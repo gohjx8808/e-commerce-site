@@ -36,8 +36,8 @@ const Checkout = () => {
     const { error } = await stripe.redirectToCheckout({
       mode: "payment",
       lineItems: [{ price: "price_1IyGWwH6YfhgUz8kTfVYv4Oq", quantity: 1 }],
-      successUrl: `http://localhost:8000/page-2/`,
-      cancelUrl: `http://localhost:8000/`,
+      successUrl: `https://jxappecommercesite.gtsb.io/page-2/`,
+      cancelUrl: `https://jxappecommercesite.gtsb.io/`,
     })
 
     if (error) {
