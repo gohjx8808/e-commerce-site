@@ -20,7 +20,7 @@ const buttonDisabledStyles = {
 let stripePromise
 const getStripe = () => {
   if (!stripePromise) {
-    stripePromise = loadStripe("pk_live_51IxulBH6YfhgUz8kbWLjtRlTygLVOiUaEMbgKDPK8zN1tIvwGmqZJazjUskevswOBAqinwVM7T1xgoWcdWYSle6k00wDfrugrl")
+    stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY)
   }
   return stripePromise
 }
