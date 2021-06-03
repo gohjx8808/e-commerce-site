@@ -17,16 +17,18 @@ const buttonDisabledStyles = {
   cursor: "not-allowed",
 }
 
-let stripePromise
-const getStripe = () => {
-  if (!stripePromise) {
-    stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY)
-  }
-  return stripePromise
-}
+
 
 const Checkout = () => {
   const [loading, setLoading] = useState(false)
+
+  let stripePromise
+  const getStripe = () => {
+    if (!stripePromise) {
+      stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY)
+    }
+    return stripePromise
+  }
 
   const redirectToCheckout = async event => {
     event.preventDefault()
