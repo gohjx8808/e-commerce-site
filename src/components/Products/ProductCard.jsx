@@ -88,7 +88,7 @@ const ProductCard = ({ product }) => {
               ? { ...buttonStyles, ...buttonDisabledStyles }
               : buttonStyles
           }
-          type="button"
+          type="submit"
         >
           BUY ME
         </button>
