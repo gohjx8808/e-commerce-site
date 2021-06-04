@@ -1,5 +1,6 @@
 import * as React from "react"
 import Checkout from "../components/Checkout"
+import Products from "../components/Products/Products"
 
 // styles
 const pageStyles = {
@@ -139,7 +140,7 @@ const IndexPage = () => {
           🎉🎉🎉
         </span>
       </h1>
-      <Checkout/>
+      <Products/>
       <p style={paragraphStyles}>
         Edit <code style={codeStyles}>src/pages/index.js</code> to see this page
         update in real-time.{" "}
