@@ -83,11 +83,12 @@ const ProductCard = ({ product }) => {
         </fieldset>
         <button
           disabled={loading}
-          style={
-            loading
-              ? { ...buttonStyles, ...buttonDisabledStyles }
-              : buttonStyles
-          }
+          // style={
+          //   loading
+          //     ? { ...buttonStyles, ...buttonDisabledStyles }
+          //     : buttonStyles
+          // }
+          className="btn btn-primary"
           type="submit"
         >
           BUY ME

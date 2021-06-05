@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Products from '../components/Products/Products';
+import SEO from '../components/SEO';
 
 // styles
 const pageStyles:React.CSSProperties = {
@@ -129,6 +130,7 @@ const links = [
 // markup
 const IndexPage = () => (
   <main style={pageStyles}>
+    <SEO />
     <title>Home Page</title>
     <h1 style={headingStyles}>
       Congratulations
