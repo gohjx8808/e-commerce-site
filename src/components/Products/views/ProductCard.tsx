@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import getStripe from '../../utils/stripejs';
+import getStripe from '../../../utils/stripejs';
 
 const cardStyles = {
   display: 'flex',
@@ -30,9 +30,9 @@ const buttonDisabledStyles = {
   cursor: 'not-allowed',
 };
 
-const formatPrice = (amount, currency) => {
-  const price = (amount / 100).toFixed(2);
-  const numberFormat = new Intl.NumberFormat(['en-US'], {
+const formatPrice = (amount:number, currency:string) => {
+  const price = parseFloat((amount / 100).toFixed(2));
+  const numberFormat = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
     currencyDisplay: 'symbol',
@@ -40,7 +40,12 @@ const formatPrice = (amount, currency) => {
   return numberFormat.format(price);
 };
 
-const ProductCard = ({ product }) => {
+interface ProductCardOwnProps{
+  product:products.productDetails
+}
+
+const ProductCard = (props:ProductCardOwnProps) => {
+  const { product } = props;
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -57,7 +62,6 @@ const ProductCard = ({ product }) => {
     });
 
     if (error) {
-      console.warn('Error:', error);
       setLoading(false);
     }
   };

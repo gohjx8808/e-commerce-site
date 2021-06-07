@@ -39,7 +39,10 @@
             }
         ],
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn"
+        "react-hooks/exhaustive-deps": "warn",
+        "camelcase": "off",
+        "no-unused-vars":"off",
+        "no-undef":"off"
     },
     "settings": {
         "import/resolver": {

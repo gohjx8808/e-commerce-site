@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Products from '../components/Products/Products';
+import Products from '../components/Products/views/Products';
 import SEO from '../components/SEO';
 
 // styles
