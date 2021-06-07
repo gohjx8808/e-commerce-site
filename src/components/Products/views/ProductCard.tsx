@@ -1,44 +1,8 @@
 import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
 import getStripe from '../../../utils/stripejs';
-
-const cardStyles = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-around',
-  alignItems: 'flex-start',
-  padding: '1rem',
-  marginBottom: '1rem',
-  boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
-  backgroundColor: '#fff',
-  borderRadius: '6px',
-  maxWidth: '300px',
-};
-const buttonStyles = {
-  display: 'block',
-  fontSize: '13px',
-  textAlign: 'center',
-  color: '#000',
-  padding: '12px',
-  boxShadow: '2px 5px 10px rgba(0,0,0,.1)',
-  backgroundColor: 'rgb(255, 178, 56)',
-  borderRadius: '6px',
-  letterSpacing: '1.5px',
-};
-
-const buttonDisabledStyles = {
-  opacity: '0.5',
-  cursor: 'not-allowed',
-};
-
-const formatPrice = (amount:number, currency:string) => {
-  const price = parseFloat((amount / 100).toFixed(2));
-  const numberFormat = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-    currencyDisplay: 'symbol',
-  });
-  return numberFormat.format(price);
-};
 
 interface ProductCardOwnProps{
   product:products.productDetails
@@ -47,6 +11,16 @@ interface ProductCardOwnProps{
 const ProductCard = (props:ProductCardOwnProps) => {
   const { product } = props;
   const [loading, setLoading] = useState(false);
+
+  const formatPrice = (amount:number, currency:string) => {
+    const price = parseFloat((amount / 100).toFixed(2));
+    const numberFormat = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency,
+      currencyDisplay: 'symbol',
+    });
+    return numberFormat.format(price);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -67,38 +41,41 @@ const ProductCard = (props:ProductCardOwnProps) => {
   };
 
   return (
-    <div style={cardStyles}>
-      <form onSubmit={handleSubmit}>
-        <fieldset style={{ border: 'none' }}>
-          <legend>
-            <h4>{product.name}</h4>
-          </legend>
-          <label>
-            Price
-            {' '}
-            <select name="priceSelect">
-              {product.prices.map((price) => (
-                <option key={price.id} value={price.id}>
-                  {formatPrice(price.unit_amount, price.currency)}
-                </option>
-              ))}
-            </select>
-          </label>
-        </fieldset>
-        <button
-          disabled={loading}
-          // style={
-          //   loading
-          //     ? { ...buttonStyles, ...buttonDisabledStyles }
-          //     : buttonStyles
-          // }
-          className="btn btn-primary"
-          type="submit"
-        >
-          BUY ME
-        </button>
-      </form>
-    </div>
+    <Card
+      border="info"
+      style={{
+        width: '18rem',
+        boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
+        backgroundColor: '#fff',
+        borderRadius: '6px',
+      }}
+    >
+      <Card.Body>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId={product.name}>
+            <Card.Title>{product.name}</Card.Title>
+            <Form.Label>
+              Price
+              {' '}
+              <Form.Control as="select" name="priceSelect">
+                {product.prices.map((price) => (
+                  <option key={price.id} value={price.id}>
+                    {formatPrice(price.unit_amount, price.currency)}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Label>
+          </Form.Group>
+          <Button
+            disabled={loading}
+            className="btn btn-primary"
+            type="submit"
+          >
+            BUY ME
+          </Button>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 };
 

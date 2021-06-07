@@ -44,7 +44,7 @@ const Products = () => (
         products[product.id].prices.push(price);
       }
       return (
-        <div style={containerStyles}>
+        <div>
           {Object.keys(products).map((key) => (
             <ProductCard key={products[key].id} product={products[key]} />
           ))}
