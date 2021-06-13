@@ -10,48 +10,55 @@ const containerStyles = {
   padding: '1rem 0 1rem 0',
 };
 
-const Products = () => (
-  <StaticQuery
-    query={graphql`
-        query ProductPrices {
-          prices: allStripePrice(
-            filter: { active: { eq: true } }
-            sort: { fields: [unit_amount] }
-          ) {
-            edges {
-              node {
-                id
-                active
-                currency
-                unit_amount
-                product {
-                  id
-                  name
-                }
-              }
+const Products = () => {
+  const allPriceQuery = graphql`
+    query ProductPrices {
+      prices: allStripePrice(
+        filter: { active: { eq: true } }
+        sort: { fields: [unit_amount] }
+      ) {
+        edges {
+          node {
+            unit_amount
+            unit_amount_decimal
+            product {
+              description
+              id
+              images
+              name
+              type
             }
+            active
+            currency
+            id
           }
         }
-      `}
-    render={({ prices }) => {
-      const products = {};
-      for (const { node: price } of prices.edges) {
-        const { product } = price;
-        if (!products[product.id]) {
-          products[product.id] = product;
-          products[product.id].prices = [];
-        }
-        products[product.id].prices.push(price);
       }
-      return (
-        <div>
-          {Object.keys(products).map((key) => (
-            <ProductCard key={products[key].id} product={products[key]} />
-          ))}
-        </div>
-      );
-    }}
-  />
-);
+    }`;
+
+  return (
+    <StaticQuery
+      query={allPriceQuery}
+      render={({ prices }) => {
+        const allProduct:products.productData[] = [];
+        const extractedPrices:products.queryProductData[] = prices.edges;
+        extractedPrices.forEach((price) => {
+          const realPrice = price.node;
+          const extractedProduct = realPrice.product;
+          const { product, ...otherDetail } = realPrice;
+          extractedProduct!.prices = otherDetail;
+          allProduct.push(extractedProduct!);
+        });
+        return (
+          <div>
+            {/* {Object.keys(products).map((key) => (
+              <ProductCard key={products[key].id} product={products[key]} />
+            ))} */}
+          </div>
+        );
+      }}
+    />
+  );
+};
 
 export default Products;

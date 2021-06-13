@@ -28,17 +28,20 @@ const ProductCard = (props:ProductCardOwnProps) => {
 
     const price = new FormData(event.target).get('priceSelect');
     const stripe = await getStripe();
-    const { error } = await stripe.redirectToCheckout({
-      mode: 'payment',
-      lineItems: [{ price, quantity: 1 }],
-      successUrl: `${window.location.origin}/page-2/`,
-      cancelUrl: `${window.location.origin}/advanced`,
-    });
+    console.log(await stripe.prices.list());
+    // const { error } = await stripe.redirectToCheckout({
+    //   mode: 'payment',
+    //   lineItems: [{ price, quantity: 1 }],
+    //   successUrl: `${window.location.origin}/page-2/`,
+    //   cancelUrl: `${window.location.origin}/advanced`,
+    // });
 
     if (error) {
       setLoading(false);
     }
   };
+
+  console.log(product);
 
   return (
     <Card
