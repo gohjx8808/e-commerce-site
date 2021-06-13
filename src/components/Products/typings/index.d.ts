@@ -31,4 +31,8 @@ declare namespace products{
     type:string
     prices:pricesData
   }
+
+  interface submitCheckoutPayload{
+    priceID:string
+  }
 }

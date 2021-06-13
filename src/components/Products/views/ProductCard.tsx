@@ -8,11 +8,12 @@ import {
   FormControl,
   InputLabel,
   makeStyles,
-  MenuItem,
-  Select,
+  TextField,
   Theme,
+  Typography,
 } from '@material-ui/core';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Carousel from 'react-material-ui-carousel';
 import getStripe from '../../../utils/stripejs';
 
@@ -36,6 +37,12 @@ const ProductCard = (props:ProductCardOwnProps) => {
   const { product } = props;
   const [loading, setLoading] = useState(false);
 
+  const { handleSubmit, register } = useForm({
+    defaultValues: {
+      priceID: product.prices.id,
+    },
+  });
+
   const formatPrice = (amount:number, currency:string) => {
     const price = parseFloat((amount / 100).toFixed(2));
     const numberFormat = new Intl.NumberFormat('en-US', {
@@ -46,26 +53,20 @@ const ProductCard = (props:ProductCardOwnProps) => {
     return numberFormat.format(price);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const onSubmit = async (hookData:products.submitCheckoutPayload) => {
     setLoading(true);
-
-    const price = new FormData(event.target).get('priceSelect');
     const stripe = await getStripe();
-    console.log(await stripe.prices.list());
-    // const { error } = await stripe.redirectToCheckout({
-    //   mode: 'payment',
-    //   lineItems: [{ price, quantity: 1 }],
-    //   successUrl: `${window.location.origin}/page-2/`,
-    //   cancelUrl: `${window.location.origin}/advanced`,
-    // });
+    const { error } = await stripe.redirectToCheckout({
+      mode: 'payment',
+      lineItems: [{ price: hookData.priceID, quantity: 1 }],
+      successUrl: `${window.location.origin}/page-2/`,
+      cancelUrl: `${window.location.origin}/advanced`,
+    });
 
-    // if (error) {
-    //   setLoading(false);
-    // }
+    if (error) {
+      setLoading(false);
+    }
   };
-
-  console.log(product);
 
   return (
     <Card
@@ -90,15 +91,12 @@ const ProductCard = (props:ProductCardOwnProps) => {
         ))}
       </Carousel>
       <CardContent>
-        <form onSubmit={handleSubmit}>
-          <FormControl className={classes.formControl}>
-            <InputLabel>Prices</InputLabel>
-            <Select>
-              <MenuItem value={product.prices.id}>
-                {formatPrice(product.prices.unit_amount, product.prices.currency)}
-              </MenuItem>
-            </Select>
-          </FormControl>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField {...register('priceID')} type="hidden" />
+          <Typography>
+            Price:
+            {formatPrice(product.prices.unit_amount, product.prices.currency)}
+          </Typography>
           <Button
             disabled={loading}
             type="submit"
