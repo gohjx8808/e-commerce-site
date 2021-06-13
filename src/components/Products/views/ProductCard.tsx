@@ -4,44 +4,23 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
-  createStyles,
-  FormControl,
-  InputLabel,
-  makeStyles,
-  TextField,
-  Theme,
   Typography,
 } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Carousel from 'react-material-ui-carousel';
+import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import getStripe from '../../../utils/stripejs';
 
 interface ProductCardOwnProps{
   product:products.productData
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  button: {
-    display: 'block',
-    marginTop: theme.spacing(2),
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-}));
-
 const ProductCard = (props:ProductCardOwnProps) => {
-  const classes = useStyles();
   const { product } = props;
   const [loading, setLoading] = useState(false);
 
-  const { handleSubmit, register } = useForm({
-    defaultValues: {
-      priceID: product.prices.id,
-    },
-  });
+  const { handleSubmit, control } = useForm();
 
   const formatPrice = (amount:number, currency:string) => {
     const price = parseFloat((amount / 100).toFixed(2));
@@ -92,7 +71,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
       </Carousel>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <TextField {...register('priceID')} type="hidden" />
+          <ControlledTextInput type="hidden" defaultValue={product.prices.id} control={control} name="priceID" />
           <Typography>
             Price:
             {formatPrice(product.prices.unit_amount, product.prices.currency)}
