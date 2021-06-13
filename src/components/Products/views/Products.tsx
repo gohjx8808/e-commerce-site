@@ -51,9 +51,9 @@ const Products = () => {
         });
         return (
           <div>
-            {/* {Object.keys(products).map((key) => (
-              <ProductCard key={products[key].id} product={products[key]} />
-            ))} */}
+            {Object.keys(allProduct).map((key) => (
+              <ProductCard key={allProduct[key].id} product={allProduct[key]} />
+            ))}
           </div>
         );
       }}

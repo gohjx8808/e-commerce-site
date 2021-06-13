@@ -1,14 +1,36 @@
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  createStyles,
+  FormControl,
+  InputLabel,
+  makeStyles,
+  MenuItem,
+  Select,
+  Theme,
+} from '@material-ui/core';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import getStripe from '../../../utils/stripejs';
 
 interface ProductCardOwnProps{
   product:products.productDetails
 }
 
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  button: {
+    display: 'block',
+    marginTop: theme.spacing(2),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+}));
+
 const ProductCard = (props:ProductCardOwnProps) => {
+  const classes = useStyles();
   const { product } = props;
   const [loading, setLoading] = useState(false);
 
@@ -45,7 +67,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
 
   return (
     <Card
-      border="info"
+      // border="info"
       style={{
         width: '18rem',
         boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
@@ -53,22 +75,30 @@ const ProductCard = (props:ProductCardOwnProps) => {
         borderRadius: '6px',
       }}
     >
-      <Card.Body>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId={product.name}>
-            <Card.Title>{product.name}</Card.Title>
-            <Form.Label>
-              Price
-              {' '}
-              <Form.Control as="select" name="priceSelect">
-                {product.prices.map((price) => (
-                  <option key={price.id} value={price.id}>
-                    {formatPrice(price.unit_amount, price.currency)}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Label>
-          </Form.Group>
+      <CardContent>
+        <form onSubmit={handleSubmit}>
+          <CardHeader
+            title={product.name}
+          />
+          <FormControl className={classes.formControl}>
+            <InputLabel id="demo-controlled-open-select-label">Age</InputLabel>
+            <Select
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              // open={open}
+              // onClose={handleClose}
+              // onOpen={handleOpen}
+              // value={age}
+              // onChange={handleChange}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
           <Button
             disabled={loading}
             className="btn btn-primary"
@@ -76,8 +106,8 @@ const ProductCard = (props:ProductCardOwnProps) => {
           >
             BUY ME
           </Button>
-        </Form>
-      </Card.Body>
+        </form>
+      </CardContent>
     </Card>
   );
 };
