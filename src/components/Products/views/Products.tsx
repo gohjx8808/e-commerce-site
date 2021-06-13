@@ -2,14 +2,6 @@ import React from 'react';
 import { graphql, StaticQuery } from 'gatsby';
 import ProductCard from './ProductCard';
 
-const containerStyles = {
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
-  padding: '1rem 0 1rem 0',
-};
-
 const Products = () => {
   const allPriceQuery = graphql`
     query ProductPrices {
@@ -51,8 +43,8 @@ const Products = () => {
         });
         return (
           <div>
-            {Object.keys(allProduct).map((key) => (
-              <ProductCard key={allProduct[key].id} product={allProduct[key]} />
+            {allProduct.map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         );

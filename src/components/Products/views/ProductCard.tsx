@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CardMedia,
   createStyles,
   FormControl,
   InputLabel,
@@ -12,10 +13,11 @@ import {
   Theme,
 } from '@material-ui/core';
 import React, { useState } from 'react';
+import Carousel from 'react-material-ui-carousel';
 import getStripe from '../../../utils/stripejs';
 
 interface ProductCardOwnProps{
-  product:products.productDetails
+  product:products.productData
 }
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -58,16 +60,15 @@ const ProductCard = (props:ProductCardOwnProps) => {
     //   cancelUrl: `${window.location.origin}/advanced`,
     // });
 
-    if (error) {
-      setLoading(false);
-    }
+    // if (error) {
+    //   setLoading(false);
+    // }
   };
 
   console.log(product);
 
   return (
     <Card
-      // border="info"
       style={{
         width: '18rem',
         boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
@@ -75,34 +76,34 @@ const ProductCard = (props:ProductCardOwnProps) => {
         borderRadius: '6px',
       }}
     >
+      <CardHeader
+        title={product.name}
+      />
+      <Carousel indicators={false}>
+        {product.images.map((imageURL) => (
+          <CardMedia
+            key={imageURL}
+            image={imageURL}
+            title={product.name}
+            component="img"
+          />
+        ))}
+      </Carousel>
       <CardContent>
         <form onSubmit={handleSubmit}>
-          <CardHeader
-            title={product.name}
-          />
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-controlled-open-select-label">Age</InputLabel>
-            <Select
-              labelId="demo-controlled-open-select-label"
-              id="demo-controlled-open-select"
-              // open={open}
-              // onClose={handleClose}
-              // onOpen={handleOpen}
-              // value={age}
-              // onChange={handleChange}
-            >
-              <MenuItem value="">
-                <em>None</em>
+            <InputLabel>Prices</InputLabel>
+            <Select>
+              <MenuItem value={product.prices.id}>
+                {formatPrice(product.prices.unit_amount, product.prices.currency)}
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
             </Select>
           </FormControl>
           <Button
             disabled={loading}
-            className="btn btn-primary"
             type="submit"
+            variant="contained"
+            color="primary"
           >
             BUY ME
           </Button>
