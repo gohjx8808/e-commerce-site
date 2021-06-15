@@ -4,6 +4,7 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  Grid,
   Typography,
 } from '@material-ui/core';
 import React, { useState } from 'react';
@@ -48,45 +49,47 @@ const ProductCard = (props:ProductCardOwnProps) => {
   };
 
   return (
-    <Card
-      style={{
-        width: '18rem',
-        boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
-        backgroundColor: '#fff',
-        borderRadius: '6px',
-      }}
-    >
-      <CardHeader
-        title={product.name}
-      />
-      <Carousel indicators={false}>
-        {product.images.map((imageURL) => (
-          <CardMedia
-            key={imageURL}
-            image={imageURL}
-            title={product.name}
-            component="img"
-          />
-        ))}
-      </Carousel>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ControlledTextInput type="hidden" defaultValue={product.prices.id} control={control} name="priceID" />
-          <Typography>
-            Price:
-            {formatPrice(product.prices.unit_amount, product.prices.currency)}
-          </Typography>
-          <Button
-            disabled={loading}
-            type="submit"
-            variant="contained"
-            color="primary"
-          >
-            BUY ME
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+    <Grid item lg={3} md={6} sm={12} xs={12}>
+      <Card
+        style={{
+          width: '18rem',
+          boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
+          backgroundColor: '#fff',
+          borderRadius: '6px',
+        }}
+      >
+        <CardHeader
+          title={product.name}
+        />
+        <Carousel indicators={false}>
+          {product.images.map((imageURL) => (
+            <CardMedia
+              key={imageURL}
+              image={imageURL}
+              title={product.name}
+              component="img"
+            />
+          ))}
+        </Carousel>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ControlledTextInput type="hidden" defaultValue={product.prices.id} control={control} name="priceID" />
+            <Typography>
+              Price:
+              {formatPrice(product.prices.unit_amount, product.prices.currency)}
+            </Typography>
+            <Button
+              disabled={loading}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              BUY ME
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 };
 

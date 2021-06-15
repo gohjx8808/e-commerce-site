@@ -1,5 +1,6 @@
 import React from 'react';
 import { graphql, StaticQuery } from 'gatsby';
+import { Grid } from '@material-ui/core';
 import ProductCard from './ProductCard';
 
 const Products = () => {
@@ -42,11 +43,11 @@ const Products = () => {
           allProduct.push(extractedProduct!);
         });
         return (
-          <div>
+          <Grid container spacing={2}>
             {allProduct.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
-          </div>
+          </Grid>
         );
       }}
     />
