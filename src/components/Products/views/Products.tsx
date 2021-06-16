@@ -48,7 +48,7 @@ const Products = () => {
           allProduct.push(extractedProduct!);
         });
         return (
-          <Grid container spacing={2}>
+          <Grid container justify="center" alignItems="center" direction="row" spacing={5}>
             {allProduct.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

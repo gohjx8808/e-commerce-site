@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import Carousel from 'react-material-ui-carousel';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import getStripe from '../../../utils/stripejs';
+import productStyle from '../src/ProductStyle';
 
 interface ProductCardOwnProps{
   product:products.productData
@@ -20,6 +21,7 @@ interface ProductCardOwnProps{
 const ProductCard = (props:ProductCardOwnProps) => {
   const { product } = props;
   const [loading, setLoading] = useState(false);
+  const classes = productStyle();
 
   const { handleSubmit, control } = useForm();
 
@@ -50,28 +52,21 @@ const ProductCard = (props:ProductCardOwnProps) => {
 
   return (
     <Grid item lg={3} md={6} sm={12} xs={12}>
-      <Card
-        style={{
-          width: '18rem',
-          boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
-          backgroundColor: '#fff',
-          borderRadius: '6px',
-        }}
-      >
-        <CardHeader
-          title={product.name}
-        />
+      <Card variant="outlined" className={classes.productCard}>
+        <CardHeader title={product.name} />
         <Carousel indicators={false}>
-          {product.localFiles.map((localFile) => {
-            const imageData = getImage(localFile)!;
-            return (
-              <GatsbyImage
-                image={imageData}
-                alt={product.name}
-                key={imageData.images.fallback?.src}
-              />
-            );
-          })}
+          <Grid container justify="center">
+            {product.localFiles.map((localFile) => {
+              const imageData = getImage(localFile)!;
+              return (
+                <GatsbyImage
+                  image={imageData}
+                  alt={product.name}
+                  key={imageData.images.fallback?.src}
+                />
+              );
+            })}
+          </Grid>
         </Carousel>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
