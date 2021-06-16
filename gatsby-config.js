@@ -17,7 +17,7 @@ module.exports = {
       options: {
         objects: ['Price', 'Product'],
         secretKey: process.env.STRIPE_SECRET_KEY,
-        downloadFiles: false,
+        downloadFiles: true,
       },
     },
     'gatsby-plugin-image',

@@ -30,6 +30,7 @@ declare namespace products{
     name:string
     type:string
     prices:pricesData
+    localFiles: import('gatsby-plugin-image').ImageDataLike[];
   }
 
   interface submitCheckoutPayload{
