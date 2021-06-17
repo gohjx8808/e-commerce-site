@@ -5,6 +5,7 @@ import {
   CardHeader,
   Grid,
   Typography,
+  Box,
 } from '@material-ui/core';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useState } from 'react';
@@ -21,7 +22,7 @@ interface ProductCardOwnProps{
 const ProductCard = (props:ProductCardOwnProps) => {
   const { product } = props;
   const [loading, setLoading] = useState(false);
-  const classes = productStyle();
+  const styles = productStyle();
 
   const { handleSubmit, control } = useForm();
 
@@ -52,18 +53,21 @@ const ProductCard = (props:ProductCardOwnProps) => {
 
   return (
     <Grid item lg={3} md={6} sm={12} xs={12}>
-      <Card variant="outlined" className={classes.productCard}>
+      <Card variant="outlined" className={styles.productCard}>
         <CardHeader title={product.name} />
         <Carousel indicators={false}>
           <Grid container justify="center">
             {product.localFiles.map((localFile) => {
               const imageData = getImage(localFile)!;
               return (
-                <GatsbyImage
-                  image={imageData}
-                  alt={product.name}
-                  key={imageData.images.fallback?.src}
-                />
+                <Box style={{ height: 250 }}>
+                  <GatsbyImage
+                    image={imageData}
+                    alt={product.name}
+                    key={imageData.images.fallback?.src}
+                    objectFit="fill"
+                  />
+                </Box>
               );
             })}
           </Grid>
