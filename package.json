@@ -27,7 +27,6 @@
     "gatsby-plugin-image": "^1.7.1",
     "gatsby-plugin-material-ui": "^3.0.1",
     "gatsby-plugin-react-helmet": "^4.6.0",
-    "gatsby-plugin-sass": "^4.7.1",
     "gatsby-plugin-sharp": "^3.7.1",
     "gatsby-source-filesystem": "^3.7.1",
     "gatsby-source-stripe": "^3.2.2",
@@ -37,7 +36,6 @@
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.8.1",
     "react-material-ui-carousel": "^2.2.6",
-    "sass": "^1.35.1",
     "typescript": "^4.3.2"
   },
   "devDependencies": {

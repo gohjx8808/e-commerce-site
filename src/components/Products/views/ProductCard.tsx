@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import Carousel from 'react-material-ui-carousel';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import getStripe from '../../../utils/stripejs';
-import productStyle from '../src/ProductStyle';
+import productStyle from '../src/productStyle';
 
 interface ProductCardOwnProps{
   product:products.productData

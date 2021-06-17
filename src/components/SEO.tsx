@@ -78,6 +78,12 @@ const SEO = (props:SEOOwnProps) => {
       )}
 
       {seo.image && <meta name="twitter:image" content={seo.image} />}
+
+      <style type="text/css">
+        {`body {
+          margin: 0;
+        }`}
+      </style>
     </Helmet>
   );
 };
