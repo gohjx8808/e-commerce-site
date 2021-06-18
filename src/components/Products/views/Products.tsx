@@ -19,6 +19,11 @@ const Products = () => {
             product {
               id
               images
+              localFiles{
+                childImageSharp{
+                  gatsbyImageData
+                }
+              }
               name
               type
             }

@@ -2,9 +2,10 @@ import {
   Box, Button,
   Card,
   CardContent,
-  CardHeader, CardMedia, Grid,
-  Typography,
+  CardHeader, Grid,
+  Typography
 } from '@material-ui/core';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Carousel from 'react-material-ui-carousel';
@@ -53,14 +54,17 @@ const ProductCard = (props:ProductCardOwnProps) => {
       <Card variant="outlined" className={styles.productCard}>
         <CardHeader title={product.name} />
         <Carousel indicators={false}>
-          {product.images.map((image) => (
-            <Box className={styles.carouselImageContainer} key={image}>
-              <CardMedia
-                image={image}
-                component="img"
-              />
-            </Box>
-          ))}
+          {product.localFiles.map((localFile) => {
+            const imageData = getImage(localFile)!;
+            return (
+              <Box className={styles.carouselImageContainer} key={imageData.images.fallback?.src}>
+                <GatsbyImage
+                  image={imageData}
+                  alt={product.name}
+                />
+              </Box>
+            );
+          })}
         </Carousel>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
