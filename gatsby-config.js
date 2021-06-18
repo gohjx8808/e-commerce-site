@@ -19,9 +19,6 @@ module.exports = {
         downloadFiles: true,
       },
     },
-    'gatsby-plugin-image',
-    'gatsby-plugin-sharp',
-    'gatsby-transformer-sharp',
   ],
 };
 

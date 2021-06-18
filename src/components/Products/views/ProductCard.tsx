@@ -54,7 +54,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
         <CardHeader title={product.name} />
         <Carousel indicators={false}>
           {product.images.map((image) => (
-            <Box className={styles.carouselImageContainer}>
+            <Box className={styles.carouselImageContainer} key={image}>
               <CardMedia
                 image={image}
                 component="img"
