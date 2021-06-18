@@ -2,8 +2,10 @@ import React from 'react';
 import { graphql, StaticQuery } from 'gatsby';
 import { Grid } from '@material-ui/core';
 import ProductCard from './ProductCard';
+import productStyle from '../src/productStyle';
 
 const Products = () => {
+  const styles = productStyle();
   const allPriceQuery = graphql`
     query ProductPrices {
       prices: allStripePrice(
@@ -15,14 +17,8 @@ const Products = () => {
             unit_amount
             unit_amount_decimal
             product {
-              description
               id
               images
-              localFiles{
-                childImageSharp{
-                  gatsbyImageData
-                }
-              }
               name
               type
             }
@@ -48,7 +44,7 @@ const Products = () => {
           allProduct.push(extractedProduct!);
         });
         return (
-          <Grid container justify="center" alignItems="center" direction="row" spacing={5}>
+          <Grid container justify="center" alignItems="center" direction="row" spacing={5} className={styles.rootContainer}>
             {allProduct.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
