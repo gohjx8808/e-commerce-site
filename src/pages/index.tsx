@@ -2,9 +2,11 @@ import Grid from '@material-ui/core/Grid';
 import { createMuiTheme } from '@material-ui/core/styles';
 import * as React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
+import { CartProvider } from 'use-shopping-cart';
 import MenuBar from '../components/MenuBar';
 import Products from '../components/Products/views/Products';
 import SEO from '../components/SEO';
+import getStripe from '../utils/stripejs';
 
 const IndexPage = () => {
   const theme = createMuiTheme({
@@ -17,13 +19,21 @@ const IndexPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container>
-        <Grid item xs={12}>
-          <SEO />
-          <MenuBar />
-          <Products />
+      <CartProvider
+        mode="client-only"
+        stripe={getStripe()}
+        successUrl="stripe.com"
+        cancelUrl="twitter.com/dayhaysoos"
+        currency="MYR"
+      >
+        <Grid container>
+          <Grid item xs={12}>
+            <SEO />
+            <MenuBar />
+            <Products />
+          </Grid>
         </Grid>
-      </Grid>
+      </CartProvider>
     </ThemeProvider>
   );
 };

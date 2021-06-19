@@ -37,7 +37,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
   const onSubmit = async (hookData:products.submitCheckoutPayload) => {
     setLoading(true);
     const stripe = await getStripe();
-    const { error } = await stripe.redirectToCheckout({
+    const { error } = await stripe!.redirectToCheckout({
       mode: 'payment',
       lineItems: [{ price: hookData.priceID, quantity: 1 }],
       successUrl: `${window.location.origin}/page-2/`,
