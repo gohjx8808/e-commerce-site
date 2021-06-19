@@ -25,6 +25,7 @@ const SEO = (props:SEOOwnProps) => {
           siteUrl: url
           defaultImage: image
           twitterUsername
+          lang
         }
       }
     }
@@ -39,6 +40,7 @@ const SEO = (props:SEOOwnProps) => {
     siteUrl,
     defaultImage,
     twitterUsername,
+    lang,
   } = site.siteMetadata;
 
   const seo = {
@@ -49,7 +51,7 @@ const SEO = (props:SEOOwnProps) => {
   };
 
   return (
-    <Helmet title={seo.title} titleTemplate={titleTemplate}>
+    <Helmet title={seo.title} titleTemplate={titleTemplate} htmlAttributes={{ lang }}>
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />
 

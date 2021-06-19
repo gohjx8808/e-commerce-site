@@ -8,6 +8,7 @@ module.exports = {
     siteUrl: 'https://jxappecommercesite.gtsb.io',
     image: '/images/snape.jpg', // Path to your image you placed in the 'static' folder
     twitterUsername: '@jxapp',
+    lang: 'en',
   },
   plugins: [
     'gatsby-plugin-gatsby-cloud',
