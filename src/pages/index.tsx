@@ -1,4 +1,5 @@
-import { createMuiTheme, Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import { createMuiTheme } from '@material-ui/core/styles';
 import * as React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import MenuBar from '../components/MenuBar';

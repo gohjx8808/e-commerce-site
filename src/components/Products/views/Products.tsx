@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql, StaticQuery } from 'gatsby';
-import { Grid } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import ProductCard from './ProductCard';
 import productStyle from '../src/productStyle';
 
