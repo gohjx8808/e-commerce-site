@@ -4,7 +4,8 @@ module.exports = {
     titleTemplate: '%s | The Real Ecommerce Site',
     description:
       'Hogwarts Potions master, Head of Slytherin house and former Death Eater.',
-    siteUrl: 'https://www.jxapp.ecommercesite.com', // No trailing slash allowed!
+    url: 'https://www.jxapp.ecommercesite.com', // No trailing slash allowed!
+    siteUrl: 'https://jxappecommercesite.gtsb.io',
     image: '/images/snape.jpg', // Path to your image you placed in the 'static' folder
     twitterUsername: '@jxapp',
   },
