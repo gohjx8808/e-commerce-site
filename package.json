@@ -28,6 +28,7 @@
     "gatsby-plugin-image": "^1.7.1",
     "gatsby-plugin-material-ui": "^3.0.1",
     "gatsby-plugin-react-helmet": "^4.6.0",
+    "gatsby-plugin-robots-txt": "^1.6.2",
     "gatsby-plugin-sharp": "^3.7.1",
     "gatsby-source-filesystem": "^3.7.1",
     "gatsby-source-stripe": "^3.2.2",
