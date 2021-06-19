@@ -1,13 +1,13 @@
 module.exports = {
   siteMetadata: {
-    title: 'eCommerceSite',
-    titleTemplate: '%s | The Real Ecommerce Site',
+    title: 'yjArtJournal',
+    titleTemplate: '%s | Handmade with Love',
     description:
-      'Hogwarts Potions master, Head of Slytherin house and former Death Eater.',
-    url: 'https://www.jxapp.ecommercesite.com', // No trailing slash allowed!
-    siteUrl: 'https://jxappecommercesite.gtsb.io',
+      'Crochet and drawings are made with love.',
+    url: 'https://yjartjournal.gtsb.io', // No trailing slash allowed!
+    siteUrl: 'https://yjartjournal.gtsb.io',
     image: '/images/snape.jpg', // Path to your image you placed in the 'static' folder
-    twitterUsername: '@jxapp',
+    twitterUsername: '@yj_artjournal',
     lang: 'en',
   },
   plugins: [
