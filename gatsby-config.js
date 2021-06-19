@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'yjArtJournal',
-    titleTemplate: '%s | Handmade with Love',
+    titleTemplate: '%s | The Handmade Cottage',
     description:
       'Crochet and drawings are made with love.',
     url: 'https://yjartjournal.gtsb.io', // No trailing slash allowed!
