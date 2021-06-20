@@ -1,11 +1,27 @@
 import { RouteComponentProps, Router } from '@reach/router';
-import React from 'react';
-import Products from '../components/Products/views/Products';
+import React, { Suspense, lazy } from 'react';
+
+const SEO = lazy(() => import('../components/SEO'));
+const MenuBar = lazy(() => import('../components/MenuBar'));
+const Products = lazy(() => import('../components/Products/views/Products'));
+
+const ProductRoutes = () => (
+  <>
+    <MenuBar />
+    <Router basepath="/product">
+      <RouterPage path="/" pageComponent={<Products />} />
+    </Router>
+  </>
+);
 
 const App = () => (
-  <Router>
-    <RouterPage path="/product" pageComponent={<Products />} />
-  </Router>
+  <Suspense fallback={<div>Loading...</div>}>
+    <SEO />
+    <Router>
+      <RouterPage path="/" pageComponent={<Products />} />
+      <RouterPage path="/product" pageComponent={ProductRoutes()} />
+    </Router>
+  </Suspense>
 );
 
 const RouterPage = (
