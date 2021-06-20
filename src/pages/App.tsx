@@ -1,8 +1,9 @@
 import { RouteComponentProps, Router } from '@reach/router';
-import React, { Suspense } from 'react';
-import MenuBar from '../components/MenuBar';
-import Products from '../components/Products/views/Products';
-import SEO from '../components/SEO';
+import React, { Suspense, lazy } from 'react';
+
+const MenuBar = lazy(() => import('../components/MenuBar'));
+const Products = lazy(() => import('../components/Products/views/Products'));
+const SEO = lazy(() => import('../components/SEO'));
 
 const ProductRoutes = () => (
   <>
@@ -13,15 +14,22 @@ const ProductRoutes = () => (
   </>
 );
 
-const App = () => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <SEO />
-    <Router>
-      <RouterPage path="/" pageComponent={<Products />} />
-      <RouterPage path="/product" pageComponent={ProductRoutes()} />
-    </Router>
-  </Suspense>
-);
+const App = () => {
+  const isSSR = typeof window === 'undefined';
+  return (
+    <>
+      {!isSSR && (
+      <Suspense fallback={<div>Loading...</div>}>
+        <SEO />
+        <Router>
+          <RouterPage path="/" pageComponent={<Products />} />
+          <RouterPage path="/product" pageComponent={ProductRoutes()} />
+        </Router>
+      </Suspense>
+      )}
+    </>
+  );
+};
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps,
