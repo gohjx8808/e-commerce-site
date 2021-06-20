@@ -1,9 +1,8 @@
 import { RouteComponentProps, Router } from '@reach/router';
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
+import MenuBar from '../components/MenuBar';
+import Products from '../components/Products/views/Products';
 import SEO from '../components/SEO';
-
-const MenuBar = lazy(() => import('../components/MenuBar'));
-const Products = lazy(() => import('../components/Products/views/Products'));
 
 const ProductRoutes = () => (
   <>
