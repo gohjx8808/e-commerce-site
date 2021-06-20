@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import { CartProvider } from 'use-shopping-cart';
 import MenuBar from '../components/MenuBar';
-import Products from '../components/Products/views/Products';
+import App from './App';
 import SEO from '../components/SEO';
 import getStripe from '../utils/stripejs';
 
@@ -30,7 +30,7 @@ const IndexPage = () => {
           <Grid item xs={12}>
             <SEO />
             <MenuBar />
-            <Products />
+            <App />
           </Grid>
         </Grid>
       </CartProvider>
