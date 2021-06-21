@@ -26,7 +26,7 @@ const IndexPage = () => {
       >
         <Grid container>
           <Grid item xs={12}>
-            
+            <App />
           </Grid>
         </Grid>
       </CartProvider>
