@@ -8,7 +8,7 @@ const SEO = lazy(() => import('../components/SEO'));
 const ProductRoutes = () => (
   <>
     <MenuBar />
-    <Router basepath="/product">
+    <Router basepath="/">
       <RouterPage path="/" pageComponent={<Products />} />
     </Router>
   </>
@@ -19,13 +19,12 @@ const App = () => {
   return (
     <>
       {!isSSR && (
-      <Suspense fallback={<div>Loading...</div>}>
-        <SEO />
-        <Router>
-          <RouterPage path="/" pageComponent={<Products />} />
-          <RouterPage path="/product" pageComponent={ProductRoutes()} />
-        </Router>
-      </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <SEO />
+          <Router>
+            <RouterPage path="/" pageComponent={ProductRoutes()} />
+          </Router>
+        </Suspense>
       )}
     </>
   );
