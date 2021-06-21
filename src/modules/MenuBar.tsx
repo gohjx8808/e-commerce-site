@@ -17,6 +17,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import { navigate } from 'gatsby';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -196,6 +198,7 @@ const MenuBar = () => {
             </Box>
             <Box className={classes.grow} />
             <Box className={classes.sectionDesktop}>
+              <Button color="inherit" onClick={() => navigate('/login')}>Login/Sign Up</Button>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon />

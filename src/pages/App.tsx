@@ -1,9 +1,11 @@
 import { RouteComponentProps, Router } from '@reach/router';
 import React, { Suspense, lazy } from 'react';
+import AuthenticationLayout from '../modules/Authentication/views/AuthenticationLayout';
+import Login from '../modules/Authentication/views/Login';
 
-const MenuBar = lazy(() => import('../components/MenuBar'));
-const Products = lazy(() => import('../components/Products/views/Products'));
-const SEO = lazy(() => import('../components/SEO'));
+const MenuBar = lazy(() => import('../modules/MenuBar'));
+const Products = lazy(() => import('../modules/Products/views/Products'));
+const SEO = lazy(() => import('../modules/SEO'));
 
 const ProductRoutes = () => (
   <>
@@ -12,6 +14,14 @@ const ProductRoutes = () => (
       <RouterPage path="/" pageComponent={<Products />} />
     </Router>
   </>
+);
+
+const AuthenticationRoutes = () => (
+  <AuthenticationLayout>
+    <Router basepath="/login">
+      <RouterPage path="/" pageComponent={<Login />} />
+    </Router>
+  </AuthenticationLayout>
 );
 
 const App = () => {
@@ -23,6 +33,7 @@ const App = () => {
           <SEO />
           <Router>
             <RouterPage path="/" pageComponent={ProductRoutes()} />
+            <RouterPage path="/login" pageComponent={AuthenticationRoutes()} />
           </Router>
         </Suspense>
       )}
