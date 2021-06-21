@@ -1,8 +1,11 @@
 import React from 'react';
 import { graphql, StaticQuery } from 'gatsby';
 import Grid from '@material-ui/core/Grid';
+import { KeyboardArrowUp } from '@material-ui/icons';
+import Fab from '@material-ui/core/Fab';
 import ProductCard from './ProductCard';
 import productStyle from '../src/productStyle';
+import ScrollTop from '../../../sharedComponents/ScrollTop';
 
 const Products = () => {
   const styles = productStyle();
@@ -53,6 +56,11 @@ const Products = () => {
             {allProduct.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
+            <ScrollTop>
+              <Fab color="secondary" size="small" aria-label="scroll back to top">
+                <KeyboardArrowUp />
+              </Fab>
+            </ScrollTop>
           </Grid>
         );
       }}
