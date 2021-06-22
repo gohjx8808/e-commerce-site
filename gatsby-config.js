@@ -13,7 +13,8 @@ module.exports = {
   plugins: [
     'gatsby-plugin-gatsby-cloud',
     'gatsby-plugin-material-ui',
-    'gatsby-plugin-react-helmet', {
+    'gatsby-plugin-react-helmet',
+    {
       resolve: 'gatsby-source-stripe',
       options: {
         objects: ['Price', 'Product'],
@@ -21,6 +22,14 @@ module.exports = {
         downloadFiles: true,
       },
     },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: `${__dirname}/src/images`,
+      },
+    },
+
     'gatsby-plugin-image',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',

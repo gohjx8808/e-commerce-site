@@ -1,7 +1,7 @@
 import { RouteComponentProps, Router } from '@reach/router';
 import React, { Suspense, lazy } from 'react';
 import AuthenticationLayout from '../modules/Authentication/views/AuthenticationLayout';
-import Login from '../modules/Authentication/views/Login';
+import Login from '../modules/Authentication/views/LoginScreen';
 
 const MenuBar = lazy(() => import('../modules/MenuBar'));
 const Products = lazy(() => import('../modules/Products/views/Products'));
