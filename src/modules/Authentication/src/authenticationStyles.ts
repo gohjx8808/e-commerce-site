@@ -5,8 +5,11 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     height: '100vh',
   },
-  logoContainer: {
-    justifyContent:'center'
-    // maxWidth: '20%',
+  iconContainer: {
+    margin: 'auto',
+    width: '20%',
+  },
+  icon: {
+    borderRadius: 10,
   },
 }));

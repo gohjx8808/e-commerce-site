@@ -31,8 +31,8 @@ const Login = () => {
             title="Login"
             style={{ textAlign: 'center' }}
           />
-          <Box className={styles.logoContainer}>
-            <GatsbyImage image={image!} alt="logo" objectFit="contain" />
+          <Box className={styles.iconContainer}>
+            <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
           </Box>
           <CardContent>
             <Typography>testing</Typography>
