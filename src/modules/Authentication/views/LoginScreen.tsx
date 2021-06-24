@@ -7,7 +7,9 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
+import { useForm } from 'react-hook-form';
 import authenticationStyles from '../src/authenticationStyles';
+import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 
 const Login = () => {
   const styles = authenticationStyles();
@@ -23,19 +25,35 @@ const Login = () => {
 
   const image = getImage(data.file);
 
+  const { control, formState: { errors } } = useForm();
+
   return (
     <Grid item xs={12}>
       <Grid container justify="center" alignItems="center">
-        <Card style={{ width: '50%' }}>
-          <CardHeader
-            title="Login"
-            style={{ textAlign: 'center' }}
-          />
-          <Box className={styles.iconContainer}>
-            <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
-          </Box>
+        <Card
+          style={{
+            width: '50%',
+            backgroundColor: 'lightgrey',
+          }}
+        >
+          <Grid container justify="center" alignItems="center" direction="column">
+            <CardHeader
+              title="Login"
+            />
+            <Box className={styles.iconContainer}>
+              <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
+            </Box>
+          </Grid>
           <CardContent>
-            <Typography>testing</Typography>
+            <Grid container justify="center" alignItems="center">
+              <ControlledTextInput
+                control={control}
+                name="email"
+                label="Email"
+                variant="outlined"
+                error={errors.email}
+              />
+            </Grid>
           </CardContent>
         </Card>
       </Grid>

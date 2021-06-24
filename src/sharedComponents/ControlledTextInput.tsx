@@ -1,6 +1,6 @@
 import TextField from '@material-ui/core/TextField';
 import React from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, FieldError } from 'react-hook-form';
 
 type variantData='standard' | 'filled' | 'outlined'
 
@@ -11,13 +11,12 @@ interface ControlledTextInputOwnProps{
   variant?:variantData,
   name:string,
   defaultValue?:string
-  error?:boolean
-  errorMsg?:string
+  error?:FieldError
 }
 
 const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
   const {
-    control, label, type, variant, name, defaultValue, error, errorMsg,
+    control, label, type, variant, name, defaultValue, error,
   } = props;
 
   return (
@@ -35,8 +34,9 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
           onChange={onChange}
           value={value}
           variant={variant}
-          error={error}
-          helperText={errorMsg}
+          error={!!error}
+          helperText={error?.message}
+          style={{ width: '80%', marginTop: 5, marginBottom: 5 }}
         />
       )}
       defaultValue={defaultValue}
@@ -49,8 +49,7 @@ ControlledTextInput.defaultProps = {
   variant: undefined,
   type: '',
   label: '',
-  error: false,
-  errorMsg: '',
+  error: null,
 };
 
 export default ControlledTextInput;

@@ -6,7 +6,6 @@ export default makeStyles((theme) => ({
     height: '100vh',
   },
   iconContainer: {
-    margin: 'auto',
     width: '20%',
   },
   icon: {
