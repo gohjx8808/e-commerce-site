@@ -10,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent';
 import { useForm } from 'react-hook-form';
 import authenticationStyles from '../src/authenticationStyles';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
+import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
 
 const Login = () => {
   const styles = authenticationStyles();
@@ -54,7 +55,7 @@ const Login = () => {
                 variant="outlined"
                 error={errors.email}
               />
-              <ControlledTextInput
+              <ControlledPasswordInput
                 control={control}
                 name="password"
                 label="Password"
