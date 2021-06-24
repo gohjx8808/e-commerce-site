@@ -1,3 +1,4 @@
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
@@ -14,10 +15,27 @@ interface ControlledTextInputOwnProps{
   error?:FieldError
 }
 
+const useStyles = makeStyles({
+  unFocusStyle: {
+    color: 'white',
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'white',
+    },
+    '&:hover .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'lightgrey',
+    },
+  },
+  unFocusLabel: {
+    color: 'white',
+  },
+});
+
 const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
   const {
     control, label, type, variant, name, defaultValue, error,
   } = props;
+
+  const styles = useStyles();
 
   return (
     <Controller
@@ -36,7 +54,15 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
           variant={variant}
           error={!!error}
           helperText={error?.message}
-          style={{ width: '80%', marginTop: 5, marginBottom: 5 }}
+          style={{
+            width: '80%', marginTop: 5, marginBottom: 5, display: type === 'hidden' ? 'none' : 'flex',
+          }}
+          InputProps={{
+            classes: {
+              root: styles.unFocusStyle,
+            },
+          }}
+          InputLabelProps={{ classes: { root: styles.unFocusLabel } }}
         />
       )}
       defaultValue={defaultValue}

@@ -68,7 +68,12 @@ const ProductCard = (props:ProductCardOwnProps) => {
         </Carousel>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <ControlledTextInput type="hidden" defaultValue={product.prices.id} control={control} name="priceID" />
+            <ControlledTextInput
+              type="hidden"
+              defaultValue={product.prices.id}
+              control={control}
+              name="priceID"
+            />
             <Typography>
               Price:
               {formatPrice(product.prices.unit_amount, product.prices.currency)}

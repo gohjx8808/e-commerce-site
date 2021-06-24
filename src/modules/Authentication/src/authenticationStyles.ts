@@ -9,6 +9,9 @@ export default makeStyles((theme) => ({
     width: '20%',
   },
   icon: {
-    borderRadius: 10,
+    borderRadius: 100,
+  },
+  loginTitle: {
+    color: 'white',
   },
 }));

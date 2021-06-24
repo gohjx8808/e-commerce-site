@@ -33,12 +33,13 @@ const Login = () => {
         <Card
           style={{
             width: '50%',
-            backgroundColor: 'lightgrey',
+            backgroundColor: '#B67B5E',
           }}
         >
           <Grid container justify="center" alignItems="center" direction="column">
             <CardHeader
               title="Login"
+              className={styles.loginTitle}
             />
             <Box className={styles.iconContainer}>
               <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
@@ -52,6 +53,13 @@ const Login = () => {
                 label="Email"
                 variant="outlined"
                 error={errors.email}
+              />
+              <ControlledTextInput
+                control={control}
+                name="password"
+                label="Password"
+                variant="outlined"
+                error={errors.password}
               />
             </Grid>
           </CardContent>
