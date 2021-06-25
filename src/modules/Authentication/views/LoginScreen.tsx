@@ -1,6 +1,5 @@
 import Card from '@material-ui/core/Card';
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import CardHeader from '@material-ui/core/CardHeader';
 import { graphql, useStaticQuery } from 'gatsby';
@@ -8,6 +7,7 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
 import { useForm } from 'react-hook-form';
+import Button from '@material-ui/core/Button';
 import authenticationStyles from '../src/authenticationStyles';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
@@ -26,7 +26,11 @@ const Login = () => {
 
   const image = getImage(data.file);
 
-  const { control, formState: { errors } } = useForm();
+  const { control, formState: { errors }, handleSubmit } = useForm();
+
+  const submitLogin = (hookData:auth.submitLoginPayload) => {
+    console.log(hookData);
+  };
 
   return (
     <Grid item xs={12}>
@@ -47,22 +51,29 @@ const Login = () => {
             </Box>
           </Grid>
           <CardContent>
-            <Grid container justify="center" alignItems="center">
-              <ControlledTextInput
-                control={control}
-                name="email"
-                label="Email"
-                variant="outlined"
-                error={errors.email}
-              />
-              <ControlledPasswordInput
-                control={control}
-                name="password"
-                label="Password"
-                variant="outlined"
-                error={errors.password}
-              />
-            </Grid>
+            <form onSubmit={handleSubmit(submitLogin)} className={styles.formContainer}>
+              <Grid container justify="center" alignItems="center">
+                <ControlledTextInput
+                  control={control}
+                  name="email"
+                  label="Email"
+                  variant="outlined"
+                  error={errors.email}
+                />
+                <ControlledPasswordInput
+                  control={control}
+                  name="password"
+                  label="Password"
+                  variant="outlined"
+                  error={errors.password}
+                />
+              </Grid>
+              <Grid container justify="center" alignItems="center" className={styles.spacingVertical}>
+                <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
+                  Log In
+                </Button>
+              </Grid>
+            </form>
           </CardContent>
         </Card>
       </Grid>

@@ -14,4 +14,15 @@ export default makeStyles((theme) => ({
   loginTitle: {
     color: 'white',
   },
+  formContainer: {
+    margin: theme.spacing(1),
+    width: '100%',
+  },
+  loginBtn: {
+    width: '20%',
+  },
+  spacingVertical: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
 }));
