@@ -63,6 +63,7 @@ const Login = () => {
                   label="Email"
                   variant="outlined"
                   error={errors.email}
+                  labelWidth={40}
                 />
                 <ControlledPasswordInput
                   control={control}

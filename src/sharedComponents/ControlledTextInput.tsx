@@ -16,6 +16,7 @@ interface ControlledTextInputOwnProps{
   name:string,
   defaultValue?:string
   error?:FieldError
+  labelWidth?:number
 }
 
 const useStyles = makeStyles({
@@ -35,7 +36,7 @@ const useStyles = makeStyles({
 
 const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
   const {
-    control, label, type, variant, name, defaultValue, error,
+    control, label, type, variant, name, defaultValue, error, labelWidth,
   } = props;
 
   const styles = useStyles();
@@ -61,7 +62,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             type={type}
             value={value}
             onChange={onChange}
-            labelWidth={70}
+            labelWidth={labelWidth}
             classes={{ root: styles.unFocusStyle }}
             error={!!error}
           />
@@ -79,6 +80,7 @@ ControlledTextInput.defaultProps = {
   type: '',
   label: '',
   error: null,
+  labelWidth: 70,
 };
 
 export default ControlledTextInput;

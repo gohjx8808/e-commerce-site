@@ -12,6 +12,9 @@ const IndexPage = () => {
       primary: {
         main: '#f5dbc9',
       },
+      error: {
+        main: '#EF9A9A',
+      },
     },
   });
 
