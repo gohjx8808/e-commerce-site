@@ -1,4 +1,5 @@
 import { RouteComponentProps, Router } from '@reach/router';
+import { withPrefix } from 'gatsby';
 import React, { Suspense, lazy } from 'react';
 import AuthenticationLayout from '../modules/Authentication/views/AuthenticationLayout';
 import Login from '../modules/Authentication/views/LoginScreen';
@@ -16,13 +17,14 @@ const ProductRoutes = () => (
   </>
 );
 
-const AuthenticationRoutes = () => (
-  <AuthenticationLayout>
-    <Router basepath="/login">
-      <RouterPage path="/" pageComponent={<Login />} />
-    </Router>
-  </AuthenticationLayout>
-);
+const AuthenticationPage = (props: { pageComponent: JSX.Element } & RouteComponentProps) => {
+  const { pageComponent } = props;
+  return (
+    <AuthenticationLayout>
+      {pageComponent}
+    </AuthenticationLayout>
+  );
+};
 
 const App = () => {
   const isSSR = typeof window === 'undefined';
@@ -32,8 +34,9 @@ const App = () => {
         <Suspense fallback={<div>Loading...</div>}>
           <SEO />
           <Router>
+            <AuthenticationPage path="/login" pageComponent={<Login />} />
+            <AuthenticationPage path="/signup" pageComponent={<Login />} />
             <RouterPage path="/" pageComponent={ProductRoutes()} />
-            <RouterPage path="/login" pageComponent={AuthenticationRoutes()} />
           </Router>
         </Suspense>
       )}

@@ -198,7 +198,8 @@ const MenuBar = () => {
             </Box>
             <Box className={classes.grow} />
             <Box className={classes.sectionDesktop}>
-              <Button color="inherit" onClick={() => navigate('/login')}>Login/Sign Up</Button>
+              <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
+              <Button color="inherit" onClick={() => navigate('/signup')}>Sign Up</Button>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon />
