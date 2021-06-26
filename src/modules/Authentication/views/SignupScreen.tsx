@@ -14,7 +14,7 @@ import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
 import { loginSchema } from '../src/authenticationSchema';
 
-const LoginScreen = () => {
+const SignupScreen = () => {
   const styles = authenticationStyles();
   const data = useStaticQuery(graphql`
     query {
@@ -64,6 +64,7 @@ const LoginScreen = () => {
                   variant="outlined"
                   error={errors.email}
                   labelWidth={40}
+                  type="email"
                 />
                 <ControlledPasswordInput
                   control={control}
@@ -86,4 +87,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;

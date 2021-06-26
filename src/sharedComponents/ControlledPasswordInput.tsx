@@ -4,8 +4,8 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { makeStyles } from '@material-ui/core/styles';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Cancel, Visibility, VisibilityOff } from '@material-ui/icons';
 import React, { useState } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
@@ -20,7 +20,7 @@ interface ControlledPasswordInputOwnProps{
   error?:FieldError
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   unFocusStyle: {
     color: 'white',
     '& .MuiOutlinedInput-notchedOutline': {
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
     marginTop: 5,
     marginBottom: 5,
   },
-});
+}));
 
 const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
   const {
@@ -48,6 +48,7 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
   const [secure, setSecure] = useState(true);
 
   const styles = useStyles();
+  const theme = useTheme();
 
   return (
     <Controller
@@ -74,6 +75,11 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
                   className={styles.unFocusLabel}
                 >
                   {!secure ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+                <IconButton
+                  edge="end"
+                >
+                  {error && <Cancel color="error" />}
                 </IconButton>
               </InputAdornment>
             )}
