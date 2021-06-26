@@ -49,6 +49,18 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        name: 'YJ Art Journal',
+        description: 'Crochet and drawings are made with love.',
+        lang: 'en',
+        start_url: '/',
+        display: 'standalone',
+        icon: 'src/images/icon.png',
+      },
+    },
+    'gatsby-plugin-offline',
   ],
 };
 

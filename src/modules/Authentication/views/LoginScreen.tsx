@@ -64,6 +64,7 @@ const LoginScreen = () => {
                   variant="outlined"
                   error={errors.email}
                   labelWidth={40}
+                  type="email"
                 />
                 <ControlledPasswordInput
                   control={control}
