@@ -81,7 +81,7 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
             classes={{ root: styles.unFocusStyle }}
             error={!!error}
           />
-          <FormHelperText>{error?.message}</FormHelperText>
+          <FormHelperText error>{error?.message}</FormHelperText>
         </FormControl>
       )}
       defaultValue={defaultValue}

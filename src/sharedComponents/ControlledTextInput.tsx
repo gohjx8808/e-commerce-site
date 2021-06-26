@@ -1,5 +1,8 @@
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import InputLabel from '@material-ui/core/InputLabel';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
@@ -46,24 +49,24 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
           onChange, value,
         },
       }) => (
-        <TextField
-          type={type}
-          label={label}
-          onChange={onChange}
-          value={value}
+        <FormControl
           variant={variant}
-          error={!!error}
-          helperText={error?.message}
           style={{
             width: '80%', marginTop: 5, marginBottom: 5, display: type === 'hidden' ? 'none' : 'flex',
           }}
-          InputProps={{
-            classes: {
-              root: styles.unFocusStyle,
-            },
-          }}
-          InputLabelProps={{ classes: { root: styles.unFocusLabel } }}
-        />
+        >
+          <InputLabel htmlFor="outlined-text" classes={{ root: styles.unFocusLabel }}>{label}</InputLabel>
+          <OutlinedInput
+            id="outlined-text"
+            type={type}
+            value={value}
+            onChange={onChange}
+            labelWidth={70}
+            classes={{ root: styles.unFocusStyle }}
+            error={!!error}
+          />
+          <FormHelperText error>{error?.message}</FormHelperText>
+        </FormControl>
       )}
       defaultValue={defaultValue}
     />

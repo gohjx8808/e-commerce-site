@@ -8,9 +8,11 @@ import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
 import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
+import { yupResolver } from '@hookform/resolvers/yup';
 import authenticationStyles from '../src/authenticationStyles';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
+import { loginSchema } from '../src/authenticationSchema';
 
 const Login = () => {
   const styles = authenticationStyles();
@@ -26,7 +28,9 @@ const Login = () => {
 
   const image = getImage(data.file);
 
-  const { control, formState: { errors }, handleSubmit } = useForm();
+  const { control, formState: { errors }, handleSubmit } = useForm({
+    resolver: yupResolver(loginSchema),
+  });
 
   const submitLogin = (hookData:auth.submitLoginPayload) => {
     console.log(hookData);
