@@ -57,7 +57,7 @@ module.exports = {
         lang: 'en',
         start_url: '/',
         display: 'standalone',
-        icon: 'src/images/icon.png',
+        icon: 'src/images/favicon.png',
       },
     },
     'gatsby-plugin-offline',
