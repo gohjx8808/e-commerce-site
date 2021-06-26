@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Cancel, Visibility, VisibilityOff } from '@material-ui/icons';
 import React, { useState } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
@@ -18,9 +18,10 @@ interface ControlledPasswordInputOwnProps{
   name:string,
   defaultValue?:string
   error?:FieldError
+  labelWidth?:number
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   unFocusStyle: {
     color: 'white',
     '& .MuiOutlinedInput-notchedOutline': {
@@ -38,17 +39,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 5,
     marginBottom: 5,
   },
-}));
+});
 
 const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
   const {
-    control, label, variant, name, defaultValue, error,
+    control, label, variant, name, defaultValue, error, labelWidth,
   } = props;
 
   const [secure, setSecure] = useState(true);
 
   const styles = useStyles();
-  const theme = useTheme();
 
   return (
     <Controller
@@ -83,7 +83,7 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
                 </IconButton>
               </InputAdornment>
             )}
-            labelWidth={70}
+            labelWidth={labelWidth}
             classes={{ root: styles.unFocusStyle }}
             error={!!error}
           />
@@ -100,6 +100,7 @@ ControlledPasswordInput.defaultProps = {
   variant: undefined,
   label: '',
   error: null,
+  labelWidth: 70,
 };
 
 export default ControlledPasswordInput;

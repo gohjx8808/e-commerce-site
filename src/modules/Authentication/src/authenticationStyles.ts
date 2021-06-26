@@ -5,11 +5,11 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     height: '100vh',
   },
-  iconContainer: {
+  loginIconContainer: {
     width: '20%',
   },
   icon: {
-    borderRadius: 100,
+    borderRadius: 200,
   },
   loginTitle: {
     color: 'white',
@@ -24,5 +24,11 @@ export default makeStyles((theme) => ({
   spacingVertical: {
     marginTop: 10,
     marginBottom: 10,
+  },
+  signupIconContainer: {
+    width: '10%',
+  },
+  fullWidthInput: {
+    width: '90%!important',
   },
 }));

@@ -50,7 +50,7 @@ const LoginScreen = () => {
               title="Login"
               className={styles.loginTitle}
             />
-            <Box className={styles.iconContainer}>
+            <Box className={styles.loginIconContainer}>
               <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
             </Box>
           </Grid>

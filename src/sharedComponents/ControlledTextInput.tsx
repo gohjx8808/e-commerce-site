@@ -20,6 +20,7 @@ interface ControlledTextInputOwnProps{
   defaultValue?:string
   error?:FieldError
   labelWidth?:number
+  customClassName?:string
 }
 
 const useStyles = makeStyles({
@@ -35,11 +36,16 @@ const useStyles = makeStyles({
   unFocusLabel: {
     color: 'white',
   },
+  formControl: {
+    width: '80%',
+    marginTop: 5,
+    marginBottom: 5,
+  },
 });
 
 const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
   const {
-    control, label, type, variant, name, defaultValue, error, labelWidth,
+    control, label, type, variant, name, defaultValue, error, labelWidth, customClassName,
   } = props;
 
   const styles = useStyles();
@@ -55,8 +61,9 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
       }) => (
         <FormControl
           variant={variant}
+          className={`${styles.formControl} ${customClassName}`}
           style={{
-            width: '80%', marginTop: 5, marginBottom: 5, display: type === 'hidden' ? 'none' : 'flex',
+            display: type === 'hidden' ? 'none' : 'flex',
           }}
         >
           <InputLabel htmlFor="outlined-text" classes={{ root: styles.unFocusLabel }}>{label}</InputLabel>
@@ -89,10 +96,11 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
 ControlledTextInput.defaultProps = {
   defaultValue: '',
   variant: undefined,
-  type: '',
+  type: 'text',
   label: '',
   error: null,
   labelWidth: 70,
+  customClassName: '',
 };
 
 export default ControlledTextInput;
