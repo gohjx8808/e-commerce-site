@@ -63,6 +63,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
                 label={label}
                 variant={variant}
                 InputLabelProps={{ classes: { root: styles.unFocusLabel } }}
+                error={!!error}
               />
             )}
             value={value}
@@ -87,7 +88,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
 };
 
 ControlledPicker.defaultProps = {
-  defaultValue: '',
+  defaultValue: null,
   variant: undefined,
   label: '',
   error: null,

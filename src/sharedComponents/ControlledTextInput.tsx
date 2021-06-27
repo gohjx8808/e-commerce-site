@@ -66,9 +66,9 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             display: type === 'hidden' ? 'none' : 'flex',
           }}
         >
-          <InputLabel htmlFor="outlined-text" classes={{ root: styles.unFocusLabel }}>{label}</InputLabel>
+          <InputLabel htmlFor={name} classes={{ root: styles.unFocusLabel }}>{label}</InputLabel>
           <OutlinedInput
-            id="outlined-text"
+            id={name}
             type={type}
             value={value}
             onChange={onChange}

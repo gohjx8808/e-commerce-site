@@ -12,7 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import authenticationStyles from '../src/authenticationStyles';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
-import { loginSchema } from '../src/authenticationSchema';
+import { loginSchema, signupSchema } from '../src/authenticationSchema';
 import ControlledDatePicker from '../../../sharedComponents/ControlledDatePicker';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 
@@ -31,10 +31,10 @@ const SignupScreen = () => {
   const image = getImage(data.file);
 
   const { control, formState: { errors }, handleSubmit } = useForm({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(signupSchema),
   });
 
-  const submitSignup = (hookData:auth.submitLoginPayload) => {
+  const submitSignup = (hookData:auth.submitSignupPayload) => {
     console.log(hookData);
   };
 

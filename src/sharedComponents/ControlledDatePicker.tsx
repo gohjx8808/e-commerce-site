@@ -21,6 +21,7 @@ interface ControlledDatePickerOwnProps{
 
 const useStyles = makeStyles({
   unFocusStyle: {
+    color: 'white',
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: 'white',
     },
@@ -71,14 +72,15 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
               inputVariant={variant}
               className={styles.unFocusStyle}
               InputLabelProps={{ classes: { root: styles.unFocusLabel } }}
-              inputProps={{ className: styles.unFocusLabel }}
+              InputProps={{ classes: { root: styles.unFocusLabel } }}
               disableFuture
               maxDateMessage="Invalid date"
               minDateMessage="Invalid date"
               autoOk
+              error={!!error}
+              helperText={error?.message}
             />
           </MuiPickersUtilsProvider>
-          <FormHelperText error>{error?.message}</FormHelperText>
         </FormControl>
       )}
       defaultValue={defaultValue}

@@ -60,9 +60,9 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
         },
       }) => (
         <FormControl variant={variant} className={styles.container}>
-          <InputLabel htmlFor="outlined-adornment-password" classes={{ root: styles.unFocusLabel }}>{label}</InputLabel>
+          <InputLabel htmlFor={name} classes={{ root: styles.unFocusLabel }}>{label}</InputLabel>
           <OutlinedInput
-            id="outlined-adornment-password"
+            id={name}
             type={!secure ? 'text' : 'password'}
             value={value}
             onChange={onChange}
