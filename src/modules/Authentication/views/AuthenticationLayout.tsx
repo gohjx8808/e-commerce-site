@@ -14,7 +14,6 @@ const AuthenticationLayout = (props:AuthenticationLayoutOwnProps) => {
   return (
     <Grid
       container
-      spacing={1}
       justify="center"
       alignItems="center"
       className={styles.authenticationBgColor}

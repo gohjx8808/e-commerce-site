@@ -13,6 +13,8 @@ import authenticationStyles from '../src/authenticationStyles';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
 import { loginSchema } from '../src/authenticationSchema';
+import ControlledDatePicker from '../../../sharedComponents/ControlledDatePicker';
+import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 
 const SignupScreen = () => {
   const styles = authenticationStyles();
@@ -32,9 +34,11 @@ const SignupScreen = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  const submitLogin = (hookData:auth.submitLoginPayload) => {
+  const submitSignup = (hookData:auth.submitLoginPayload) => {
     console.log(hookData);
   };
+
+  const genderOptions = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
 
   return (
     <Grid item xs={12}>
@@ -55,7 +59,7 @@ const SignupScreen = () => {
             </Box>
           </Grid>
           <CardContent>
-            <form onSubmit={handleSubmit(submitLogin)} className={styles.formContainer}>
+            <form onSubmit={handleSubmit(submitSignup)} className={styles.formContainer}>
               <Grid container justify="center" alignItems="center">
                 <Grid item xs={12}>
                   <Grid container justify="center" alignItems="center">
@@ -116,6 +120,29 @@ const SignupScreen = () => {
                       variant="outlined"
                       error={errors.confirmPassword}
                       labelWidth={135}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} md={6} lg={6}>
+                  <Grid container justify="center" alignItems="center">
+                    <ControlledDatePicker
+                      control={control}
+                      name="dob"
+                      label="Date of Birth"
+                      variant="outlined"
+                      error={errors.dob}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} md={6} lg={6}>
+                  <Grid container justify="center" alignItems="center">
+                    <ControlledPicker
+                      control={control}
+                      name="gender"
+                      label="Gender"
+                      variant="outlined"
+                      error={errors.gender}
+                      options={genderOptions}
                     />
                   </Grid>
                 </Grid>
