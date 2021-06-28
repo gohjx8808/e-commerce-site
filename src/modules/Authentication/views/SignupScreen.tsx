@@ -44,125 +44,132 @@ const SignupScreen = () => {
   const genderOptions = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
 
   return (
-    <Grid item xs={12}>
-      <Grid container justify="center" alignItems="center">
-        <Card
-          style={{
-            width: '80%',
-            backgroundColor: '#B67B5E',
-          }}
-        >
-          <Grid container justify="center" alignItems="center" direction="column">
-            <CardHeader
-              title="Registration"
-              className={styles.loginTitle}
-            />
-            <Box className={styles.signupIconContainer}>
-              <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
-            </Box>
-          </Grid>
-          <CardContent>
-            <form onSubmit={handleSubmit(submitSignup)} className={styles.formContainer}>
-              <Grid container justify="center" alignItems="center">
-                <Grid item xs={12}>
-                  <Grid container justify="center" alignItems="center">
-                    <ControlledTextInput
-                      control={control}
-                      name="fullName"
-                      label="Full Name"
-                      variant="outlined"
-                      error={errors.fullName}
-                      labelWidth={70}
-                      customClassName={styles.fullWidthInput}
-                    />
+    <Grid
+      container
+      justify="center"
+      alignItems="center"
+      className={styles.signUpHeight}
+    >
+      <Grid item xs={12}>
+        <Grid container justify="center" alignItems="center">
+          <Card
+            style={{
+              width: '80%',
+              backgroundColor: '#B67B5E',
+            }}
+          >
+            <Grid container justify="center" alignItems="center" direction="column">
+              <CardHeader
+                title="Registration"
+                className={styles.loginTitle}
+              />
+              <Box className={styles.signupIconContainer}>
+                <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
+              </Box>
+            </Grid>
+            <CardContent>
+              <form onSubmit={handleSubmit(submitSignup)} className={styles.formContainer}>
+                <Grid container justify="center" alignItems="center">
+                  <Grid item xs={12}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledTextInput
+                        control={control}
+                        name="fullName"
+                        label="Full Name"
+                        variant="outlined"
+                        error={errors.fullName}
+                        labelWidth={70}
+                        customClassName={styles.fullWidthInput}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={6}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledTextInput
+                        control={control}
+                        name="phoneNumber"
+                        label="Phone Number"
+                        variant="outlined"
+                        error={errors.phoneNumber}
+                        labelWidth={110}
+                        type="tel"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={6}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledTextInput
+                        control={control}
+                        name="email"
+                        label="Email"
+                        variant="outlined"
+                        error={errors.email}
+                        labelWidth={40}
+                        type="email"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={6}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledPasswordInput
+                        control={control}
+                        name="password"
+                        label="Password"
+                        variant="outlined"
+                        error={errors.password}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={6}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledPasswordInput
+                        control={control}
+                        name="confirmPassword"
+                        label="Confirm Password"
+                        variant="outlined"
+                        error={errors.confirmPassword}
+                        labelWidth={135}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Grid container justify="center" alignItems="center">
+                      <PasswordRequirements password={watch('password')} rePassword={watch('confirmPassword')} />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={6}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledDatePicker
+                        control={control}
+                        name="dob"
+                        label="Date of Birth"
+                        variant="outlined"
+                        error={errors.dob}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={6}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledPicker
+                        control={control}
+                        name="gender"
+                        label="Gender"
+                        variant="outlined"
+                        error={errors.gender}
+                        options={genderOptions}
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
-                <Grid item xs={12} md={6} lg={6}>
-                  <Grid container justify="center" alignItems="center">
-                    <ControlledTextInput
-                      control={control}
-                      name="phoneNumber"
-                      label="Phone Number"
-                      variant="outlined"
-                      error={errors.phoneNumber}
-                      labelWidth={110}
-                      type="tel"
-                    />
-                  </Grid>
+                <Grid container justify="center" alignItems="center" className={styles.spacingVertical}>
+                  <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
+                    Submit
+                  </Button>
                 </Grid>
-                <Grid item xs={12} md={6} lg={6}>
-                  <Grid container justify="center" alignItems="center">
-                    <ControlledTextInput
-                      control={control}
-                      name="email"
-                      label="Email"
-                      variant="outlined"
-                      error={errors.email}
-                      labelWidth={40}
-                      type="email"
-                    />
-                  </Grid>
-                </Grid>
-                <Grid item xs={12} md={6} lg={6}>
-                  <Grid container justify="center" alignItems="center">
-                    <ControlledPasswordInput
-                      control={control}
-                      name="password"
-                      label="Password"
-                      variant="outlined"
-                      error={errors.password}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid item xs={12} md={6} lg={6}>
-                  <Grid container justify="center" alignItems="center">
-                    <ControlledPasswordInput
-                      control={control}
-                      name="confirmPassword"
-                      label="Confirm Password"
-                      variant="outlined"
-                      error={errors.confirmPassword}
-                      labelWidth={135}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container justify="center" alignItems="center">
-                    <PasswordRequirements password={watch('password')} rePassword={watch('confirmPassword')} />
-                  </Grid>
-                </Grid>
-                <Grid item xs={12} md={6} lg={6}>
-                  <Grid container justify="center" alignItems="center">
-                    <ControlledDatePicker
-                      control={control}
-                      name="dob"
-                      label="Date of Birth"
-                      variant="outlined"
-                      error={errors.dob}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid item xs={12} md={6} lg={6}>
-                  <Grid container justify="center" alignItems="center">
-                    <ControlledPicker
-                      control={control}
-                      name="gender"
-                      label="Gender"
-                      variant="outlined"
-                      error={errors.gender}
-                      options={genderOptions}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid container justify="center" alignItems="center" className={styles.spacingVertical}>
-                <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
-                  Submit
-                </Button>
-              </Grid>
-            </form>
-          </CardContent>
-        </Card>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </Grid>
   );

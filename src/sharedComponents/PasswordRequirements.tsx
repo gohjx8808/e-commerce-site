@@ -1,9 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Close, Done } from '@material-ui/icons';
 import React, { useCallback, useEffect, useState } from 'react';
-import authenticationStyles from '../modules/Authentication/src/authenticationStyles';
 
 interface PasswordRequirementsOwnProps{
   password:string
@@ -12,16 +11,28 @@ interface PasswordRequirementsOwnProps{
 
 const useStyles = makeStyles({
   met: {
-    color: '#009900',
+    color: '#32cd32',
   },
-  notMet: {
-    color: 'rgba(0,0,0,0.5)',
+  passwordRequirementContainer: {
+    borderColor: 'white',
+    borderWidth: 1,
+    border: 'dashed',
+    width: '40%',
+    borderRadius: 2,
+    padding: 5,
+    margin: 10,
+  },
+  whiteTitle: {
+    color: 'white',
+  },
+  passwordRequirementInnerContainer: {
+    width: '55%',
   },
 });
 
 const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
   const { password, rePassword } = props;
-  const styles = authenticationStyles();
+  const styles = useStyles();
 
   const [contains8C, setContains8C] = useState(false);
   const [containsUL, setContainsUL] = useState(false);
@@ -30,55 +41,97 @@ const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
   const [containsSC, setContainsSC] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(false);
 
+  const [passwordRequirements, setPasswordRequirements] = useState([
+    {
+      key: 'contains8C',
+      met: false,
+      label: 'Minimum 8 characters',
+    }, {
+      key: 'containsUL',
+      met: false,
+      label: 'At least 1 uppercase letter',
+    }, {
+      key: 'containsLL',
+      met: false,
+      label: 'At least 1 lowercase letter',
+    }, {
+      key: 'containsN',
+      met: false,
+      label: 'At least 1 number',
+    }, {
+      key: 'containsSC',
+      met: false,
+      label: 'At least 1 special character',
+    }, {
+      key: 'passwordMatch',
+      met: false,
+      label: 'Passwords match',
+    },
+  ]);
+
   const validatePassword = useCallback(() => {
-    setContainsUL(password ? password.toLowerCase() !== password : false);
-    setContainsLL(password ? password.toUpperCase() !== password : false);
-    setContainsN(/\d/.test(password));
-    setContainsSC(/[!@#$%^&*,.()\-+_={}[\]{};'\\:"|\\/<>?~`]/g.test(password));
-    setContains8C(password ? password.length >= 8 : false);
-    setPasswordMatch(password !== undefined && password !== '' && password === rePassword);
+    toggleMet('containsUL', password ? password.toLowerCase() !== password : false);
+    toggleMet('containsLL', password ? password.toUpperCase() !== password : false);
+    toggleMet('containsN', /\d/.test(password));
+    toggleMet('containsSC', /[!@#$%^&*,.()\-+_={}[\]{};'\\:"|\\/<>?~`]/g.test(password));
+    toggleMet('contains8C', password ? password.length >= 8 : false);
+    toggleMet('passwordMatch', password !== undefined && password !== '' && password === rePassword);
   }, [password, rePassword]);
+
+  const toggleMet = (targetKey:string, metRequirement:boolean) => {
+    const targetEntryIndex = passwordRequirements.findIndex((entry) => entry.key === targetKey);
+    const items = [...passwordRequirements];
+    items[targetEntryIndex].met = metRequirement;
+    setPasswordRequirements(items);
+  };
 
   useEffect(() => {
     validatePassword();
   }, [password, rePassword, validatePassword]);
 
-  const checklists = [
-    ['Minimum 8 characters', contains8C],
-    ['At least 1 uppercase letter', containsUL],
-    ['At least 1 lowercase letter', containsLL],
-    ['At least 1 number', containsN],
-    ['At least 1 special character', containsSC],
-    ['Passwords match', passwordMatch],
-  ];
-
   return (
     <Grid item className={styles.passwordRequirementContainer}>
       <Grid container justify="center" alignItems="center">
-        <Typography variant="h6" className={styles.loginTitle}>Password Requirements:</Typography>
-        {checklists.map((item) => <ChecklistItem data={item} />)}
+        <Typography variant="h6" className={styles.whiteTitle}>Password Requirements:</Typography>
+        {passwordRequirements.map((item) => <ChecklistItem data={item} key={item.key} />)}
       </Grid>
     </Grid>
   );
 };
 
-const ChecklistItem = ({ data }) => {
-  const label = data[0];
-  const meetsReq = data[1];
+interface ChecklistItemOwnProps{
+  data:passwordRequirementData
+}
+
+interface passwordRequirementData{
+  key:string
+  label:string
+  met:boolean
+}
+
+const ChecklistItem = (props:ChecklistItemOwnProps) => {
+  const { data } = props;
+  const meetsReq = data.met;
 
   const checklistStyle = useStyles();
 
   return (
     <Grid item xs={12}>
-      <Grid container>
-        {meetsReq ? (
-          <Done className={checklistStyle.met} />
-        ) : (
-          <Close className={checklistStyle.notMet} />
-        )}
-        <Typography className={meetsReq ? checklistStyle.met : checklistStyle.notMet}>
-          {label}
-        </Typography>
+      <Grid container justify="center">
+        <Grid container className={checklistStyle.passwordRequirementInnerContainer} direction="row" alignItems="center">
+          <Grid item>
+            {meetsReq ? (
+              <Done className={checklistStyle.met} />
+            ) : (
+              <Close className={checklistStyle.whiteTitle} />
+            )}
+          </Grid>
+          <Grid item>
+            <Typography className={meetsReq ? checklistStyle.met : checklistStyle.whiteTitle}>
+              {data.label}
+            </Typography>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
