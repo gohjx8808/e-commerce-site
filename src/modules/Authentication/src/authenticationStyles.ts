@@ -31,4 +31,13 @@ export default makeStyles((theme) => ({
   fullWidthInput: {
     width: '90%!important',
   },
+  passwordRequirementContainer: {
+    borderColor: 'white',
+    borderWidth: 1,
+    border: 'dashed',
+    width: '50%',
+    borderRadius: 2,
+    padding: 5,
+    margin: 5,
+  },
 }));

@@ -1,20 +1,21 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
+import Grid from '@material-ui/core/Grid';
 import { graphql, useStaticQuery } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import Box from '@material-ui/core/Box';
-import CardContent from '@material-ui/core/CardContent';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import Button from '@material-ui/core/Button';
-import { yupResolver } from '@hookform/resolvers/yup';
-import authenticationStyles from '../src/authenticationStyles';
-import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
-import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
-import { loginSchema, signupSchema } from '../src/authenticationSchema';
 import ControlledDatePicker from '../../../sharedComponents/ControlledDatePicker';
+import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
+import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
+import PasswordRequirements from '../../../sharedComponents/PasswordRequirements';
+import { signupSchema } from '../src/authenticationSchema';
+import authenticationStyles from '../src/authenticationStyles';
 
 const SignupScreen = () => {
   const styles = authenticationStyles();
@@ -30,7 +31,9 @@ const SignupScreen = () => {
 
   const image = getImage(data.file);
 
-  const { control, formState: { errors }, handleSubmit } = useForm({
+  const {
+    control, formState: { errors }, handleSubmit, watch,
+  } = useForm({
     resolver: yupResolver(signupSchema),
   });
 
@@ -121,6 +124,11 @@ const SignupScreen = () => {
                       error={errors.confirmPassword}
                       labelWidth={135}
                     />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container justify="center" alignItems="center">
+                    <PasswordRequirements password={watch('password')} rePassword={watch('confirmPassword')} />
                   </Grid>
                 </Grid>
                 <Grid item xs={12} md={6} lg={6}>
