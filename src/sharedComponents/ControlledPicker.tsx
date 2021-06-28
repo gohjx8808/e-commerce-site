@@ -18,7 +18,7 @@ interface ControlledPickerOwnProps{
   options:optionsData[]
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   unFocusStyle: {
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: 'white',
@@ -34,7 +34,10 @@ const useStyles = makeStyles({
     width: '80%',
     marginBottom: 5,
   },
-});
+  errorColor: {
+    color: theme.palette.error.main,
+  },
+}));
 
 const ControlledPicker = (props:ControlledPickerOwnProps) => {
   const {
@@ -75,7 +78,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
             classes={{
               root: styles.unFocusStyle,
               inputRoot: styles.unFocusLabel,
-              popupIndicator: styles.unFocusLabel,
+              popupIndicator: error ? styles.errorColor : styles.unFocusLabel,
               clearIndicator: styles.unFocusLabel,
             }}
           />

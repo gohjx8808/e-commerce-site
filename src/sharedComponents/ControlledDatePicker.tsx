@@ -19,7 +19,7 @@ interface ControlledDatePickerOwnProps{
   error?:FieldError
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   unFocusStyle: {
     color: 'white',
     '& .MuiOutlinedInput-notchedOutline': {
@@ -38,7 +38,10 @@ const useStyles = makeStyles({
     marginTop: 5,
     marginBottom: 5,
   },
-});
+  errorColor: {
+    color: theme.palette.error.main,
+  },
+}));
 
 const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
   const {
@@ -67,7 +70,7 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
               onChange={(selectedDate:Date) => onChange(selectedDate ? selectedDate.toString() : '')}
               KeyboardButtonProps={{
                 'aria-label': 'change date',
-                className: styles.unFocusLabel,
+                className: error ? styles.errorColor : styles.unFocusLabel,
               }}
               inputVariant={variant}
               className={styles.unFocusStyle}

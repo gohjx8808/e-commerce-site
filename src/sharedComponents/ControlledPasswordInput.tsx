@@ -60,7 +60,9 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
         },
       }) => (
         <FormControl variant={variant} className={styles.container}>
-          <InputLabel htmlFor={name} classes={{ root: styles.unFocusLabel }}>{label}</InputLabel>
+          <InputLabel htmlFor={name} classes={{ root: styles.unFocusLabel }} error={!!error}>
+            {label}
+          </InputLabel>
           <OutlinedInput
             id={name}
             type={!secure ? 'text' : 'password'}
@@ -74,7 +76,7 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
                   edge="end"
                   className={styles.unFocusLabel}
                 >
-                  {!secure ? <Visibility /> : <VisibilityOff />}
+                  {!secure ? <Visibility color={error ? 'error' : 'inherit'} /> : <VisibilityOff color={error ? 'error' : 'inherit'} />}
                 </IconButton>
                 <IconButton
                   edge="end"

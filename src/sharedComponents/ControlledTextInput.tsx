@@ -66,7 +66,9 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             display: type === 'hidden' ? 'none' : 'flex',
           }}
         >
-          <InputLabel htmlFor={name} classes={{ root: styles.unFocusLabel }}>{label}</InputLabel>
+          <InputLabel htmlFor={name} classes={{ root: styles.unFocusLabel }} error={!!error}>
+            {label}
+          </InputLabel>
           <OutlinedInput
             id={name}
             type={type}
