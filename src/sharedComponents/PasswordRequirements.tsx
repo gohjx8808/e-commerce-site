@@ -34,13 +34,6 @@ const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
   const { password, rePassword } = props;
   const styles = useStyles();
 
-  const [contains8C, setContains8C] = useState(false);
-  const [containsUL, setContainsUL] = useState(false);
-  const [containsLL, setContainsLL] = useState(false);
-  const [containsN, setContainsN] = useState(false);
-  const [containsSC, setContainsSC] = useState(false);
-  const [passwordMatch, setPasswordMatch] = useState(false);
-
   const [passwordRequirements, setPasswordRequirements] = useState([
     {
       key: 'contains8C',
@@ -69,6 +62,13 @@ const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
     },
   ]);
 
+  const toggleMet = useCallback((targetKey:string, metRequirement:boolean) => {
+    const targetEntryIndex = passwordRequirements.findIndex((entry) => entry.key === targetKey);
+    const items = [...passwordRequirements];
+    items[targetEntryIndex].met = metRequirement;
+    setPasswordRequirements(items);
+  }, [passwordRequirements]);
+
   const validatePassword = useCallback(() => {
     toggleMet('containsUL', password ? password.toLowerCase() !== password : false);
     toggleMet('containsLL', password ? password.toUpperCase() !== password : false);
@@ -76,17 +76,12 @@ const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
     toggleMet('containsSC', /[!@#$%^&*,.()\-+_={}[\]{};'\\:"|\\/<>?~`]/g.test(password));
     toggleMet('contains8C', password ? password.length >= 8 : false);
     toggleMet('passwordMatch', password !== undefined && password !== '' && password === rePassword);
-  }, [password, rePassword]);
-
-  const toggleMet = (targetKey:string, metRequirement:boolean) => {
-    const targetEntryIndex = passwordRequirements.findIndex((entry) => entry.key === targetKey);
-    const items = [...passwordRequirements];
-    items[targetEntryIndex].met = metRequirement;
-    setPasswordRequirements(items);
-  };
+  }, [password, rePassword, toggleMet]);
 
   useEffect(() => {
-    validatePassword();
+    if (password !== undefined) {
+      validatePassword();
+    }
   }, [password, rePassword, validatePassword]);
 
   return (

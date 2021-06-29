@@ -37,51 +37,58 @@ const LoginScreen = () => {
   };
 
   return (
-    <Grid item xs={12}>
-      <Grid container justify="center" alignItems="center">
-        <Card
-          style={{
-            width: '50%',
-            backgroundColor: '#B67B5E',
-          }}
-        >
-          <Grid container justify="center" alignItems="center" direction="column">
-            <CardHeader
-              title="Login"
-              className={styles.loginTitle}
-            />
-            <Box className={styles.loginIconContainer}>
-              <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
-            </Box>
-          </Grid>
-          <CardContent>
-            <form onSubmit={handleSubmit(submitLogin)} className={styles.formContainer}>
-              <Grid container justify="center" alignItems="center">
-                <ControlledTextInput
-                  control={control}
-                  name="email"
-                  label="Email"
-                  variant="outlined"
-                  error={errors.email}
-                  labelWidth={40}
-                  type="email"
-                />
-                <ControlledPasswordInput
-                  control={control}
-                  name="password"
-                  label="Password"
-                  variant="outlined"
-                  error={errors.password}
-                />
-              </Grid>
-              <Grid container justify="center" alignItems="center" className={styles.spacingVertical}>
-                <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
-                  Log In
-                </Button>
-              </Grid>
-            </form>
-          </CardContent>
-        </Card>
+    <Grid
+      container
+      justify="center"
+      alignItems="center"
+      className={styles.loginBg}
+    >
+      <Grid item xs={12}>
+        <Grid container justify="center" alignItems="center">
+          <Card
+            style={{
+              width: '50%',
+              backgroundColor: '#B67B5E',
+            }}
+          >
+            <Grid container justify="center" alignItems="center" direction="column">
+              <CardHeader
+                title="Login"
+                className={styles.loginTitle}
+              />
+              <Box className={styles.loginIconContainer}>
+                <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
+              </Box>
+            </Grid>
+            <CardContent>
+              <form onSubmit={handleSubmit(submitLogin)} className={styles.formContainer}>
+                <Grid container justify="center" alignItems="center">
+                  <ControlledTextInput
+                    control={control}
+                    name="email"
+                    label="Email"
+                    variant="outlined"
+                    error={errors.email}
+                    labelWidth={40}
+                    type="email"
+                  />
+                  <ControlledPasswordInput
+                    control={control}
+                    name="password"
+                    label="Password"
+                    variant="outlined"
+                    error={errors.password}
+                  />
+                </Grid>
+                <Grid container justify="center" alignItems="center" className={styles.spacingVertical}>
+                  <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
+                    Log In
+                  </Button>
+                </Grid>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </Grid>
   );
