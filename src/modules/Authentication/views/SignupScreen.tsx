@@ -14,8 +14,8 @@ import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswor
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import PasswordRequirements from '../../../sharedComponents/PasswordRequirements';
-import { signupSchema } from '../src/authenticationSchema';
-import authenticationStyles from '../src/authenticationStyles';
+import { signupSchema } from '../src/authSchema';
+import authenticationStyles from '../src/authStyles';
 
 const SignupScreen = () => {
   const styles = authenticationStyles();

@@ -9,10 +9,10 @@ import CardContent from '@material-ui/core/CardContent';
 import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
-import authenticationStyles from '../src/authenticationStyles';
+import authenticationStyles from '../src/authStyles';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
-import { loginSchema } from '../src/authenticationSchema';
+import { loginSchema } from '../src/authSchema';
 
 const LoginScreen = () => {
   const styles = authenticationStyles();

@@ -1,8 +1,8 @@
 {
-  "name": "e-commerce-site",
+  "name": "yj-artjournal",
   "version": "1.0.0",
   "private": true,
-  "description": "eCommerceSite",
+  "description": "yjArtJournal",
   "keywords": [
     "gatsby"
   ],
