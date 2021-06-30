@@ -9,6 +9,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import firebase from 'gatsby-plugin-firebase';
 import ControlledDatePicker from '../../../sharedComponents/ControlledDatePicker';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
@@ -16,6 +17,7 @@ import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import PasswordRequirements from '../../../sharedComponents/PasswordRequirements';
 import { signupSchema } from '../src/authSchema';
 import authenticationStyles from '../src/authStyles';
+import 'firebase/auth';
 
 const SignupScreen = () => {
   const styles = authenticationStyles();
@@ -36,6 +38,8 @@ const SignupScreen = () => {
   } = useForm({
     resolver: yupResolver(signupSchema),
   });
+
+  firebase.auth();
 
   const submitSignup = (hookData:auth.submitSignupPayload) => {
     console.log(hookData);
