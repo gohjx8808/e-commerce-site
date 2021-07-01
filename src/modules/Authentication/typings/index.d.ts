@@ -1,4 +1,6 @@
 declare namespace auth{
+
+  interface State{}
   interface submitLoginPayload{
     email:string
     password:string

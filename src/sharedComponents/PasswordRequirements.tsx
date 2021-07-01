@@ -67,7 +67,7 @@ const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
     const items = [...passwordRequirements];
     items[targetEntryIndex].met = metRequirement;
     setPasswordRequirements(items);
-  }, [passwordRequirements]);
+  }, []);
 
   const validatePassword = useCallback(() => {
     toggleMet('containsUL', password ? password.toLowerCase() !== password : false);

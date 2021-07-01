@@ -59,6 +59,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
           <Autocomplete
             options={options}
             getOptionLabel={(option) => option.label}
+            getOptionSelected={(option, selectedValue) => option.value === selectedValue.value}
             renderInput={(params) => (
               <TextField
                 // eslint-disable-next-line react/jsx-props-no-spreading

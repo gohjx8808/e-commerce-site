@@ -7,17 +7,17 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
 import { graphql, useStaticQuery } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import firebase from 'gatsby-plugin-firebase';
+import { useAppDispatch } from '../../../hooks';
 import ControlledDatePicker from '../../../sharedComponents/ControlledDatePicker';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import PasswordRequirements from '../../../sharedComponents/PasswordRequirements';
+import { submitSignUp } from '../src/authReducer';
 import { signupSchema } from '../src/authSchema';
 import authenticationStyles from '../src/authStyles';
-import 'firebase/auth';
 
 const SignupScreen = () => {
   const styles = authenticationStyles();
@@ -31,6 +31,8 @@ const SignupScreen = () => {
     }
   `);
 
+  const dispatch = useAppDispatch();
+
   const image = getImage(data.file);
 
   const {
@@ -39,11 +41,10 @@ const SignupScreen = () => {
     resolver: yupResolver(signupSchema),
   });
 
-  firebase.auth();
-
-  const submitSignup = (hookData:auth.submitSignupPayload) => {
+  const submitSignup = useCallback((hookData:auth.submitSignupPayload) => {
+    dispatch(submitSignUp());
     console.log(hookData);
-  };
+  }, [dispatch]);
 
   const genderOptions = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
 
