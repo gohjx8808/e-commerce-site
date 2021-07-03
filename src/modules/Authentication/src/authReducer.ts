@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const INITIAL_STATE:auth.State = {
 };
@@ -7,7 +7,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: INITIAL_STATE,
   reducers: {
-    submitSignUp: () => { console.log('yes'); },
+    submitSignUp: (state, action:PayloadAction<auth.submitSignupPayload>) => {},
   },
 });
 

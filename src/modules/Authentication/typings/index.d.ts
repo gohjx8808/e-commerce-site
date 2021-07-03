@@ -13,5 +13,18 @@ declare namespace auth{
     gender:optionsData
     password:string
     phoneNumber:string
+    fullName:string
+  }
+
+  interface registerUserPayload{
+    email:string
+    password:string
+  }
+
+  interface saveUserDetailsPayload{
+    email:string
+    dob:string
+    gender:string
+    fullName:string
   }
 }

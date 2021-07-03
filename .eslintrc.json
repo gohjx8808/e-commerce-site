@@ -41,8 +41,9 @@
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "camelcase": "off",
-        "no-unused-vars":"off",
-        "no-undef":"off"
+        "no-unused-vars": "off",
+        "no-undef": "off",
+        "import/no-duplicates": "off"
     },
     "settings": {
         "import/resolver": {

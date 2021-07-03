@@ -42,8 +42,7 @@ const SignupScreen = () => {
   });
 
   const submitSignup = useCallback((hookData:auth.submitSignupPayload) => {
-    dispatch(submitSignUp());
-    console.log(hookData);
+    dispatch(submitSignUp(hookData));
   }, [dispatch]);
 
   const genderOptions = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
