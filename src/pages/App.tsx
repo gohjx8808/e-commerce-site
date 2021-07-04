@@ -2,7 +2,7 @@ import { RouteComponentProps, Router } from '@reach/router';
 import React, { Suspense, lazy } from 'react';
 
 const MenuBar = lazy(() => import('../modules/MenuBar'));
-const Products = lazy(() => import('../modules/products/views/Products'));
+const Products = lazy(() => import('../modules/productss/views/Products'));
 const SEO = lazy(() => import('../modules/SEO'));
 const SignupScreen = lazy(() => import('../modules/auth/views/SignupScreen'));
 const LoginScreen = lazy(() => import('../modules/auth/views/LoginScreen'));
