@@ -43,7 +43,8 @@
         "camelcase": "off",
         "no-unused-vars": "off",
         "no-undef": "off",
-        "import/no-duplicates": "off"
+        "import/no-duplicates": "off",
+        "no-param-reassign":"warn"
     },
     "settings": {
         "import/resolver": {
