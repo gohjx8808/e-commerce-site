@@ -78,11 +78,14 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
                 >
                   {!secure ? <Visibility color={error ? 'error' : 'inherit'} /> : <VisibilityOff color={error ? 'error' : 'inherit'} />}
                 </IconButton>
+                {error
+                && (
                 <IconButton
                   edge="end"
                 >
-                  {error && <Cancel color="error" />}
+                  <Cancel color="error" />
                 </IconButton>
+                )}
               </InputAdornment>
             )}
             labelWidth={labelWidth}

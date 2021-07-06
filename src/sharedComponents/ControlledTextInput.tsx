@@ -77,12 +77,12 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             labelWidth={labelWidth}
             classes={{ root: styles.unFocusStyle }}
             error={!!error}
-            endAdornment={(
+            endAdornment={error && (
               <InputAdornment position="end">
                 <IconButton
                   edge="end"
                 >
-                  {error && <Cancel color="error" />}
+                  <Cancel color="error" />
                 </IconButton>
               </InputAdornment>
             )}
