@@ -44,7 +44,7 @@
         "no-unused-vars": "off",
         "no-undef": "off",
         "import/no-duplicates": "off",
-        "no-param-reassign":"warn"
+        "no-param-reassign":["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]
     },
     "settings": {
         "import/resolver": {
