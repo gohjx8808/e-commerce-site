@@ -30,8 +30,16 @@ function* submitSignUpSaga() {
       yield put(updateStatusMsg('Your registration is successful! Please login using your credentials.'));
       yield put(toggleStatusModal(true));
     } catch (error) {
+      const errorCode = error.code;
+      if (errorCode === 'auth/email-already-in-use') {
+        yield put(updateStatusMsg('The provided email is already in use by an existing user. '
+        + 'Please register using another email or login using the correct credentials.'));
+      } else if (errorCode === 'auth/invalid-email') {
+        yield put(updateStatusMsg('Invalid email! Please try again.'));
+      } else {
+        yield put(updateStatusMsg('Your registration has failed! Please try again.'));
+      }
       yield put(toggleSuccess(false));
-      yield put(updateStatusMsg('Your registration has failed! Please try again.'));
       yield put(toggleStatusModal(true));
     }
   }
