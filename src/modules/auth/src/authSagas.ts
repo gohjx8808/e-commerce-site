@@ -2,6 +2,7 @@ import firebase from 'gatsby-plugin-firebase';
 import {
   call, fork, put, take,
 } from 'redux-saga/effects';
+import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
 import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
 } from '../../status/src/statusReducer';
@@ -15,6 +16,7 @@ export default function* authSaga() {
 function* submitSignUpSaga() {
   while (true) {
     const { payload }:ReturnType<typeof authSlice.actions.submitSignUp> = yield take(submitSignUp);
+    yield put(toggleLoadingOverlay(true));
     yield put(updateStatusTitle('Registration'));
     try {
       const registeredUser:firebase.auth.UserCredential = yield call(registerUser, payload);
@@ -28,6 +30,7 @@ function* submitSignUpSaga() {
       yield call(saveUserDetails, userID, userDetails);
       yield put(toggleSuccess(true));
       yield put(updateStatusMsg('Your registration is successful! Please login using your credentials.'));
+      yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
     } catch (error) {
       const errorCode = error.code;
@@ -40,6 +43,7 @@ function* submitSignUpSaga() {
         yield put(updateStatusMsg('Your registration has failed! Please try again.'));
       }
       yield put(toggleSuccess(false));
+      yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
     }
   }

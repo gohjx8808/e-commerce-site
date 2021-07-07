@@ -1,5 +1,6 @@
 import { RouteComponentProps, Router } from '@reach/router';
 import React, { Suspense, lazy } from 'react';
+import LoadingOverlay from '../modules/overlay/views/LoadingOverlay';
 import StatusModal from '../modules/status/views/StatusModal';
 
 const MenuBar = lazy(() => import('../modules/MenuBar'));
@@ -30,6 +31,7 @@ const App = () => {
             <RouterPage path="/" pageComponent={ProductRoutes()} />
           </Router>
           <StatusModal />
+          <LoadingOverlay />
         </Suspense>
       )}
     </>
