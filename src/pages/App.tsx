@@ -1,13 +1,13 @@
 import { RouteComponentProps, Router } from '@reach/router';
 import React, { Suspense, lazy } from 'react';
-import LoadingOverlay from '../modules/overlay/views/LoadingOverlay';
-import StatusModal from '../modules/status/views/StatusModal';
 
 const MenuBar = lazy(() => import('../modules/MenuBar'));
 const Products = lazy(() => import('../modules/products/views/Products'));
 const SEO = lazy(() => import('../modules/SEO'));
 const SignupScreen = lazy(() => import('../modules/auth/views/SignupScreen'));
 const LoginScreen = lazy(() => import('../modules/auth/views/LoginScreen'));
+const LoadingOverlay = lazy(() => import('../modules/overlay/views/LoadingOverlay'));
+const StatusModal = lazy(() => import('../modules/status/views/StatusModal'));
 
 const ProductRoutes = () => (
   <>
