@@ -19,7 +19,11 @@ const StatusModal = () => {
 
   return (
     <Dialog open={isStatusModalOpen} onClose={() => dispatch(toggleStatusModal(false))} aria-labelledby="status-title" aria-describedby="status-msg">
-      <DialogTitle id="status-title">{statusTitle}</DialogTitle>
+      <DialogTitle id="status-title">
+        <Grid container justify="center">
+          {statusTitle}
+        </Grid>
+      </DialogTitle>
       <DialogContent>
         <Grid container justify="center">
           {isSuccess ? <ThumbUp color="primary" /> : <ThumbDown color="primary" />}
