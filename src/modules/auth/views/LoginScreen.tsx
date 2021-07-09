@@ -9,10 +9,13 @@ import CardContent from '@material-ui/core/CardContent';
 import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useCallback } from 'react';
 import authenticationStyles from '../src/authStyles';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
 import { loginSchema } from '../src/authSchema';
+import { useAppDispatch } from '../../../hooks';
+import { submitSignIn } from '../src/authReducer';
 
 const LoginScreen = () => {
   const styles = authenticationStyles();
@@ -27,14 +30,15 @@ const LoginScreen = () => {
   `);
 
   const image = getImage(data.file);
+  const dispatch = useAppDispatch();
 
   const { control, formState: { errors }, handleSubmit } = useForm({
     resolver: yupResolver(loginSchema),
   });
 
-  const submitLogin = (hookData:auth.submitLoginPayload) => {
-    console.log(hookData);
-  };
+  const submitLogin = useCallback((hookData:auth.submitSignInPayload) => {
+    dispatch(submitSignIn(hookData));
+  }, [dispatch]);
 
   return (
     <Grid

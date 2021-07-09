@@ -1,5 +1,5 @@
 declare namespace auth{
-  interface submitLoginPayload{
+  interface submitSignInPayload{
     email:string
     password:string
   }
@@ -24,5 +24,13 @@ declare namespace auth{
     dob:string
     gender:string
     fullName:string
+  }
+
+  interface currentUserDetails{
+    uid:string
+    dob:string
+    email:string
+    fullName:string
+    gender:string
   }
 }

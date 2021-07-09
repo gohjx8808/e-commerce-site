@@ -9,3 +9,9 @@ export const registerUser = (payload:auth.registerUserPayload) => (
 export const saveUserDetails = (uid:string, userDetails:auth.saveUserDetailsPayload) => {
   firebase.database().ref(`users/${uid}`).set(userDetails);
 };
+
+export const signIn = (payload:auth.submitSignInPayload) => (
+  firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+);
+
+export const getCurrentUserDetails = (uid:string) => firebase.database().ref(`users/${uid}`).once('value');
