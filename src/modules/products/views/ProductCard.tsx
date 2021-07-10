@@ -11,8 +11,10 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Carousel from 'react-material-ui-carousel';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import getStripe from '../../../utils/stripejs';
+import { addToShoppingCart } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 
 interface ProductCardOwnProps{
@@ -23,6 +25,10 @@ const ProductCard = (props:ProductCardOwnProps) => {
   const { product } = props;
   const [loading, setLoading] = useState(false);
   const styles = productStyle();
+  const dispatch = useAppDispatch();
+  const shoppingcar = useAppSelector((state) => state.product.shoppingCartItem);
+
+  console.log(shoppingcar);
 
   const { handleSubmit, control } = useForm();
 
@@ -49,6 +55,17 @@ const ProductCard = (props:ProductCardOwnProps) => {
     if (error) {
       setLoading(false);
     }
+  };
+
+  const onAddToCart = (productData:products.productData) => {
+    const formattedData:products.shoppingCartItemData = {
+      id: productData.id,
+      name: productData.name,
+      imgURL: productData.localFiles,
+      price: `${productData.prices.currency.toUpperCase()} ${(+productData.prices.unit_amount_decimal / 100).toFixed(2)}`,
+      quantity: 1,
+    };
+    dispatch(addToShoppingCart(formattedData));
   };
 
   return (
@@ -80,7 +97,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
             <Typography className={styles.priceText} color="secondary">
               {`Price: ${formatPrice(product.prices.unit_amount, product.prices.currency)}`}
             </Typography>
-            <IconButton aria-label="addToCart" size="medium">
+            <IconButton aria-label="addToCart" size="medium" onClick={() => onAddToCart(product)}>
               <AddShoppingCart fontSize="inherit" color="secondary" />
             </IconButton>
           </Grid>
