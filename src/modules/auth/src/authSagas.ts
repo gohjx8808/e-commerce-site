@@ -3,7 +3,6 @@ import firebase from 'gatsby-plugin-firebase';
 import {
   call, fork, put, take,
 } from 'redux-saga/effects';
-import routeNames from '../../../utils/routeNames';
 import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
 import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,

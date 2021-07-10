@@ -207,8 +207,7 @@ const MenuBar = () => {
                   <Grid container justify="center" alignItems="center">
                     <Typography>{`Welcome, ${currentUserDetail.fullName}`}</Typography>
                   </Grid>
-                )
-                : (
+                ) : (
                   <>
                     <Button color="inherit" onClick={() => navigate(routeNames.login)}>Login</Button>
                     <Button color="inherit" onClick={() => navigate(routeNames.signUp)}>Sign Up</Button>

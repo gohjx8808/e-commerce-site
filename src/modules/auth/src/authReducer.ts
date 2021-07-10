@@ -18,8 +18,8 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState: INITIAL_STATE,
   reducers: {
-    submitSignUp: (state, action:PayloadAction<auth.submitSignupPayload>) => {},
-    submitSignIn: (state, action:PayloadAction<auth.submitSignInPayload>) => {},
+    submitSignUp: (_state, _action:PayloadAction<auth.submitSignupPayload>) => {},
+    submitSignIn: (_state, _action:PayloadAction<auth.submitSignInPayload>) => {},
     storeSignedInUser: (state, action:PayloadAction<auth.currentUserDetails>) => {
       state.currentUser = action.payload;
     },
