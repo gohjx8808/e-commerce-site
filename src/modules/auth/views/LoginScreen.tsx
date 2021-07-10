@@ -49,12 +49,7 @@ const LoginScreen = () => {
     >
       <Grid item xs={12}>
         <Grid container justify="center" alignItems="center">
-          <Card
-            style={{
-              width: '50%',
-              backgroundColor: '#B67B5E',
-            }}
-          >
+          <Card className={styles.loginCard}>
             <Grid container justify="center" alignItems="center" direction="column">
               <CardHeader
                 title="Login"

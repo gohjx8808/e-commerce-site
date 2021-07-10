@@ -15,6 +15,9 @@ const IndexPage = () => {
       error: {
         main: '#EF9A9A',
       },
+      secondary: {
+        main: '#B67B5E',
+      },
     },
   });
 

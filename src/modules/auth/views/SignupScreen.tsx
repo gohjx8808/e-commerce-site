@@ -56,12 +56,7 @@ const SignupScreen = () => {
     >
       <Grid item xs={12}>
         <Grid container justify="center" alignItems="center">
-          <Card
-            style={{
-              width: '80%',
-              backgroundColor: '#B67B5E',
-            }}
-          >
+          <Card className={styles.signupCard}>
             <Grid container justify="center" alignItems="center" direction="column">
               <CardHeader
                 title="Registration"

@@ -4,7 +4,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import { AddShoppingCart } from '@material-ui/icons';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -52,7 +54,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
   return (
     <Grid item lg={3} md={6} sm={12} xs={12}>
       <Card variant="outlined" className={styles.productCard}>
-        <CardHeader title={product.name} />
+        <CardHeader title={product.name} className={styles.cardTitle} />
         <Carousel indicators={false}>
           {product.localFiles.map((localFile) => {
             const imageData = getImage(localFile)!;
@@ -67,26 +69,22 @@ const ProductCard = (props:ProductCardOwnProps) => {
           })}
         </Carousel>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          {/* <form onSubmit={handleSubmit(onSubmit)}>
             <ControlledTextInput
               type="hidden"
               defaultValue={product.prices.id}
               control={control}
               name="priceID"
-            />
-            <Typography>
-              Price:
-              {formatPrice(product.prices.unit_amount, product.prices.currency)}
+            /> */}
+          <Grid container justify="space-between" alignItems="center">
+            <Typography className={styles.priceText} color="secondary">
+              {`Price: ${formatPrice(product.prices.unit_amount, product.prices.currency)}`}
             </Typography>
-            <Button
-              disabled={loading}
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              BUY ME
-            </Button>
-          </form>
+            <IconButton aria-label="addToCart" size="medium">
+              <AddShoppingCart fontSize="inherit" color="secondary" />
+            </IconButton>
+          </Grid>
+          {/* </form> */}
         </CardContent>
       </Card>
     </Grid>

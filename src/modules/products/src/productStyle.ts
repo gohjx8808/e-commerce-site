@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const productStyle = makeStyles({
+const productStyle = makeStyles((theme) => ({
   productCard: {
     boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
     backgroundColor: '#fff',
@@ -16,6 +16,13 @@ const productStyle = makeStyles({
     paddingRight: 50,
     paddingLeft: 50,
   },
-});
+  priceText: {
+    fontWeight: 'bold',
+  },
+  cardTitle: {
+    color: theme.palette.secondary.main,
+    textAlign: 'center',
+  },
+}));
 
 export default productStyle;
