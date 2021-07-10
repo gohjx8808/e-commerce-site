@@ -1,7 +1,9 @@
+import { navigate } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 import {
   call, fork, put, take,
 } from 'redux-saga/effects';
+import routeNames from '../../../utils/routeNames';
 import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
 import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
@@ -66,6 +68,7 @@ function* submitLoginSaga() {
       };
       yield put(storeSignedInUser(storedDetails));
       yield put(toggleLoadingOverlay(false));
+      navigate('/');
     } catch (error) {
       yield put(updateStatusTitle('Log In'));
       yield put(updateStatusMsg('Invalid credentials! Please try again.'));

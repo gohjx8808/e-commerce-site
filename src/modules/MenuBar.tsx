@@ -19,7 +19,10 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { navigate } from 'gatsby';
+import Grid from '@material-ui/core/Grid';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
+import routeNames from '../utils/routeNames';
+import { useAppSelector } from '../hooks';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   grow: {
@@ -89,6 +92,7 @@ const MenuBar = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
+  const currentUserDetail = useAppSelector((state) => state.auth.currentUser);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -198,8 +202,18 @@ const MenuBar = () => {
             </Box>
             <Box className={classes.grow} />
             <Box className={classes.sectionDesktop}>
-              <Button color="inherit" onClick={() => navigate('/login')}>Login</Button>
-              <Button color="inherit" onClick={() => navigate('/signup')}>Sign Up</Button>
+              {currentUserDetail.fullName !== ''
+                ? (
+                  <Grid container justify="center" alignItems="center">
+                    <Typography>{`Welcome, ${currentUserDetail.fullName}`}</Typography>
+                  </Grid>
+                )
+                : (
+                  <>
+                    <Button color="inherit" onClick={() => navigate(routeNames.login)}>Login</Button>
+                    <Button color="inherit" onClick={() => navigate(routeNames.signUp)}>Sign Up</Button>
+                  </>
+                )}
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                   <MailIcon />

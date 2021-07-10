@@ -84,6 +84,7 @@ const SignupScreen = () => {
                         error={errors.fullName}
                         labelWidth={70}
                         customClassName={styles.fullWidthInput}
+                        type="text"
                       />
                     </Grid>
                   </Grid>
