@@ -33,7 +33,7 @@ export default makeStyles((theme) => ({
   },
   signUpHeight: {
     backgroundColor: theme.palette.primary.main,
-    height: '120vh',
+    height: '110vh',
   },
   loginCard: {
     width: '50%',

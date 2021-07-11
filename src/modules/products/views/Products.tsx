@@ -57,7 +57,7 @@ const Products = () => {
               <ProductCard key={product.id} product={product} />
             ))}
             <ScrollTop>
-              <Fab color="primary" size="medium" aria-label="scroll back to top">
+              <Fab color="secondary" size="medium" aria-label="scroll back to top">
                 <KeyboardArrowUp />
               </Fab>
             </ScrollTop>
