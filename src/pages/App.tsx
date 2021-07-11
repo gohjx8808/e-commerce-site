@@ -10,15 +10,6 @@ const LoginScreen = lazy(() => import('../modules/auth/views/LoginScreen'));
 const LoadingOverlay = lazy(() => import('../modules/overlay/views/LoadingOverlay'));
 const StatusModal = lazy(() => import('../modules/status/views/StatusModal'));
 
-const ProductRoutes = () => (
-  <>
-    <MenuBar />
-    <Router basepath="/">
-      <RouterPage path="/" pageComponent={<Products />} />
-    </Router>
-  </>
-);
-
 const App = () => {
   const isSSR = typeof window === 'undefined';
   return (
@@ -29,7 +20,8 @@ const App = () => {
           <Router>
             <RouterPage path={routeNames.login} pageComponent={<LoginScreen />} />
             <RouterPage path={routeNames.signUp} pageComponent={<SignupScreen />} />
-            <RouterPage path="/" pageComponent={ProductRoutes()} />
+            <MainRoutes path="/" pageComponent={<Products />} />
+            <MainRoutes path="/cart" pageComponent={<Products />} />
           </Router>
           <StatusModal />
           <LoadingOverlay />
@@ -42,5 +34,15 @@ const App = () => {
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps,
 ) => props.pageComponent;
+
+const MainRoutes = (props: { pageComponent: JSX.Element } & RouteComponentProps) => {
+  const { pageComponent } = props;
+  return (
+    <>
+      <MenuBar />
+      {pageComponent}
+    </>
+  );
+};
 
 export default App;
