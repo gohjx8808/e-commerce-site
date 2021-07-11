@@ -24,6 +24,14 @@ const productStyle = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     textAlign: 'center',
   },
+  mobileSnackbar: {
+    [theme.breakpoints.down('xs')]: {
+      bottom: 90,
+    },
+  },
+  snackbarContent: {
+    backgroundColor: 'grey',
+  },
 }));
 
 export default productStyle;
