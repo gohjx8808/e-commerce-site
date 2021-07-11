@@ -20,6 +20,8 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { navigate } from 'gatsby';
 import Grid from '@material-ui/core/Grid';
+import { ShoppingCart } from '@material-ui/icons';
+import { useEffect } from 'react';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
 import routeNames from '../utils/routeNames';
 import { useAppSelector } from '../hooks';
@@ -93,6 +95,17 @@ const MenuBar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
   const currentUserDetail = useAppSelector((state) => state.auth.currentUser);
+  const shoppingCartItem = useAppSelector((state) => state.product.shoppingCartItem);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+
+  useEffect(() => {
+    let total = 0;
+    shoppingCartItem.map((item) => {
+      total += item.quantity;
+      return null;
+    });
+    setTotalQuantity(total);
+  }, [shoppingCartItem]);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -213,14 +226,9 @@ const MenuBar = () => {
                     <Button color="inherit" onClick={() => navigate(routeNames.signUp)}>Sign Up</Button>
                   </>
                 )}
-              <IconButton aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton aria-label="show 17 new notifications" color="inherit">
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
+              <IconButton aria-label="shopping cart" color="inherit">
+                <Badge badgeContent={totalQuantity} color="secondary">
+                  <ShoppingCart />
                 </Badge>
               </IconButton>
               <IconButton
