@@ -1,30 +1,27 @@
-import React, { useState } from 'react';
-import {
-  fade, makeStyles, Theme, createStyles,
-} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import { navigate } from 'gatsby';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import InputBase from '@material-ui/core/InputBase';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import {
+  createStyles, fade, makeStyles, Theme,
+} from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import { ShoppingCart } from '@material-ui/icons';
-import { useEffect } from 'react';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuIcon from '@material-ui/icons/Menu';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import SearchIcon from '@material-ui/icons/Search';
+import { navigate } from 'gatsby';
+import React, { useEffect, useState } from 'react';
+import { useAppSelector } from '../hooks';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
 import routeNames from '../utils/routeNames';
-import { useAppSelector } from '../hooks';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   grow: {
@@ -92,8 +89,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const MenuBar = () => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
+  const [accAnchor, setAccAnchor] = useState<null | HTMLElement>(null);
+  const [mobileMoreAnchor, setMobileMoreAnchor] = useState<null | HTMLElement>(null);
   const currentUserDetail = useAppSelector((state) => state.auth.currentUser);
   const shoppingCartItem = useAppSelector((state) => state.product.shoppingCartItem);
   const [totalQuantity, setTotalQuantity] = useState(0);
@@ -107,46 +104,45 @@ const MenuBar = () => {
     setTotalQuantity(total);
   }, [shoppingCartItem]);
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isMenuOpen = Boolean(accAnchor);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchor);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAccAnchor(event.currentTarget);
   };
 
   const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
+    setMobileMoreAnchor(null);
   };
 
   const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
+    setAccAnchor(null);
   };
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileMoreAnchorEl(event.currentTarget);
+    setMobileMoreAnchor(event.currentTarget);
   };
 
-  // const menuId = 'primary-search-account-menu';
-  // const renderMenu = (
-  //   <Menu
-  //     anchorEl={anchorEl}
-  //     anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-  //     id={menuId}
-  //     keepMounted
-  //     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-  //     open={isMenuOpen}
-  //     onClose={handleMenuClose}
-  //   >
-  //     <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-  //     <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-  //   </Menu>
-  // );
+  const menuId = 'account';
+  const renderMenu = (
+    <Menu
+      anchorEl={accAnchor}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+    </Menu>
+  );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = 'mobile-more';
   const renderMobileMenu = (
     <Menu
-      anchorEl={mobileMoreAnchorEl}
+      anchorEl={mobileMoreAnchor}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={mobileMenuId}
       keepMounted
@@ -155,20 +151,12 @@ const MenuBar = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
+        <IconButton aria-label="shopping cart" color="inherit">
+          <Badge badgeContent={totalQuantity} color="secondary">
+            <ShoppingCart />
           </Badge>
         </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
+        <Typography>Cart</Typography>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -179,7 +167,7 @@ const MenuBar = () => {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <Typography>Profile</Typography>
       </MenuItem>
     </Menu>
   );
@@ -234,7 +222,7 @@ const MenuBar = () => {
               <IconButton
                 edge="end"
                 aria-label="account of current user"
-              // aria-controls={menuId}
+                aria-controls={menuId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
                 color="inherit"
@@ -258,7 +246,7 @@ const MenuBar = () => {
       </ElevationScroll>
       <Toolbar id="back-to-top-anchor" />
       {renderMobileMenu}
-      {/* {renderMenu} */}
+      {renderMenu}
     </Box>
   );
 };
