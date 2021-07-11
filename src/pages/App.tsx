@@ -1,5 +1,6 @@
 import { RouteComponentProps, Router } from '@reach/router';
 import React, { Suspense, lazy } from 'react';
+import Footer from '../modules/Footer';
 import routeNames from '../utils/routeNames';
 
 const MenuBar = lazy(() => import('../modules/MenuBar'));
@@ -23,6 +24,7 @@ const App = () => {
             <MainRoutes path="/" pageComponent={<Products />} />
             <MainRoutes path="/cart" pageComponent={<Products />} />
           </Router>
+          <Footer />
           <StatusModal />
           <LoadingOverlay />
         </Suspense>

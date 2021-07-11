@@ -15,6 +15,7 @@ const productStyle = makeStyles((theme) => ({
     paddingTop: 20,
     paddingRight: 50,
     paddingLeft: 50,
+    paddingBottom: 20,
   },
   priceText: {
     fontWeight: 'bold',
