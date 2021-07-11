@@ -1,5 +1,4 @@
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -8,12 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { AddShoppingCart } from '@material-ui/icons';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
 import Carousel from 'react-material-ui-carousel';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
-import getStripe from '../../../utils/stripejs';
+import { useAppDispatch } from '../../../hooks';
 import { addToShoppingCart } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 
@@ -23,14 +19,8 @@ interface ProductCardOwnProps{
 
 const ProductCard = (props:ProductCardOwnProps) => {
   const { product } = props;
-  const [loading, setLoading] = useState(false);
   const styles = productStyle();
   const dispatch = useAppDispatch();
-  const shoppingcar = useAppSelector((state) => state.product.shoppingCartItem);
-
-  console.log(shoppingcar);
-
-  const { handleSubmit, control } = useForm();
 
   const formatPrice = (amount:number, currency:string) => {
     const price = parseFloat((amount / 100).toFixed(2));
@@ -42,20 +32,20 @@ const ProductCard = (props:ProductCardOwnProps) => {
     return numberFormat.format(price);
   };
 
-  const onSubmit = async (hookData:products.submitCheckoutPayload) => {
-    setLoading(true);
-    const stripe = await getStripe();
-    const { error } = await stripe!.redirectToCheckout({
-      mode: 'payment',
-      lineItems: [{ price: hookData.priceID, quantity: 1 }],
-      successUrl: `${window.location.origin}/page-2/`,
-      cancelUrl: `${window.location.origin}/advanced`,
-    });
+  // const onSubmit = async (hookData:products.submitCheckoutPayload) => {
+  //   setLoading(true);
+  //   const stripe = await getStripe();
+  //   const { error } = await stripe!.redirectToCheckout({
+  //     mode: 'payment',
+  //     lineItems: [{ price: hookData.priceID, quantity: 1 }],
+  //     successUrl: `${window.location.origin}/page-2/`,
+  //     cancelUrl: `${window.location.origin}/advanced`,
+  //   });
 
-    if (error) {
-      setLoading(false);
-    }
-  };
+  //   if (error) {
+  //     setLoading(false);
+  //   }
+  // };
 
   const onAddToCart = (productData:products.productData) => {
     const formattedData:products.shoppingCartItemData = {
@@ -86,13 +76,6 @@ const ProductCard = (props:ProductCardOwnProps) => {
           })}
         </Carousel>
         <CardContent>
-          {/* <form onSubmit={handleSubmit(onSubmit)}>
-            <ControlledTextInput
-              type="hidden"
-              defaultValue={product.prices.id}
-              control={control}
-              name="priceID"
-            /> */}
           <Grid container justify="space-between" alignItems="center">
             <Typography className={styles.priceText} color="secondary">
               {`Price: ${formatPrice(product.prices.unit_amount, product.prices.currency)}`}
@@ -101,7 +84,6 @@ const ProductCard = (props:ProductCardOwnProps) => {
               <AddShoppingCart fontSize="inherit" color="secondary" />
             </IconButton>
           </Grid>
-          {/* </form> */}
         </CardContent>
       </Card>
     </Grid>
