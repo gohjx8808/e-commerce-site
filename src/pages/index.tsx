@@ -1,7 +1,9 @@
 import Grid from '@material-ui/core/Grid';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import { SnackbarProvider } from 'notistack';
 import * as React from 'react';
+import CustomSnackbar from '../sharedComponents/CustomSnackbar';
 import App from './App';
 
 const IndexPage = () => {
@@ -20,13 +22,24 @@ const IndexPage = () => {
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container>
-        <Grid item xs={12}>
-          <App />
+    <SnackbarProvider
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+      }}
+      autoHideDuration={3000}
+      content={(key, message) => (
+        <CustomSnackbar id={key} message={message} />
+      )}
+    >
+      <ThemeProvider theme={theme}>
+        <Grid container>
+          <Grid item xs={12}>
+            <App />
+          </Grid>
         </Grid>
-      </Grid>
-    </ThemeProvider>
+      </ThemeProvider>
+    </SnackbarProvider>
   );
 };
 

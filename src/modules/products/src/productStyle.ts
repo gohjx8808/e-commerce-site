@@ -18,19 +18,15 @@ const productStyle = makeStyles((theme) => ({
     paddingBottom: 20,
   },
   priceText: {
+    color: theme.palette.secondary.main,
     fontWeight: 'bold',
   },
   cardTitle: {
     color: theme.palette.secondary.main,
     textAlign: 'center',
   },
-  mobileSnackbar: {
-    [theme.breakpoints.down('xs')]: {
-      bottom: 90,
-    },
-  },
-  snackbarContent: {
-    backgroundColor: 'grey',
+  shoppingCartIcon: {
+    color: theme.palette.secondary.main,
   },
 }));
 

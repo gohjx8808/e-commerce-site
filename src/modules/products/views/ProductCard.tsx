@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { AddShoppingCart } from '@material-ui/icons';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch } from '../../../hooks';
@@ -47,6 +48,8 @@ const ProductCard = (props:ProductCardOwnProps) => {
   //   }
   // };
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const onAddToCart = (productData:products.productData) => {
     const formattedData:products.shoppingCartItemData = {
       id: productData.id,
@@ -56,6 +59,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
       quantity: 1,
     };
     dispatch(addToShoppingCart(formattedData));
+    enqueueSnackbar(`${productData.name} is added to your cart!`);
   };
 
   return (
@@ -77,11 +81,11 @@ const ProductCard = (props:ProductCardOwnProps) => {
         </Carousel>
         <CardContent>
           <Grid container justify="space-between" alignItems="center">
-            <Typography className={styles.priceText} color="secondary">
+            <Typography className={styles.priceText}>
               {`Price: ${formatPrice(product.prices.unit_amount, product.prices.currency)}`}
             </Typography>
             <IconButton aria-label="addToCart" size="medium" onClick={() => onAddToCart(product)}>
-              <AddShoppingCart fontSize="inherit" color="secondary" />
+              <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
             </IconButton>
           </Grid>
         </CardContent>

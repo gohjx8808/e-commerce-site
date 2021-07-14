@@ -2,12 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface productState{
   shoppingCartItem:products.shoppingCartItemData[]
-  isCartSnackbarOpen:boolean
 }
 
 const INITIAL_STATE:productState = {
   shoppingCartItem: [],
-  isCartSnackbarOpen: false,
 };
 
 export const productSlice = createSlice({
@@ -21,14 +19,10 @@ export const productSlice = createSlice({
       } else {
         state.shoppingCartItem[targetIndex].quantity += 1;
       }
-      state.isCartSnackbarOpen = true;
-    },
-    toggleCartSnackbar: (state, action:PayloadAction<boolean>) => {
-      state.isCartSnackbarOpen = action.payload;
     },
   },
 });
 
-export const { addToShoppingCart, toggleCartSnackbar } = productSlice.actions;
+export const { addToShoppingCart } = productSlice.actions;
 
 export default productSlice.reducer;
