@@ -1,6 +1,7 @@
 import { RouteComponentProps, Router } from '@reach/router';
 import React, { Suspense, lazy } from 'react';
 import Footer from '../modules/Footer';
+import Cart from '../modules/products/views/Cart';
 import routeNames from '../utils/routeNames';
 
 const MenuBar = lazy(() => import('../modules/MenuBar'));
@@ -22,7 +23,7 @@ const App = () => {
             <RouterPage path={routeNames.login} pageComponent={<LoginScreen />} />
             <RouterPage path={routeNames.signUp} pageComponent={<SignupScreen />} />
             <MainRoutes path="/" pageComponent={<Products />} />
-            <MainRoutes path="/cart" pageComponent={<Products />} />
+            <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
           </Router>
           <Footer />
           <StatusModal />

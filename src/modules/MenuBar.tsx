@@ -214,7 +214,7 @@ const MenuBar = () => {
                     <Button color="inherit" onClick={() => navigate(routeNames.signUp)}>Sign Up</Button>
                   </>
                 )}
-              <IconButton aria-label="shopping cart" color="inherit">
+              <IconButton aria-label="shopping cart" color="inherit" onClick={() => navigate(routeNames.cart)}>
                 <Badge badgeContent={totalQuantity} color="secondary">
                   <ShoppingCart />
                 </Badge>
