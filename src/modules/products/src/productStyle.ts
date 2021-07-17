@@ -28,6 +28,34 @@ const productStyle = makeStyles((theme) => ({
   shoppingCartIcon: {
     color: theme.palette.secondary.main,
   },
+  cartTitleCardContent: {
+    '&:last-child': {
+      paddingBottom: 16,
+    },
+  },
+  cartCard: {
+    backgroundColor: theme.palette.secondary.main,
+    marginTop: 20,
+    marginBottom: 20,
+    borderRadius: 10,
+  },
+  cartTitle: {
+    fontWeight: 'bold',
+  },
+  cartItemImageContainer: {
+    width: '80%',
+    marginTop: 5,
+  },
+  cartItemImage: {
+    borderRadius: 5,
+  },
+  cartItemCard: {
+    paddingBottom: 20,
+    paddingTop: 10,
+    borderTopColor: 'black',
+    borderTopWidth: 1,
+    borderTopStyle: 'solid',
+  },
 }));
 
 export default productStyle;
