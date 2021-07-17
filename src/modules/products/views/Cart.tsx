@@ -15,7 +15,7 @@ const Cart = () => {
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
 
   return (
-    <Grid container justify="center" alignItems="center">
+    <Grid container justify="center" alignItems="center" className={styles.cartCardContainer} spacing={2}>
       <Grid item xs={11}>
         <Card className={styles.cartCard}>
           <CardContent className={styles.cartTitleCardContent}>
@@ -33,8 +33,20 @@ const Cart = () => {
                 </Grid>
               ))}
             </Grid>
-            {cartItems.map((cartItem) => (
-              <Grid container justify="center" alignItems="center" key={cartItem.id} className={styles.cartItemCard}>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item xs={11}>
+        <Card className={styles.cartCard}>
+          <CardContent className={styles.cartTitleCardContent}>
+            {cartItems.map((cartItem, index) => (
+              <Grid
+                container
+                justify="center"
+                alignItems="center"
+                key={cartItem.id}
+                className={`${styles.cartItemCard} ${index === 0 ? '' : styles.topBorderedCartItemCard}`}
+              >
                 <Grid item xs={2}>
                   <Checkbox
                     color="primary"
@@ -72,6 +84,20 @@ const Cart = () => {
                 </Grid>
               </Grid>
             ))}
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item xs={11}>
+        <Card className={styles.cartCard}>
+          <CardContent className={styles.cartTitleCardContent}>
+            <Grid container justify="center" alignItems="center">
+              <Grid item xs={10}>
+                <Typography className={styles.cartTitle}>Total</Typography>
+              </Grid>
+              <Grid item xs={2}>
+                <Typography className={styles.cartTitle}>RM 1000</Typography>
+              </Grid>
+            </Grid>
           </CardContent>
         </Card>
       </Grid>
