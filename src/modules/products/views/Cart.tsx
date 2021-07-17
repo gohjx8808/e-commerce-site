@@ -5,7 +5,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppSelector } from '../../../hooks';
 import productStyle from '../src/productStyle';
 
@@ -13,6 +13,38 @@ const Cart = () => {
   const styles = productStyle();
   const cartTitle = ['Item', 'Price (RM)', 'Quantity', 'Total (RM)'];
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [totalAmount, setTotalAmount] = useState<number>(0);
+
+  const onChangeSelect = (event:React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.id === 'selectAll') {
+      if (event.target.checked) {
+        const allIds = [] as string[];
+        let total = 0;
+        cartItems.map((item) => {
+          allIds.push(item.id);
+          total += +item.price * item.quantity;
+          return null;
+        });
+        setSelectedItems(allIds);
+        setTotalAmount(total);
+      } else {
+        setSelectedItems([]);
+        setTotalAmount(0);
+      }
+    } else {
+      let rawTotal = totalAmount;
+      if (event.target.checked) {
+        setSelectedItems([...selectedItems, event.target.id]);
+        setTotalAmount(rawTotal += +event.target!.getAttribute('data-price')!);
+      } else {
+        const splicedArr = [...selectedItems];
+        splicedArr.splice(splicedArr.indexOf(event.target.id), 1);
+        setSelectedItems(splicedArr);
+        setTotalAmount(rawTotal -= +event.target!.getAttribute('data-price')!);
+      }
+    }
+  };
 
   return (
     <Grid container justify="center" alignItems="center" className={styles.cartCardContainer} spacing={2}>
@@ -23,12 +55,17 @@ const Cart = () => {
               <Grid item xs={2}>
                 <Checkbox
                   color="primary"
-                  indeterminate={false}
+                  onChange={onChangeSelect}
+                  indeterminate={
+                    selectedItems.length < cartItems.length && selectedItems.length > 0
+                  }
+                  checked={selectedItems.length > 0}
+                  id="selectAll"
                   inputProps={{ 'aria-label': 'checkAll' }}
                 />
               </Grid>
               {cartTitle.map((title) => (
-                <Grid item xs={title === 'Item' ? 4 : 2}>
+                <Grid item xs={title === 'Item' ? 4 : 2} key={title}>
                   <Typography className={styles.cartTitle}>{title}</Typography>
                 </Grid>
               ))}
@@ -49,8 +86,11 @@ const Cart = () => {
               >
                 <Grid item xs={2}>
                   <Checkbox
+                    checked={selectedItems.includes(cartItem.id)}
                     color="primary"
-                    inputProps={{ 'aria-label': 'checkAll' }}
+                    onChange={onChangeSelect}
+                    id={cartItem.id}
+                    inputProps={{ 'aria-label': 'checkAll', 'data-price': +cartItem.price * cartItem.quantity } as any}
                   />
                 </Grid>
                 <Grid item xs={4}>
@@ -95,7 +135,11 @@ const Cart = () => {
                 <Typography className={styles.cartTitle}>Total</Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography className={styles.cartTitle}>RM 1000</Typography>
+                <Typography className={styles.cartTitle}>
+                  RM
+                  {' '}
+                  {totalAmount.toFixed(2)}
+                </Typography>
               </Grid>
             </Grid>
           </CardContent>
