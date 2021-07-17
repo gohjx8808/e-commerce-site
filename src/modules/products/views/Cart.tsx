@@ -9,6 +9,10 @@ import React, { useState } from 'react';
 import { useAppSelector } from '../../../hooks';
 import productStyle from '../src/productStyle';
 
+type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  [key: string]: string | undefined | number
+}
+
 const Cart = () => {
   const styles = productStyle();
   const cartTitle = ['Item', 'Price (RM)', 'Quantity', 'Total (RM)'];
@@ -36,12 +40,12 @@ const Cart = () => {
       let rawTotal = totalAmount;
       if (event.target.checked) {
         setSelectedItems([...selectedItems, event.target.id]);
-        setTotalAmount(rawTotal += +event.target!.getAttribute('data-price')!);
+        setTotalAmount(rawTotal += +event.target.getAttribute('data-price')!);
       } else {
         const splicedArr = [...selectedItems];
         splicedArr.splice(splicedArr.indexOf(event.target.id), 1);
         setSelectedItems(splicedArr);
-        setTotalAmount(rawTotal -= +event.target!.getAttribute('data-price')!);
+        setTotalAmount(rawTotal -= +event.target.getAttribute('data-price')!);
       }
     }
   };
@@ -90,7 +94,10 @@ const Cart = () => {
                     color="primary"
                     onChange={onChangeSelect}
                     id={cartItem.id}
-                    inputProps={{ 'aria-label': 'checkAll', 'data-price': +cartItem.price * cartItem.quantity } as any}
+                    inputProps={{
+                      'aria-label': cartItem.id,
+                      'data-price': +cartItem.price * cartItem.quantity,
+                    } as CartItemCheckboxProps}
                   />
                 </Grid>
                 <Grid item xs={4}>
