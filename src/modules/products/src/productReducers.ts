@@ -20,9 +20,17 @@ export const productSlice = createSlice({
         state.shoppingCartItem[targetIndex].quantity += 1;
       }
     },
+    reduceQuantity: (state, action:PayloadAction<string>) => {
+      const targetIndex = state.shoppingCartItem.findIndex((item) => item.id === action.payload);
+      state.shoppingCartItem[targetIndex].quantity -= 1;
+    },
+    increaseQuantity: (state, action:PayloadAction<string>) => {
+      const targetIndex = state.shoppingCartItem.findIndex((item) => item.id === action.payload);
+      state.shoppingCartItem[targetIndex].quantity += 1;
+    },
   },
 });
 
-export const { addToShoppingCart } = productSlice.actions;
+export const { addToShoppingCart, reduceQuantity, increaseQuantity } = productSlice.actions;
 
 export default productSlice.reducer;

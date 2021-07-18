@@ -1,12 +1,15 @@
+import { IconButton } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { Add, Remove } from '@material-ui/icons';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useState } from 'react';
-import { useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { increaseQuantity, reduceQuantity } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 
 type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -19,6 +22,7 @@ const Cart = () => {
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [totalAmount, setTotalAmount] = useState<number>(0);
+  const dispatch = useAppDispatch();
 
   const onChangeSelect = (event:React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.id === 'selectAll') {
@@ -47,6 +51,22 @@ const Cart = () => {
         setSelectedItems(splicedArr);
         setTotalAmount(rawTotal -= +event.target.getAttribute('data-price')!);
       }
+    }
+  };
+
+  const onReduceItemQuantity = (cartItemID:string, cartItemPrice:string) => {
+    dispatch(reduceQuantity(cartItemID));
+    if (selectedItems.includes(cartItemID)) {
+      const prevAmount = totalAmount;
+      setTotalAmount(prevAmount - +cartItemPrice);
+    }
+  };
+
+  const onIncreaseItemQuantity = (cartItemID:string, cartItemPrice:string) => {
+    dispatch(increaseQuantity(cartItemID));
+    if (selectedItems.includes(cartItemID)) {
+      const prevAmount = totalAmount;
+      setTotalAmount(prevAmount + +cartItemPrice);
     }
   };
 
@@ -158,7 +178,13 @@ const Cart = () => {
                     justify="center"
                     alignItems="center"
                   >
+                    <IconButton onClick={() => onReduceItemQuantity(cartItem.id, cartItem.price)}>
+                      <Remove />
+                    </IconButton>
                     <Typography>{cartItem.quantity}</Typography>
+                    <IconButton onClick={() => onIncreaseItemQuantity(cartItem.id, cartItem.price)}>
+                      <Add />
+                    </IconButton>
                   </Grid>
                 </Grid>
                 <Grid item xs={2}>
