@@ -34,7 +34,7 @@ const productStyle = makeStyles((theme) => ({
     },
   },
   cartCard: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: 10,
   },
   cartCardContainer: {
@@ -45,7 +45,7 @@ const productStyle = makeStyles((theme) => ({
     fontWeight: 'bold',
   },
   cartItemImageContainer: {
-    width: '80%',
+    width: '30%',
     marginTop: 5,
   },
   cartItemImage: {
@@ -59,6 +59,10 @@ const productStyle = makeStyles((theme) => ({
     borderTopColor: 'black',
     borderTopWidth: 1,
     borderTopStyle: 'solid',
+  },
+  totalTitle: {
+    fontWeight: 'bold',
+    paddingLeft: '10%',
   },
 }));
 

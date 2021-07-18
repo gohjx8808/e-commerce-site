@@ -52,32 +52,44 @@ const Cart = () => {
 
   return (
     <Grid container justify="center" alignItems="center" className={styles.cartCardContainer} spacing={2}>
-      <Grid item xs={11}>
+      <Grid item lg={10} xs={11}>
         <Card className={styles.cartCard}>
           <CardContent className={styles.cartTitleCardContent}>
             <Grid container justify="center" alignItems="center">
               <Grid item xs={2}>
-                <Checkbox
-                  color="primary"
-                  onChange={onChangeSelect}
-                  indeterminate={
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                >
+                  <Checkbox
+                    color="secondary"
+                    onChange={onChangeSelect}
+                    indeterminate={
                     selectedItems.length < cartItems.length && selectedItems.length > 0
                   }
-                  checked={selectedItems.length > 0}
-                  id="selectAll"
-                  inputProps={{ 'aria-label': 'checkAll' }}
-                />
+                    checked={selectedItems.length > 0}
+                    id="selectAll"
+                    inputProps={{ 'aria-label': 'checkAll' }}
+                  />
+                </Grid>
               </Grid>
               {cartTitle.map((title) => (
                 <Grid item xs={title === 'Item' ? 4 : 2} key={title}>
-                  <Typography className={styles.cartTitle}>{title}</Typography>
+                  <Grid
+                    container
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Typography className={styles.cartTitle}>{title}</Typography>
+                  </Grid>
                 </Grid>
               ))}
             </Grid>
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={11}>
+      <Grid item lg={10} xs={11}>
         <Card className={styles.cartCard}>
           <CardContent className={styles.cartTitleCardContent}>
             {cartItems.map((cartItem, index) => (
@@ -89,60 +101,91 @@ const Cart = () => {
                 className={`${styles.cartItemCard} ${index === 0 ? '' : styles.topBorderedCartItemCard}`}
               >
                 <Grid item xs={2}>
-                  <Checkbox
-                    checked={selectedItems.includes(cartItem.id)}
-                    color="primary"
-                    onChange={onChangeSelect}
-                    id={cartItem.id}
-                    inputProps={{
-                      'aria-label': cartItem.id,
-                      'data-price': +cartItem.price * cartItem.quantity,
-                    } as CartItemCheckboxProps}
-                  />
+                  <Grid
+                    container
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Checkbox
+                      checked={selectedItems.includes(cartItem.id)}
+                      color="secondary"
+                      onChange={onChangeSelect}
+                      id={cartItem.id}
+                      inputProps={{
+                        'aria-label': cartItem.id,
+                        'data-price': +cartItem.price * cartItem.quantity,
+                      } as CartItemCheckboxProps}
+                    />
+                  </Grid>
                 </Grid>
                 <Grid item xs={4}>
-                  <Typography>{cartItem.name}</Typography>
-                  {cartItem.imgURL.map((localFile) => {
-                    const imageData = getImage(localFile)!;
-                    return (
-                      <Box
-                        className={styles.cartItemImageContainer}
-                        key={imageData.images.fallback?.src}
-                      >
-                        <GatsbyImage
-                          image={imageData}
-                          alt={cartItem.id}
-                          imgClassName={styles.cartItemImage}
-                        />
-                      </Box>
-                    );
-                  })}
+                  <Grid
+                    container
+                    justify="center"
+                    alignItems="center"
+                    direction="column"
+                  >
+                    <Typography>{cartItem.name}</Typography>
+                    {cartItem.imgURL.map((localFile) => {
+                      const imageData = getImage(localFile)!;
+                      return (
+                        <Box
+                          className={styles.cartItemImageContainer}
+                          key={imageData.images.fallback?.src}
+                        >
+                          <GatsbyImage
+                            image={imageData}
+                            alt={cartItem.id}
+                            imgClassName={styles.cartItemImage}
+                          />
+                        </Box>
+                      );
+                    })}
+                  </Grid>
                 </Grid>
                 <Grid item xs={2}>
-                  <Typography>{cartItem.price}</Typography>
+                  <Grid
+                    container
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Typography>{cartItem.price}</Typography>
+                  </Grid>
                 </Grid>
                 <Grid item xs={2}>
-                  <Typography>{cartItem.quantity}</Typography>
+                  <Grid
+                    container
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Typography>{cartItem.quantity}</Typography>
+                  </Grid>
                 </Grid>
                 <Grid item xs={2}>
-                  <Typography>
-                    {(+cartItem.price * cartItem.quantity).toFixed(2)}
-                  </Typography>
+                  <Grid
+                    container
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Typography>
+                      {(+cartItem.price * cartItem.quantity).toFixed(2)}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             ))}
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={11}>
+      <Grid item lg={10} xs={11}>
         <Card className={styles.cartCard}>
           <CardContent className={styles.cartTitleCardContent}>
             <Grid container justify="center" alignItems="center">
               <Grid item xs={10}>
-                <Typography className={styles.cartTitle}>Total</Typography>
+                <Typography className={styles.totalTitle}>Total</Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography className={styles.cartTitle}>
+                <Typography className={styles.totalTitle}>
                   RM
                   {' '}
                   {totalAmount.toFixed(2)}
