@@ -40,7 +40,7 @@ declare namespace products{
   interface shoppingCartItemData{
     id:string
     quantity:number
-    imgURL:import('gatsby-plugin-image').ImageDataLike[]
+    imgURL?:import('gatsby-plugin-image').ImageDataLike[]
     name:string
     price:string
   }

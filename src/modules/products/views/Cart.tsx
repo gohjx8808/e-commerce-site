@@ -9,8 +9,9 @@ import { Add, Remove } from '@material-ui/icons';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { increaseQuantity, reduceQuantity } from '../src/productReducers';
+import { increaseQuantity, reduceQuantity, removeItemFromCart } from '../src/productReducers';
 import productStyle from '../src/productStyle';
+import ItemRemoveConfirmationDialog from './ItemRemoveConfirmationDialog';
 
 type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
   [key: string]: string | undefined | number
@@ -22,6 +23,13 @@ const Cart = () => {
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [totalAmount, setTotalAmount] = useState<number>(0);
+  const [toBeRemovedItem, setToBeRemovedItem] = useState<products.shoppingCartItemData>({
+    id: '',
+    name: '',
+    quantity: 0,
+    price: '',
+  });
+  const [removeConfirmModalDisplay, setRemoveConfirmModalDisplay] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const onChangeSelect = (event:React.ChangeEvent<HTMLInputElement>) => {
@@ -54,11 +62,30 @@ const Cart = () => {
     }
   };
 
-  const onReduceItemQuantity = (cartItemID:string, cartItemPrice:string) => {
-    dispatch(reduceQuantity(cartItemID));
-    if (selectedItems.includes(cartItemID)) {
+  const toggleRemoveConfirmModalDisplay = () => {
+    setRemoveConfirmModalDisplay(!removeConfirmModalDisplay);
+  };
+
+  const onReduceItemQuantity = (cartItem:products.shoppingCartItemData) => {
+    if (+cartItem.quantity - 1 === 0) {
+      setToBeRemovedItem(cartItem);
+      toggleRemoveConfirmModalDisplay();
+    } else {
+      dispatch(reduceQuantity(cartItem.id));
+      minusFromTotal();
+    }
+  };
+
+  const confirmItemRemove = () => {
+    dispatch(removeItemFromCart(toBeRemovedItem.id));
+    minusFromTotal();
+    toggleRemoveConfirmModalDisplay();
+  };
+
+  const minusFromTotal = () => {
+    if (selectedItems.includes(toBeRemovedItem.id)) {
       const prevAmount = totalAmount;
-      setTotalAmount(prevAmount - +cartItemPrice);
+      setTotalAmount(prevAmount - +toBeRemovedItem.price);
     }
   };
 
@@ -146,7 +173,7 @@ const Cart = () => {
                     direction="column"
                   >
                     <Typography>{cartItem.name}</Typography>
-                    {cartItem.imgURL.map((localFile) => {
+                    {cartItem.imgURL!.map((localFile) => {
                       const imageData = getImage(localFile)!;
                       return (
                         <Box
@@ -178,7 +205,11 @@ const Cart = () => {
                     justify="center"
                     alignItems="center"
                   >
-                    <IconButton onClick={() => onReduceItemQuantity(cartItem.id, cartItem.price)}>
+                    <IconButton
+                      onClick={
+                        () => onReduceItemQuantity(cartItem)
+                      }
+                    >
                       <Remove />
                     </IconButton>
                     <Typography>{cartItem.quantity}</Typography>
@@ -221,6 +252,12 @@ const Cart = () => {
           </CardContent>
         </Card>
       </Grid>
+      <ItemRemoveConfirmationDialog
+        modalOpen={removeConfirmModalDisplay}
+        itemName={toBeRemovedItem.name}
+        toggleModal={toggleRemoveConfirmModalDisplay}
+        confirmRemove={confirmItemRemove}
+      />
     </Grid>
   );
 };
