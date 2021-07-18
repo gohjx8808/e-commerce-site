@@ -85,6 +85,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       display: 'none',
     },
   },
+  nameBtn: {
+    textTransform: 'none',
+  },
 }));
 
 const MenuBar = () => {
@@ -185,9 +188,9 @@ const MenuBar = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography className={classes.title} variant="h6" noWrap>
-              YJ Art Journal
-            </Typography>
+            <Button className={classes.nameBtn} onClick={() => navigate('/')}>
+              <Typography className={classes.title} variant="h6">YJ Art Journal</Typography>
+            </Button>
             <Box className={classes.search}>
               <Box className={classes.searchIcon}>
                 <SearchIcon />
