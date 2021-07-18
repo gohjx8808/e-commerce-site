@@ -109,7 +109,6 @@ const Cart = () => {
       }
       return null;
     });
-    console.log(totalCheckoutItem);
     const stripe = await getStripe();
     const { error } = await stripe!.redirectToCheckout({
       mode: 'payment',
@@ -150,7 +149,7 @@ const Cart = () => {
                     justify="center"
                     alignItems="center"
                   >
-                    <Typography className={styles.cartTitle}>{title}</Typography>
+                    <Typography className={styles.boldText}>{title}</Typography>
                   </Grid>
                 </Grid>
               ))}

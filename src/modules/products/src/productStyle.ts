@@ -41,7 +41,7 @@ const productStyle = makeStyles((theme) => ({
     marginTop: 20,
     marginBottom: 20,
   },
-  cartTitle: {
+  boldText: {
     fontWeight: 'bold',
   },
   cartItemImageContainer: {

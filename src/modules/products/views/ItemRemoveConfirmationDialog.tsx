@@ -5,6 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import React from 'react';
+import productStyle from '../src/productStyle';
 
 interface ItemRemoveConfirmationDialogOwnProps{
   modalOpen:boolean
@@ -18,19 +19,23 @@ const ItemRemoveConfirmationDialog = (props:ItemRemoveConfirmationDialogOwnProps
     modalOpen, toggleModal, confirmRemove, itemName,
   } = props;
 
+  const styles = productStyle();
+
   return (
     <Dialog
       open={modalOpen}
       onClose={toggleModal}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      aria-labelledby="item-remove-title"
+      aria-describedby="item-remove-description"
     >
-      <DialogTitle id="alert-dialog-title">Confirmation to remove item</DialogTitle>
+      <DialogTitle id="item-remove-title">Confirmation to remove item</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
+        <DialogContentText id="item-remove-description">
           Are you sure you wish to remove
           {' '}
-          {itemName}
+          <span className={styles.boldText}>
+            {itemName}
+          </span>
           {' '}
           from your cart?
         </DialogContentText>
