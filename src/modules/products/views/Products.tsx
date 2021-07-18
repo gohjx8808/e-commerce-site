@@ -40,7 +40,12 @@ const Products = () => {
       }
     }`;
 
-    console.log(productFilterKeyword);
+  const filterProduct = (product:products.productData) => {
+    if (productFilterKeyword) {
+      return product.name.includes(productFilterKeyword);
+    }
+    return true;
+  };
 
   return (
     <StaticQuery
@@ -59,7 +64,7 @@ const Products = () => {
           <>
             <Grid container justify="center" alignItems="center" direction="row" spacing={5} className={styles.rootContainer}>
               {allProduct.filter(
-                (product) => product.name.includes(productFilterKeyword),
+                (product) => filterProduct(product),
               ).map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
