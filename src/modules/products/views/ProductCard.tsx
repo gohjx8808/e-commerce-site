@@ -56,6 +56,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
       name: productData.name,
       imgURL: productData.localFiles,
       price: (+productData.prices.unit_amount_decimal / 100).toFixed(2),
+      price_id: productData.prices.id,
       quantity: 1,
     };
     dispatch(addToShoppingCart(formattedData));

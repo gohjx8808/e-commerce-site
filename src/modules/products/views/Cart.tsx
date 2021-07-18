@@ -1,14 +1,16 @@
-import { IconButton } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { Add, Remove } from '@material-ui/icons';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import getStripe from '../../../utils/stripejs';
 import { increaseQuantity, reduceQuantity, removeItemFromCart } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 import ItemRemoveConfirmationDialog from './ItemRemoveConfirmationDialog';
@@ -28,6 +30,7 @@ const Cart = () => {
     name: '',
     quantity: 0,
     price: '',
+    price_id: '',
   });
   const [removeConfirmModalDisplay, setRemoveConfirmModalDisplay] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -95,6 +98,25 @@ const Cart = () => {
       const prevAmount = totalAmount;
       setTotalAmount(prevAmount + +cartItemPrice);
     }
+  };
+
+  const onCheckout = async () => {
+    const totalCheckoutItem = [] as products.checkoutData[];
+    selectedItems.map((itemID) => {
+      const selectedItem = cartItems.find((cartItem) => cartItem.id === itemID);
+      if (selectedItem) {
+        totalCheckoutItem.push({ price: selectedItem.price_id, quantity: selectedItem.quantity });
+      }
+      return null;
+    });
+    console.log(totalCheckoutItem);
+    const stripe = await getStripe();
+    const { error } = await stripe!.redirectToCheckout({
+      mode: 'payment',
+      lineItems: totalCheckoutItem,
+      successUrl: `${window.location.origin}/page-2/`,
+      cancelUrl: `${window.location.origin}/cart`,
+    });
   };
 
   return (
@@ -251,6 +273,13 @@ const Cart = () => {
             </Grid>
           </CardContent>
         </Card>
+      </Grid>
+      <Grid item lg={10} xs={11}>
+        <Grid container justify="flex-end">
+          <Button variant="contained" color="secondary" size="medium" onClick={() => onCheckout()}>
+            Checkout
+          </Button>
+        </Grid>
       </Grid>
       <ItemRemoveConfirmationDialog
         modalOpen={removeConfirmModalDisplay}

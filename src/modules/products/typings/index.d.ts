@@ -43,5 +43,11 @@ declare namespace products{
     imgURL?:import('gatsby-plugin-image').ImageDataLike[]
     name:string
     price:string
+    price_id:string
+  }
+
+  interface checkoutData{
+    price:string
+    quantity:number
   }
 }
