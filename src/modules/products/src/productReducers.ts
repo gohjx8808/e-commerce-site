@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface productState{
   shoppingCartItem:products.shoppingCartItemData[]
+  productFilterKeyword:string
 }
 
 const INITIAL_STATE:productState = {
   shoppingCartItem: [],
+  productFilterKeyword: '',
 };
 
 export const productSlice = createSlice({
@@ -32,11 +34,18 @@ export const productSlice = createSlice({
       const targetIndex = state.shoppingCartItem.findIndex((item) => item.id === action.payload);
       state.shoppingCartItem.splice(targetIndex, 1);
     },
+    updateProductFilterKeyword: (state, action:PayloadAction<string>) => {
+      state.productFilterKeyword = action.payload;
+    },
   },
 });
 
 export const {
-  addToShoppingCart, reduceQuantity, increaseQuantity, removeItemFromCart,
+  addToShoppingCart,
+  reduceQuantity,
+  increaseQuantity,
+  removeItemFromCart,
+  updateProductFilterKeyword,
 } = productSlice.actions;
 
 export default productSlice.reducer;

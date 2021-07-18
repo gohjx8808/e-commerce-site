@@ -19,9 +19,10 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import { navigate } from 'gatsby';
 import React, { useEffect, useState } from 'react';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
 import routeNames from '../utils/routeNames';
+import { updateProductFilterKeyword } from './products/src/productReducers';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   grow: {
@@ -97,6 +98,7 @@ const MenuBar = () => {
   const currentUserDetail = useAppSelector((state) => state.auth.currentUser);
   const shoppingCartItem = useAppSelector((state) => state.product.shoppingCartItem);
   const [totalQuantity, setTotalQuantity] = useState(0);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     let total = 0;
@@ -175,6 +177,12 @@ const MenuBar = () => {
     </Menu>
   );
 
+  const onChangeProductFilterKeyword = (
+    event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    dispatch(updateProductFilterKeyword(event.target.value));
+  };
+
   return (
     <Box className={classes.grow}>
       <ElevationScroll>
@@ -202,6 +210,7 @@ const MenuBar = () => {
                   input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
+                onChange={onChangeProductFilterKeyword}
               />
             </Box>
             <Box className={classes.grow} />

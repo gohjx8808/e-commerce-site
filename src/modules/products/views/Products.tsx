@@ -3,12 +3,14 @@ import Grid from '@material-ui/core/Grid';
 import { KeyboardArrowUp } from '@material-ui/icons';
 import { graphql, StaticQuery } from 'gatsby';
 import React from 'react';
+import { useAppSelector } from '../../../hooks';
 import ScrollTop from '../../../sharedComponents/ScrollTop';
 import productStyle from '../src/productStyle';
 import ProductCard from './ProductCard';
 
 const Products = () => {
   const styles = productStyle();
+  const productFilterKeyword = useAppSelector((state) => state.product.productFilterKeyword);
   const allPriceQuery = graphql`
     query ProductPrices {
       prices: allStripePrice(
@@ -38,6 +40,8 @@ const Products = () => {
       }
     }`;
 
+    console.log(productFilterKeyword);
+
   return (
     <StaticQuery
       query={allPriceQuery}
@@ -54,7 +58,9 @@ const Products = () => {
         return (
           <>
             <Grid container justify="center" alignItems="center" direction="row" spacing={5} className={styles.rootContainer}>
-              {allProduct.map((product) => (
+              {allProduct.filter(
+                (product) => product.name.includes(productFilterKeyword),
+              ).map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
               <ScrollTop>
