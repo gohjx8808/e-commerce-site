@@ -10,6 +10,7 @@ import { Add, Remove } from '@material-ui/icons';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import getStripe from '../../../utils/stripejs';
 import { increaseQuantity, reduceQuantity, removeItemFromCart } from '../src/productReducers';
 import productStyle from '../src/productStyle';
@@ -121,6 +122,9 @@ const Cart = () => {
   return (
     <Grid container justify="center" alignItems="center" className={styles.cartCardContainer} spacing={2}>
       <Grid item lg={10} xs={11}>
+        <Grid item xs={9}>
+          <CustomBreadcrumbs />
+        </Grid>
         <Card className={styles.cartCard}>
           <CardContent className={styles.cartTitleCardContent}>
             <Grid container justify="center" alignItems="center">

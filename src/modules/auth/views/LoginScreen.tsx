@@ -16,6 +16,7 @@ import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswor
 import { loginSchema } from '../src/authSchema';
 import { useAppDispatch } from '../../../hooks';
 import { submitSignIn } from '../src/authReducer';
+import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 
 const LoginScreen = () => {
   const styles = authenticationStyles();
@@ -48,6 +49,11 @@ const LoginScreen = () => {
       className={styles.loginBg}
     >
       <Grid item xs={12}>
+        <Grid container justify="center" alignItems="center">
+          <Grid item xs={6}>
+            <CustomBreadcrumbs />
+          </Grid>
+        </Grid>
         <Grid container justify="center" alignItems="center">
           <Card className={styles.loginCard}>
             <Grid container justify="center" alignItems="center" direction="column">

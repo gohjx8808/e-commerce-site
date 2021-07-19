@@ -14,6 +14,7 @@ import ControlledDatePicker from '../../../sharedComponents/ControlledDatePicker
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
+import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import PasswordRequirements from '../../../sharedComponents/PasswordRequirements';
 import { submitSignUp } from '../src/authReducer';
 import { signupSchema } from '../src/authSchema';
@@ -56,6 +57,9 @@ const SignupScreen = () => {
     >
       <Grid item xs={12}>
         <Grid container justify="center" alignItems="center">
+          <Grid item xs={9}>
+            <CustomBreadcrumbs />
+          </Grid>
           <Card className={styles.signupCard}>
             <Grid container justify="center" alignItems="center" direction="column">
               <CardHeader
