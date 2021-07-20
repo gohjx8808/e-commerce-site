@@ -1,10 +1,13 @@
 import Box from '@material-ui/core/Box';
+import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
+import { KeyboardArrowUp } from '@material-ui/icons';
 import { RouteComponentProps, Router } from '@reach/router';
-import React, { Suspense, lazy } from 'react';
+import React, { lazy, Suspense } from 'react';
 import Footer from '../modules/Footer';
 import HomeScreen from '../modules/HomeScreen';
 import Cart from '../modules/products/views/Cart';
+import ScrollTop from '../sharedComponents/ScrollTop';
 import routeNames from '../utils/routeNames';
 
 const MenuBar = lazy(() => import('../modules/MenuBar'));
@@ -41,10 +44,10 @@ const App = () => {
         <Suspense fallback={<div>Loading...</div>}>
           <SEO />
           <Router>
+            <MainRoutes path="/" pageComponent={<HomeScreen />} />
             <RouterPage path={routeNames.login} pageComponent={<LoginScreen />} />
             <RouterPage path={routeNames.signUp} pageComponent={<SignupScreen />} />
             <MainRoutes path={routeNames.products} pageComponent={<Products />} />
-            <MainRoutes path="/" pageComponent={<HomeScreen />} />
             <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
           </Router>
           <StatusModal />
@@ -81,6 +84,11 @@ const MainRoutes = (props: { pageComponent: JSX.Element } & RouteComponentProps)
         </Box>
         <Footer />
       </Box>
+      <ScrollTop>
+        <Fab color="secondary" size="medium" aria-label="scroll back to top">
+          <KeyboardArrowUp />
+        </Fab>
+      </ScrollTop>
     </Box>
   );
 };

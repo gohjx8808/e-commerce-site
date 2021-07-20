@@ -59,20 +59,13 @@ const Products = () => {
           allProduct.push(extractedProduct!);
         });
         return (
-          <>
-            <Grid container justify="center" alignItems="center" direction="row" spacing={5}>
-              {allProduct.filter(
-                (product) => filterProduct(product),
-              ).map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-              <ScrollTop>
-                <Fab color="secondary" size="medium" aria-label="scroll back to top">
-                  <KeyboardArrowUp />
-                </Fab>
-              </ScrollTop>
-            </Grid>
-          </>
+          <Grid container justify="center" alignItems="center" direction="row" spacing={5}>
+            {allProduct.filter(
+              (product) => filterProduct(product),
+            ).map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </Grid>
         );
       }}
     />
