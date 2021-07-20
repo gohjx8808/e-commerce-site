@@ -9,9 +9,15 @@ import {
   createStyles, makeStyles, Theme,
 } from '@material-ui/core/styles';
 import {
-  ChatOutlined, ImageSearchOutlined, InsertEmoticon, LiveHelpOutlined, PermContactCalendarOutlined,
+  ChatOutlined,
+  HomeOutlined,
+  ImageSearchOutlined,
+  InsertEmoticon,
+  LiveHelpOutlined,
+  PermContactCalendarOutlined,
 } from '@material-ui/icons';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { useLocation } from '@reach/router';
 import clsx from 'clsx';
 import React from 'react';
 
@@ -59,6 +65,8 @@ interface CustomDrawerOwnProps{
 const CustomDrawer = (props:CustomDrawerOwnProps) => {
   const { drawerOpen, handleDrawerClose } = props;
   const classes = useStyles();
+  const location = useLocation();
+  const currentPathName = location.pathname;
 
   return (
     <Drawer
@@ -81,31 +89,37 @@ const CustomDrawer = (props:CustomDrawerOwnProps) => {
       </div>
       <Divider />
       <List>
-        <ListItem button>
+        <ListItem button selected={currentPathName === '/'}>
+          <ListItemIcon>
+            <HomeOutlined />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItem>
+        <ListItem button selected={currentPathName === '/introduction'}>
           <ListItemIcon>
             <InsertEmoticon />
           </ListItemIcon>
           <ListItemText primary="Introduction" />
         </ListItem>
-        <ListItem button>
+        <ListItem button selected={currentPathName === '/products'}>
           <ListItemIcon>
             <ImageSearchOutlined />
           </ListItemIcon>
           <ListItemText primary="Products" />
         </ListItem>
-        <ListItem button>
+        <ListItem button selected={currentPathName === '/sharingCorner'}>
           <ListItemIcon>
             <ChatOutlined />
           </ListItemIcon>
           <ListItemText primary="Sharing Corner" />
         </ListItem>
-        <ListItem button>
+        <ListItem button selected={currentPathName === '/contactUs'}>
           <ListItemIcon>
             <PermContactCalendarOutlined />
           </ListItemIcon>
           <ListItemText primary="Contact Us" />
         </ListItem>
-        <ListItem button>
+        <ListItem button selected={currentPathName === '/faq'}>
           <ListItemIcon>
             <LiveHelpOutlined />
           </ListItemIcon>
