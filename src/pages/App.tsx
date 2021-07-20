@@ -47,7 +47,6 @@ const App = () => {
             <MainRoutes path="/" pageComponent={<HomeScreen />} />
             <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
           </Router>
-          <Footer />
           <StatusModal />
           <LoadingOverlay />
         </Suspense>
@@ -58,7 +57,15 @@ const App = () => {
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps,
-) => props.pageComponent;
+) => {
+  const { pageComponent } = props;
+  return (
+    <>
+      {pageComponent}
+      <Footer />
+    </>
+  );
+};
 
 const MainRoutes = (props: { pageComponent: JSX.Element } & RouteComponentProps) => {
   const { pageComponent } = props;
@@ -67,9 +74,12 @@ const MainRoutes = (props: { pageComponent: JSX.Element } & RouteComponentProps)
   return (
     <Box className={styles.flexDisplay}>
       <MenuBar />
-      <Box className={styles.content}>
-        <Box className={styles.toolbar} />
-        {pageComponent}
+      <Box>
+        <Box className={styles.content}>
+          <Box className={styles.toolbar} />
+          {pageComponent}
+        </Box>
+        <Footer />
       </Box>
     </Box>
   );
