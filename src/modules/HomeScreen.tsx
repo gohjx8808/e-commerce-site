@@ -11,6 +11,11 @@ const useStyle = makeStyles({
   carouselImages: {
     borderRadius: 10,
   },
+  carouselNavWrapper: {
+    '&:hover': {
+      backgroundColor: '#FFFFFF60',
+    },
+  },
 });
 
 interface bannerImageData{
@@ -46,7 +51,13 @@ const HomeScreen = () => {
   return (
     <Grid container justify="center" alignItems="center">
       <Grid item xs={12}>
-        <Carousel>
+        <Carousel
+          navButtonsWrapperProps={{ className: styles.carouselNavWrapper, style: {} }}
+          navButtonsProps={{
+            className: '',
+            style: { backgroundColor: 'transparent', color: 'black' },
+          }}
+        >
           {bannerImages.allFile.edges.map((banner) => {
             const bannerNode = banner.node;
             const bannerRealImageData = getImage(bannerNode.childImageSharp)!;
@@ -61,7 +72,6 @@ const HomeScreen = () => {
           })}
         </Carousel>
       </Grid>
-
     </Grid>
   );
 };
