@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { RouteComponentProps, Router } from '@reach/router';
 import React, { Suspense, lazy } from 'react';
 import Footer from '../modules/Footer';
+import HomeScreen from '../modules/HomeScreen';
 import Cart from '../modules/products/views/Cart';
 import routeNames from '../utils/routeNames';
 
@@ -42,7 +43,8 @@ const App = () => {
           <Router>
             <RouterPage path={routeNames.login} pageComponent={<LoginScreen />} />
             <RouterPage path={routeNames.signUp} pageComponent={<SignupScreen />} />
-            <MainRoutes path="/" pageComponent={<Products />} />
+            <MainRoutes path={routeNames.products} pageComponent={<Products />} />
+            <MainRoutes path="/" pageComponent={<HomeScreen />} />
             <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
           </Router>
           <Footer />

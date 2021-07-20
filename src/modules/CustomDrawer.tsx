@@ -19,7 +19,9 @@ import {
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { useLocation } from '@reach/router';
 import clsx from 'clsx';
+import { navigate } from 'gatsby';
 import React from 'react';
+import routeNames from '../utils/routeNames';
 
 const drawerWidth = 210;
 
@@ -89,7 +91,7 @@ const CustomDrawer = (props:CustomDrawerOwnProps) => {
       </div>
       <Divider />
       <List>
-        <ListItem button selected={currentPathName === '/'}>
+        <ListItem button selected={currentPathName === '/'} onClick={() => navigate('/')}>
           <ListItemIcon>
             <HomeOutlined />
           </ListItemIcon>
@@ -101,7 +103,11 @@ const CustomDrawer = (props:CustomDrawerOwnProps) => {
           </ListItemIcon>
           <ListItemText primary="Introduction" />
         </ListItem>
-        <ListItem button selected={currentPathName === '/products'}>
+        <ListItem
+          button
+          selected={currentPathName === routeNames.products}
+          onClick={() => navigate(routeNames.products)}
+        >
           <ListItemIcon>
             <ImageSearchOutlined />
           </ListItemIcon>
