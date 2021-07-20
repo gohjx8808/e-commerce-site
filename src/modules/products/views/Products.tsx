@@ -5,11 +5,9 @@ import { graphql, StaticQuery } from 'gatsby';
 import React from 'react';
 import { useAppSelector } from '../../../hooks';
 import ScrollTop from '../../../sharedComponents/ScrollTop';
-import productStyle from '../src/productStyle';
 import ProductCard from './ProductCard';
 
 const Products = () => {
-  const styles = productStyle();
   const productFilterKeyword = useAppSelector((state) => state.product.productFilterKeyword);
   const allPriceQuery = graphql`
     query ProductPrices {
@@ -62,7 +60,7 @@ const Products = () => {
         });
         return (
           <>
-            <Grid container justify="center" alignItems="center" direction="row" spacing={5} className={styles.rootContainer}>
+            <Grid container justify="center" alignItems="center" direction="row" spacing={5}>
               {allProduct.filter(
                 (product) => filterProduct(product),
               ).map((product) => (

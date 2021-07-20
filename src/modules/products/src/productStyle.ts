@@ -11,12 +11,6 @@ const productStyle = makeStyles((theme) => ({
     alignItems: 'center',
     display: 'flex',
   },
-  rootContainer: {
-    paddingTop: 20,
-    paddingRight: 50,
-    paddingLeft: 50,
-    paddingBottom: 20,
-  },
   priceText: {
     color: theme.palette.secondary.main,
     fontWeight: 'bold',
@@ -36,10 +30,6 @@ const productStyle = makeStyles((theme) => ({
   cartCard: {
     backgroundColor: theme.palette.primary.main,
     borderRadius: 10,
-  },
-  cartCardContainer: {
-    marginTop: 20,
-    marginBottom: 20,
   },
   boldText: {
     fontWeight: 'bold',

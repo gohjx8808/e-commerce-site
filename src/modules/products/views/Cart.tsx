@@ -120,7 +120,7 @@ const Cart = () => {
   };
 
   return (
-    <Grid container justify="center" alignItems="center" className={styles.cartCardContainer} spacing={2}>
+    <Grid container justify="center" alignItems="center" spacing={2}>
       <Grid item lg={10} xs={11}>
         <Grid item xs={9}>
           <CustomBreadcrumbs />
