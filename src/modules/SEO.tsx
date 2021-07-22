@@ -15,7 +15,8 @@ const SEO = (props:SEOOwnProps) => {
     title, description, image, article,
   } = props;
   const { pathname } = useLocation();
-  const query = graphql`
+
+  const { site } = useStaticQuery(graphql`
     query SEO {
       site {
         siteMetadata {
@@ -28,10 +29,7 @@ const SEO = (props:SEOOwnProps) => {
           lang
         }
       }
-    }
-  `;
-
-  const { site } = useStaticQuery(query);
+    }`);
 
   const {
     defaultTitle,

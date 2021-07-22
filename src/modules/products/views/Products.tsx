@@ -1,15 +1,13 @@
-import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
-import { KeyboardArrowUp } from '@material-ui/icons';
-import { graphql, StaticQuery } from 'gatsby';
-import React from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
+import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../hooks';
-import ScrollTop from '../../../sharedComponents/ScrollTop';
 import ProductCard from './ProductCard';
 
 const Products = () => {
+  const [allProduct, setAllProduct] = useState<products.productData[]>([]);
   const productFilterKeyword = useAppSelector((state) => state.product.productFilterKeyword);
-  const allPriceQuery = graphql`
+  const allPrices = useStaticQuery(graphql`
     query ProductPrices {
       prices: allStripePrice(
         filter: { active: { eq: true } }
@@ -36,7 +34,20 @@ const Products = () => {
           }
         }
       }
-    }`;
+    }`);
+
+  useEffect(() => {
+    const extractedPrices:products.queryProductData[] = allPrices.prices.edges;
+    const tempProduct = [] as products.productData[];
+    extractedPrices.forEach((price) => {
+      const realPrice = price.node;
+      const extractedProduct = realPrice.product;
+      const { product, ...otherDetail } = realPrice;
+      extractedProduct!.prices = otherDetail;
+      tempProduct.push(extractedProduct!);
+    });
+    setAllProduct(tempProduct);
+  }, [allPrices]);
 
   const filterProduct = (product:products.productData) => {
     if (productFilterKeyword) {
@@ -46,29 +57,13 @@ const Products = () => {
   };
 
   return (
-    <StaticQuery
-      query={allPriceQuery}
-      render={({ prices }) => {
-        const allProduct:products.productData[] = [];
-        const extractedPrices:products.queryProductData[] = prices.edges;
-        extractedPrices.forEach((price) => {
-          const realPrice = price.node;
-          const extractedProduct = realPrice.product;
-          const { product, ...otherDetail } = realPrice;
-          extractedProduct!.prices = otherDetail;
-          allProduct.push(extractedProduct!);
-        });
-        return (
-          <Grid container justify="center" alignItems="center" direction="row" spacing={5}>
-            {allProduct.filter(
-              (product) => filterProduct(product),
-            ).map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </Grid>
-        );
-      }}
-    />
+    <Grid container justify="center" alignItems="center" direction="row" spacing={5}>
+      {allProduct.filter(
+        (product) => filterProduct(product),
+      ).map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </Grid>
   );
 };
 
