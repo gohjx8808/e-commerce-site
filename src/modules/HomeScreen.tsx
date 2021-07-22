@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import { graphql, useStaticQuery } from 'gatsby';
 import {
   GatsbyImage, getImage, ImageDataLike,
@@ -15,6 +16,12 @@ const useStyle = makeStyles({
     '&:hover': {
       backgroundColor: '#FFFFFF60',
     },
+  },
+  sectionContainer: {
+    paddingTop: 20,
+  },
+  unboldH6: {
+    fontWeight: 'normal',
   },
 });
 
@@ -57,6 +64,8 @@ const HomeScreen = () => {
             className: '',
             style: { backgroundColor: 'transparent', color: 'black' },
           }}
+          animation="slide"
+          interval={3000}
         >
           {bannerImages.allFile.edges.map((banner) => {
             const bannerNode = banner.node;
@@ -71,6 +80,13 @@ const HomeScreen = () => {
             );
           })}
         </Carousel>
+        <Grid container justify="center" alignItems="center" className={styles.sectionContainer} direction="column">
+          <Typography variant="h4" color="secondary">Welcome!</Typography>
+          <Typography variant="h6" className={styles.unboldH6}>Hello, welcome to my little art journal!</Typography>
+        </Grid>
+        <Grid container className={styles.sectionContainer} direction="column">
+          <Typography variant="h5" color="secondary">Product</Typography>
+        </Grid>
       </Grid>
     </Grid>
   );
