@@ -25,12 +25,6 @@ const useStyle = makeStyles({
   },
 });
 
-interface bannerImageData{
-  allFile:{
-    edges:imageInnerStructure[]
-  }
-}
-
 interface imageInnerStructure{
   node:{
     childImageSharp:ImageDataLike
@@ -143,18 +137,25 @@ const HomeScreen = () => {
         }}
         animation="slide"
         interval={3000}
+        autoPlay={false}
       >
-        {productImages.map((imageList) => imageList.map((image) => {
-          const productImagesData = getImage(image)!;
-          return (
-            <GatsbyImage
-              image={productImagesData}
-              alt={productImagesData.images.fallback?.src!}
-              key={productImagesData.images.fallback?.src}
-              imgClassName={styles.carouselImages}
-            />
-          );
-        }))}
+        {productImages.map((imageList) => (
+          <Grid container direction="row" justify="center" alignItems="center">
+            {imageList.map((image) => {
+              const productImagesData = getImage(image)!;
+              return (
+                <Grid item xs={3}>
+                  <GatsbyImage
+                    image={productImagesData}
+                    alt={productImagesData.images.fallback?.src!}
+                    key={productImagesData.images.fallback?.src}
+                    imgClassName={styles.carouselImages}
+                  />
+                </Grid>
+              );
+            })}
+          </Grid>
+        ))}
       </Carousel>
     </Grid>
   );
