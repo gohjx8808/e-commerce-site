@@ -5,7 +5,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import {
   GatsbyImage, getImage, ImageDataLike,
 } from 'gatsby-plugin-image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 
 const useStyle = makeStyles({
@@ -39,8 +39,9 @@ interface imageInnerStructure{
 }
 
 const HomeScreen = () => {
+  const [productImages, setProductImages] = useState<ImageDataLike[][]>([]);
   const styles = useStyle();
-  const bannerImages:bannerImageData = useStaticQuery(graphql`
+  const homeQuery = useStaticQuery(graphql`
     query {
       allFile(filter: {relativeDirectory: {eq: "banner"}}) {
         edges {
@@ -52,8 +53,54 @@ const HomeScreen = () => {
           }
         }
       }
+      prices: allStripePrice(
+        filter: { active: { eq: true } }
+        sort: { fields: [unit_amount] }
+      ) {
+        edges {
+          node {
+            unit_amount
+            unit_amount_decimal
+            product {
+              id
+              images
+              localFiles{
+                childImageSharp{
+                  gatsbyImageData
+                }
+              }
+              name
+              type
+            }
+            active
+            currency
+            id
+          }
+        }
+      }
     }
   `);
+
+  useEffect(() => {
+    const extractedPrices:products.queryProductData[] = homeQuery.prices.edges;
+    const tempProduct = [] as ImageDataLike[][];
+    let i = 1;
+    let abc = [] as ImageDataLike[];
+    extractedPrices.forEach((price) => {
+      const realPrice = price.node;
+      const extractedProduct = realPrice.product;
+      abc.push(extractedProduct?.localFiles[0]!);
+      if (i % 4 === 0) {
+        tempProduct.push(abc);
+        abc = [];
+      }
+      i += 1;
+    });
+    if (abc.length > 0) {
+      tempProduct.push(abc);
+    }
+    setProductImages(tempProduct);
+  }, [homeQuery]);
 
   return (
     <Grid container justify="center" alignItems="center">
@@ -67,7 +114,7 @@ const HomeScreen = () => {
           animation="slide"
           interval={3000}
         >
-          {bannerImages.allFile.edges.map((banner) => {
+          {homeQuery.allFile.edges.map((banner:imageInnerStructure) => {
             const bannerNode = banner.node;
             const bannerRealImageData = getImage(bannerNode.childImageSharp)!;
             return (
@@ -88,6 +135,27 @@ const HomeScreen = () => {
           <Typography variant="h5" color="secondary">Product</Typography>
         </Grid>
       </Grid>
+      <Carousel
+        navButtonsWrapperProps={{ className: styles.carouselNavWrapper, style: {} }}
+        navButtonsProps={{
+          className: '',
+          style: { backgroundColor: 'transparent', color: 'black' },
+        }}
+        animation="slide"
+        interval={3000}
+      >
+        {productImages.map((imageList) => imageList.map((image) => {
+          const productImagesData = getImage(image)!;
+          return (
+            <GatsbyImage
+              image={productImagesData}
+              alt={productImagesData.images.fallback?.src!}
+              key={productImagesData.images.fallback?.src}
+              imgClassName={styles.carouselImages}
+            />
+          );
+        }))}
+      </Carousel>
     </Grid>
   );
 };
