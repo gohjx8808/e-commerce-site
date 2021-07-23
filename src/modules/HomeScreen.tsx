@@ -1,12 +1,14 @@
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, navigate, useStaticQuery } from 'gatsby';
 import {
   GatsbyImage, getImage, ImageDataLike,
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
+import routeNames from '../utils/routeNames';
 
 const useStyle = makeStyles({
   carouselImages: {
@@ -22,6 +24,13 @@ const useStyle = makeStyles({
   },
   unboldH6: {
     fontWeight: 'normal',
+  },
+  productCarouselImages: {
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  viewMoreBtn: {
+    marginTop: 10,
   },
 });
 
@@ -136,15 +145,15 @@ const HomeScreen = () => {
           style: { backgroundColor: 'transparent', color: 'black' },
         }}
         animation="slide"
-        interval={3000}
-        autoPlay={false}
+        interval={5000}
+        timeout={700}
       >
         {productImages.map((imageList) => (
           <Grid container direction="row" justify="center" alignItems="center">
             {imageList.map((image) => {
               const productImagesData = getImage(image)!;
               return (
-                <Grid item xs={3}>
+                <Grid item xs={3} className={styles.productCarouselImages}>
                   <GatsbyImage
                     image={productImagesData}
                     alt={productImagesData.images.fallback?.src!}
@@ -157,6 +166,7 @@ const HomeScreen = () => {
           </Grid>
         ))}
       </Carousel>
+      <Button variant="contained" color="primary" className={styles.viewMoreBtn} onClick={() => navigate(routeNames.products)}>View More</Button>
     </Grid>
   );
 };
