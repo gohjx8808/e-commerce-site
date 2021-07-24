@@ -77,20 +77,20 @@ const Cart = () => {
       toggleRemoveConfirmModalDisplay();
     } else {
       dispatch(reduceQuantity(cartItem.id));
-      minusFromTotal();
+      minusFromTotal(cartItem);
     }
   };
 
   const confirmItemRemove = () => {
     dispatch(removeItemFromCart(toBeRemovedItem.id));
-    minusFromTotal();
+    minusFromTotal(toBeRemovedItem);
     toggleRemoveConfirmModalDisplay();
   };
 
-  const minusFromTotal = () => {
-    if (selectedItems.includes(toBeRemovedItem.id)) {
+  const minusFromTotal = (item:products.shoppingCartItemData) => {
+    if (selectedItems.includes(item.id)) {
       const prevAmount = totalAmount;
-      setTotalAmount(prevAmount - +toBeRemovedItem.price);
+      setTotalAmount(prevAmount - +item.price);
     }
   };
 
