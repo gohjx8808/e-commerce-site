@@ -38,7 +38,7 @@ const CustomBreadcrumbs = () => {
         Home
       </Link>
       {routesInBetween.map((route) => (
-        <Link color="inherit" href={`/${route}`}>
+        <Link color="inherit" href={`/${route}`} key={route}>
           {breadcrumbNameMap[`/${route}`]}
         </Link>
       ))}
