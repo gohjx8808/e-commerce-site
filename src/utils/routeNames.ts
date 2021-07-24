@@ -3,4 +3,5 @@ export default {
   signUp: '/signup',
   cart: '/cart',
   products: '/products',
+  checkout: '/cart/checkout',
 };

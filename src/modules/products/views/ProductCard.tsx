@@ -33,21 +33,6 @@ const ProductCard = (props:ProductCardOwnProps) => {
     return numberFormat.format(price);
   };
 
-  // const onSubmit = async (hookData:products.submitCheckoutPayload) => {
-  //   setLoading(true);
-  //   const stripe = await getStripe();
-  //   const { error } = await stripe!.redirectToCheckout({
-  //     mode: 'payment',
-  //     lineItems: [{ price: hookData.priceID, quantity: 1 }],
-  //     successUrl: `${window.location.origin}/page-2/`,
-  //     cancelUrl: `${window.location.origin}/advanced`,
-  //   });
-
-  //   if (error) {
-  //     setLoading(false);
-  //   }
-  // };
-
   const { enqueueSnackbar } = useSnackbar();
 
   const onAddToCart = (productData:products.productData) => {

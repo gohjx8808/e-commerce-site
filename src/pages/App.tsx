@@ -49,6 +49,7 @@ const App = () => {
             <RouterPage path={routeNames.signUp} pageComponent={<SignupScreen />} />
             <MainRoutes path={routeNames.products} pageComponent={<Products />} />
             <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
+            <MainRoutes path={routeNames.checkout} pageComponent={<Cart />} />
           </Router>
           <StatusModal />
           <LoadingOverlay />

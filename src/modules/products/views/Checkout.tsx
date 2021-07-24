@@ -21,7 +21,7 @@ type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
   [key: string]: string | undefined | number
 }
 
-const Cart = () => {
+const Checkout = () => {
   const styles = productStyle();
   const cartTitle = ['Item', 'Price (RM)', 'Quantity', 'Total (RM)'];
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
@@ -277,4 +277,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Checkout;
