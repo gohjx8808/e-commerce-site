@@ -87,6 +87,12 @@ const Cart = () => {
   };
 
   const confirmItemRemove = () => {
+    const removeIndex = selectedCheckoutItemsID.indexOf(toBeRemovedItem.id);
+    if (removeIndex !== -1) {
+      const copiedIDs = [...selectedCheckoutItemsID];
+      copiedIDs.splice(removeIndex, 1);
+      dispatch(updateSelectedCheckoutItemsID(copiedIDs));
+    }
     dispatch(removeItemFromCart(toBeRemovedItem.id));
     toggleRemoveConfirmModalDisplay();
   };
