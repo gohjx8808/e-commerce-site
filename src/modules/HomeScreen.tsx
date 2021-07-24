@@ -149,15 +149,19 @@ const HomeScreen = () => {
         timeout={700}
       >
         {productImages.map((imageList) => (
-          <Grid container direction="row" justify="center" alignItems="center">
+          <Grid container direction="row" justify="center" alignItems="center" key={imageList.toLocaleString()}>
             {imageList.map((image) => {
               const productImagesData = getImage(image)!;
               return (
-                <Grid item xs={3} className={styles.productCarouselImages}>
+                <Grid
+                  item
+                  xs={3}
+                  className={styles.productCarouselImages}
+                  key={productImagesData.images.fallback?.src}
+                >
                   <GatsbyImage
                     image={productImagesData}
                     alt={productImagesData.images.fallback?.src!}
-                    key={productImagesData.images.fallback?.src}
                     imgClassName={styles.carouselImages}
                   />
                 </Grid>

@@ -10,10 +10,13 @@ import { Add, Remove } from '@material-ui/icons';
 import { navigate } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import routeNames from '../../../utils/routeNames';
-import { increaseQuantity, reduceQuantity, removeItemFromCart } from '../src/productReducers';
+import {
+  increaseQuantity, reduceQuantity, removeItemFromCart, updateSelectedCheckoutItemsID,
+} from '../src/productReducers';
 import productStyle from '../src/productStyle';
 import ItemRemoveConfirmationDialog from './ItemRemoveConfirmationDialog';
 
@@ -25,7 +28,7 @@ const Cart = () => {
   const styles = productStyle();
   const cartTitle = ['Item', 'Price (RM)', 'Quantity', 'Total (RM)'];
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const selectedCheckoutItemsID = useAppSelector((state) => state.product.selectedCheckoutItemsID);
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [toBeRemovedItem, setToBeRemovedItem] = useState<products.shoppingCartItemData>({
     id: '',
@@ -37,33 +40,36 @@ const Cart = () => {
   const [removeConfirmModalDisplay, setRemoveConfirmModalDisplay] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    let currentTotal = 0;
+    cartItems.map((item) => {
+      if (selectedCheckoutItemsID.includes(item.id)) {
+        currentTotal += +item.price * +item.quantity;
+      }
+      return null;
+    });
+    setTotalAmount(currentTotal);
+  }, [cartItems, selectedCheckoutItemsID]);
+
   const onChangeSelect = (event:React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.id === 'selectAll') {
       if (event.target.checked) {
         const allIds = [] as string[];
-        let total = 0;
         cartItems.map((item) => {
           allIds.push(item.id);
-          total += +item.price * item.quantity;
           return null;
         });
-        setSelectedItems(allIds);
-        setTotalAmount(total);
+        dispatch(updateSelectedCheckoutItemsID(allIds));
       } else {
-        setSelectedItems([]);
-        setTotalAmount(0);
+        dispatch(updateSelectedCheckoutItemsID([]));
       }
+    } else if (event.target.checked) {
+      const prevArr = [...selectedCheckoutItemsID, event.target.id];
+      dispatch(updateSelectedCheckoutItemsID(prevArr));
     } else {
-      let rawTotal = totalAmount;
-      if (event.target.checked) {
-        setSelectedItems([...selectedItems, event.target.id]);
-        setTotalAmount(rawTotal += +event.target.getAttribute('data-price')!);
-      } else {
-        const splicedArr = [...selectedItems];
-        splicedArr.splice(splicedArr.indexOf(event.target.id), 1);
-        setSelectedItems(splicedArr);
-        setTotalAmount(rawTotal -= +event.target.getAttribute('data-price')!);
-      }
+      const splicedArr = [...selectedCheckoutItemsID];
+      splicedArr.splice(splicedArr.indexOf(event.target.id), 1);
+      dispatch(updateSelectedCheckoutItemsID(splicedArr));
     }
   };
 
@@ -77,29 +83,16 @@ const Cart = () => {
       toggleRemoveConfirmModalDisplay();
     } else {
       dispatch(reduceQuantity(cartItem.id));
-      minusFromTotal(cartItem);
     }
   };
 
   const confirmItemRemove = () => {
     dispatch(removeItemFromCart(toBeRemovedItem.id));
-    minusFromTotal(toBeRemovedItem);
     toggleRemoveConfirmModalDisplay();
   };
 
-  const minusFromTotal = (item:products.shoppingCartItemData) => {
-    if (selectedItems.includes(item.id)) {
-      const prevAmount = totalAmount;
-      setTotalAmount(prevAmount - +item.price);
-    }
-  };
-
-  const onIncreaseItemQuantity = (cartItemID:string, cartItemPrice:string) => {
+  const onIncreaseItemQuantity = (cartItemID:string) => {
     dispatch(increaseQuantity(cartItemID));
-    if (selectedItems.includes(cartItemID)) {
-      const prevAmount = totalAmount;
-      setTotalAmount(prevAmount + +cartItemPrice);
-    }
   };
 
   return (
@@ -121,9 +114,10 @@ const Cart = () => {
                     color="secondary"
                     onChange={onChangeSelect}
                     indeterminate={
-                    selectedItems.length < cartItems.length && selectedItems.length > 0
+                      selectedCheckoutItemsID.length < cartItems.length
+                      && selectedCheckoutItemsID.length > 0
                   }
-                    checked={selectedItems.length > 0}
+                    checked={selectedCheckoutItemsID.length > 0}
                     id="selectAll"
                     inputProps={{ 'aria-label': 'checkAll' }}
                   />
@@ -162,7 +156,7 @@ const Cart = () => {
                     alignItems="center"
                   >
                     <Checkbox
-                      checked={selectedItems.includes(cartItem.id)}
+                      checked={selectedCheckoutItemsID.includes(cartItem.id)}
                       color="secondary"
                       onChange={onChangeSelect}
                       id={cartItem.id}
@@ -221,7 +215,7 @@ const Cart = () => {
                       <Remove />
                     </IconButton>
                     <Typography>{cartItem.quantity}</Typography>
-                    <IconButton onClick={() => onIncreaseItemQuantity(cartItem.id, cartItem.price)}>
+                    <IconButton onClick={() => onIncreaseItemQuantity(cartItem.id)}>
                       <Add />
                     </IconButton>
                   </Grid>

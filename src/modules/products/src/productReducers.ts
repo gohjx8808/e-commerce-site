@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface productState{
   shoppingCartItem:products.shoppingCartItemData[]
   productFilterKeyword:string
+  selectedCheckoutItemsID:string[]
 }
 
 const INITIAL_STATE:productState = {
   shoppingCartItem: [],
   productFilterKeyword: '',
+  selectedCheckoutItemsID: [],
 };
 
 export const productSlice = createSlice({
@@ -37,6 +39,9 @@ export const productSlice = createSlice({
     updateProductFilterKeyword: (state, action:PayloadAction<string>) => {
       state.productFilterKeyword = action.payload;
     },
+    updateSelectedCheckoutItemsID: (state, action:PayloadAction<string[]>) => {
+      state.selectedCheckoutItemsID = action.payload;
+    },
   },
 });
 
@@ -46,6 +51,7 @@ export const {
   increaseQuantity,
   removeItemFromCart,
   updateProductFilterKeyword,
+  updateSelectedCheckoutItemsID,
 } = productSlice.actions;
 
 export default productSlice.reducer;

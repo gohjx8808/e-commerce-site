@@ -1,5 +1,3 @@
-import { EmptyObject } from 'redux';
-
 export const loadState = () => {
   try {
     const serialState = localStorage.getItem('appState');
@@ -12,7 +10,7 @@ export const loadState = () => {
   }
 };
 
-export const saveState = (state: EmptyObject) => {
+export const saveState = (state:any) => {
   try {
     const serialState = JSON.stringify(state);
     localStorage.setItem('appState', serialState);
