@@ -11,6 +11,7 @@ import { navigate } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppSelector } from '../../../hooks';
+import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import routeNames from '../../../utils/routeNames';
@@ -56,6 +57,26 @@ const Checkout = () => {
     },
   ];
 
+  const stateOptions = [
+    { value: 'Johor', label: 'Johor' },
+    { value: 'Kedah', label: 'Kedah' },
+    { value: 'Kelantan', label: 'Kelantan' },
+    { value: 'Kuala Lumpur', label: 'Kuala Lumpur' },
+    { value: 'Labuan', label: 'Labuan' },
+    { value: 'Melaka', label: 'Melaka' },
+    { value: 'Negeri Sembilan', label: 'Negeri Sembilan' },
+    { value: 'Pahang', label: 'Pahang' },
+    { value: 'Perak', label: 'Perak' },
+    { value: 'Perlis', label: 'Perlis' },
+    { value: 'Pulau Pinang', label: 'Pulau Pinang' },
+    { value: 'Putrajaya', label: 'Putrajaya' },
+    { value: 'Sabah', label: 'Sabah' },
+    { value: 'Sarawak', label: 'Sarawak' },
+    { value: 'Selangor', label: 'Selangor' },
+    { value: 'Terengganu', label: 'Terengganu' },
+    { value: 'Outside Malaysia', label: 'Outside Malaysia' },
+  ];
+
   const handlePageSizeChange = (params: GridPageChangeParams) => {
     setPageSize(params.pageSize);
   };
@@ -92,15 +113,52 @@ const Checkout = () => {
       <Grid item lg={6} xs={11}>
         <Card>
           <CardContent className={styles.cartTitleCardContent}>
-            <ControlledTextInput
-              control={control}
-              name="emailAddress"
-              variant="outlined"
-              label="Email Address"
-              labelWidth={105}
-              lightBg
-              customClassName={styles.checkoutInputWidth}
-            />
+            <Grid container justify="center" alignItems="center">
+              <ControlledTextInput
+                control={control}
+                name="emailAddress"
+                variant="outlined"
+                label="Email Address"
+                labelWidth={105}
+                lightBg
+                customClassName={styles.checkoutInputWidth}
+              />
+              <ControlledTextInput
+                control={control}
+                name="addressLine1"
+                variant="outlined"
+                label="Address Line 1"
+                labelWidth={105}
+                lightBg
+                customClassName={styles.checkoutInputWidth}
+              />
+              <ControlledTextInput
+                control={control}
+                name="addressLine2"
+                variant="outlined"
+                label="Address Line 2"
+                labelWidth={110}
+                lightBg
+                customClassName={styles.checkoutInputWidth}
+              />
+              <ControlledTextInput
+                control={control}
+                name="postcode"
+                variant="outlined"
+                label="Postcode"
+                lightBg
+                customClassName={styles.checkoutInputWidth}
+                maxLength={10}
+              />
+              <ControlledPicker
+                control={control}
+                options={stateOptions}
+                name="state"
+                variant="outlined"
+                lightBg
+                label="State"
+              />
+            </Grid>
           </CardContent>
         </Card>
       </Grid>

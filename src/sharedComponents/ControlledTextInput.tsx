@@ -22,6 +22,7 @@ interface ControlledTextInputOwnProps{
   labelWidth?:number
   customClassName?:string
   lightBg?:boolean
+  maxLength?:number
 }
 
 const useStyles = makeStyles({
@@ -56,6 +57,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
     labelWidth,
     customClassName,
     lightBg,
+    maxLength,
   } = props;
 
   const styles = useStyles();
@@ -74,7 +76,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
           className={`${styles.formControl} ${customClassName}`}
           style={{
             display: type === 'hidden' ? 'none' : 'flex',
-            width: lightBg ? '100%' : '80%',
+            width: lightBg ? '95%' : '80%',
           }}
         >
           <InputLabel
@@ -103,6 +105,9 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
                 </IconButton>
               </InputAdornment>
             )}
+            inputProps={{
+              maxLength,
+            }}
           />
           <FormHelperText error>{error?.message}</FormHelperText>
         </FormControl>
@@ -121,6 +126,7 @@ ControlledTextInput.defaultProps = {
   labelWidth: 70,
   customClassName: '',
   lightBg: false,
+  maxLength: null,
 };
 
 export default ControlledTextInput;
