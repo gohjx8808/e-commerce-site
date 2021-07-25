@@ -19,8 +19,8 @@ const LoadingOverlay = lazy(() => import('../modules/overlay/views/LoadingOverla
 const StatusModal = lazy(() => import('../modules/status/views/StatusModal'));
 
 const useStyles = makeStyles((theme) => ({
-  flexDisplay: {
-    display: 'flex',
+  contentContainer: {
+    marginLeft: theme.spacing(7) + 1,
   },
   toolbar: {
     display: 'flex',
@@ -76,7 +76,7 @@ const MainRoutes = (props: { pageComponent: JSX.Element } & RouteComponentProps)
   const styles = useStyles();
 
   return (
-    <Box className={styles.flexDisplay}>
+    <Box className={styles.contentContainer}>
       <MenuBar />
       <Box>
         <Box className={styles.content}>

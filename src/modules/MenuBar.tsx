@@ -221,7 +221,7 @@ const MenuBar = () => {
   };
 
   return (
-    <Box className={classes.grow}>
+    <Box>
       <CssBaseline />
       <ElevationScroll>
         <AppBar

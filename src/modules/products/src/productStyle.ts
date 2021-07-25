@@ -30,6 +30,7 @@ const productStyle = makeStyles((theme) => ({
   cartCard: {
     backgroundColor: theme.palette.primary.main,
     borderRadius: 10,
+    width: '100%',
   },
   boldText: {
     fontWeight: 'bold',
