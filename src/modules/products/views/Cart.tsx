@@ -103,7 +103,7 @@ const Cart = () => {
 
   return (
     <Grid container justify="center" alignItems="center" spacing={2}>
-      <Grid item lg={10} xs={11}>
+      <Grid item xs={11}>
         <Grid item xs={9}>
           <CustomBreadcrumbs />
         </Grid>
@@ -144,7 +144,7 @@ const Cart = () => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item lg={10} xs={11}>
+      <Grid item xs={11}>
         <Card className={styles.cartCard}>
           <CardContent className={styles.cartTitleCardContent}>
             {cartItems.map((cartItem, index) => (
@@ -242,7 +242,7 @@ const Cart = () => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item lg={10} xs={11}>
+      <Grid item xs={11}>
         <Card className={styles.cartCard}>
           <CardContent className={styles.cartTitleCardContent}>
             <Grid container justify="center" alignItems="center">
@@ -260,7 +260,7 @@ const Cart = () => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item lg={10} xs={11}>
+      <Grid item xs={11}>
         <Grid container justify="flex-end">
           <Button variant="contained" color="secondary" size="medium" onClick={() => navigate(routeNames.checkout)}>
             Checkout
