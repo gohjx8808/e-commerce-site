@@ -6,7 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { makeStyles } from '@material-ui/core/styles';
 import { Cancel } from '@material-ui/icons';
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
 type variantData='standard' | 'filled' | 'outlined'
@@ -24,7 +24,7 @@ interface ControlledTextInputOwnProps{
   lightBg?:boolean
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   unFocusStyle: {
     color: 'white',
     '& .MuiOutlinedInput-notchedOutline': {
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 5,
     marginBottom: 5,
   },
-}));
+});
 
 const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
   const {
