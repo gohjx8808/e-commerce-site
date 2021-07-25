@@ -7,6 +7,7 @@ import React, { lazy, Suspense } from 'react';
 import Footer from '../modules/Footer';
 import HomeScreen from '../modules/HomeScreen';
 import Cart from '../modules/products/views/Cart';
+import Checkout from '../modules/products/views/Checkout';
 import ScrollTop from '../sharedComponents/ScrollTop';
 import routeNames from '../utils/routeNames';
 
@@ -41,7 +42,7 @@ const App = () => {
             <RouterPage path={routeNames.signUp} pageComponent={<SignupScreen />} />
             <MainRoutes path={routeNames.products} pageComponent={<Products />} />
             <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
-            <MainRoutes path={routeNames.checkout} pageComponent={<Cart />} />
+            <MainRoutes path={routeNames.checkout} pageComponent={<Checkout />} />
           </Router>
           <StatusModal />
           <LoadingOverlay />

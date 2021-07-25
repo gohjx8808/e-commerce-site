@@ -6,7 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { makeStyles } from '@material-ui/core/styles';
 import { Cancel } from '@material-ui/icons';
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
 type variantData='standard' | 'filled' | 'outlined'
@@ -21,9 +21,10 @@ interface ControlledTextInputOwnProps{
   error?:FieldError
   labelWidth?:number
   customClassName?:string
+  lightBg?:boolean
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   unFocusStyle: {
     color: 'white',
     '& .MuiOutlinedInput-notchedOutline': {
@@ -41,11 +42,20 @@ const useStyles = makeStyles({
     marginTop: 5,
     marginBottom: 5,
   },
-});
+}));
 
 const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
   const {
-    control, label, type, variant, name, defaultValue, error, labelWidth, customClassName,
+    control,
+    label,
+    type,
+    variant,
+    name,
+    defaultValue,
+    error,
+    labelWidth,
+    customClassName,
+    lightBg,
   } = props;
 
   const styles = useStyles();
@@ -64,9 +74,15 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
           className={`${styles.formControl} ${customClassName}`}
           style={{
             display: type === 'hidden' ? 'none' : 'flex',
+            width: lightBg ? '100%' : '80%',
           }}
         >
-          <InputLabel htmlFor={name} classes={{ root: styles.unFocusLabel }} error={!!error}>
+          <InputLabel
+            htmlFor={name}
+            color={lightBg ? 'secondary' : 'primary'}
+            classes={{ root: !lightBg ? styles.unFocusLabel : '' }}
+            error={!!error}
+          >
             {label}
           </InputLabel>
           <OutlinedInput
@@ -75,7 +91,8 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             value={value}
             onChange={onChange}
             labelWidth={labelWidth}
-            classes={{ root: styles.unFocusStyle }}
+            color={lightBg ? 'secondary' : 'primary'}
+            classes={{ root: !lightBg ? styles.unFocusStyle : '' }}
             error={!!error}
             endAdornment={error && (
               <InputAdornment position="end">
@@ -103,6 +120,7 @@ ControlledTextInput.defaultProps = {
   error: null,
   labelWidth: 70,
   customClassName: '',
+  lightBg: false,
 };
 
 export default ControlledTextInput;

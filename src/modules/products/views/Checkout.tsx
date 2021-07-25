@@ -2,277 +2,115 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { Add, Remove } from '@material-ui/icons';
+import {
+  DataGrid, GridColDef, GridPageChangeParams, GridValueGetterParams,
+} from '@material-ui/data-grid';
 import { navigate } from 'gatsby';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useAppSelector } from '../../../hooks';
+import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import routeNames from '../../../utils/routeNames';
-import { increaseQuantity, reduceQuantity, removeItemFromCart } from '../src/productReducers';
 import productStyle from '../src/productStyle';
-import ItemRemoveConfirmationDialog from './ItemRemoveConfirmationDialog';
-
-type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  [key: string]: string | undefined | number
-}
 
 const Checkout = () => {
   const styles = productStyle();
-  const cartTitle = ['Item', 'Price (RM)', 'Quantity', 'Total (RM)'];
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const selectedCheckoutItemsID = useAppSelector((state) => state.product.selectedCheckoutItemsID);
   const [totalAmount, setTotalAmount] = useState<number>(0);
-  const [toBeRemovedItem, setToBeRemovedItem] = useState<products.shoppingCartItemData>({
-    id: '',
-    name: '',
-    quantity: 0,
-    price: '',
-    price_id: '',
-  });
-  const [removeConfirmModalDisplay, setRemoveConfirmModalDisplay] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
+  const [extractedCartItem, setExtractedCartItem] = useState<products.shoppingCartItemData[]>([]);
+  const [pageSize, setPageSize] = useState<number>(5);
+  const { control } = useForm();
 
-  const onChangeSelect = (event:React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.id === 'selectAll') {
-      if (event.target.checked) {
-        const allIds = [] as string[];
-        let total = 0;
-        cartItems.map((item) => {
-          allIds.push(item.id);
-          total += +item.price * item.quantity;
-          return null;
-        });
-        setSelectedItems(allIds);
-        setTotalAmount(total);
-      } else {
-        setSelectedItems([]);
-        setTotalAmount(0);
+  useEffect(() => {
+    const filteredItems = cartItems.filter((item) => {
+      if (selectedCheckoutItemsID.includes(item.id)) {
+        const itemPrice = +item.price * +item.quantity;
+        setTotalAmount((prevTotalAmount) => prevTotalAmount + itemPrice);
+        return true;
       }
-    } else {
-      let rawTotal = totalAmount;
-      if (event.target.checked) {
-        setSelectedItems([...selectedItems, event.target.id]);
-        setTotalAmount(rawTotal += +event.target.getAttribute('data-price')!);
-      } else {
-        const splicedArr = [...selectedItems];
-        splicedArr.splice(splicedArr.indexOf(event.target.id), 1);
-        setSelectedItems(splicedArr);
-        setTotalAmount(rawTotal -= +event.target.getAttribute('data-price')!);
-      }
-    }
-  };
+      return false;
+    });
+    setExtractedCartItem(filteredItems);
+  }, [cartItems, selectedCheckoutItemsID]);
 
-  const toggleRemoveConfirmModalDisplay = () => {
-    setRemoveConfirmModalDisplay(!removeConfirmModalDisplay);
-  };
+  const columns: GridColDef[] = [
+    { field: 'name', headerName: 'Name', width: 150 },
+    {
+      field: 'price', headerName: 'Price per Unit', width: 200, align: 'center', headerAlign: 'center', sortable: false,
+    },
+    {
+      field: 'quantity', headerName: 'Quantity', width: 150, align: 'center', headerAlign: 'center', sortable: false,
+    },
+    {
+      field: 'totalPrice',
+      headerName: 'Total Price',
+      sortable: false,
+      width: 150,
+      align: 'center',
+      headerAlign: 'center',
+      valueGetter: (params: GridValueGetterParams) => `${(+params.getValue(params.id, 'price')! * +params.getValue(params.id, 'quantity')!).toFixed(2)}`,
+    },
+  ];
 
-  const onReduceItemQuantity = (cartItem:products.shoppingCartItemData) => {
-    if (+cartItem.quantity - 1 === 0) {
-      setToBeRemovedItem(cartItem);
-      toggleRemoveConfirmModalDisplay();
-    } else {
-      dispatch(reduceQuantity(cartItem.id));
-      minusFromTotal();
-    }
-  };
-
-  const confirmItemRemove = () => {
-    dispatch(removeItemFromCart(toBeRemovedItem.id));
-    minusFromTotal();
-    toggleRemoveConfirmModalDisplay();
-  };
-
-  const minusFromTotal = () => {
-    if (selectedItems.includes(toBeRemovedItem.id)) {
-      const prevAmount = totalAmount;
-      setTotalAmount(prevAmount - +toBeRemovedItem.price);
-    }
-  };
-
-  const onIncreaseItemQuantity = (cartItemID:string, cartItemPrice:string) => {
-    dispatch(increaseQuantity(cartItemID));
-    if (selectedItems.includes(cartItemID)) {
-      const prevAmount = totalAmount;
-      setTotalAmount(prevAmount + +cartItemPrice);
-    }
+  const handlePageSizeChange = (params: GridPageChangeParams) => {
+    setPageSize(params.pageSize);
   };
 
   return (
     <Grid container justify="center" alignItems="center" spacing={2}>
-      <Grid item lg={10} xs={11}>
+      <Grid item xs={11}>
         <Grid item xs={9}>
           <CustomBreadcrumbs />
         </Grid>
-        <Card className={styles.cartCard}>
-          <CardContent className={styles.cartTitleCardContent}>
-            <Grid container justify="center" alignItems="center">
-              <Grid item xs={2}>
-                <Grid
-                  container
-                  justify="center"
-                  alignItems="center"
-                >
-                  <Checkbox
-                    color="secondary"
-                    onChange={onChangeSelect}
-                    indeterminate={
-                    selectedItems.length < cartItems.length && selectedItems.length > 0
-                  }
-                    checked={selectedItems.length > 0}
-                    id="selectAll"
-                    inputProps={{ 'aria-label': 'checkAll' }}
-                  />
-                </Grid>
-              </Grid>
-              {cartTitle.map((title) => (
-                <Grid item xs={title === 'Item' ? 4 : 2} key={title}>
-                  <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <Typography className={styles.boldText}>{title}</Typography>
-                  </Grid>
-                </Grid>
-              ))}
-            </Grid>
-          </CardContent>
-        </Card>
       </Grid>
-      <Grid item lg={10} xs={11}>
-        <Card className={styles.cartCard}>
-          <CardContent className={styles.cartTitleCardContent}>
-            {cartItems.map((cartItem, index) => (
-              <Grid
-                container
-                justify="center"
-                alignItems="center"
-                key={cartItem.id}
-                className={`${styles.cartItemCard} ${index === 0 ? '' : styles.topBorderedCartItemCard}`}
-              >
-                <Grid item xs={2}>
-                  <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <Checkbox
-                      checked={selectedItems.includes(cartItem.id)}
-                      color="secondary"
-                      onChange={onChangeSelect}
-                      id={cartItem.id}
-                      inputProps={{
-                        'aria-label': cartItem.id,
-                        'data-price': +cartItem.price * cartItem.quantity,
-                      } as CartItemCheckboxProps}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid item xs={4}>
-                  <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                    direction="column"
-                  >
-                    <Typography>{cartItem.name}</Typography>
-                    {cartItem.imgURL!.map((localFile) => {
-                      const imageData = getImage(localFile)!;
-                      return (
-                        <Box
-                          className={styles.cartItemImageContainer}
-                          key={imageData.images.fallback?.src}
-                        >
-                          <GatsbyImage
-                            image={imageData}
-                            alt={cartItem.id}
-                            imgClassName={styles.cartItemImage}
-                          />
-                        </Box>
-                      );
-                    })}
-                  </Grid>
-                </Grid>
-                <Grid item xs={2}>
-                  <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <Typography>{cartItem.price}</Typography>
-                  </Grid>
-                </Grid>
-                <Grid item xs={2}>
-                  <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <IconButton
-                      onClick={
-                        () => onReduceItemQuantity(cartItem)
-                      }
-                    >
-                      <Remove />
-                    </IconButton>
-                    <Typography>{cartItem.quantity}</Typography>
-                    <IconButton onClick={() => onIncreaseItemQuantity(cartItem.id, cartItem.price)}>
-                      <Add />
-                    </IconButton>
-                  </Grid>
-                </Grid>
-                <Grid item xs={2}>
-                  <Grid
-                    container
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <Typography>
-                      {(+cartItem.price * cartItem.quantity).toFixed(2)}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-            ))}
-          </CardContent>
-        </Card>
+      <Grid item lg={6} xs={11}>
+        <Typography variant="h6">Your Order</Typography>
+        <Box className={styles.checkoutItemContainer}>
+          <DataGrid
+            rows={extractedCartItem}
+            columns={columns}
+            disableColumnMenu
+            pageSize={pageSize}
+            onPageSizeChange={handlePageSizeChange}
+            rowsPerPageOptions={[5, 10, 20]}
+            pagination
+            disableSelectionOnClick
+            style={{ borderColor: '#B67B5E', borderWidth: 2 }}
+          />
+        </Box>
+        <Grid container justify="flex-end" className={styles.totalPayText}>
+          <Typography variant="h6">
+            Total Amount to Pay: RM
+            {totalAmount.toFixed(2)}
+          </Typography>
+        </Grid>
       </Grid>
-      <Grid item lg={10} xs={11}>
-        <Card className={styles.cartCard}>
+      <Grid item lg={6} xs={11}>
+        <Card>
           <CardContent className={styles.cartTitleCardContent}>
-            <Grid container justify="center" alignItems="center">
-              <Grid item xs={10}>
-                <Typography className={styles.totalTitle}>Total</Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <Typography className={styles.totalTitle}>
-                  RM
-                  {' '}
-                  {totalAmount.toFixed(2)}
-                </Typography>
-              </Grid>
-            </Grid>
+            <ControlledTextInput
+              control={control}
+              name="emailAddress"
+              variant="outlined"
+              label="Email Address"
+              labelWidth={105}
+              lightBg
+              customClassName={styles.checkoutInputWidth}
+            />
           </CardContent>
         </Card>
       </Grid>
       <Grid item lg={10} xs={11}>
         <Grid container justify="flex-end">
           <Button variant="contained" color="secondary" size="medium" onClick={() => navigate(routeNames.checkout)}>
-            Checkout
+            Proceed To Payment
           </Button>
         </Grid>
       </Grid>
-      <ItemRemoveConfirmationDialog
-        modalOpen={removeConfirmModalDisplay}
-        itemName={toBeRemovedItem.name}
-        toggleModal={toggleRemoveConfirmModalDisplay}
-        confirmRemove={confirmItemRemove}
-      />
     </Grid>
   );
 };

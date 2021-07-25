@@ -55,6 +55,16 @@ const productStyle = makeStyles((theme) => ({
     fontWeight: 'bold',
     paddingLeft: '10%',
   },
+  checkoutItemContainer: {
+    height: 300,
+    width: '100%',
+  },
+  totalPayText: {
+    paddingTop: 5,
+  },
+  checkoutInputWidth: {
+    width: '100%',
+  },
 }));
 
 export default productStyle;
