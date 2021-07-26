@@ -24,7 +24,7 @@ const Checkout = () => {
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<products.shoppingCartItemData[]>([]);
   const [pageSize, setPageSize] = useState<number>(5);
-  const { control } = useForm();
+  const { control, watch, setValue } = useForm();
 
   useEffect(() => {
     const filteredItems = cartItems.filter((item) => {
@@ -81,6 +81,16 @@ const Checkout = () => {
     setPageSize(params.pageSize);
   };
 
+  const selectedState = watch('state');
+
+  useEffect(() => {
+    if (selectedState && selectedState.value !== 'Outside Malaysia') {
+      setValue('country', 'Malaysia');
+    } else {
+      setValue('country', '');
+    }
+  }, [setValue, selectedState]);
+
   return (
     <Grid container justify="center" alignItems="center" spacing={2}>
       <Grid item xs={11}>
@@ -121,7 +131,6 @@ const Checkout = () => {
                 label="Email Address"
                 labelWidth={105}
                 lightBg
-                customClassName={styles.checkoutInputWidth}
               />
               <ControlledTextInput
                 control={control}
@@ -130,7 +139,6 @@ const Checkout = () => {
                 label="Address Line 1"
                 labelWidth={105}
                 lightBg
-                customClassName={styles.checkoutInputWidth}
               />
               <ControlledTextInput
                 control={control}
@@ -139,7 +147,6 @@ const Checkout = () => {
                 label="Address Line 2"
                 labelWidth={110}
                 lightBg
-                customClassName={styles.checkoutInputWidth}
               />
               <ControlledTextInput
                 control={control}
@@ -147,7 +154,6 @@ const Checkout = () => {
                 variant="outlined"
                 label="Postcode"
                 lightBg
-                customClassName={styles.checkoutInputWidth}
                 maxLength={10}
               />
               <ControlledPicker
@@ -158,11 +164,29 @@ const Checkout = () => {
                 lightBg
                 label="State"
               />
+              {watch('state') && watch('state').value === 'Outside Malaysia' && (
+                <ControlledTextInput
+                  control={control}
+                  name="outsideMalaysiaState"
+                  variant="outlined"
+                  label="Foreign Country State"
+                  labelWidth={155}
+                  lightBg
+                />
+              )}
+              <ControlledTextInput
+                control={control}
+                name="country"
+                variant="outlined"
+                label="Country"
+                labelWidth={55}
+                lightBg
+              />
             </Grid>
           </CardContent>
         </Card>
       </Grid>
-      <Grid item lg={10} xs={11}>
+      <Grid item lg={12} xs={11}>
         <Grid container justify="flex-end">
           <Button variant="contained" color="secondary" size="medium" onClick={() => navigate(routeNames.checkout)}>
             Proceed To Payment

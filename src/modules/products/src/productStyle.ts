@@ -62,9 +62,6 @@ const productStyle = makeStyles((theme) => ({
   totalPayText: {
     paddingTop: 5,
   },
-  checkoutInputWidth: {
-    width: '100%',
-  },
 }));
 
 export default productStyle;
