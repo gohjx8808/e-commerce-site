@@ -76,7 +76,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
           className={`${styles.formControl} ${customClassName}`}
           style={{
             display: type === 'hidden' ? 'none' : 'flex',
-            width: lightBg ? '95%' : '80%',
+            width: '80%',
           }}
         >
           <InputLabel

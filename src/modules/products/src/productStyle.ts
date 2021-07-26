@@ -62,6 +62,15 @@ const productStyle = makeStyles((theme) => ({
   totalPayText: {
     paddingTop: 5,
   },
+  shippingInfoFullWidth: {
+    width: '95%!important',
+  },
+  shippingInfoHalfWidth: {
+    [theme.breakpoints.up('lg')]: {
+      width: '90%!important',
+    },
+    width: '95%!important',
+  },
 }));
 
 export default productStyle;

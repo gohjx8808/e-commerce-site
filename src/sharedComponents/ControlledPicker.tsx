@@ -18,6 +18,7 @@ interface ControlledPickerOwnProps{
   error?:FieldError
   options:optionsData[]
   lightBg?:boolean
+  customClassName?:string
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ControlledPicker = (props:ControlledPickerOwnProps) => {
   const {
-    control, label, variant, name, defaultValue, error, options, lightBg,
+    control, label, variant, name, defaultValue, error, options, lightBg, customClassName,
   } = props;
 
   const [popupIndicatorClass, setPopupIndicatorClass] = useState('');
@@ -69,7 +70,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
           onChange, value,
         },
       }) => (
-        <FormControl variant={variant} className={styles.container} style={{ width: lightBg ? '95%' : '80%', marginTop: 5 }}>
+        <FormControl variant={variant} className={`${styles.container} ${customClassName}`} style={{ width: '80%', marginTop: 5 }}>
           <Autocomplete
             options={options}
             getOptionLabel={(option) => option.label}
@@ -114,6 +115,7 @@ ControlledPicker.defaultProps = {
   label: '',
   error: null,
   lightBg: false,
+  customClassName: '',
 };
 
 export default ControlledPicker;

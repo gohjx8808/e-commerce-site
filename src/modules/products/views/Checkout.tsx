@@ -131,6 +131,7 @@ const Checkout = () => {
                 label="Email Address"
                 labelWidth={105}
                 lightBg
+                customClassName={styles.shippingInfoFullWidth}
               />
               <ControlledTextInput
                 control={control}
@@ -139,6 +140,7 @@ const Checkout = () => {
                 label="Address Line 1"
                 labelWidth={105}
                 lightBg
+                customClassName={styles.shippingInfoFullWidth}
               />
               <ControlledTextInput
                 control={control}
@@ -147,41 +149,75 @@ const Checkout = () => {
                 label="Address Line 2"
                 labelWidth={110}
                 lightBg
+                customClassName={styles.shippingInfoFullWidth}
               />
-              <ControlledTextInput
-                control={control}
-                name="postcode"
-                variant="outlined"
-                label="Postcode"
-                lightBg
-                maxLength={10}
-              />
-              <ControlledPicker
-                control={control}
-                options={stateOptions}
-                name="state"
-                variant="outlined"
-                lightBg
-                label="State"
-              />
-              {watch('state') && watch('state').value === 'Outside Malaysia' && (
-                <ControlledTextInput
-                  control={control}
-                  name="outsideMalaysiaState"
-                  variant="outlined"
-                  label="Foreign Country State"
-                  labelWidth={155}
-                  lightBg
-                />
+              <Grid item lg={6} xs={12}>
+                <Grid container justify="center" alignItems="center">
+                  <ControlledTextInput
+                    control={control}
+                    name="postcode"
+                    variant="outlined"
+                    label="Postcode"
+                    lightBg
+                    maxLength={10}
+                    customClassName={styles.shippingInfoHalfWidth}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item lg={6} xs={12}>
+                <Grid container justify="center" alignItems="center">
+                  <ControlledTextInput
+                    control={control}
+                    name="city"
+                    variant="outlined"
+                    label="City"
+                    lightBg
+                    labelWidth={25}
+                    customClassName={styles.shippingInfoHalfWidth}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item lg={6} xs={12}>
+                <Grid container justify="center" alignItems="center">
+                  <ControlledPicker
+                    control={control}
+                    options={stateOptions}
+                    name="state"
+                    variant="outlined"
+                    lightBg
+                    label="State"
+                    customClassName={styles.shippingInfoHalfWidth}
+                  />
+                </Grid>
+              </Grid>
+              {selectedState && selectedState.value === 'Outside Malaysia' && (
+                <Grid item lg={6} xs={12}>
+                  <Grid container justify="center" alignItems="center">
+                    <ControlledTextInput
+                      control={control}
+                      name="outsideMalaysiaState"
+                      variant="outlined"
+                      label="Foreign Country State"
+                      labelWidth={155}
+                      lightBg
+                      customClassName={styles.shippingInfoHalfWidth}
+                    />
+                  </Grid>
+                </Grid>
               )}
-              <ControlledTextInput
-                control={control}
-                name="country"
-                variant="outlined"
-                label="Country"
-                labelWidth={55}
-                lightBg
-              />
+              <Grid item lg={selectedState && selectedState.value === 'Outside Malaysia' ? 12 : 6} xs={12}>
+                <Grid container justify="center" alignItems="center">
+                  <ControlledTextInput
+                    control={control}
+                    name="country"
+                    variant="outlined"
+                    label="Country"
+                    labelWidth={55}
+                    lightBg
+                    customClassName={selectedState && selectedState.value !== 'Outside Malaysia' ? styles.shippingInfoHalfWidth : styles.shippingInfoFullWidth}
+                  />
+                </Grid>
+              </Grid>
             </Grid>
           </CardContent>
         </Card>
