@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     width: '80%',
     marginBottom: 5,
+    marginTop: 5,
   },
   errorColor: {
     color: theme.palette.error.main,
@@ -70,7 +71,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
           onChange, value,
         },
       }) => (
-        <FormControl variant={variant} className={`${styles.container} ${customClassName}`} style={{ width: '80%', marginTop: 5 }}>
+        <FormControl variant={variant} className={`${styles.container} ${customClassName}`}>
           <Autocomplete
             options={options}
             getOptionLabel={(option) => option.label}

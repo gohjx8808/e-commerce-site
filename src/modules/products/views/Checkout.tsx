@@ -110,7 +110,7 @@ const Checkout = () => {
             rowsPerPageOptions={[5, 10, 20]}
             pagination
             disableSelectionOnClick
-            style={{ borderColor: '#B67B5E', borderWidth: 2 }}
+            className={styles.checkoutItemDataGrid}
           />
         </Box>
         <Grid container justify="flex-end" className={styles.totalPayText}>

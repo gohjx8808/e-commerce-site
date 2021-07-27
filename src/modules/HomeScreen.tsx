@@ -32,6 +32,10 @@ const useStyle = makeStyles({
   viewMoreBtn: {
     marginTop: 10,
   },
+  productCarouselNavButton: {
+    backgroundColor: 'transparent!important',
+    color: 'black!important',
+  },
 });
 
 interface imageInnerStructure{
@@ -111,8 +115,8 @@ const HomeScreen = () => {
         <Carousel
           navButtonsWrapperProps={{ className: styles.carouselNavWrapper, style: {} }}
           navButtonsProps={{
-            className: '',
-            style: { backgroundColor: 'transparent', color: 'black' },
+            className: styles.productCarouselNavButton,
+            style: {},
           }}
           animation="slide"
           interval={3000}
@@ -141,8 +145,8 @@ const HomeScreen = () => {
       <Carousel
         navButtonsWrapperProps={{ className: styles.carouselNavWrapper, style: {} }}
         navButtonsProps={{
-          className: '',
-          style: { backgroundColor: 'transparent', color: 'black' },
+          className: styles.productCarouselNavButton,
+          style: {},
         }}
         animation="slide"
         interval={5000}

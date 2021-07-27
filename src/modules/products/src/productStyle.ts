@@ -71,6 +71,10 @@ const productStyle = makeStyles((theme) => ({
     },
     width: '95%!important',
   },
+  checkoutItemDataGrid: {
+    borderColor: '#B67B5E!important',
+    borderWidth: '2px!important',
+  },
 }));
 
 export default productStyle;
