@@ -23,6 +23,7 @@ interface ControlledTextInputOwnProps{
   customClassName?:string
   lightBg?:boolean
   maxLength?:number
+  startAdornment?:React.ReactNode
 }
 
 const useStyles = makeStyles({
@@ -58,6 +59,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
     customClassName,
     lightBg,
     maxLength,
+    startAdornment,
   } = props;
 
   const styles = useStyles();
@@ -104,6 +106,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
                 </IconButton>
               </InputAdornment>
             )}
+            startAdornment={startAdornment}
             inputProps={{
               maxLength,
             }}
@@ -126,6 +129,7 @@ ControlledTextInput.defaultProps = {
   customClassName: '',
   lightBg: false,
   maxLength: null,
+  startAdornment: null,
 };
 
 export default ControlledTextInput;

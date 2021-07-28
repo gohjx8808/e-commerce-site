@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import {
   DataGrid, GridColDef, GridPageChangeParams, GridValueGetterParams,
@@ -136,13 +137,44 @@ const Checkout = () => {
             <Grid container justify="center" alignItems="center">
               <ControlledTextInput
                 control={control}
-                name="emailAddress"
+                name="fullName"
                 variant="outlined"
-                label="Email Address"
-                labelWidth={105}
+                label="Full Name"
                 lightBg
                 customClassName={styles.shippingInfoFullWidth}
               />
+              <Grid item lg={6} xs={12}>
+                <Grid container justify="center" alignItems="center">
+                  <ControlledTextInput
+                    control={control}
+                    name="emailAddress"
+                    variant="outlined"
+                    label="Email Address"
+                    labelWidth={105}
+                    lightBg
+                    customClassName={styles.shippingInfoHalfWidth}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item lg={6} xs={12}>
+                <Grid container justify="center" alignItems="center">
+                  <ControlledTextInput
+                    control={control}
+                    name="phoneNo"
+                    variant="outlined"
+                    label="Phone Number"
+                    labelWidth={105}
+                    lightBg
+                    customClassName={styles.shippingInfoHalfWidth}
+                    startAdornment={(
+                      <InputAdornment position="start">
+                        +
+                      </InputAdornment>
+                    )}
+                    defaultValue="60"
+                  />
+                </Grid>
+              </Grid>
               <ControlledTextInput
                 control={control}
                 name="addressLine1"

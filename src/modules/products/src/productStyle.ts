@@ -56,7 +56,7 @@ const productStyle = makeStyles((theme) => ({
     paddingLeft: '10%',
   },
   checkoutItemContainer: {
-    height: 320,
+    height: 390,
     width: '100%',
   },
   totalPayTextContainer: {
@@ -79,7 +79,7 @@ const productStyle = makeStyles((theme) => ({
     borderWidth: '2px!important',
   },
   checkoutOrderCard: {
-    height: 380,
+    height: 450,
   },
 }));
 
