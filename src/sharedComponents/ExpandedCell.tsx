@@ -1,5 +1,7 @@
-import { Paper, Popper, Typography } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import { GridCellParams, isOverflown } from '@material-ui/data-grid';
 import React, {
   memo, useRef, useState,

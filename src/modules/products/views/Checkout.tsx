@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {
@@ -105,7 +106,7 @@ const Checkout = () => {
       </Grid>
       <Grid item lg={4} xs={11}>
         <Typography variant="h6">Your Order</Typography>
-        <Card>
+        <Card className={`${styles.secondaryBorder} ${styles.checkoutOrderCard}`} variant="outlined">
           <Box className={styles.checkoutItemContainer}>
             <DataGrid
               rows={extractedCartItem}
@@ -116,20 +117,21 @@ const Checkout = () => {
               rowsPerPageOptions={[5, 10, 20]}
               pagination
               disableSelectionOnClick
-              className={styles.checkoutItemDataGrid}
+              hideFooter
             />
           </Box>
+          <Divider />
+          <Grid container justify="flex-end" className={styles.totalPayTextContainer}>
+            <Typography variant="subtitle1" className={styles.totalPayText}>
+              Total Amount to Pay: RM
+              {totalAmount.toFixed(2)}
+            </Typography>
+          </Grid>
         </Card>
-        <Grid container justify="flex-end" className={styles.totalPayText}>
-          <Typography variant="h6">
-            Total Amount to Pay: RM
-            {totalAmount.toFixed(2)}
-          </Typography>
-        </Grid>
       </Grid>
       <Grid item lg={8} xs={11}>
         <Typography variant="h6">Shipping Information</Typography>
-        <Card className={styles.checkoutItemDataGrid} variant="outlined">
+        <Card className={styles.secondaryBorder} variant="outlined">
           <CardContent className={styles.cartTitleCardContent}>
             <Grid container justify="center" alignItems="center">
               <ControlledTextInput

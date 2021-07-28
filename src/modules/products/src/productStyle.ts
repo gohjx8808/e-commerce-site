@@ -56,11 +56,14 @@ const productStyle = makeStyles((theme) => ({
     paddingLeft: '10%',
   },
   checkoutItemContainer: {
-    height: 380,
+    height: 320,
     width: '100%',
   },
+  totalPayTextContainer: {
+    padding: 15,
+  },
   totalPayText: {
-    paddingTop: 5,
+    fontWeight: 525,
   },
   shippingInfoFullWidth: {
     width: '95%!important',
@@ -71,9 +74,12 @@ const productStyle = makeStyles((theme) => ({
     },
     width: '95%!important',
   },
-  checkoutItemDataGrid: {
+  secondaryBorder: {
     borderColor: `${theme.palette.secondary.main}!important`,
     borderWidth: '2px!important',
+  },
+  checkoutOrderCard: {
+    height: 380,
   },
 }));
 
