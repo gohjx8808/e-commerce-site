@@ -56,7 +56,7 @@ const productStyle = makeStyles((theme) => ({
     paddingLeft: '10%',
   },
   checkoutItemContainer: {
-    height: 300,
+    height: 380,
     width: '100%',
   },
   totalPayText: {
@@ -72,7 +72,7 @@ const productStyle = makeStyles((theme) => ({
     width: '95%!important',
   },
   checkoutItemDataGrid: {
-    borderColor: '#B67B5E!important',
+    borderColor: `${theme.palette.secondary.main}!important`,
     borderWidth: '2px!important',
   },
 }));

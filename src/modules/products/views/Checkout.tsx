@@ -14,6 +14,7 @@ import { useAppSelector } from '../../../hooks';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
+import ExpandedCell from '../../../sharedComponents/ExpandedCell';
 import routeNames from '../../../utils/routeNames';
 import productStyle from '../src/productStyle';
 
@@ -39,18 +40,20 @@ const Checkout = () => {
   }, [cartItems, selectedCheckoutItemsID]);
 
   const columns: GridColDef[] = [
-    { field: 'name', headerName: 'Name', width: 150 },
     {
-      field: 'price', headerName: 'Price per Unit', width: 200, align: 'center', headerAlign: 'center', sortable: false,
+      field: 'name', headerName: 'Name', flex: 1, renderCell: ExpandedCell,
     },
     {
-      field: 'quantity', headerName: 'Quantity', width: 150, align: 'center', headerAlign: 'center', sortable: false,
+      field: 'price', headerName: 'Price per Unit', flex: 1, align: 'center', headerAlign: 'center', sortable: false,
+    },
+    {
+      field: 'quantity', headerName: 'Quantity', flex: 1, align: 'center', headerAlign: 'center', sortable: false,
     },
     {
       field: 'totalPrice',
       headerName: 'Total Price',
       sortable: false,
-      width: 150,
+      flex: 1,
       align: 'center',
       headerAlign: 'center',
       valueGetter: (params: GridValueGetterParams) => `${(+params.getValue(params.id, 'price')! * +params.getValue(params.id, 'quantity')!).toFixed(2)}`,
@@ -91,28 +94,32 @@ const Checkout = () => {
     }
   }, [setValue, selectedState]);
 
+  const outsideMalaysiaState = selectedState && selectedState.value === 'Outside Malaysia';
+
   return (
-    <Grid container justify="center" alignItems="center" spacing={2}>
+    <Grid container justify="center" spacing={3}>
       <Grid item xs={11}>
         <Grid item xs={9}>
           <CustomBreadcrumbs />
         </Grid>
       </Grid>
-      <Grid item lg={6} xs={11}>
+      <Grid item lg={4} xs={11}>
         <Typography variant="h6">Your Order</Typography>
-        <Box className={styles.checkoutItemContainer}>
-          <DataGrid
-            rows={extractedCartItem}
-            columns={columns}
-            disableColumnMenu
-            pageSize={pageSize}
-            onPageSizeChange={handlePageSizeChange}
-            rowsPerPageOptions={[5, 10, 20]}
-            pagination
-            disableSelectionOnClick
-            className={styles.checkoutItemDataGrid}
-          />
-        </Box>
+        <Card>
+          <Box className={styles.checkoutItemContainer}>
+            <DataGrid
+              rows={extractedCartItem}
+              columns={columns}
+              disableColumnMenu
+              pageSize={pageSize}
+              onPageSizeChange={handlePageSizeChange}
+              rowsPerPageOptions={[5, 10, 20]}
+              pagination
+              disableSelectionOnClick
+              className={styles.checkoutItemDataGrid}
+            />
+          </Box>
+        </Card>
         <Grid container justify="flex-end" className={styles.totalPayText}>
           <Typography variant="h6">
             Total Amount to Pay: RM
@@ -120,8 +127,9 @@ const Checkout = () => {
           </Typography>
         </Grid>
       </Grid>
-      <Grid item lg={6} xs={11}>
-        <Card>
+      <Grid item lg={8} xs={11}>
+        <Typography variant="h6">Shipping Information</Typography>
+        <Card className={styles.checkoutItemDataGrid} variant="outlined">
           <CardContent className={styles.cartTitleCardContent}>
             <Grid container justify="center" alignItems="center">
               <ControlledTextInput
@@ -190,7 +198,7 @@ const Checkout = () => {
                   />
                 </Grid>
               </Grid>
-              {selectedState && selectedState.value === 'Outside Malaysia' && (
+              {outsideMalaysiaState && (
                 <Grid item lg={6} xs={12}>
                   <Grid container justify="center" alignItems="center">
                     <ControlledTextInput
@@ -205,7 +213,7 @@ const Checkout = () => {
                   </Grid>
                 </Grid>
               )}
-              <Grid item lg={selectedState && selectedState.value === 'Outside Malaysia' ? 12 : 6} xs={12}>
+              <Grid item lg={outsideMalaysiaState ? 12 : 6} xs={12}>
                 <Grid container justify="center" alignItems="center">
                   <ControlledTextInput
                     control={control}
@@ -214,7 +222,10 @@ const Checkout = () => {
                     label="Country"
                     labelWidth={55}
                     lightBg
-                    customClassName={selectedState && selectedState.value !== 'Outside Malaysia' ? styles.shippingInfoHalfWidth : styles.shippingInfoFullWidth}
+                    customClassName={
+                      outsideMalaysiaState
+                        ? styles.shippingInfoFullWidth : styles.shippingInfoHalfWidth
+                    }
                   />
                 </Grid>
               </Grid>
