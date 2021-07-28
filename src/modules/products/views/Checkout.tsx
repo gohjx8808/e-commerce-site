@@ -13,6 +13,7 @@ import { navigate } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppSelector } from '../../../hooks';
+import ControlledCheckbox from '../../../sharedComponents/ControlledCheckbox';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
@@ -262,6 +263,13 @@ const Checkout = () => {
                     }
                   />
                 </Grid>
+              </Grid>
+              <Grid container justify="flex-start" alignItems="center" className={styles.rmbPadding}>
+                <ControlledCheckbox
+                  name="saveShippingInfo"
+                  control={control}
+                  label="Use this shipping information for the next time"
+                />
               </Grid>
             </Grid>
           </CardContent>
