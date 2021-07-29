@@ -4,12 +4,15 @@ import { GatsbyFunctionRequest, GatsbyFunctionResponse } from 'gatsby';
 export default async function sendEmail(req: GatsbyFunctionRequest, res: GatsbyFunctionResponse) {
   sgMail.setApiKey(process.env.GATSBY_SENDGRID_API_KEY!);
 
+  const postData:products.submitShippingInfoPayload = req.body;
+
   const msg = {
-    to: 'gohjx8808@gmail.com',
+    to: postData.email,
     from: 'yj.artjournal@gmail.com',
-    subject: 'Sending with SendGrid is Fun',
-    text: 'and easy to do anywhere, even with Node.js',
-    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    templateId: 'd-42bce563a8cc4a00b44c787c32a0cb23',
+    dynamic_template_data: {
+      name: postData.fullName,
+    },
   };
 
   try {

@@ -103,14 +103,14 @@ const Checkout = () => {
 
   const outsideMalaysiaState = selectedState && selectedState.value === 'Outside Malaysia';
 
-  const proceedToPayment = async (hookData) => {
+  const proceedToPayment = async (hookData:products.submitShippingInfoPayload) => {
     const response = await window.fetch('/api/sendGrid', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
+      body: JSON.stringify(hookData),
     }).then((rawRes) => rawRes.json());
-    console.log(response);
   };
 
   return (

@@ -50,4 +50,16 @@ declare namespace products{
     price:string
     quantity:number
   }
+
+  interface submitShippingInfoPayload{
+    fullName:string
+    email: string
+    phoneNo: string
+    addressLine1: string
+    postcode: string
+    city: string
+    state: optionsData
+    outsideMalaysiaState: string
+    country: string
+  }
 }
