@@ -21,6 +21,8 @@ import ExpandedCell from '../../../sharedComponents/ExpandedCell';
 import productSchema from '../src/productSchema';
 import productStyle from '../src/productStyle';
 
+const sgMail = require('@sendgrid/mail');
+
 const Checkout = () => {
   const styles = productStyle();
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
@@ -33,6 +35,10 @@ const Checkout = () => {
   } = useForm({
     resolver: yupResolver(productSchema.shippingInfoSchema),
   });
+
+  useEffect(() => {
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  }, []);
 
   useEffect(() => {
     const filteredItems = cartItems.filter((item) => {
@@ -104,7 +110,20 @@ const Checkout = () => {
   const outsideMalaysiaState = selectedState && selectedState.value === 'Outside Malaysia';
 
   const proceedToPayment = (hookData) => {
-    console.log(hookData);
+    const msg = {
+      to: 'gohjx8808@gmail.com', // Change to your recipient
+      from: 'yj.artjournal@gmail.com', // Change to your verified sender
+      subject: 'Sending with SendGrid is Fun',
+      text: 'and easy to do anywhere, even with Node.js',
+      html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    };
+    sgMail.send(msg)
+      .then(() => {
+        console.log('Email sent');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (

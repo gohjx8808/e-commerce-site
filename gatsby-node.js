@@ -1,7 +1,7 @@
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({ plugins: [new NodePolyfillPlugin()] });
+  actions.setWebpackConfig({ plugins: [new NodePolyfillPlugin()], node: { fs: 'empty' } });
 };
 
 exports.onCreatePage = ({ page, actions }) => {
