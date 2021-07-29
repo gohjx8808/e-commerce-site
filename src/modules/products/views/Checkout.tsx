@@ -37,7 +37,7 @@ const Checkout = () => {
   });
 
   useEffect(() => {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    sgMail.setApiKey(process.env.GATSBY_SENDGRID_API_KEY);
   }, []);
 
   useEffect(() => {
