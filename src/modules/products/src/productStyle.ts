@@ -84,6 +84,9 @@ const productStyle = makeStyles((theme) => ({
   rmbPadding: {
     paddingLeft: 20,
   },
+  proceedPaymentBtnContainer: {
+    marginTop: 10,
+  },
 }));
 
 export default productStyle;

@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -9,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import {
   DataGrid, GridColDef, GridPageChangeParams, GridValueGetterParams,
 } from '@material-ui/data-grid';
-import { navigate } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppSelector } from '../../../hooks';
@@ -18,7 +18,7 @@ import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import ExpandedCell from '../../../sharedComponents/ExpandedCell';
-import routeNames from '../../../utils/routeNames';
+import productSchema from '../src/productSchema';
 import productStyle from '../src/productStyle';
 
 const Checkout = () => {
@@ -28,7 +28,11 @@ const Checkout = () => {
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<products.shoppingCartItemData[]>([]);
   const [pageSize, setPageSize] = useState<number>(5);
-  const { control, watch, setValue } = useForm();
+  const {
+    control, watch, setValue, handleSubmit, formState: { errors },
+  } = useForm({
+    resolver: yupResolver(productSchema.shippingInfoSchema),
+  });
 
   useEffect(() => {
     const filteredItems = cartItems.filter((item) => {
@@ -99,6 +103,10 @@ const Checkout = () => {
 
   const outsideMalaysiaState = selectedState && selectedState.value === 'Outside Malaysia';
 
+  const proceedToPayment = (hookData) => {
+    console.log(hookData);
+  };
+
   return (
     <Grid container justify="center" spacing={3}>
       <Grid item xs={11}>
@@ -132,155 +140,168 @@ const Checkout = () => {
         </Card>
       </Grid>
       <Grid item lg={8} xs={11}>
-        <Typography variant="h6">Shipping Information</Typography>
-        <Card className={styles.secondaryBorder} variant="outlined">
-          <CardContent className={styles.cartTitleCardContent}>
-            <Grid container justify="center" alignItems="center">
-              <ControlledTextInput
-                control={control}
-                name="fullName"
-                variant="outlined"
-                label="Full Name"
-                lightBg
-                customClassName={styles.shippingInfoFullWidth}
-              />
-              <Grid item lg={6} xs={12}>
+        <form onSubmit={handleSubmit(proceedToPayment)}>
+          <Grid item xs={12}>
+            <Typography variant="h6">Shipping Information</Typography>
+            <Card className={styles.secondaryBorder} variant="outlined">
+              <CardContent className={styles.cartTitleCardContent}>
                 <Grid container justify="center" alignItems="center">
                   <ControlledTextInput
                     control={control}
-                    name="emailAddress"
+                    name="fullName"
                     variant="outlined"
-                    label="Email Address"
-                    labelWidth={105}
+                    label="Full Name"
                     lightBg
-                    customClassName={styles.shippingInfoHalfWidth}
+                    customClassName={styles.shippingInfoFullWidth}
+                    error={errors.fullName}
                   />
-                </Grid>
-              </Grid>
-              <Grid item lg={6} xs={12}>
-                <Grid container justify="center" alignItems="center">
-                  <ControlledTextInput
-                    control={control}
-                    name="phoneNo"
-                    variant="outlined"
-                    label="Phone Number"
-                    labelWidth={105}
-                    lightBg
-                    customClassName={styles.shippingInfoHalfWidth}
-                    startAdornment={(
-                      <InputAdornment position="start">
-                        +
-                      </InputAdornment>
+                  <Grid item lg={6} xs={12}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledTextInput
+                        control={control}
+                        name="email"
+                        variant="outlined"
+                        label="Email Address"
+                        labelWidth={105}
+                        lightBg
+                        customClassName={styles.shippingInfoHalfWidth}
+                        error={errors.email}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item lg={6} xs={12}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledTextInput
+                        control={control}
+                        name="phoneNo"
+                        variant="outlined"
+                        label="Phone Number"
+                        labelWidth={105}
+                        lightBg
+                        customClassName={styles.shippingInfoHalfWidth}
+                        startAdornment={(
+                          <InputAdornment position="start">
+                            +
+                          </InputAdornment>
                     )}
-                    defaultValue="60"
-                  />
-                </Grid>
-              </Grid>
-              <ControlledTextInput
-                control={control}
-                name="addressLine1"
-                variant="outlined"
-                label="Address Line 1"
-                labelWidth={105}
-                lightBg
-                customClassName={styles.shippingInfoFullWidth}
-              />
-              <ControlledTextInput
-                control={control}
-                name="addressLine2"
-                variant="outlined"
-                label="Address Line 2"
-                labelWidth={110}
-                lightBg
-                customClassName={styles.shippingInfoFullWidth}
-              />
-              <Grid item lg={6} xs={12}>
-                <Grid container justify="center" alignItems="center">
+                        defaultValue="60"
+                        error={errors.phoneNo}
+                      />
+                    </Grid>
+                  </Grid>
                   <ControlledTextInput
                     control={control}
-                    name="postcode"
+                    name="addressLine1"
                     variant="outlined"
-                    label="Postcode"
+                    label="Address Line 1"
+                    labelWidth={105}
                     lightBg
-                    maxLength={10}
-                    customClassName={styles.shippingInfoHalfWidth}
+                    customClassName={styles.shippingInfoFullWidth}
+                    error={errors.addressLine1}
                   />
-                </Grid>
-              </Grid>
-              <Grid item lg={6} xs={12}>
-                <Grid container justify="center" alignItems="center">
                   <ControlledTextInput
                     control={control}
-                    name="city"
+                    name="addressLine2"
                     variant="outlined"
-                    label="City"
+                    label="Address Line 2"
+                    labelWidth={110}
                     lightBg
-                    labelWidth={25}
-                    customClassName={styles.shippingInfoHalfWidth}
+                    customClassName={styles.shippingInfoFullWidth}
                   />
-                </Grid>
-              </Grid>
-              <Grid item lg={6} xs={12}>
-                <Grid container justify="center" alignItems="center">
-                  <ControlledPicker
-                    control={control}
-                    options={stateOptions}
-                    name="state"
-                    variant="outlined"
-                    lightBg
-                    label="State"
-                    customClassName={styles.shippingInfoHalfWidth}
-                  />
-                </Grid>
-              </Grid>
-              {outsideMalaysiaState && (
-                <Grid item lg={6} xs={12}>
-                  <Grid container justify="center" alignItems="center">
-                    <ControlledTextInput
+                  <Grid item lg={6} xs={12}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledTextInput
+                        control={control}
+                        name="postcode"
+                        variant="outlined"
+                        label="Postcode"
+                        lightBg
+                        maxLength={10}
+                        customClassName={styles.shippingInfoHalfWidth}
+                        error={errors.postcode}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item lg={6} xs={12}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledTextInput
+                        control={control}
+                        name="city"
+                        variant="outlined"
+                        label="City"
+                        lightBg
+                        labelWidth={25}
+                        customClassName={styles.shippingInfoHalfWidth}
+                        error={errors.city}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item lg={6} xs={12}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledPicker
+                        control={control}
+                        options={stateOptions}
+                        name="state"
+                        variant="outlined"
+                        lightBg
+                        label="State"
+                        customClassName={styles.shippingInfoHalfWidth}
+                        error={errors.state}
+                      />
+                    </Grid>
+                  </Grid>
+                  {outsideMalaysiaState && (
+                  <Grid item lg={6} xs={12}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledTextInput
+                        control={control}
+                        name="outsideMalaysiaState"
+                        variant="outlined"
+                        label="Foreign Country State"
+                        labelWidth={155}
+                        lightBg
+                        customClassName={styles.shippingInfoHalfWidth}
+                        error={errors.outsideMalaysiaState}
+                      />
+                    </Grid>
+                  </Grid>
+                  )}
+                  <Grid item lg={outsideMalaysiaState ? 12 : 6} xs={12}>
+                    <Grid container justify="center" alignItems="center">
+                      <ControlledTextInput
+                        control={control}
+                        name="country"
+                        variant="outlined"
+                        label="Country"
+                        labelWidth={55}
+                        lightBg
+                        customClassName={
+                      outsideMalaysiaState
+                        ? styles.shippingInfoFullWidth : styles.shippingInfoHalfWidth
+                      }
+                        error={errors.country}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container justify="flex-start" alignItems="center" className={styles.rmbPadding}>
+                    <ControlledCheckbox
+                      name="saveShippingInfo"
                       control={control}
-                      name="outsideMalaysiaState"
-                      variant="outlined"
-                      label="Foreign Country State"
-                      labelWidth={155}
-                      lightBg
-                      customClassName={styles.shippingInfoHalfWidth}
+                      label="Use this shipping information for the next time"
                     />
                   </Grid>
                 </Grid>
-              )}
-              <Grid item lg={outsideMalaysiaState ? 12 : 6} xs={12}>
-                <Grid container justify="center" alignItems="center">
-                  <ControlledTextInput
-                    control={control}
-                    name="country"
-                    variant="outlined"
-                    label="Country"
-                    labelWidth={55}
-                    lightBg
-                    customClassName={
-                      outsideMalaysiaState
-                        ? styles.shippingInfoFullWidth : styles.shippingInfoHalfWidth
-                    }
-                  />
-                </Grid>
-              </Grid>
-              <Grid container justify="flex-start" alignItems="center" className={styles.rmbPadding}>
-                <ControlledCheckbox
-                  name="saveShippingInfo"
-                  control={control}
-                  label="Use this shipping information for the next time"
-                />
-              </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container justify="flex-end" className={styles.proceedPaymentBtnContainer}>
+              <Button variant="contained" color="secondary" size="medium" type="submit">
+                Proceed To Payment
+              </Button>
             </Grid>
-          </CardContent>
-        </Card>
-      </Grid>
-      <Grid item lg={12} xs={11}>
-        <Grid container justify="flex-end">
-          <Button variant="contained" color="secondary" size="medium" onClick={() => navigate(routeNames.checkout)}>
-            Proceed To Payment
-          </Button>
-        </Grid>
+          </Grid>
+        </form>
       </Grid>
     </Grid>
   );
