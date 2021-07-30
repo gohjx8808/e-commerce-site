@@ -18,6 +18,7 @@ import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import ExpandedCell from '../../../sharedComponents/ExpandedCell';
+import { formatPrice } from '../../../utils/helper';
 import productSchema from '../src/productSchema';
 import productStyle from '../src/productStyle';
 
@@ -28,6 +29,7 @@ const Checkout = () => {
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<products.shoppingCartItemData[]>([]);
   const [pageSize, setPageSize] = useState<number>(5);
+  const [shippingFee, setShippingFee] = useState<number>(0);
   const {
     control, watch, setValue, handleSubmit, formState: { errors },
   } = useForm({
@@ -103,6 +105,19 @@ const Checkout = () => {
 
   const outsideMalaysiaState = selectedState && selectedState.value === 'Outside Malaysia';
 
+  useEffect(() => {
+    const eastMalaysia = selectedState && (selectedState.value === 'Sabah' || selectedState.value === 'Sarawak');
+    if (selectedState) {
+      if (eastMalaysia) {
+        setShippingFee(14);
+      } else {
+        setShippingFee(7);
+      }
+    } else {
+      setShippingFee(0);
+    }
+  }, [selectedState]);
+
   const proceedToPayment = async (hookData:products.submitShippingInfoPayload) => {
     const response = await window.fetch('/api/sendGrid', {
       method: 'POST',
@@ -115,10 +130,8 @@ const Checkout = () => {
 
   return (
     <Grid container justify="center" spacing={3}>
-      <Grid item xs={11}>
-        <Grid item xs={9}>
-          <CustomBreadcrumbs />
-        </Grid>
+      <Grid item xs={11} lg={12}>
+        <CustomBreadcrumbs />
       </Grid>
       <Grid item lg={4} xs={11}>
         <Typography variant="h6">Your Order</Typography>
@@ -138,10 +151,22 @@ const Checkout = () => {
           </Box>
           <Divider />
           <Grid container justify="flex-end" className={styles.totalPayTextContainer}>
-            <Typography variant="subtitle1" className={styles.totalPayText}>
-              Total Amount to Pay: RM
-              {totalAmount.toFixed(2)}
-            </Typography>
+            <Grid container>
+              <Typography variant="subtitle1" className={`${styles.totalPayText} ${styles.checkListFront}`}>
+                Shipping Fee:
+              </Typography>
+              <Typography variant="subtitle1" className={`${styles.totalPayText} ${styles.checkListBack}`}>
+                {shippingFee !== 0 ? formatPrice(shippingFee, 'MYR') : '-'}
+              </Typography>
+            </Grid>
+            <Grid container>
+              <Typography variant="subtitle1" className={`${styles.totalPayText} ${styles.checkListFront}`}>
+                Total Amount to Pay:
+              </Typography>
+              <Typography variant="subtitle1" className={`${styles.totalPayText} ${styles.checkListBack}`}>
+                {formatPrice(totalAmount + shippingFee, 'MYR')}
+              </Typography>
+            </Grid>
           </Grid>
         </Card>
       </Grid>
@@ -189,7 +214,7 @@ const Checkout = () => {
                           <InputAdornment position="start">
                             +
                           </InputAdornment>
-                    )}
+                        )}
                         defaultValue="60"
                         error={errors.phoneNo}
                       />

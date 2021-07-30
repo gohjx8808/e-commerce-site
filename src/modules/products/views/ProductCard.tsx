@@ -11,6 +11,7 @@ import { useSnackbar } from 'notistack';
 import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch } from '../../../hooks';
+import { formatPrice } from '../../../utils/helper';
 import { addToShoppingCart } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 
@@ -22,16 +23,6 @@ const ProductCard = (props:ProductCardOwnProps) => {
   const { product } = props;
   const styles = productStyle();
   const dispatch = useAppDispatch();
-
-  const formatPrice = (amount:number, currency:string) => {
-    const price = parseFloat((amount / 100).toFixed(2));
-    const numberFormat = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency,
-      currencyDisplay: 'symbol',
-    });
-    return numberFormat.format(price);
-  };
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -68,7 +59,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
         <CardContent>
           <Grid container justify="space-between" alignItems="center">
             <Typography className={styles.priceText}>
-              {`Price: ${formatPrice(product.prices.unit_amount, product.prices.currency)}`}
+              {`Price: ${formatPrice(product.prices.unit_amount / 100, product.prices.currency)}`}
             </Typography>
             <IconButton aria-label="addToCart" size="medium" onClick={() => onAddToCart(product)}>
               <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />

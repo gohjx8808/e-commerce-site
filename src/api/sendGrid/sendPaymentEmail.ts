@@ -1,15 +1,15 @@
 import sgMail from '@sendgrid/mail';
 import { GatsbyFunctionRequest, GatsbyFunctionResponse } from 'gatsby';
 
-export default async function sendEmail(req: GatsbyFunctionRequest, res: GatsbyFunctionResponse) {
-  sgMail.setApiKey(process.env.GATSBY_SENDGRID_API_KEY!);
+sgMail.setApiKey(process.env.GATSBY_SENDGRID_API_KEY!);
 
+const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionResponse) => {
   const postData:products.submitShippingInfoPayload = req.body;
 
   const msg = {
     to: postData.email,
     from: 'yj.artjournal@gmail.com',
-    templateId: 'd-42bce563a8cc4a00b44c787c32a0cb23',
+    templateId: 'd-ce30ae1412f546d592d214d4fc8efa90',
     dynamic_template_data: {
       name: postData.fullName,
     },
@@ -21,4 +21,6 @@ export default async function sendEmail(req: GatsbyFunctionRequest, res: GatsbyF
   } catch (e) {
     return res.status(e.code).json({ msg: e.message });
   }
-}
+};
+
+export default sendPaymentEmail;

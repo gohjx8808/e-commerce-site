@@ -56,7 +56,7 @@ const productStyle = makeStyles((theme) => ({
     paddingLeft: '10%',
   },
   checkoutItemContainer: {
-    height: 420,
+    height: 390,
     width: '100%',
   },
   totalPayTextContainer: {
@@ -86,6 +86,14 @@ const productStyle = makeStyles((theme) => ({
   },
   proceedPaymentBtnContainer: {
     marginTop: 10,
+  },
+  checkListFront: {
+    flex: 3,
+    textAlign: 'right',
+  },
+  checkListBack: {
+    flex: 1,
+    textAlign: 'right',
   },
 }));
 
