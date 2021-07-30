@@ -16,6 +16,7 @@ const shippingInfoSchema = yup.object().shape({
     then: yup.string().required('Foreign country state is required'),
   }),
   country: yup.string().required('Country is required'),
+  paymentOptions: yup.string().required('Payment option is required'),
 });
 
 export default { shippingInfoSchema };

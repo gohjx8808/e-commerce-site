@@ -59,7 +59,7 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
         },
       }) => (
         <Box className={styles.leftPadding}>
-          <FormControl className={styles.rowFlex}>
+          <FormControl className={styles.rowFlex} error={!!error}>
             <FormLabel component="legend" className={styles.labelColor} focused={false}>{label}</FormLabel>
             <RadioGroup
               aria-label={label}

@@ -336,7 +336,7 @@ const Checkout = () => {
             <Grid container justify="center" direction="row" alignItems="center" className={styles.proceedPaymentBtnContainer}>
               <Grid item xs={8}>
                 <Grid container justify="flex-start" alignItems="center">
-                  <ControlledRadioButton control={control} name="paymentOptions" label="Payment Options:" options={paymentOptions} />
+                  <ControlledRadioButton control={control} name="paymentOptions" label="Payment Options:" options={paymentOptions} error={errors.paymentOptions} />
                 </Grid>
               </Grid>
               <Grid item xs={4}>
