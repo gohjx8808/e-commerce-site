@@ -1,7 +1,6 @@
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
@@ -12,26 +11,6 @@ interface ControlledCheckboxOwnProps{
   defaultValue?:boolean
   error?:FieldError
 }
-
-const useStyles = makeStyles({
-  unFocusStyle: {
-    color: 'white',
-    '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'white',
-    },
-    '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'lightgrey',
-    },
-  },
-  unFocusLabel: {
-    color: 'white',
-  },
-  formControl: {
-    width: '80%',
-    marginTop: 5,
-    marginBottom: 5,
-  },
-});
 
 const ControlledCheckbox = (props:ControlledCheckboxOwnProps) => {
   const {

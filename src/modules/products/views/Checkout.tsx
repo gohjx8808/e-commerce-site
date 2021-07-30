@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import { useAppSelector } from '../../../hooks';
 import ControlledCheckbox from '../../../sharedComponents/ControlledCheckbox';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
+import ControlledRadioButton from '../../../sharedComponents/ControlledRadioButton';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import ExpandedCell from '../../../sharedComponents/ExpandedCell';
@@ -87,6 +88,11 @@ const Checkout = () => {
     { value: 'Selangor', label: 'Selangor' },
     { value: 'Terengganu', label: 'Terengganu' },
     { value: 'Outside Malaysia', label: 'Outside Malaysia' },
+  ];
+
+  const paymentOptions = [
+    { value: 'TNG', label: 'TNG E-Wallet' },
+    { value: 'bankTransfer', label: 'Bank Transfer' },
   ];
 
   const handlePageSizeChange = (params: GridPageChangeParams) => {
@@ -321,15 +327,25 @@ const Checkout = () => {
                       label="Use this shipping information for the next time"
                     />
                   </Grid>
+
                 </Grid>
               </CardContent>
             </Card>
           </Grid>
           <Grid item xs={12}>
-            <Grid container justify="flex-end" className={styles.proceedPaymentBtnContainer}>
-              <Button variant="contained" color="secondary" size="medium" type="submit">
-                Proceed To Payment
-              </Button>
+            <Grid container justify="center" direction="row" alignItems="center" className={styles.proceedPaymentBtnContainer}>
+              <Grid item xs={8}>
+                <Grid container justify="flex-start" alignItems="center">
+                  <ControlledRadioButton control={control} name="paymentOptions" label="Payment Options:" options={paymentOptions} />
+                </Grid>
+              </Grid>
+              <Grid item xs={4}>
+                <Grid container justify="flex-end" alignItems="center">
+                  <Button variant="contained" color="secondary" size="medium" type="submit">
+                    Proceed To Payment
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </form>
