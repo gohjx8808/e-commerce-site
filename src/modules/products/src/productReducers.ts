@@ -4,12 +4,14 @@ interface productState{
   shoppingCartItem:products.shoppingCartItemData[]
   productFilterKeyword:string
   selectedCheckoutItemsID:string[]
+  prevOrderCount:number
 }
 
 const INITIAL_STATE:productState = {
   shoppingCartItem: [],
   productFilterKeyword: '',
   selectedCheckoutItemsID: [],
+  prevOrderCount: 0,
 };
 
 export const productSlice = createSlice({
@@ -42,6 +44,9 @@ export const productSlice = createSlice({
     updateSelectedCheckoutItemsID: (state, action:PayloadAction<string[]>) => {
       state.selectedCheckoutItemsID = action.payload;
     },
+    updatePrevOrderCount: (state, action:PayloadAction<number>) => {
+      state.prevOrderCount = action.payload;
+    },
   },
 });
 
@@ -52,6 +57,7 @@ export const {
   removeItemFromCart,
   updateProductFilterKeyword,
   updateSelectedCheckoutItemsID,
+  updatePrevOrderCount,
 } = productSlice.actions;
 
 export default productSlice.reducer;

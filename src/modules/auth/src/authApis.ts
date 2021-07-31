@@ -14,4 +14,4 @@ export const signIn = (payload:auth.submitSignInPayload) => (
   firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
 );
 
-export const getCurrentUserDetails = (uid:string) => firebase.database().ref(`users/${uid}`).once('value');
+export const getCurrentUserDetails = (uid:string) => (firebase.database().ref(`users/${uid}`).once('value'));

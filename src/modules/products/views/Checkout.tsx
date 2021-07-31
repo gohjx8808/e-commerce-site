@@ -327,7 +327,6 @@ const Checkout = () => {
                       label="Use this shipping information for the next time"
                     />
                   </Grid>
-
                 </Grid>
               </CardContent>
             </Card>
