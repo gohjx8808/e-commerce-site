@@ -36,6 +36,7 @@ const Cart = () => {
     quantity: 0,
     price: '',
     price_id: '',
+    itemPrice: '',
   });
   const [removeConfirmModalDisplay, setRemoveConfirmModalDisplay] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -44,7 +45,7 @@ const Cart = () => {
     let currentTotal = 0;
     cartItems.map((item) => {
       if (selectedCheckoutItemsID.includes(item.id)) {
-        currentTotal += +item.price * +item.quantity;
+        currentTotal += +item.itemPrice;
       }
       return null;
     });
@@ -168,7 +169,7 @@ const Cart = () => {
                       id={cartItem.id}
                       inputProps={{
                         'aria-label': cartItem.id,
-                        'data-price': +cartItem.price * cartItem.quantity,
+                        'data-price': +cartItem.itemPrice,
                       } as CartItemCheckboxProps}
                     />
                   </Grid>
@@ -233,7 +234,7 @@ const Cart = () => {
                     alignItems="center"
                   >
                     <Typography>
-                      {(+cartItem.price * cartItem.quantity).toFixed(2)}
+                      {cartItem.itemPrice}
                     </Typography>
                   </Grid>
                 </Grid>

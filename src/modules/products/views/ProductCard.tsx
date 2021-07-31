@@ -27,14 +27,14 @@ const ProductCard = (props:ProductCardOwnProps) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const onAddToCart = (productData:products.productData) => {
-    const formattedData:products.shoppingCartItemData = {
+    const formattedData = {
       id: productData.id,
       name: productData.name,
       imgURL: productData.localFiles,
       price: (+productData.prices.unit_amount_decimal / 100).toFixed(2),
       price_id: productData.prices.id,
       quantity: 1,
-    };
+    } as products.shoppingCartItemData;
     dispatch(addToShoppingCart(formattedData));
     enqueueSnackbar(`${productData.name} is added to your cart!`);
   };
