@@ -44,6 +44,7 @@ declare namespace products{
     name:string
     price:string
     price_id:string
+    itemPrice:string
   }
 
   interface checkoutData{
@@ -61,5 +62,23 @@ declare namespace products{
     state: optionsData
     outsideMalaysiaState: string
     country: string
+  }
+
+  interface sendEmailPayload{
+    fullName:string
+    email: string
+    phoneNo: string
+    addressLine1: string
+    addressLine2:string
+    postcode: string
+    city: string
+    state: optionsData
+    outsideMalaysiaState: string
+    country: string
+    currentOrderCount:number
+    paymentOptions:string
+    totalAmount:number
+    shippingFee:number
+    selectedCheckoutItems:shoppingCartItemData[]
   }
 }

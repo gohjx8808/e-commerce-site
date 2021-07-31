@@ -8,11 +8,11 @@ import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import {
-  DataGrid, GridColDef, GridPageChangeParams, GridValueGetterParams,
+  DataGrid, GridColDef, GridPageChangeParams,
 } from '@material-ui/data-grid';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledCheckbox from '../../../sharedComponents/ControlledCheckbox';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledRadioButton from '../../../sharedComponents/ControlledRadioButton';
@@ -20,13 +20,16 @@ import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import ExpandedCell from '../../../sharedComponents/ExpandedCell';
 import { formatPrice } from '../../../utils/helper';
+import { updateCurrentOrderCount } from '../src/productReducers';
 import productSchema from '../src/productSchema';
 import productStyle from '../src/productStyle';
 
 const Checkout = () => {
   const styles = productStyle();
+  const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
   const selectedCheckoutItemsID = useAppSelector((state) => state.product.selectedCheckoutItemsID);
+  const prevOrderCount = useAppSelector((state) => state.product.prevOrderCount);
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<products.shoppingCartItemData[]>([]);
   const [pageSize, setPageSize] = useState<number>(5);
@@ -41,6 +44,8 @@ const Checkout = () => {
     const filteredItems = cartItems.filter((item) => {
       if (selectedCheckoutItemsID.includes(item.id)) {
         const itemPrice = +item.price * +item.quantity;
+        // eslint-disable-next-line no-param-reassign
+        item = { ...item, itemPrice: itemPrice.toFixed(2) };
         setTotalAmount((prevTotalAmount) => prevTotalAmount + itemPrice);
         return true;
       }
@@ -60,13 +65,12 @@ const Checkout = () => {
       field: 'quantity', headerName: 'Quantity', flex: 1, align: 'center', headerAlign: 'center', sortable: false,
     },
     {
-      field: 'totalPrice',
+      field: 'itemPrice',
       headerName: 'Total Price',
       sortable: false,
       flex: 1,
       align: 'center',
       headerAlign: 'center',
-      valueGetter: (params: GridValueGetterParams) => `${(+params.getValue(params.id, 'price')! * +params.getValue(params.id, 'quantity')!).toFixed(2)}`,
     },
   ];
 
@@ -125,13 +129,23 @@ const Checkout = () => {
   }, [selectedState]);
 
   const proceedToPayment = async (hookData:products.submitShippingInfoPayload) => {
-    const response = await window.fetch('/api/sendGrid', {
+    const emailData = {
+      ...hookData,
+      currentOrderCount: prevOrderCount + 1,
+      totalAmount: totalAmount + shippingFee,
+      shippingFee,
+      selectedCheckoutItems: extractedCartItem,
+    } as products.sendEmailPayload;
+
+    await window.fetch('/api/sendGrid/sendPaymentEmail', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify(hookData),
-    }).then((rawRes) => rawRes.json());
+      body: JSON.stringify(emailData),
+    }).then(() => {
+      dispatch(updateCurrentOrderCount(prevOrderCount + 1));
+    });
   };
 
   return (

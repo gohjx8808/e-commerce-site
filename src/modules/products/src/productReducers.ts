@@ -47,6 +47,7 @@ export const productSlice = createSlice({
     updatePrevOrderCount: (state, action:PayloadAction<number>) => {
       state.prevOrderCount = action.payload;
     },
+    updateCurrentOrderCount: (_state, _action:PayloadAction<number>) => {},
   },
 });
 
@@ -58,6 +59,7 @@ export const {
   updateProductFilterKeyword,
   updateSelectedCheckoutItemsID,
   updatePrevOrderCount,
+  updateCurrentOrderCount,
 } = productSlice.actions;
 
 export default productSlice.reducer;

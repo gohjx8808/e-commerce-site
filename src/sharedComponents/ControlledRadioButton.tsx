@@ -72,6 +72,7 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
                   control={<Radio />}
                   label={option.label}
                   className={styles.spaceBetweenRadio}
+                  key={option.value}
                 />
               ))}
             </RadioGroup>
