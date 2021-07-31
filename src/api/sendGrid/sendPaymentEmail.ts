@@ -16,7 +16,7 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
     TNG: 'd-13380bdf16624fb6bf11c56450dde78d',
   } as paymentMap;
 
-  const paymentEmail = {
+  const emails = [{
     to: postData.email,
     bcc: 'piggy.chiah@gmail.com',
     from: 'yj.artjournal@gmail.com',
@@ -27,9 +27,7 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
       shippingFee: formatPrice(postData.shippingFee, 'MYR'),
       totalAmount: formatPrice(postData.totalAmount, 'MYR'),
     },
-  };
-
-  const receiptEmail = {
+  }, {
     to: 'piggy.chiah@gmail.com',
     from: 'yj.artjournal@gmail.com',
     templateId: 'd-178070cfd5484d9298f0c21efde0c44b',
@@ -47,11 +45,10 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
       shippingFee: formatPrice(postData.shippingFee, 'MYR'),
       totalAmount: formatPrice(postData.totalAmount, 'MYR'),
     },
-  };
+  }];
 
   try {
-    // await sgMail.send(paymentEmail);
-    await sgMail.send(receiptEmail);
+    await sgMail.send(emails);
     return res.status(200).json({ msg: 'Message sent successfully' });
   } catch (e) {
     return res.status(e.code).json({ msg: e.message });
