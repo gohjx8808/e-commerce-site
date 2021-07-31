@@ -2,12 +2,12 @@ import firebase from 'gatsby-plugin-firebase';
 import {
   call, fork, put, take,
 } from 'redux-saga/effects';
-import { getPrevOrderCount, updateOrderCount } from './productApi';
-import { updateCurrentOrderCount, updatePrevOrderCount } from './productReducers';
+import { getPrevOrderCount, sendPaymentEmailApi, updateOrderCount } from './productApi';
+import { sendPaymentEmailAction, updatePrevOrderCount } from './productReducers';
 
 export default function* productRuntime() {
   yield fork(getPrevOrderCountSaga);
-  yield fork(updateCurrentOrderCountSaga);
+  yield fork(sendPaymentEmailSaga);
 }
 
 function* getPrevOrderCountSaga() {
@@ -16,7 +16,16 @@ function* getPrevOrderCountSaga() {
   yield put(updatePrevOrderCount(prevOrderCount));
 }
 
-function* updateCurrentOrderCountSaga() {
-  const { payload } = yield take(updateCurrentOrderCount);
-  yield call(updateOrderCount, payload);
+function* sendPaymentEmailSaga() {
+  while (true) {
+    const { payload }:ReturnType<
+      typeof sendPaymentEmailAction
+    > = yield take(sendPaymentEmailAction);
+    try {
+      yield call(sendPaymentEmailApi, payload);
+      yield call(updateOrderCount, payload.currentOrderCount);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

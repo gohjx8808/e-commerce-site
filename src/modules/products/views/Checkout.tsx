@@ -20,7 +20,7 @@ import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import ExpandedCell from '../../../sharedComponents/ExpandedCell';
 import { formatPrice } from '../../../utils/helper';
-import { updateCurrentOrderCount } from '../src/productReducers';
+import { sendPaymentEmailAction } from '../src/productReducers';
 import productSchema from '../src/productSchema';
 import productStyle from '../src/productStyle';
 
@@ -137,15 +137,7 @@ const Checkout = () => {
       selectedCheckoutItems: extractedCartItem,
     } as products.sendEmailPayload;
 
-    await window.fetch('/api/sendGrid/sendPaymentEmail', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(emailData),
-    }).then(() => {
-      dispatch(updateCurrentOrderCount(prevOrderCount + 1));
-    });
+    dispatch(sendPaymentEmailAction(emailData));
   };
 
   return (
