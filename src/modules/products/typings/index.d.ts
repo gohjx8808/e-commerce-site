@@ -1,36 +1,25 @@
 declare namespace products{
-  interface productDetails{
-    name:string
-    prices:productPriceData[]
+  interface rawProductQueryData{
+    allContentfulProducts:{
+      edges:innerProductQueryData[]
+    }
   }
 
-  interface productPriceData{
-    id:string
-    unit_amount:number
-    currency:string
-  }
-
-  interface queryProductData{
-    node:pricesData
-  }
-
-  interface pricesData{
-    active:boolean
-    currency:string
-    id:string
-    product?:productData
-    unit_amount:number
-    unit_amount_decimal:string
+  interface innerProductQueryData{
+    node:productData
   }
 
   interface productData{
-    description:string
-    id:string
-    images:string[]
+    category:string
+    contentful_id:string
     name:string
-    type:string
-    prices:pricesData
-    localFiles: import('gatsby-plugin-image').ImageDataLike[];
+    price:number
+    contentDescription:productContentDescription
+    productImage:import('gatsby-plugin-image').ImageDataLike[]
+  }
+
+  interface productContentDescription{
+    raw:string
   }
 
   interface submitCheckoutPayload{
@@ -40,10 +29,9 @@ declare namespace products{
   interface shoppingCartItemData{
     id:string
     quantity:number
-    imgURL?:import('gatsby-plugin-image').ImageDataLike[]
+    img?:import('gatsby-plugin-image').IGatsbyImageData
     name:string
     price:string
-    price_id:string
     itemPrice:string
   }
 

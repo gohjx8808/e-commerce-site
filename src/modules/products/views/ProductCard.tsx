@@ -28,11 +28,10 @@ const ProductCard = (props:ProductCardOwnProps) => {
 
   const onAddToCart = (productData:products.productData) => {
     const formattedData = {
-      id: productData.id,
+      id: productData.contentful_id,
       name: productData.name,
-      imgURL: productData.localFiles,
-      price: (+productData.prices.unit_amount_decimal / 100).toFixed(2),
-      price_id: productData.prices.id,
+      img: getImage(productData.productImage[0]),
+      price: productData.price.toFixed(2),
       quantity: 1,
     } as products.shoppingCartItemData;
     dispatch(addToShoppingCart(formattedData));
@@ -40,12 +39,12 @@ const ProductCard = (props:ProductCardOwnProps) => {
   };
 
   return (
-    <Grid item lg={3} md={6} sm={12} xs={12}>
+    <Grid item lg={3} md={6} sm={6} xs={12}>
       <Card variant="outlined" className={styles.productCard}>
         <CardHeader title={product.name} className={styles.cardTitle} />
-        <Carousel indicators={false}>
-          {product.localFiles.map((localFile) => {
-            const imageData = getImage(localFile)!;
+        <Carousel indicators={false} autoPlay={false}>
+          {product.productImage.map((image) => {
+            const imageData = getImage(image)!;
             return (
               <Box className={styles.carouselImageContainer} key={imageData.images.fallback?.src}>
                 <GatsbyImage
@@ -59,7 +58,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
         <CardContent>
           <Grid container justify="space-between" alignItems="center">
             <Typography className={styles.priceText}>
-              {`Price: ${formatPrice(product.prices.unit_amount / 100, product.prices.currency)}`}
+              {`Price: ${formatPrice(product.price, 'MYR')}`}
             </Typography>
             <IconButton aria-label="addToCart" size="medium" onClick={() => onAddToCart(product)}>
               <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />

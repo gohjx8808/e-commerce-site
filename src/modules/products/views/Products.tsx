@@ -1,67 +1,44 @@
 import Grid from '@material-ui/core/Grid';
 import { graphql, useStaticQuery } from 'gatsby';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useAppSelector } from '../../../hooks';
 import ProductCard from './ProductCard';
 
 const Products = () => {
-  const [allProduct, setAllProduct] = useState<products.productData[]>([]);
   const productFilterKeyword = useAppSelector((state) => state.product.productFilterKeyword);
-  const allPrices = useStaticQuery(graphql`
+  const allProducts:products.rawProductQueryData = useStaticQuery(graphql`
     query ProductPrices {
-      prices: allStripePrice(
-        filter: { active: { eq: true } }
-        sort: { fields: [unit_amount] }
-      ) {
+      allContentfulProducts(filter: {node_locale: {eq: "en-US"}}) {
         edges {
           node {
-            unit_amount
-            unit_amount_decimal
-            product {
-              id
-              images
-              localFiles{
-                childImageSharp{
-                  gatsbyImageData
-                }
-              }
-              name
-              type
+            name
+            contentful_id
+            category
+            productImage {
+              gatsbyImageData
             }
-            active
-            currency
-            id
+            price
+            contentDescription {
+              raw
+            }
           }
         }
       }
     }`);
 
-  useEffect(() => {
-    const extractedPrices:products.queryProductData[] = allPrices.prices.edges;
-    const tempProduct = [] as products.productData[];
-    extractedPrices.forEach((price) => {
-      const realPrice = price.node;
-      const extractedProduct = realPrice.product;
-      const { product, ...otherDetail } = realPrice;
-      extractedProduct!.prices = otherDetail;
-      tempProduct.push(extractedProduct!);
-    });
-    setAllProduct(tempProduct);
-  }, [allPrices]);
-
-  const filterProduct = (product:products.productData) => {
+  const filterProduct = (product:products.innerProductQueryData) => {
     if (productFilterKeyword) {
-      return product.name.includes(productFilterKeyword);
+      return product.node.name.includes(productFilterKeyword);
     }
     return true;
   };
 
   return (
     <Grid container justify="center" alignItems="center" direction="row" spacing={5}>
-      {allProduct.filter(
+      {allProducts.allContentfulProducts.edges.filter(
         (product) => filterProduct(product),
       ).map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.node.contentful_id} product={product.node} />
       ))}
     </Grid>
   );

@@ -8,9 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { Add, Remove } from '@material-ui/icons';
 import { navigate } from 'gatsby';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import { GatsbyImage } from 'gatsby-plugin-image';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import routeNames from '../../../utils/routeNames';
@@ -35,7 +34,6 @@ const Cart = () => {
     name: '',
     quantity: 0,
     price: '',
-    price_id: '',
     itemPrice: '',
   });
   const [removeConfirmModalDisplay, setRemoveConfirmModalDisplay] = useState<boolean>(false);
@@ -182,21 +180,16 @@ const Cart = () => {
                     direction="column"
                   >
                     <Typography>{cartItem.name}</Typography>
-                    {cartItem.imgURL!.map((localFile) => {
-                      const imageData = getImage(localFile)!;
-                      return (
-                        <Box
-                          className={styles.cartItemImageContainer}
-                          key={imageData.images.fallback?.src}
-                        >
-                          <GatsbyImage
-                            image={imageData}
-                            alt={cartItem.id}
-                            imgClassName={styles.cartItemImage}
-                          />
-                        </Box>
-                      );
-                    })}
+                    <Box
+                      className={styles.cartItemImageContainer}
+                      key={cartItem.img!.images.fallback?.src}
+                    >
+                      <GatsbyImage
+                        image={cartItem.img!}
+                        alt={cartItem.id}
+                        imgClassName={styles.cartItemImage}
+                      />
+                    </Box>
                   </Grid>
                 </Grid>
                 <Grid item xs={2}>

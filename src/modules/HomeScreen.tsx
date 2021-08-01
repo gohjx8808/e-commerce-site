@@ -60,28 +60,19 @@ const HomeScreen = () => {
           }
         }
       }
-      prices: allStripePrice(
-        filter: { active: { eq: true } }
-        sort: { fields: [unit_amount] }
-      ) {
+      products: allContentfulProducts(filter: {node_locale: {eq: "en-US"}}) {
         edges {
           node {
-            unit_amount
-            unit_amount_decimal
-            product {
-              id
-              images
-              localFiles{
-                childImageSharp{
-                  gatsbyImageData
-                }
-              }
-              name
-              type
+            name
+            contentful_id
+            category
+            productImage {
+              gatsbyImageData
             }
-            active
-            currency
-            id
+            price
+            contentDescription {
+              raw
+            }
           }
         }
       }
@@ -89,22 +80,20 @@ const HomeScreen = () => {
   `);
 
   useEffect(() => {
-    const extractedPrices:products.queryProductData[] = homeQuery.prices.edges;
+    const extractedProducts:products.innerProductQueryData[] = homeQuery.products.edges;
     const tempProduct = [] as ImageDataLike[][];
     let i = 1;
-    let abc = [] as ImageDataLike[];
-    extractedPrices.forEach((price) => {
-      const realPrice = price.node;
-      const extractedProduct = realPrice.product;
-      abc.push(extractedProduct?.localFiles[0]!);
+    let images = [] as ImageDataLike[];
+    extractedProducts.forEach((product) => {
+      images.push(product.node.productImage[0]);
       if (i % 4 === 0) {
-        tempProduct.push(abc);
-        abc = [];
+        tempProduct.push(images);
+        images = [];
       }
       i += 1;
     });
-    if (abc.length > 0) {
-      tempProduct.push(abc);
+    if (images.length > 0) {
+      tempProduct.push(images);
     }
     setProductImages(tempProduct);
   }, [homeQuery]);
