@@ -1,5 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { SnackbarProvider } from 'notistack';
 import * as React from 'react';
@@ -7,7 +7,7 @@ import CustomSnackbar from '../sharedComponents/CustomSnackbar';
 import App from './App';
 
 const IndexPage = () => {
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: {
       primary: {
         main: '#f5dbc9',

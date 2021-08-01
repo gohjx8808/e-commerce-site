@@ -20,20 +20,20 @@ const StatusModal = () => {
   return (
     <Dialog open={isStatusModalOpen} onClose={() => dispatch(toggleStatusModal(false))} aria-labelledby="status-title" aria-describedby="status-msg">
       <DialogTitle id="status-title">
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           {statusTitle}
         </Grid>
       </DialogTitle>
       <DialogContent>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           {isSuccess ? <ThumbUp color="primary" /> : <ThumbDown color="primary" />}
         </Grid>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <DialogContentText id="status-msg">{statusMsg}</DialogContentText>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Button onClick={() => dispatch(toggleStatusModal(false))} color="primary" variant="contained">
             Close
           </Button>

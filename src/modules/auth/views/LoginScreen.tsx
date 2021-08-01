@@ -44,19 +44,19 @@ const LoginScreen = () => {
   return (
     <Grid
       container
-      justify="center"
+      justifyContent="center"
       alignItems="center"
       className={styles.loginBg}
     >
       <Grid item xs={12}>
-        <Grid container justify="center" alignItems="center">
+        <Grid container justifyContent="center" alignItems="center">
           <Grid item xs={6}>
             <CustomBreadcrumbs />
           </Grid>
         </Grid>
-        <Grid container justify="center" alignItems="center">
+        <Grid container justifyContent="center" alignItems="center">
           <Card className={styles.loginCard}>
-            <Grid container justify="center" alignItems="center" direction="column">
+            <Grid container justifyContent="center" alignItems="center" direction="column">
               <CardHeader
                 title="Login"
                 className={styles.loginTitle}
@@ -67,7 +67,7 @@ const LoginScreen = () => {
             </Grid>
             <CardContent>
               <form onSubmit={handleSubmit(submitLogin)} className={styles.formContainer}>
-                <Grid container justify="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center">
                   <ControlledTextInput
                     control={control}
                     name="email"
@@ -85,7 +85,7 @@ const LoginScreen = () => {
                     error={errors.password}
                   />
                 </Grid>
-                <Grid container justify="center" alignItems="center" className={styles.spacingVertical}>
+                <Grid container justifyContent="center" alignItems="center" className={styles.spacingVertical}>
                   <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
                     Log In
                   </Button>

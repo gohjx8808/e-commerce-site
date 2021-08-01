@@ -1,18 +1,18 @@
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { graphql, navigate, useStaticQuery } from 'gatsby';
+import { ExpandMore } from '@material-ui/icons';
+import { graphql, useStaticQuery } from 'gatsby';
 import {
   GatsbyImage, getImage, ImageDataLike,
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
-import ImageList from '@material-ui/core/ImageList';
-import ImageListItem from '@material-ui/core/ImageListItem';
-import Box from '@material-ui/core/Box';
-import IconButton from '@material-ui/core/IconButton';
-import { ExpandMore } from '@material-ui/icons';
 
 const useStyle = makeStyles((theme) => ({
   carouselImages: {
@@ -29,15 +29,13 @@ const useStyle = makeStyles((theme) => ({
   unboldH6: {
     fontWeight: 'normal',
   },
-  viewMoreBtn: {
-    marginTop: 10,
-  },
   productCarouselNavButton: {
     backgroundColor: 'transparent!important',
     color: 'black!important',
   },
   hyperlink: {
     textDecorationLine: 'underline',
+    color: theme.palette.secondary.main,
   },
   imageListRoot: {
     display: 'flex',
@@ -45,6 +43,7 @@ const useStyle = makeStyles((theme) => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
+    paddingTop: 10,
   },
   imageList: {
     height: 450,
@@ -58,8 +57,14 @@ interface imageInnerStructure{
   }
 }
 
+interface imageListImages{
+  productImage:ImageDataLike
+  rows:number
+  cols:number
+}
+
 const HomeScreen = () => {
-  const [productImages, setProductImages] = useState<ImageDataLike[]>([]);
+  const [productImages, setProductImages] = useState<imageListImages[]>([]);
   const styles = useStyle();
   const homeQuery = useStaticQuery(graphql`
     query {
@@ -86,6 +91,8 @@ const HomeScreen = () => {
             contentDescription {
               raw
             }
+            row
+            column
           }
         }
       }
@@ -94,15 +101,19 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const extractedProducts:products.innerProductQueryData[] = homeQuery.products.edges;
-    const tempProduct = [] as ImageDataLike[];
+    const tempProduct = [] as imageListImages[];
     extractedProducts.forEach((product) => {
-      tempProduct.push(product.node.productImage[0]);
+      tempProduct.push({
+        productImage: product.node.productImage[0],
+        rows: parseInt(product.node.row, 10),
+        cols: parseInt(product.node.column, 10),
+      });
     });
     setProductImages(tempProduct);
   }, [homeQuery]);
 
   return (
-    <Grid container justify="center" alignItems="center">
+    <Grid container justifyContent="center" alignItems="center">
       <Grid item xs={12}>
         <Carousel
           navButtonsWrapperProps={{ className: styles.carouselNavWrapper, style: {} }}
@@ -126,7 +137,7 @@ const HomeScreen = () => {
             );
           })}
         </Carousel>
-        <Grid container justify="center" alignItems="center" className={styles.sectionContainer} direction="column">
+        <Grid container justifyContent="center" alignItems="center" className={styles.sectionContainer} direction="column">
           <Typography variant="h4" color="secondary">Welcome!</Typography>
           <Typography variant="h6" className={styles.unboldH6}>Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
           <Typography variant="h6" className={styles.unboldH6}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
@@ -141,9 +152,13 @@ const HomeScreen = () => {
       <Box className={styles.imageListRoot}>
         <ImageList rowHeight="auto" cols={5} className={styles.imageList}>
           {productImages.map((image) => {
-            const productImagesData = getImage(image)!;
+            const productImagesData = getImage(image.productImage)!;
             return (
-              <ImageListItem key={productImagesData.images.fallback?.src}>
+              <ImageListItem
+                key={productImagesData.images.fallback?.src}
+                cols={image.cols}
+                rows={image.rows}
+              >
                 <GatsbyImage
                   image={productImagesData}
                   alt={productImagesData.images.fallback?.src!}

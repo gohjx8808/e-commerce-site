@@ -56,7 +56,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
           })}
         </Carousel>
         <CardContent>
-          <Grid container justify="space-between" alignItems="center">
+          <Grid container justifyContent="space-between" alignItems="center">
             <Typography className={styles.priceText}>
               {formatPrice(product.price, 'MYR')}
             </Typography>

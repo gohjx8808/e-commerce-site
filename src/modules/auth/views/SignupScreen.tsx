@@ -51,17 +51,17 @@ const SignupScreen = () => {
   return (
     <Grid
       container
-      justify="center"
+      justifyContent="center"
       alignItems="center"
       className={styles.signUpHeight}
     >
       <Grid item xs={12}>
-        <Grid container justify="center" alignItems="center">
+        <Grid container justifyContent="center" alignItems="center">
           <Grid item xs={9}>
             <CustomBreadcrumbs />
           </Grid>
           <Card className={styles.signupCard}>
-            <Grid container justify="center" alignItems="center" direction="column">
+            <Grid container justifyContent="center" alignItems="center" direction="column">
               <CardHeader
                 title="Registration"
                 className={styles.loginTitle}
@@ -72,9 +72,9 @@ const SignupScreen = () => {
             </Grid>
             <CardContent>
               <form onSubmit={handleSubmit(submitSignup)} className={styles.formContainer}>
-                <Grid container justify="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center">
                   <Grid item xs={12}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledTextInput
                         control={control}
                         name="fullName"
@@ -88,7 +88,7 @@ const SignupScreen = () => {
                     </Grid>
                   </Grid>
                   <Grid item xs={12} md={6} lg={6}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledTextInput
                         control={control}
                         name="phoneNumber"
@@ -101,7 +101,7 @@ const SignupScreen = () => {
                     </Grid>
                   </Grid>
                   <Grid item xs={12} md={6} lg={6}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledTextInput
                         control={control}
                         name="email"
@@ -114,7 +114,7 @@ const SignupScreen = () => {
                     </Grid>
                   </Grid>
                   <Grid item xs={12} md={6} lg={6}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledPasswordInput
                         control={control}
                         name="password"
@@ -125,7 +125,7 @@ const SignupScreen = () => {
                     </Grid>
                   </Grid>
                   <Grid item xs={12} md={6} lg={6}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledPasswordInput
                         control={control}
                         name="confirmPassword"
@@ -137,12 +137,12 @@ const SignupScreen = () => {
                     </Grid>
                   </Grid>
                   <Grid item xs={12}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <PasswordRequirements password={watch('password')} rePassword={watch('confirmPassword')} />
                     </Grid>
                   </Grid>
                   <Grid item xs={12} md={6} lg={6}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledDatePicker
                         control={control}
                         name="dob"
@@ -153,7 +153,7 @@ const SignupScreen = () => {
                     </Grid>
                   </Grid>
                   <Grid item xs={12} md={6} lg={6}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledPicker
                         control={control}
                         name="gender"
@@ -165,7 +165,7 @@ const SignupScreen = () => {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid container justify="center" alignItems="center" className={styles.spacingVertical}>
+                <Grid container justifyContent="center" alignItems="center" className={styles.spacingVertical}>
                   <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
                     Submit
                   </Button>

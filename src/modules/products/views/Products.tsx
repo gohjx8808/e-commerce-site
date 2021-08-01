@@ -34,7 +34,7 @@ const Products = () => {
   };
 
   return (
-    <Grid container justify="center" alignItems="center" direction="row" spacing={5}>
+    <Grid container justifyContent="center" alignItems="center" direction="row" spacing={5}>
       {allProducts.allContentfulProducts.edges.filter(
         (product) => filterProduct(product),
       ).map((product) => (

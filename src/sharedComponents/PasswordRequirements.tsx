@@ -86,7 +86,7 @@ const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
 
   return (
     <Grid item className={styles.passwordRequirementContainer}>
-      <Grid container justify="center" alignItems="center">
+      <Grid container justifyContent="center" alignItems="center">
         <Typography variant="h6" className={styles.whiteTitle}>Password Requirements:</Typography>
         {passwordRequirements.map((item) => <ChecklistItem data={item} key={item.key} />)}
       </Grid>
@@ -112,7 +112,7 @@ const ChecklistItem = (props:ChecklistItemOwnProps) => {
 
   return (
     <Grid item xs={12}>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <Grid container className={checklistStyle.passwordRequirementInnerContainer} direction="row" alignItems="center">
           <Grid item>
             {meetsReq ? (

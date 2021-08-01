@@ -101,18 +101,18 @@ const Cart = () => {
   };
 
   return (
-    <Grid container justify="center" alignItems="center" spacing={2}>
+    <Grid container justifyContent="center" alignItems="center" spacing={2}>
       <Grid item xs={11}>
         <Grid item xs={9}>
           <CustomBreadcrumbs />
         </Grid>
         <Card className={styles.cartCard}>
           <CardContent className={styles.cartTitleCardContent}>
-            <Grid container justify="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center">
               <Grid item xs={2}>
                 <Grid
                   container
-                  justify="center"
+                  justifyContent="center"
                   alignItems="center"
                 >
                   <Checkbox
@@ -132,7 +132,7 @@ const Cart = () => {
                 <Grid item xs={title === 'Item' ? 4 : 2} key={title}>
                   <Grid
                     container
-                    justify="center"
+                    justifyContent="center"
                     alignItems="center"
                   >
                     <Typography className={styles.boldText}>{title}</Typography>
@@ -149,7 +149,7 @@ const Cart = () => {
             {cartItems.map((cartItem, index) => (
               <Grid
                 container
-                justify="center"
+                justifyContent="center"
                 alignItems="center"
                 key={cartItem.id}
                 className={`${styles.cartItemCard} ${index === 0 ? '' : styles.topBorderedCartItemCard}`}
@@ -157,7 +157,7 @@ const Cart = () => {
                 <Grid item xs={2}>
                   <Grid
                     container
-                    justify="center"
+                    justifyContent="center"
                     alignItems="center"
                   >
                     <Checkbox
@@ -175,7 +175,7 @@ const Cart = () => {
                 <Grid item xs={4}>
                   <Grid
                     container
-                    justify="center"
+                    justifyContent="center"
                     alignItems="center"
                     direction="column"
                   >
@@ -195,7 +195,7 @@ const Cart = () => {
                 <Grid item xs={2}>
                   <Grid
                     container
-                    justify="center"
+                    justifyContent="center"
                     alignItems="center"
                   >
                     <Typography>{cartItem.price}</Typography>
@@ -204,7 +204,7 @@ const Cart = () => {
                 <Grid item xs={2}>
                   <Grid
                     container
-                    justify="center"
+                    justifyContent="center"
                     alignItems="center"
                   >
                     <IconButton
@@ -223,7 +223,7 @@ const Cart = () => {
                 <Grid item xs={2}>
                   <Grid
                     container
-                    justify="center"
+                    justifyContent="center"
                     alignItems="center"
                   >
                     <Typography>
@@ -239,7 +239,7 @@ const Cart = () => {
       <Grid item xs={11}>
         <Card className={styles.cartCard}>
           <CardContent className={styles.cartTitleCardContent}>
-            <Grid container justify="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center">
               <Grid item xs={10}>
                 <Typography className={styles.totalTitle}>Total</Typography>
               </Grid>
@@ -255,7 +255,7 @@ const Cart = () => {
         </Card>
       </Grid>
       <Grid item xs={11}>
-        <Grid container justify="flex-end">
+        <Grid container justifyContent="flex-end">
           <Button variant="contained" color="secondary" size="medium" onClick={() => navigate(routeNames.checkout)}>
             Checkout
           </Button>

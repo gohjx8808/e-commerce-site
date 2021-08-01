@@ -141,7 +141,7 @@ const Checkout = () => {
   };
 
   return (
-    <Grid container justify="center" spacing={3}>
+    <Grid container justifyContent="center" spacing={3}>
       <Grid item xs={11} lg={12}>
         <CustomBreadcrumbs />
       </Grid>
@@ -162,7 +162,7 @@ const Checkout = () => {
             />
           </Box>
           <Divider />
-          <Grid container justify="flex-end" className={styles.totalPayTextContainer}>
+          <Grid container justifyContent="flex-end" className={styles.totalPayTextContainer}>
             <Grid container>
               <Typography variant="subtitle1" className={`${styles.totalPayText} ${styles.checkListFront}`}>
                 Shipping Fee:
@@ -188,7 +188,7 @@ const Checkout = () => {
             <Typography variant="h6">Shipping Information</Typography>
             <Card className={styles.secondaryBorder} variant="outlined">
               <CardContent className={styles.cartTitleCardContent}>
-                <Grid container justify="center" alignItems="center">
+                <Grid container justifyContent="center" alignItems="center">
                   <ControlledTextInput
                     control={control}
                     name="fullName"
@@ -199,7 +199,7 @@ const Checkout = () => {
                     error={errors.fullName}
                   />
                   <Grid item lg={6} xs={12}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledTextInput
                         control={control}
                         name="email"
@@ -213,7 +213,7 @@ const Checkout = () => {
                     </Grid>
                   </Grid>
                   <Grid item lg={6} xs={12}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledTextInput
                         control={control}
                         name="phoneNo"
@@ -252,7 +252,7 @@ const Checkout = () => {
                     customClassName={styles.shippingInfoFullWidth}
                   />
                   <Grid item lg={6} xs={12}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledTextInput
                         control={control}
                         name="postcode"
@@ -266,7 +266,7 @@ const Checkout = () => {
                     </Grid>
                   </Grid>
                   <Grid item lg={6} xs={12}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledTextInput
                         control={control}
                         name="city"
@@ -280,7 +280,7 @@ const Checkout = () => {
                     </Grid>
                   </Grid>
                   <Grid item lg={6} xs={12}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledPicker
                         control={control}
                         options={stateOptions}
@@ -295,7 +295,7 @@ const Checkout = () => {
                   </Grid>
                   {outsideMalaysiaState && (
                   <Grid item lg={6} xs={12}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledTextInput
                         control={control}
                         name="outsideMalaysiaState"
@@ -310,7 +310,7 @@ const Checkout = () => {
                   </Grid>
                   )}
                   <Grid item lg={outsideMalaysiaState ? 12 : 6} xs={12}>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justifyContent="center" alignItems="center">
                       <ControlledTextInput
                         control={control}
                         name="country"
@@ -326,7 +326,7 @@ const Checkout = () => {
                       />
                     </Grid>
                   </Grid>
-                  <Grid container justify="flex-start" alignItems="center" className={styles.rmbPadding}>
+                  <Grid container justifyContent="flex-start" alignItems="center" className={styles.rmbPadding}>
                     <ControlledCheckbox
                       name="saveShippingInfo"
                       control={control}
@@ -338,14 +338,14 @@ const Checkout = () => {
             </Card>
           </Grid>
           <Grid item xs={12}>
-            <Grid container justify="center" direction="row" alignItems="center" className={styles.proceedPaymentBtnContainer}>
+            <Grid container justifyContent="center" direction="row" alignItems="center" className={styles.proceedPaymentBtnContainer}>
               <Grid item xs={8}>
-                <Grid container justify="flex-start" alignItems="center">
+                <Grid container justifyContent="flex-start" alignItems="center">
                   <ControlledRadioButton control={control} name="paymentOptions" label="Payment Options:" options={paymentOptions} error={errors.paymentOptions} />
                 </Grid>
               </Grid>
               <Grid item xs={4}>
-                <Grid container justify="flex-end" alignItems="center">
+                <Grid container justifyContent="flex-end" alignItems="center">
                   <Button variant="contained" color="secondary" size="medium" type="submit">
                     Proceed To Payment
                   </Button>

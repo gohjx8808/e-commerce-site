@@ -9,7 +9,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {
-  createStyles, fade, makeStyles, Theme,
+  createStyles, alpha, makeStyles, Theme,
 } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -45,9 +45,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -263,7 +263,7 @@ const MenuBar = () => {
             <Box className={classes.sectionDesktop}>
               {currentUserDetail.fullName !== ''
                 ? (
-                  <Grid container justify="center" alignItems="center">
+                  <Grid container justifyContent="center" alignItems="center">
                     <Typography>{`Welcome, ${currentUserDetail.fullName}`}</Typography>
                   </Grid>
                 ) : (
