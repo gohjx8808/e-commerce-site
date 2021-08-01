@@ -28,7 +28,7 @@ const Products = () => {
 
   const filterProduct = (product:products.innerProductQueryData) => {
     if (productFilterKeyword) {
-      return product.node.name.includes(productFilterKeyword);
+      return product.node.name.toLowerCase().includes(productFilterKeyword.toLowerCase());
     }
     return true;
   };

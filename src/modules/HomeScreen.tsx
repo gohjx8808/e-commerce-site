@@ -8,9 +8,13 @@ import {
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
-import routeNames from '../utils/routeNames';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
+import Box from '@material-ui/core/Box';
+import IconButton from '@material-ui/core/IconButton';
+import { ExpandMore } from '@material-ui/icons';
 
-const useStyle = makeStyles({
+const useStyle = makeStyles((theme) => ({
   carouselImages: {
     borderRadius: 10,
   },
@@ -25,10 +29,6 @@ const useStyle = makeStyles({
   unboldH6: {
     fontWeight: 'normal',
   },
-  productCarouselImages: {
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
   viewMoreBtn: {
     marginTop: 10,
   },
@@ -36,7 +36,20 @@ const useStyle = makeStyles({
     backgroundColor: 'transparent!important',
     color: 'black!important',
   },
-});
+  hyperlink: {
+    textDecorationLine: 'underline',
+  },
+  imageListRoot: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  imageList: {
+    height: 450,
+  },
+}));
 
 interface imageInnerStructure{
   node:{
@@ -46,7 +59,7 @@ interface imageInnerStructure{
 }
 
 const HomeScreen = () => {
-  const [productImages, setProductImages] = useState<ImageDataLike[][]>([]);
+  const [productImages, setProductImages] = useState<ImageDataLike[]>([]);
   const styles = useStyle();
   const homeQuery = useStaticQuery(graphql`
     query {
@@ -81,20 +94,10 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const extractedProducts:products.innerProductQueryData[] = homeQuery.products.edges;
-    const tempProduct = [] as ImageDataLike[][];
-    let i = 1;
-    let images = [] as ImageDataLike[];
+    const tempProduct = [] as ImageDataLike[];
     extractedProducts.forEach((product) => {
-      images.push(product.node.productImage[0]);
-      if (i % 4 === 0) {
-        tempProduct.push(images);
-        images = [];
-      }
-      i += 1;
+      tempProduct.push(product.node.productImage[0]);
     });
-    if (images.length > 0) {
-      tempProduct.push(images);
-    }
     setProductImages(tempProduct);
   }, [homeQuery]);
 
@@ -125,45 +128,34 @@ const HomeScreen = () => {
         </Carousel>
         <Grid container justify="center" alignItems="center" className={styles.sectionContainer} direction="column">
           <Typography variant="h4" color="secondary">Welcome!</Typography>
-          <Typography variant="h6" className={styles.unboldH6}>Hello, welcome to my little art journal!</Typography>
+          <Typography variant="h6" className={styles.unboldH6}>Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
+          <Typography variant="h6" className={styles.unboldH6}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
+          <Button>
+            <Typography variant="subtitle1" className={`${styles.unboldH6} ${styles.hyperlink}`}>Learn more!</Typography>
+          </Button>
         </Grid>
         <Grid container className={styles.sectionContainer} direction="column">
-          <Typography variant="h5" color="secondary">Product</Typography>
+          <Typography variant="h5" color="secondary">Product Gallery</Typography>
         </Grid>
       </Grid>
-      <Carousel
-        navButtonsWrapperProps={{ className: styles.carouselNavWrapper, style: {} }}
-        navButtonsProps={{
-          className: styles.productCarouselNavButton,
-          style: {},
-        }}
-        animation="slide"
-        interval={5000}
-        timeout={700}
-      >
-        {productImages.map((imageList) => (
-          <Grid container direction="row" justify="center" alignItems="center" key={imageList.toLocaleString()}>
-            {imageList.map((image) => {
-              const productImagesData = getImage(image)!;
-              return (
-                <Grid
-                  item
-                  xs={3}
-                  className={styles.productCarouselImages}
-                  key={productImagesData.images.fallback?.src}
-                >
-                  <GatsbyImage
-                    image={productImagesData}
-                    alt={productImagesData.images.fallback?.src!}
-                    imgClassName={styles.carouselImages}
-                  />
-                </Grid>
-              );
-            })}
-          </Grid>
-        ))}
-      </Carousel>
-      <Button variant="contained" color="primary" className={styles.viewMoreBtn} onClick={() => navigate(routeNames.products)}>View More</Button>
+      <Box className={styles.imageListRoot}>
+        <ImageList rowHeight="auto" cols={5} className={styles.imageList}>
+          {productImages.map((image) => {
+            const productImagesData = getImage(image)!;
+            return (
+              <ImageListItem key={productImagesData.images.fallback?.src}>
+                <GatsbyImage
+                  image={productImagesData}
+                  alt={productImagesData.images.fallback?.src!}
+                />
+              </ImageListItem>
+            );
+          })}
+        </ImageList>
+      </Box>
+      <IconButton>
+        <ExpandMore />
+      </IconButton>
     </Grid>
   );
 };
