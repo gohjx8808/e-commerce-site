@@ -15,21 +15,12 @@ module.exports = {
     'gatsby-plugin-material-ui',
     'gatsby-plugin-react-helmet',
     {
-      resolve: 'gatsby-source-stripe',
-      options: {
-        objects: ['Price', 'Product'],
-        secretKey: process.env.STRIPE_SECRET_KEY,
-        downloadFiles: true,
-      },
-    },
-    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'images',
         path: `${__dirname}/src/images`,
       },
     },
-
     'gatsby-plugin-image',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',

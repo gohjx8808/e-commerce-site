@@ -58,7 +58,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
         <CardContent>
           <Grid container justify="space-between" alignItems="center">
             <Typography className={styles.priceText}>
-              {`Price: ${formatPrice(product.price, 'MYR')}`}
+              {formatPrice(product.price, 'MYR')}
             </Typography>
             <IconButton aria-label="addToCart" size="medium" onClick={() => onAddToCart(product)}>
               <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
