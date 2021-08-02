@@ -78,8 +78,6 @@ const Products = () => {
     return isProductInFilter && isProductInCategory;
   };
 
-  console.log(categoryProductAmount);
-
   return (
     <>
       {categories.map((category) => (
