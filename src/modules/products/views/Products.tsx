@@ -5,9 +5,11 @@ import { graphql, useStaticQuery } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-scroll';
 import { useAppSelector } from '../../../hooks';
+import productStyle from '../src/productStyle';
 import ProductCard from './ProductCard';
 
 const Products = () => {
+  const styles = productStyle();
   const productFilterKeyword = useAppSelector((state) => state.product.productFilterKeyword);
   const [categories, setCategories] = useState<string[]>([]);
   const allProducts:products.rawProductQueryData = useStaticQuery(graphql`
@@ -65,7 +67,7 @@ const Products = () => {
       ))}
       {categories.map((category) => (
         <Grid container justifyContent="center" alignItems="center" direction="column" key={category}>
-          <Typography variant="h6" id={category}>{category}</Typography>
+          <Typography variant="h6" id={category} className={styles.categorySpacing}>{category}</Typography>
           <Grid container justifyContent="center" alignItems="center" direction="row" spacing={5} key={category}>
             {allProducts.allContentfulProducts.edges.filter(
               (product) => filterProduct(product, category),

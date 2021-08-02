@@ -95,6 +95,10 @@ const productStyle = makeStyles((theme) => ({
     flex: 1,
     textAlign: 'right',
   },
+  categorySpacing: {
+    paddingBottom: 20,
+    paddingTop: 20,
+  },
 }));
 
 export default productStyle;
