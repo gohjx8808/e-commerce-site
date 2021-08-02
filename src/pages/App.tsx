@@ -1,6 +1,8 @@
 import Box from '@material-ui/core/Box';
 import Fab from '@material-ui/core/Fab';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import { KeyboardArrowUp } from '@material-ui/icons';
 import { RouteComponentProps, Router } from '@reach/router';
 import React, { lazy, Suspense } from 'react';
@@ -27,6 +29,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  pageBannerBg: {
+    backgroundColor: theme.palette.secondary.main,
+    padding: 10,
+  },
+  pageBannerText: {
+    color: 'white',
+  },
 }));
 
 const App = () => {
@@ -40,7 +49,7 @@ const App = () => {
             <MainRoutes path="/" pageComponent={<HomeScreen />} />
             <RouterPage path={routeNames.login} pageComponent={<LoginScreen />} />
             <RouterPage path={routeNames.signUp} pageComponent={<SignupScreen />} />
-            <MainRoutes path={routeNames.products} pageComponent={<Products />} />
+            <MainRoutes path={routeNames.products} pageComponent={<Products />} pageBannerTitle="Product Categories" />
             <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
             <MainRoutes path={routeNames.checkout} pageComponent={<Checkout />} />
           </Router>
@@ -64,19 +73,26 @@ const RouterPage = (
   );
 };
 
-const MainRoutes = (props: { pageComponent: JSX.Element } & RouteComponentProps) => {
-  const { pageComponent } = props;
+const MainRoutes = (props: {
+   pageComponent: JSX.Element, pageBannerTitle?:string
+  } & RouteComponentProps) => {
+  const { pageComponent, pageBannerTitle } = props;
   const styles = useStyles();
 
   return (
     <Box className={styles.contentContainer}>
       <MenuBar />
-      <Box>
-        <Box className={styles.content}>
-          {pageComponent}
-        </Box>
-        <Footer />
+      {pageBannerTitle && (
+        <Grid item xs={12} className={styles.pageBannerBg}>
+          <Grid container justifyContent="center" alignItems="center">
+            <Typography variant="h4" className={styles.pageBannerText}>{pageBannerTitle}</Typography>
+          </Grid>
+        </Grid>
+      )}
+      <Box className={styles.content}>
+        {pageComponent}
       </Box>
+      <Footer />
       <ScrollTop>
         <Fab color="secondary" size="medium" aria-label="scroll back to top">
           <KeyboardArrowUp />
@@ -84,6 +100,10 @@ const MainRoutes = (props: { pageComponent: JSX.Element } & RouteComponentProps)
       </ScrollTop>
     </Box>
   );
+};
+
+MainRoutes.defaultProps = {
+  pageBannerTitle: null,
 };
 
 export default App;

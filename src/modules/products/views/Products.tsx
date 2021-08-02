@@ -81,13 +81,24 @@ const Products = () => {
   return (
     <>
       {categories.map((category) => (
-        <Link to={category} key={category} spy smooth offset={-60}>
-          <Button>{category}</Button>
-        </Link>
+        <Button disabled={!categoryProductAmount[category]} key={category}>
+          <Link
+            to={category}
+            spy
+            smooth
+            offset={-60}
+          >
+            {category}
+          </Link>
+        </Button>
       ))}
       {categories.map((category) => (
         <Grid container justifyContent="center" alignItems="center" direction="column" key={category}>
-          {categoryProductAmount[category] && <Typography variant="h6" id={category} className={styles.categorySpacing}>{category}</Typography>}
+          {categoryProductAmount[category] && (
+            <Grid container justifyContent="flex-start" alignItems="center">
+              <Typography variant="h6" id={category} className={styles.categorySpacing}>{category}</Typography>
+            </Grid>
+          )}
           <Grid container justifyContent="center" alignItems="center" direction="row" spacing={5} key={category}>
             {allProducts.allContentfulProducts.edges.filter(
               (product) => filterProduct(product, category),

@@ -18,6 +18,7 @@ const productStyle = makeStyles((theme) => ({
   cardTitle: {
     color: theme.palette.secondary.main,
     textAlign: 'center',
+    height: 95,
   },
   shoppingCartIcon: {
     color: theme.palette.secondary.main,
