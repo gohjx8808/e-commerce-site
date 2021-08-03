@@ -4,7 +4,9 @@ export const loadState = () => {
     if (serialState === null) {
       return undefined;
     }
-    return JSON.parse(serialState);
+    const parseState = JSON.parse(serialState);
+    parseState.product.productFilterKeyword = null;
+    return parseState;
   } catch (err) {
     return undefined;
   }
@@ -12,7 +14,7 @@ export const loadState = () => {
 
 export const saveState = (state:any) => {
   try {
-    state.product.productFilterKeyword = null;
+    // state.product.productFilterKeyword = null;
     const serialState = JSON.stringify(state);
     localStorage.setItem('appState', serialState);
   } catch (err) {

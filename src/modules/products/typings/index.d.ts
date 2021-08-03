@@ -47,6 +47,7 @@ declare namespace products{
     email: string
     phoneNo: string
     addressLine1: string
+    addressLine2:string
     postcode: string
     city: string
     state: optionsData
@@ -70,5 +71,6 @@ declare namespace products{
     totalAmount:number
     shippingFee:number
     selectedCheckoutItems:shoppingCartItemData[]
+    saveShippingInfo:boolean
   }
 }

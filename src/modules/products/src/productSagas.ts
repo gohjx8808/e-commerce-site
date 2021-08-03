@@ -9,7 +9,9 @@ import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
 } from '../../status/src/statusReducer';
 import { getPrevOrderCount, sendPaymentEmailApi, updateOrderCount } from './productApi';
-import { removeItemFromCart, sendPaymentEmailAction, updatePrevOrderCount } from './productReducers';
+import {
+  removeItemFromCart, saveShippingInfo, sendPaymentEmailAction, updatePrevOrderCount,
+} from './productReducers';
 
 export default function* productRuntime() {
   yield fork(getPrevOrderCountSaga);
@@ -33,6 +35,23 @@ function* sendPaymentEmailSaga() {
       yield call(updateOrderCount, payload.currentOrderCount);
       const toBeRemovedItems = payload.selectedCheckoutItems;
       yield all(toBeRemovedItems.map((item) => put(removeItemFromCart(item.id))));
+      if (payload.saveShippingInfo) {
+        const shippingInfo:products.submitShippingInfoPayload = {
+          fullName: payload.fullName,
+          email: payload.email,
+          phoneNo: payload.phoneNo,
+          addressLine1: payload.addressLine1,
+          addressLine2: payload.addressLine2,
+          postcode: payload.postcode,
+          city: payload.city,
+          state: payload.state,
+          outsideMalaysiaState: payload.outsideMalaysiaState,
+          country: payload.country,
+        };
+        yield put(saveShippingInfo(shippingInfo));
+      } else {
+        yield put(saveShippingInfo({}));
+      }
       yield put(toggleSuccess(true));
       yield put(updateStatusTitle('Your order is confirmed'));
       yield put(updateStatusMsg('An email regarding payment details will be sent to your email shortly. Please kindly proceed your payment within 24 hours.'));

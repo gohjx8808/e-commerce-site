@@ -38,9 +38,14 @@ const Products = () => {
     }`);
 
   const filterProductKeyword = useCallback(
-    (productName:string) => productName.toLowerCase().includes(
-      productFilterKeyword.toLowerCase(),
-    ), [productFilterKeyword],
+    (productName:string) => {
+      if (productFilterKeyword) {
+        return productName.toLowerCase().includes(
+          productFilterKeyword.toLowerCase(),
+        );
+      }
+      return true;
+    }, [productFilterKeyword],
   );
 
   useEffect(() => {
@@ -67,11 +72,8 @@ const Products = () => {
   }, [allProducts, filterProductKeyword]);
 
   const filterProduct = (product:products.innerProductQueryData, category:string) => {
-    let isProductInFilter = true;
+    const isProductInFilter = filterProductKeyword(product.node.name);
     let isProductInCategory = true;
-    if (productFilterKeyword) {
-      isProductInFilter = filterProductKeyword(product.node.name);
-    }
     if (product.node.category) {
       isProductInCategory = product.node.category === category;
     }

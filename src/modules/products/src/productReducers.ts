@@ -5,6 +5,7 @@ interface productState{
   productFilterKeyword:string
   selectedCheckoutItemsID:string[]
   prevOrderCount:number
+  prevShippingInfo:products.submitShippingInfoPayload|{}
 }
 
 const INITIAL_STATE:productState = {
@@ -12,6 +13,18 @@ const INITIAL_STATE:productState = {
   productFilterKeyword: '',
   selectedCheckoutItemsID: [],
   prevOrderCount: 0,
+  prevShippingInfo: {
+    fullName: '',
+    email: '',
+    phoneNo: '',
+    addressLine1: '',
+    addressLine2: '',
+    postcode: '',
+    city: '',
+    state: { value: '', label: '' },
+    outsideMalaysiaState: '',
+    country: '',
+  },
 };
 
 export const productSlice = createSlice({
@@ -56,6 +69,9 @@ export const productSlice = createSlice({
       state.prevOrderCount = action.payload;
     },
     sendPaymentEmailAction: (_state, _action:PayloadAction<products.sendEmailPayload>) => {},
+    saveShippingInfo: (state, action:PayloadAction<products.submitShippingInfoPayload|{}>) => {
+      state.prevShippingInfo = action.payload;
+    },
   },
 });
 
@@ -68,6 +84,7 @@ export const {
   updateSelectedCheckoutItemsID,
   updatePrevOrderCount,
   sendPaymentEmailAction,
+  saveShippingInfo,
 } = productSlice.actions;
 
 export default productSlice.reducer;

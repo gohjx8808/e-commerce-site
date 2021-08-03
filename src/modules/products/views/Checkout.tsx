@@ -30,15 +30,22 @@ const Checkout = () => {
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
   const selectedCheckoutItemsID = useAppSelector((state) => state.product.selectedCheckoutItemsID);
   const prevOrderCount = useAppSelector((state) => state.product.prevOrderCount);
+  const prevShippingInfo = useAppSelector((state) => state.product.prevShippingInfo);
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<products.shoppingCartItemData[]>([]);
   const [pageSize, setPageSize] = useState<number>(5);
   const [shippingFee, setShippingFee] = useState<number>(0);
   const {
-    control, watch, setValue, handleSubmit, formState: { errors },
+    control, watch, setValue, handleSubmit, formState: { errors }, reset,
   } = useForm({
     resolver: yupResolver(productSchema.shippingInfoSchema),
   });
+
+  useEffect(() => {
+    if (prevShippingInfo !== {}) {
+      reset(prevShippingInfo);
+    }
+  }, [prevShippingInfo, reset]);
 
   useEffect(() => {
     const filteredItems = cartItems.filter((item) => {
