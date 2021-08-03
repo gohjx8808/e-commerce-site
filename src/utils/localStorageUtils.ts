@@ -12,6 +12,7 @@ export const loadState = () => {
 
 export const saveState = (state:any) => {
   try {
+    state.product.productFilterKeyword = null;
     const serialState = JSON.stringify(state);
     localStorage.setItem('appState', serialState);
   } catch (err) {
