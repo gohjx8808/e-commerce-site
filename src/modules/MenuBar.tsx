@@ -161,10 +161,17 @@ const MenuBar = () => {
   const renderMenu = (
     <Menu
       anchorEl={accAnchor}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -177,10 +184,11 @@ const MenuBar = () => {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchor}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      getContentAnchorEl={null}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: 'top', horizontal: 'center' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
