@@ -184,14 +184,6 @@ const MenuBar = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="shopping cart" color="inherit">
-          <Badge badgeContent={totalQuantity} color="secondary">
-            <ShoppingCart />
-          </Badge>
-        </IconButton>
-        <Typography>Cart</Typography>
-      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -289,6 +281,11 @@ const MenuBar = () => {
               </IconButton>
             </Box>
             <Box className={classes.sectionMobile}>
+              <IconButton aria-label="shopping cart" color="inherit" onClick={() => navigate(routeNames.cart)}>
+                <Badge badgeContent={totalQuantity} color="secondary">
+                  <ShoppingCart />
+                </Badge>
+              </IconButton>
               <IconButton
                 aria-label="show more"
                 aria-controls={mobileMenuId}
