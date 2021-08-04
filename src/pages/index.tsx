@@ -19,6 +19,9 @@ const IndexPage = () => {
         main: '#B67B5E',
       },
     },
+    typography: {
+      fontFamily: 'Sitka Display Semibold',
+    },
   });
 
   return (
