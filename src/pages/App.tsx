@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { KeyboardArrowUp } from '@material-ui/icons';
 import { RouteComponentProps, Router } from '@reach/router';
 import React, { lazy, Suspense } from 'react';
+import AccountDetails from '../modules/account/views/AccountDetails';
 import Footer from '../modules/Footer';
 import HomeScreen from '../modules/HomeScreen';
 import Cart from '../modules/products/views/Cart';
@@ -52,6 +53,7 @@ const App = () => {
             <MainRoutes path={routeNames.products} pageComponent={<Products />} pageBannerTitle="Product Categories" />
             <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
             <MainRoutes path={routeNames.checkout} pageComponent={<Checkout />} />
+            <MainRoutes path={routeNames.account} pageComponent={<AccountDetails />} />
           </Router>
           <StatusModal />
           <LoadingOverlay />

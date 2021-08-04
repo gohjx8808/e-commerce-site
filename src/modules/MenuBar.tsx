@@ -164,6 +164,7 @@ const MenuBar = () => {
         <IconButton
           aria-label="account"
           color="inherit"
+          onClick={() => navigate(routeNames.account)}
         >
           <AccountCircle />
         </IconButton>
@@ -256,6 +257,7 @@ const MenuBar = () => {
               <IconButton
                 aria-label="account"
                 color="inherit"
+                onClick={() => navigate(routeNames.account)}
               >
                 <AccountCircle />
               </IconButton>

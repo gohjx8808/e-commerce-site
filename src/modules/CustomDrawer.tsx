@@ -97,12 +97,12 @@ const CustomDrawer = (props:CustomDrawerOwnProps) => {
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
-        <ListItem button selected={currentPathName === '/introduction'}>
+        {/* <ListItem button selected={currentPathName === '/introduction'}>
           <ListItemIcon>
             <InsertEmoticon />
           </ListItemIcon>
           <ListItemText primary="Introduction" />
-        </ListItem>
+        </ListItem> */}
         <ListItem
           button
           selected={currentPathName === routeNames.products}
@@ -113,24 +113,24 @@ const CustomDrawer = (props:CustomDrawerOwnProps) => {
           </ListItemIcon>
           <ListItemText primary="Products" />
         </ListItem>
-        <ListItem button selected={currentPathName === '/sharingCorner'}>
+        {/* <ListItem button selected={currentPathName === '/sharingCorner'}>
           <ListItemIcon>
             <ChatOutlined />
           </ListItemIcon>
           <ListItemText primary="Sharing Corner" />
-        </ListItem>
-        <ListItem button selected={currentPathName === '/contactUs'}>
+        </ListItem> */}
+        {/* <ListItem button selected={currentPathName === '/contactUs'}>
           <ListItemIcon>
             <PermContactCalendarOutlined />
           </ListItemIcon>
           <ListItemText primary="Contact Us" />
-        </ListItem>
-        <ListItem button selected={currentPathName === '/faq'}>
+        </ListItem> */}
+        {/* <ListItem button selected={currentPathName === '/faq'}>
           <ListItemIcon>
             <LiveHelpOutlined />
           </ListItemIcon>
           <ListItemText primary="FAQ" />
-        </ListItem>
+        </ListItem> */}
       </List>
     </Drawer>
   );

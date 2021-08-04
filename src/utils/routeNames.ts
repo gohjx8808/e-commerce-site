@@ -4,4 +4,5 @@ export default {
   cart: '/cart',
   products: '/products',
   checkout: '/cart/checkout',
+  account: '/account',
 };
