@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { ShoppingCart } from '@material-ui/icons';
+import { ExitToApp, ShoppingCart } from '@material-ui/icons';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -114,14 +114,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   menuIconShift: {
     [theme.breakpoints.up('md')]: {
-      paddingLeft: 16,
+      paddingLeft: 5,
+      paddingRight: 5,
     },
   },
 }));
 
 const MenuBar = () => {
   const classes = useStyles();
-  const [accAnchor, setAccAnchor] = useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mobileMoreAnchor, setMobileMoreAnchor] = useState<null | HTMLElement>(null);
   const currentUserDetail = useAppSelector((state) => state.auth.currentUser);
@@ -138,47 +138,15 @@ const MenuBar = () => {
     setTotalQuantity(total);
   }, [shoppingCartItem]);
 
-  const isMenuOpen = Boolean(accAnchor);
   const isMobileMenuOpen = Boolean(mobileMoreAnchor);
-
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAccAnchor(event.currentTarget);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchor(null);
   };
 
-  const handleMenuClose = () => {
-    setAccAnchor(null);
-  };
-
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchor(event.currentTarget);
   };
-
-  const menuId = 'account';
-  const renderMenu = (
-    <Menu
-      anchorEl={accAnchor}
-      getContentAnchorEl={null}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'center',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = 'mobile-more';
   const renderMobileMenu = (
@@ -192,17 +160,26 @@ const MenuBar = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem>
         <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
+          aria-label="account"
           color="inherit"
         >
           <AccountCircle />
         </IconButton>
         <Typography>Profile</Typography>
       </MenuItem>
+      {currentUserDetail.fullName !== '' && (
+        <MenuItem>
+          <IconButton
+            aria-label="logout"
+            color="inherit"
+          >
+            <ExitToApp />
+          </IconButton>
+          <Typography>Logout</Typography>
+        </MenuItem>
+      )}
     </Menu>
   );
 
@@ -232,7 +209,6 @@ const MenuBar = () => {
         >
           <Toolbar className={classes.menuIconShift}>
             <IconButton
-              edge="start"
               className={clsx(classes.menuButton, {
                 [classes.hide]: drawerOpen,
               })}
@@ -278,15 +254,19 @@ const MenuBar = () => {
                 </Badge>
               </IconButton>
               <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                aria-label="account"
                 color="inherit"
               >
                 <AccountCircle />
               </IconButton>
+              {currentUserDetail.fullName !== '' && (
+                <IconButton
+                  aria-label="logout"
+                  color="inherit"
+                >
+                  <ExitToApp />
+                </IconButton>
+              )}
             </Box>
             <Box className={classes.sectionMobile}>
               <IconButton aria-label="shopping cart" color="inherit" onClick={() => navigate(routeNames.cart)}>
@@ -309,7 +289,6 @@ const MenuBar = () => {
       </ElevationScroll>
       <Toolbar id="back-to-top-anchor" />
       {renderMobileMenu}
-      {renderMenu}
       <CustomDrawer drawerOpen={drawerOpen} handleDrawerClose={handleDrawerClose} />
     </Box>
   );
