@@ -11,6 +11,7 @@ const INITIAL_STATE:authState = {
     gender: '',
     fullName: '',
     email: '',
+    phoneNumber: '',
   },
 };
 

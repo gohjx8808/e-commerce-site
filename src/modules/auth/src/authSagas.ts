@@ -3,6 +3,7 @@ import firebase from 'gatsby-plugin-firebase';
 import {
   call, fork, put, take,
 } from 'redux-saga/effects';
+import routeNames from '../../../utils/routeNames';
 import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
 import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
@@ -30,12 +31,14 @@ function* submitSignUpSaga() {
         dob: payload.dob,
         gender: payload.gender.value,
         fullName: payload.fullName,
+        phoneNumber: payload.phoneNumber,
       };
       yield call(saveUserDetails, userID, userDetails);
       yield put(toggleSuccess(true));
       yield put(updateStatusMsg('Your registration is successful! Please login using your credentials.'));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
+      navigate(routeNames.login);
     } catch (error) {
       const errorCode = error.code;
       if (errorCode === 'auth/email-already-in-use') {

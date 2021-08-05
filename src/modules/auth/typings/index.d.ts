@@ -24,6 +24,7 @@ declare namespace auth{
     dob:string
     gender:string
     fullName:string
+    phoneNumber:string
   }
 
   interface currentUserDetails{
@@ -32,5 +33,6 @@ declare namespace auth{
     email:string
     fullName:string
     gender:string
+    phoneNumber:string
   }
 }

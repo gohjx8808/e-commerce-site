@@ -23,6 +23,7 @@ const CustomBreadcrumbs = () => {
     [routeNames.cart]: 'Shopping Cart',
     '/': 'Home',
     [routeNames.checkout]: 'Checkout',
+    [routeNames.account]: 'My Account',
   };
   const [routesInBetween, setRoutesInBetween] = useState<string[]>([]);
   const styles = useStyle();
