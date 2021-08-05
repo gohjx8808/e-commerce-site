@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    minHeight: '87vh',
   },
   pageBannerBg: {
     backgroundColor: theme.palette.secondary.main,
