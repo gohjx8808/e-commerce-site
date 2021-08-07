@@ -15,9 +15,12 @@ export const accountSlice = createSlice({
     toggleEditAccDetailModal: (state, action:PayloadAction<boolean>) => {
       state.isEditAccDetailModalDisplay = action.payload;
     },
+    submitEditAccDetailsAction: (
+      _state, _action:PayloadAction<account.submitEditAccDetailPayload>,
+    ) => {},
   },
 });
 
-export const { toggleEditAccDetailModal } = accountSlice.actions;
+export const { toggleEditAccDetailModal, submitEditAccDetailsAction } = accountSlice.actions;
 
 export default accountSlice.reducer;
