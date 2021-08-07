@@ -3,6 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { Cake, Email, Person, Phone, Wc } from '@material-ui/icons';
 import { DateTime } from 'luxon';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -38,10 +39,12 @@ const AccountDetails = () => {
                   <SingleAccData
                     label="Full Name"
                     data={currentUserDetails.fullName}
+                    Icon={<Person />}
                   />
                   <SingleAccData
                     label="Gender"
                     data={genderMap[currentUserDetails.gender]}
+                    Icon={<Wc />}
                   />
                 </Grid>
               </Grid>
@@ -50,10 +53,12 @@ const AccountDetails = () => {
                   <SingleAccData
                     label="Email"
                     data={currentUserDetails.email}
+                    Icon={<Email />}
                   />
                   <SingleAccData
                     label="Phone No"
                     data={currentUserDetails.phoneNumber}
+                    Icon={<Phone />}
                   />
                 </Grid>
               </Grid>
@@ -62,6 +67,7 @@ const AccountDetails = () => {
                   <SingleAccData
                     label="Date of Birth"
                     data={DateTime.fromISO(currentUserDetails.dob).toLocaleString()}
+                    Icon={<Cake />}
                   />
                   <Grid item xs={6} />
                 </Grid>
