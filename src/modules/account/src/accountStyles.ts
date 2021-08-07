@@ -8,6 +8,9 @@ const accountStyles = makeStyles({
     paddingTop: 10,
     paddingBottom: 10,
   },
+  editBtnTopSpacing: {
+    paddingTop: 20,
+  },
 });
 
 export default accountStyles;

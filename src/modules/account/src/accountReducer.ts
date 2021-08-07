@@ -1,15 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const INITIAL_STATE = {};
+interface accState{
+  isEditAccDetailModalDisplay:boolean
+}
+
+const INITIAL_STATE:accState = {
+  isEditAccDetailModalDisplay: false,
+};
 
 export const accountSlice = createSlice({
   name: 'account',
   initialState: INITIAL_STATE,
   reducers: {
-
+    toggleEditAccDetailModal: (state, action:PayloadAction<boolean>) => {
+      state.isEditAccDetailModalDisplay = action.payload;
+    },
   },
 });
 
-export const {} = accountSlice.actions;
+export const { toggleEditAccDetailModal } = accountSlice.actions;
 
 export default accountSlice.reducer;
