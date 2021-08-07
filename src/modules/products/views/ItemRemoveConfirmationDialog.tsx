@@ -40,11 +40,11 @@ const ItemRemoveConfirmationDialog = (props:ItemRemoveConfirmationDialogOwnProps
           from your cart?
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={toggleModal}>
+      <DialogActions className={styles.totalPayTextContainer}>
+        <Button onClick={toggleModal} color="secondary" variant="contained">
           Cancel
         </Button>
-        <Button onClick={confirmRemove}>
+        <Button onClick={confirmRemove} color="secondary">
           Confirm
         </Button>
       </DialogActions>

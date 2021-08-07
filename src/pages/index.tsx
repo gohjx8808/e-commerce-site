@@ -25,24 +25,24 @@ const IndexPage = () => {
   });
 
   return (
-    <SnackbarProvider
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left',
-      }}
-      autoHideDuration={3000}
-      content={(key, message) => (
-        <CustomSnackbar id={key} message={message} />
-      )}
-    >
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <SnackbarProvider
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        autoHideDuration={3000}
+        content={(key, message) => (
+          <CustomSnackbar id={key} message={message} />
+        )}
+      >
         <Grid container>
           <Grid item xs={12}>
             <App />
           </Grid>
         </Grid>
-      </ThemeProvider>
-    </SnackbarProvider>
+      </SnackbarProvider>
+    </ThemeProvider>
   );
 };
 

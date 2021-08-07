@@ -17,6 +17,7 @@ import {
   increaseQuantity, reduceQuantity, removeItemFromCart, updateSelectedCheckoutItemsID,
 } from '../src/productReducers';
 import productStyle from '../src/productStyle';
+import CheckoutErrorSnackbar from './CheckoutErrorSnackbar';
 import ItemRemoveConfirmationDialog from './ItemRemoveConfirmationDialog';
 
 type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -37,6 +38,7 @@ const Cart = () => {
     itemPrice: '',
   });
   const [removeConfirmModalDisplay, setRemoveConfirmModalDisplay] = useState<boolean>(false);
+  const [isCheckoutError, setIsCheckoutError] = useState(false);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -98,6 +100,14 @@ const Cart = () => {
 
   const onIncreaseItemQuantity = (cartItemID:string) => {
     dispatch(increaseQuantity(cartItemID));
+  };
+
+  const onCheckout = () => {
+    if (selectedCheckoutItemsID.length > 0) {
+      navigate(routeNames.checkout);
+    } else {
+      setIsCheckoutError(true);
+    }
   };
 
   return (
@@ -256,7 +266,7 @@ const Cart = () => {
       </Grid>
       <Grid item xs={11}>
         <Grid container justifyContent="flex-end">
-          <Button variant="contained" color="secondary" size="medium" onClick={() => navigate(routeNames.checkout)}>
+          <Button variant="contained" color="secondary" size="medium" onClick={onCheckout}>
             Checkout
           </Button>
         </Grid>
@@ -266,6 +276,10 @@ const Cart = () => {
         itemName={toBeRemovedItem.name}
         toggleModal={toggleRemoveConfirmModalDisplay}
         confirmRemove={confirmItemRemove}
+      />
+      <CheckoutErrorSnackbar
+        isSnackbarOpen={isCheckoutError}
+        toggleSnackbar={() => setIsCheckoutError(false)}
       />
     </Grid>
   );
