@@ -1,15 +1,16 @@
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
 import { DateTime } from 'luxon';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
+import { toggleEditAccDetailModal } from '../src/accountReducer';
 import accountStyles from '../src/accountStyles';
 import EditAccDetailModal from './EditAccDetailModal';
-import { toggleEditAccDetailModal } from '../src/accountReducer';
+import SingleAccData from './SingleAccData';
 
 interface stringDict{
   [key:string]:string
@@ -31,49 +32,37 @@ const AccountDetails = () => {
       <Grid item xs={10}>
         <Card>
           <CardContent>
-            <Grid container spacing={4} className={styles.verticalSpacing}>
-              <Grid item xs={12}>
-                <Grid container justifyContent="center" direction="row">
-                  <Grid item xs={6}>
-                    <Grid container justifyContent="center" direction="column" alignItems="center">
-                      <Typography className={styles.boldText}>Full Name</Typography>
-                      <Typography>{currentUserDetails.fullName}</Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Grid container justifyContent="center" direction="column" alignItems="center">
-                      <Typography className={styles.boldText}>Gender</Typography>
-                      <Typography>{genderMap[currentUserDetails.gender]}</Typography>
-                    </Grid>
-                  </Grid>
+            <Grid container justifyContent="center" spacing={4} className={styles.verticalSpacing}>
+              <Grid item xs={10}>
+                <Grid container justifyContent="center" alignItems="center" direction="row" spacing={2}>
+                  <SingleAccData
+                    label="Full Name"
+                    data={currentUserDetails.fullName}
+                  />
+                  <SingleAccData
+                    label="Gender"
+                    data={genderMap[currentUserDetails.gender]}
+                  />
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <Grid container justifyContent="center" direction="row">
-                  <Grid item xs={6}>
-                    <Grid container justifyContent="center" direction="column" alignItems="center">
-                      <Typography className={styles.boldText}>Email</Typography>
-                      <Typography>{currentUserDetails.email}</Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Grid container justifyContent="center" direction="column" alignItems="center">
-                      <Typography className={styles.boldText}>Phone No</Typography>
-                      <Typography>{currentUserDetails.phoneNumber}</Typography>
-                    </Grid>
-                  </Grid>
+              <Grid item xs={10}>
+                <Grid container justifyContent="center" alignItems="center" direction="row" spacing={2}>
+                  <SingleAccData
+                    label="Email"
+                    data={currentUserDetails.email}
+                  />
+                  <SingleAccData
+                    label="Phone No"
+                    data={currentUserDetails.phoneNumber}
+                  />
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <Grid container justifyContent="center" direction="row">
-                  <Grid item xs={6}>
-                    <Grid container justifyContent="center" direction="column" alignItems="center">
-                      <Typography className={styles.boldText}>Date of Birth</Typography>
-                      <Typography>
-                        {DateTime.fromISO(currentUserDetails.dob).toLocaleString()}
-                      </Typography>
-                    </Grid>
-                  </Grid>
+              <Grid item xs={10}>
+                <Grid container justifyContent="center" direction="row" spacing={2}>
+                  <SingleAccData
+                    label="Date of Birth"
+                    data={DateTime.fromISO(currentUserDetails.dob).toLocaleString()}
+                  />
                   <Grid item xs={6} />
                 </Grid>
               </Grid>
