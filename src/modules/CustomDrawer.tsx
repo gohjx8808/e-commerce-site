@@ -9,12 +9,8 @@ import {
   createStyles, makeStyles, Theme,
 } from '@material-ui/core/styles';
 import {
-  ChatOutlined,
   HomeOutlined,
   ImageSearchOutlined,
-  InsertEmoticon,
-  LiveHelpOutlined,
-  PermContactCalendarOutlined,
 } from '@material-ui/icons';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { useLocation } from '@reach/router';
