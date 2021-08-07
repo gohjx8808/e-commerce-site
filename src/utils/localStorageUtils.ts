@@ -7,6 +7,7 @@ export const loadState = () => {
     const parseState = JSON.parse(serialState);
     parseState.product.productFilterKeyword = null;
     parseState.account.isEditAccDetailModalDisplay = false;
+    parseState.auth.isSignOutConfirmationModalOpen = false;
     return parseState;
   } catch (err) {
     return undefined;

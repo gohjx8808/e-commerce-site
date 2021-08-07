@@ -43,4 +43,7 @@ export default makeStyles((theme) => ({
     width: '80%',
     backgroundColor: '#B67B5E',
   },
+  signoutModalActionContainer: {
+    padding: '20px!important',
+  },
 }));

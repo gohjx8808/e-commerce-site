@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface authState{
   currentUser:auth.currentUserDetails
+  isSignOutConfirmationModalOpen:boolean
 }
 
 const INITIAL_STATE:authState = {
@@ -13,6 +14,7 @@ const INITIAL_STATE:authState = {
     email: '',
     phoneNumber: '',
   },
+  isSignOutConfirmationModalOpen: false,
 };
 
 export const authSlice = createSlice({
@@ -25,11 +27,24 @@ export const authSlice = createSlice({
       state.currentUser = action.payload;
     },
     getCurrentUserDetailsAction: (_state, _action:PayloadAction<string>) => {},
+    signOutAction: (_state) => {},
+    toggleSignOutConfirmationModal: (state, action:PayloadAction<boolean>) => {
+      state.isSignOutConfirmationModalOpen = action.payload;
+    },
+    clearCurrentUser: (state) => {
+      state.currentUser = INITIAL_STATE.currentUser;
+    },
   },
 });
 
 export const {
-  submitSignUp, submitSignIn, storeSignedInUser, getCurrentUserDetailsAction,
+  submitSignUp,
+  submitSignIn,
+  storeSignedInUser,
+  getCurrentUserDetailsAction,
+  signOutAction,
+  toggleSignOutConfirmationModal,
+  clearCurrentUser,
 } = authSlice.actions;
 
 export default authSlice.reducer;

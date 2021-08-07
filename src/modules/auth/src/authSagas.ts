@@ -9,16 +9,23 @@ import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
 } from '../../status/src/statusReducer';
 import {
-  getCurrentUserDetails, registerUser, saveUserDetails, signIn,
+  getCurrentUserDetails, registerUser, saveUserDetails, signIn, signOut,
 } from './authApis';
 import {
-  getCurrentUserDetailsAction, storeSignedInUser, submitSignIn, submitSignUp,
+  clearCurrentUser,
+  getCurrentUserDetailsAction,
+  signOutAction,
+  storeSignedInUser,
+  submitSignIn,
+  submitSignUp,
+  toggleSignOutConfirmationModal,
 } from './authReducer';
 
 export default function* authSaga() {
   yield fork(submitSignUpSaga);
   yield fork(submitLoginSaga);
   yield fork(getUserDetailSaga);
+  yield fork(logoutSaga);
 }
 
 function* submitSignUpSaga() {
@@ -93,6 +100,28 @@ function* getUserDetailSaga() {
     } catch (error) {
       yield put(updateStatusTitle('Error'));
       yield put(updateStatusMsg('Error occur. Please try again.'));
+      yield put(toggleLoadingOverlay(false));
+      yield put(toggleStatusModal(true));
+    }
+  }
+}
+
+function* logoutSaga() {
+  while (true) {
+    yield take(signOutAction);
+    yield put(toggleLoadingOverlay(true));
+    yield put(updateStatusTitle('Logout'));
+    try {
+      yield call(signOut);
+      yield put(toggleSuccess(true));
+      yield put(updateStatusMsg('Successfully logout!'));
+      yield put(clearCurrentUser());
+      yield put(toggleLoadingOverlay(false));
+      yield put(toggleSignOutConfirmationModal(false));
+      yield put(toggleStatusModal(true));
+    } catch {
+      yield put(toggleSuccess(false));
+      yield put(updateStatusMsg('Network error! Please try again.'));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
     }

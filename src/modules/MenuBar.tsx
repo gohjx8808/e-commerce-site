@@ -9,7 +9,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {
-  createStyles, alpha, makeStyles, Theme,
+  alpha, createStyles, makeStyles, Theme,
 } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -24,6 +24,8 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
 import routeNames from '../utils/routeNames';
+import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
+import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
 import CustomDrawer from './CustomDrawer';
 import { updateProductFilterKeyword } from './products/src/productReducers';
 
@@ -148,6 +150,10 @@ const MenuBar = () => {
     setMobileMoreAnchor(event.currentTarget);
   };
 
+  const promptSignOut = () => {
+    dispatch(toggleSignOutConfirmationModal(true));
+  };
+
   const mobileMenuId = 'mobile-more';
   const renderMobileMenu = (
     <Menu
@@ -175,6 +181,7 @@ const MenuBar = () => {
           <IconButton
             aria-label="logout"
             color="inherit"
+            onClick={promptSignOut}
           >
             <ExitToApp />
           </IconButton>
@@ -265,6 +272,7 @@ const MenuBar = () => {
                 <IconButton
                   aria-label="logout"
                   color="inherit"
+                  onClick={promptSignOut}
                 >
                   <ExitToApp />
                 </IconButton>
@@ -292,6 +300,7 @@ const MenuBar = () => {
       <Toolbar id="back-to-top-anchor" />
       {renderMobileMenu}
       <CustomDrawer drawerOpen={drawerOpen} handleDrawerClose={handleDrawerClose} />
+      <SignOutConfirmationModal />
     </Box>
   );
 };
