@@ -11,11 +11,14 @@ import {
 import {
   getCurrentUserDetails, registerUser, saveUserDetails, signIn,
 } from './authApis';
-import { storeSignedInUser, submitSignIn, submitSignUp } from './authReducer';
+import {
+  getCurrentUserDetailsAction, storeSignedInUser, submitSignIn, submitSignUp,
+} from './authReducer';
 
 export default function* authSaga() {
   yield fork(submitSignUpSaga);
   yield fork(submitLoginSaga);
+  yield fork(getUserDetailSaga);
 }
 
 function* submitSignUpSaga() {
@@ -62,18 +65,34 @@ function* submitLoginSaga() {
     yield put(toggleLoadingOverlay(true));
     try {
       const response:firebase.auth.UserCredential = yield call(signIn, payload);
-      const userDetails:firebase.database.DataSnapshot = yield call(
-        getCurrentUserDetails, response.user?.uid!,
-      );
-      const storedDetails:auth.currentUserDetails = {
-        ...userDetails.val(), uid: response.user?.uid!,
-      };
-      yield put(storeSignedInUser(storedDetails));
+      yield put(getCurrentUserDetailsAction(response.user?.uid!));
       yield put(toggleLoadingOverlay(false));
       navigate('/');
     } catch (error) {
       yield put(updateStatusTitle('Log In'));
       yield put(updateStatusMsg('Invalid credentials! Please try again.'));
+      yield put(toggleLoadingOverlay(false));
+      yield put(toggleStatusModal(true));
+    }
+  }
+}
+
+function* getUserDetailSaga() {
+  while (true) {
+    const { payload }:ReturnType<typeof getCurrentUserDetailsAction> = yield take(
+      getCurrentUserDetailsAction,
+    );
+    try {
+      const userDetails:firebase.database.DataSnapshot = yield call(
+        getCurrentUserDetails, payload,
+      );
+      const storedDetails:auth.currentUserDetails = {
+        ...userDetails.val(), uid: payload,
+      };
+      yield put(storeSignedInUser(storedDetails));
+    } catch (error) {
+      yield put(updateStatusTitle('Error'));
+      yield put(updateStatusMsg('Error occur. Please try again.'));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
     }

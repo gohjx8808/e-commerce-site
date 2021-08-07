@@ -24,9 +24,12 @@ export const authSlice = createSlice({
     storeSignedInUser: (state, action:PayloadAction<auth.currentUserDetails>) => {
       state.currentUser = action.payload;
     },
+    getCurrentUserDetailsAction: (_state, _action:PayloadAction<string>) => {},
   },
 });
 
-export const { submitSignUp, submitSignIn, storeSignedInUser } = authSlice.actions;
+export const {
+  submitSignUp, submitSignIn, storeSignedInUser, getCurrentUserDetailsAction,
+} = authSlice.actions;
 
 export default authSlice.reducer;
