@@ -106,7 +106,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
                 </IconButton>
               </InputAdornment>
             )}
-            startAdornment={startAdornment}
+            startAdornment={startAdornment && <InputAdornment position="start">{startAdornment}</InputAdornment>}
             inputProps={{
               maxLength,
             }}

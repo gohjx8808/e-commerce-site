@@ -107,7 +107,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
           <FormHelperText error>{error?.message}</FormHelperText>
         </FormControl>
       )}
-      defaultValue={defaultValue}
+      defaultValue={options.find((option) => option.value === defaultValue)}
     />
   );
 };

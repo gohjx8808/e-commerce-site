@@ -11,6 +11,12 @@ const accountStyles = makeStyles({
   editBtnTopSpacing: {
     paddingTop: 20,
   },
+  inputFullWidth: {
+    width: '100%!important',
+  },
+  editAccDetailActionBtnContainer: {
+    padding: '20px!important',
+  },
 });
 
 export default accountStyles;

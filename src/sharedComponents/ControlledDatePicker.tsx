@@ -3,7 +3,10 @@ import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
 import { KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
 import MuiPickersUtilsProvider from '@material-ui/pickers/MuiPickersUtilsProvider';
-import React from 'react';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import clsx from 'clsx';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
 type variantData='standard' | 'filled' | 'outlined'
@@ -15,6 +18,8 @@ interface ControlledDatePickerOwnProps{
   name:string,
   defaultValue?:string
   error?:FieldError
+  lightBg?:boolean
+  customClassName?:string
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -39,14 +44,30 @@ const useStyles = makeStyles((theme) => ({
   errorColor: {
     color: theme.palette.error.main,
   },
+  secondary: {
+    color: theme.palette.secondary.main,
+  },
+  black: {
+    color: 'black',
+  },
 }));
 
 const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
   const {
-    control, label, variant, name, defaultValue, error,
+    control, label, variant, name, defaultValue, error, lightBg, customClassName,
   } = props;
-
+  const [inputColorClass, setInputColorClass] = useState('');
   const styles = useStyles();
+
+  useEffect(() => {
+    if (error) {
+      setInputColorClass(styles.errorColor);
+    } else if (lightBg) {
+      setInputColorClass(styles.black);
+    } else {
+      setInputColorClass(styles.unFocusLabel);
+    }
+  }, [error, lightBg, styles]);
 
   return (
     <Controller
@@ -57,7 +78,7 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
           onChange, value,
         },
       }) => (
-        <FormControl variant={variant} className={styles.container}>
+        <FormControl variant={variant} className={clsx(styles.container, customClassName)}>
           <MuiPickersUtilsProvider utils={LuxonUtils}>
             <KeyboardDatePicker
               variant="inline"
@@ -65,15 +86,16 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
               margin="normal"
               label={label}
               value={value ? new Date(value) : null}
-              onChange={(selectedDate:Date) => onChange(selectedDate ? selectedDate.toString() : '')}
+              onChange={(selectedDate:MaterialUiPickersDate) => onChange(selectedDate ? selectedDate.toString() : '')}
               KeyboardButtonProps={{
                 'aria-label': 'change date',
-                className: error ? styles.errorColor : styles.unFocusLabel,
+                className: inputColorClass,
               }}
+              color={lightBg ? 'secondary' : 'primary'}
               inputVariant={variant}
-              className={styles.unFocusStyle}
-              InputLabelProps={{ classes: { root: styles.unFocusLabel } }}
-              InputProps={{ classes: { root: styles.unFocusLabel } }}
+              className={!lightBg ? styles.unFocusStyle : ''}
+              InputLabelProps={{ classes: { root: !lightBg ? styles.unFocusLabel : '' } }}
+              InputProps={{ classes: { root: !lightBg ? styles.unFocusLabel : '' } }}
               disableFuture
               maxDateMessage="Invalid date"
               minDateMessage="Invalid date"
@@ -94,6 +116,8 @@ ControlledDatePicker.defaultProps = {
   variant: undefined,
   label: '',
   error: null,
+  lightBg: false,
+  customClassName: '',
 };
 
 export default ControlledDatePicker;
