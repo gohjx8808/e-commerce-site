@@ -36,16 +36,10 @@ const Checkout = () => {
   const [pageSize, setPageSize] = useState<number>(5);
   const [shippingFee, setShippingFee] = useState<number>(0);
   const {
-    control, watch, setValue, handleSubmit, formState: { errors }, reset,
+    control, watch, setValue, handleSubmit, formState: { errors },
   } = useForm({
     resolver: yupResolver(productSchema.shippingInfoSchema),
   });
-
-  useEffect(() => {
-    if (prevShippingInfo !== {}) {
-      reset(prevShippingInfo);
-    }
-  }, [prevShippingInfo, reset]);
 
   useEffect(() => {
     const filteredItems = cartItems.filter((item) => {
@@ -204,6 +198,7 @@ const Checkout = () => {
                     lightBg
                     customClassName={styles.shippingInfoFullWidth}
                     error={errors.fullName}
+                    defaultValue={prevShippingInfo.fullName}
                   />
                   <Grid item lg={6} xs={12}>
                     <Grid container justifyContent="center" alignItems="center">
@@ -216,6 +211,7 @@ const Checkout = () => {
                         lightBg
                         customClassName={styles.shippingInfoHalfWidth}
                         error={errors.email}
+                        defaultValue={prevShippingInfo.email}
                       />
                     </Grid>
                   </Grid>
@@ -234,8 +230,8 @@ const Checkout = () => {
                             +
                           </InputAdornment>
                         )}
-                        defaultValue="60"
                         error={errors.phoneNo}
+                        defaultValue={prevShippingInfo.phoneNo}
                       />
                     </Grid>
                   </Grid>
@@ -248,6 +244,7 @@ const Checkout = () => {
                     lightBg
                     customClassName={styles.shippingInfoFullWidth}
                     error={errors.addressLine1}
+                    defaultValue={prevShippingInfo.addressLine1}
                   />
                   <ControlledTextInput
                     control={control}
@@ -257,6 +254,7 @@ const Checkout = () => {
                     labelWidth={110}
                     lightBg
                     customClassName={styles.shippingInfoFullWidth}
+                    defaultValue={prevShippingInfo.addressLine2}
                   />
                   <Grid item lg={6} xs={12}>
                     <Grid container justifyContent="center" alignItems="center">
@@ -269,6 +267,7 @@ const Checkout = () => {
                         maxLength={10}
                         customClassName={styles.shippingInfoHalfWidth}
                         error={errors.postcode}
+                        defaultValue={prevShippingInfo.postcode}
                       />
                     </Grid>
                   </Grid>
@@ -283,6 +282,7 @@ const Checkout = () => {
                         labelWidth={25}
                         customClassName={styles.shippingInfoHalfWidth}
                         error={errors.city}
+                        defaultValue={prevShippingInfo.city}
                       />
                     </Grid>
                   </Grid>
@@ -297,6 +297,7 @@ const Checkout = () => {
                         label="State"
                         customClassName={styles.shippingInfoHalfWidth}
                         error={errors.state}
+                        defaultValue={prevShippingInfo.state}
                       />
                     </Grid>
                   </Grid>
@@ -312,6 +313,7 @@ const Checkout = () => {
                         lightBg
                         customClassName={styles.shippingInfoHalfWidth}
                         error={errors.outsideMalaysiaState}
+                        defaultValue={prevShippingInfo.outsideMalaysiaState}
                       />
                     </Grid>
                   </Grid>
@@ -326,10 +328,11 @@ const Checkout = () => {
                         labelWidth={55}
                         lightBg
                         customClassName={
-                      outsideMalaysiaState
-                        ? styles.shippingInfoFullWidth : styles.shippingInfoHalfWidth
-                      }
+                          outsideMalaysiaState
+                            ? styles.shippingInfoFullWidth : styles.shippingInfoHalfWidth
+                          }
                         error={errors.country}
+                        defaultValue={prevShippingInfo.country}
                       />
                     </Grid>
                   </Grid>
@@ -338,6 +341,7 @@ const Checkout = () => {
                       name="saveShippingInfo"
                       control={control}
                       label="Use this shipping information for the next time"
+                      defaultValue={prevShippingInfo.saveShippingInfo}
                     />
                   </Grid>
                 </Grid>
@@ -348,7 +352,14 @@ const Checkout = () => {
             <Grid container justifyContent="center" direction="row" alignItems="center" className={styles.proceedPaymentBtnContainer}>
               <Grid item xs={8}>
                 <Grid container justifyContent="flex-start" alignItems="center">
-                  <ControlledRadioButton control={control} name="paymentOptions" label="Payment Options:" options={paymentOptions} error={errors.paymentOptions} />
+                  <ControlledRadioButton
+                    control={control}
+                    name="paymentOptions"
+                    label="Payment Options:"
+                    options={paymentOptions}
+                    error={errors.paymentOptions}
+                    defaultValue={prevShippingInfo.paymentOptions}
+                  />
                 </Grid>
               </Grid>
               <Grid item xs={4}>

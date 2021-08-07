@@ -47,10 +47,26 @@ function* sendPaymentEmailSaga() {
           state: payload.state,
           outsideMalaysiaState: payload.outsideMalaysiaState,
           country: payload.country,
+          saveShippingInfo: payload.saveShippingInfo,
+          paymentOptions: payload.paymentOptions,
         };
         yield put(saveShippingInfo(shippingInfo));
       } else {
-        yield put(saveShippingInfo({}));
+        const emptyShippingInfo:products.submitShippingInfoPayload = {
+          fullName: '',
+          email: '',
+          phoneNo: '60',
+          addressLine1: '',
+          addressLine2: '',
+          postcode: '',
+          city: '',
+          state: { label: '', value: '' },
+          outsideMalaysiaState: '',
+          country: '',
+          saveShippingInfo: false,
+          paymentOptions: '',
+        };
+        yield put(saveShippingInfo(emptyShippingInfo));
       }
       yield put(toggleSuccess(true));
       yield put(updateStatusTitle('Your order is confirmed'));

@@ -53,6 +53,23 @@ declare namespace products{
     state: optionsData
     outsideMalaysiaState: string
     country: string
+    saveShippingInfo:boolean
+    paymentOptions:string
+  }
+
+  interface storageShippingInfoPayload{
+    fullName:string
+    email: string
+    phoneNo: string
+    addressLine1: string
+    addressLine2:string
+    postcode: string
+    city: string
+    state: string
+    outsideMalaysiaState: string
+    country: string
+    saveShippingInfo:boolean
+    paymentOptions:string
   }
 
   interface sendEmailPayload{
