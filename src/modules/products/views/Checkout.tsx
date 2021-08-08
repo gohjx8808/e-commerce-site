@@ -117,8 +117,8 @@ const Checkout = () => {
   const outsideMalaysiaState = selectedState && selectedState.value === 'Outside Malaysia';
 
   useEffect(() => {
-    const eastMalaysia = selectedState && (selectedState.value === 'Sabah' || selectedState.value === 'Sarawak');
-    if (selectedState) {
+    const eastMalaysia = selectedState && (selectedState.value === 'Sabah' || selectedState.value === 'Sarawak' || selectedState.value === 'Labuan');
+    if (selectedState && selectedState.value !== 'Outside Malaysia') {
       if (eastMalaysia) {
         setShippingFee(14);
       } else {
