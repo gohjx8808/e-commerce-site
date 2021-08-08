@@ -24,6 +24,8 @@ interface ControlledTextInputOwnProps{
   lightBg?:boolean
   maxLength?:number
   startAdornment?:React.ReactNode
+  multiline?:boolean
+  rows?:number
 }
 
 const useStyles = makeStyles({
@@ -60,6 +62,8 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
     lightBg,
     maxLength,
     startAdornment,
+    multiline,
+    rows,
   } = props;
 
   const styles = useStyles();
@@ -110,6 +114,8 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             inputProps={{
               maxLength,
             }}
+            multiline={multiline}
+            rows={rows}
           />
           <FormHelperText error>{error?.message}</FormHelperText>
         </FormControl>
@@ -130,6 +136,8 @@ ControlledTextInput.defaultProps = {
   lightBg: false,
   maxLength: null,
   startAdornment: null,
+  multiline: false,
+  rows: 1,
 };
 
 export default ControlledTextInput;

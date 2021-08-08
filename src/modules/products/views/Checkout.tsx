@@ -302,21 +302,21 @@ const Checkout = () => {
                     </Grid>
                   </Grid>
                   {outsideMalaysiaState && (
-                  <Grid item lg={6} xs={12}>
-                    <Grid container justifyContent="center" alignItems="center">
-                      <ControlledTextInput
-                        control={control}
-                        name="outsideMalaysiaState"
-                        variant="outlined"
-                        label="Foreign Country State"
-                        labelWidth={155}
-                        lightBg
-                        customClassName={styles.shippingInfoHalfWidth}
-                        error={errors.outsideMalaysiaState}
-                        defaultValue={prevShippingInfo.outsideMalaysiaState}
-                      />
+                    <Grid item lg={6} xs={12}>
+                      <Grid container justifyContent="center" alignItems="center">
+                        <ControlledTextInput
+                          control={control}
+                          name="outsideMalaysiaState"
+                          variant="outlined"
+                          label="Foreign Country State"
+                          labelWidth={155}
+                          lightBg
+                          customClassName={styles.shippingInfoHalfWidth}
+                          error={errors.outsideMalaysiaState}
+                          defaultValue={prevShippingInfo.outsideMalaysiaState}
+                        />
+                      </Grid>
                     </Grid>
-                  </Grid>
                   )}
                   <Grid item lg={outsideMalaysiaState ? 12 : 6} xs={12}>
                     <Grid container justifyContent="center" alignItems="center">
@@ -333,6 +333,21 @@ const Checkout = () => {
                           }
                         error={errors.country}
                         defaultValue={prevShippingInfo.country}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Grid container justifyContent="center" alignItems="center">
+                      <ControlledTextInput
+                        control={control}
+                        name="notesToSeller"
+                        variant="outlined"
+                        label="Notes to seller (optional)"
+                        labelWidth={160}
+                        lightBg
+                        customClassName={styles.shippingInfoFullWidth}
+                        multiline
+                        rows={4}
                       />
                     </Grid>
                   </Grid>

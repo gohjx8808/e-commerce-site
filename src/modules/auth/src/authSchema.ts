@@ -20,8 +20,8 @@ export const signupSchema = yup.object().shape({
     .oneOf([yup.ref('password')], 'Passwords do not match.'),
   dob: yup.string().required('Date of birth is required'),
   gender: yup.object().shape({
-    value: yup.string(),
-    label: yup.string(),
+    value: yup.string().required('Gender is required'),
+    label: yup.string().required('Gender is required'),
   }).typeError('Gender is required'),
   phoneNumber: yup.number().required('Phone number is required').typeError('Invalid phone number'),
   fullName: yup.string().required('Full name is required'),

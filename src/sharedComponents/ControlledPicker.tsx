@@ -3,9 +3,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { Control, Controller } from 'react-hook-form';
 
 type variantData='standard' | 'filled' | 'outlined'
 
@@ -15,7 +14,7 @@ interface ControlledPickerOwnProps{
   variant?:variantData,
   name:string,
   defaultValue?:string
-  error?:FieldError
+  error?:any
   options:optionsData[]
   lightBg?:boolean
   customClassName?:string
@@ -104,7 +103,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
               clearIndicator: lightBg ? '' : styles.unFocusLabel,
             }}
           />
-          <FormHelperText error>{error?.message}</FormHelperText>
+          <FormHelperText error>{error?.value.message}</FormHelperText>
         </FormControl>
       )}
       defaultValue={options.find((option) => option.value === defaultValue)}

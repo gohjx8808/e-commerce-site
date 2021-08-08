@@ -5,6 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
+import clsx from 'clsx';
 import { graphql, useStaticQuery } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useCallback } from 'react';
@@ -53,7 +54,10 @@ const SignupScreen = () => {
       container
       justifyContent="center"
       alignItems="center"
-      className={styles.signUpHeight}
+      className={clsx({
+        [styles.signUpHeight]: Object.keys(errors).length === 0,
+        [styles.errorSignUpHeight]: Object.keys(errors).length > 0,
+      })}
     >
       <Grid item xs={12}>
         <Grid container justifyContent="center" alignItems="center">

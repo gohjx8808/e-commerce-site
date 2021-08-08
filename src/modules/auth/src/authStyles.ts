@@ -35,6 +35,10 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     height: '110vh',
   },
+  errorSignUpHeight: {
+    backgroundColor: theme.palette.primary.main,
+    height: '120vh',
+  },
   loginCard: {
     width: '50%',
     backgroundColor: '#B67B5E',

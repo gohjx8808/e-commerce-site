@@ -8,8 +8,8 @@ const shippingInfoSchema = yup.object().shape({
   postcode: yup.number().typeError('Invalid postcode'),
   city: yup.string().required('City is required'),
   state: yup.object().shape({
-    label: yup.string(),
-    value: yup.string(),
+    label: yup.string().required('State is required'),
+    value: yup.string().required('State is required'),
   }).typeError('State is required'),
   outsideMalaysiaState: yup.string().when('state', {
     is: (state:optionsData) => state && state.value === 'Outside Malaysia',
