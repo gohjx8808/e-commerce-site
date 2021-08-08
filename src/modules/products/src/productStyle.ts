@@ -60,6 +60,10 @@ const productStyle = makeStyles((theme) => ({
     height: 520,
     width: '100%',
   },
+  outsideMalaysiaCheckoutItemContainer: {
+    height: 580,
+    width: '100%',
+  },
   totalPayTextContainer: {
     padding: 20,
   },
@@ -81,6 +85,9 @@ const productStyle = makeStyles((theme) => ({
   },
   checkoutOrderCard: {
     height: 620,
+  },
+  outsideMalaysiaCheckoutOrderCard: {
+    height: 687,
   },
   rmbPadding: {
     paddingLeft: 20,

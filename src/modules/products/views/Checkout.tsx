@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import {
   DataGrid, GridColDef, GridPageChangeParams,
 } from '@material-ui/data-grid';
+import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -105,16 +106,15 @@ const Checkout = () => {
   };
 
   const selectedState = watch('state');
+  const outsideMalaysiaState = selectedState && selectedState.value === 'Outside Malaysia';
 
   useEffect(() => {
-    if (selectedState && selectedState.value !== 'Outside Malaysia') {
+    if (!outsideMalaysiaState) {
       setValue('country', 'Malaysia');
     } else {
       setValue('country', '');
     }
-  }, [setValue, selectedState]);
-
-  const outsideMalaysiaState = selectedState && selectedState.value === 'Outside Malaysia';
+  }, [setValue, outsideMalaysiaState]);
 
   useEffect(() => {
     const eastMalaysia = selectedState && (selectedState.value === 'Sabah' || selectedState.value === 'Sarawak' || selectedState.value === 'Labuan');
@@ -148,8 +148,18 @@ const Checkout = () => {
       </Grid>
       <Grid item lg={4} xs={11}>
         <Typography variant="h6">Your Order</Typography>
-        <Card className={`${styles.secondaryBorder} ${styles.checkoutOrderCard}`} variant="outlined">
-          <Box className={styles.checkoutItemContainer}>
+        <Card
+          className={clsx(styles.secondaryBorder, {
+            [styles.checkoutOrderCard]: !outsideMalaysiaState,
+            [styles.outsideMalaysiaCheckoutOrderCard]: outsideMalaysiaState,
+          })}
+          variant="outlined"
+        >
+          <Box className={clsx({
+            [styles.checkoutItemContainer]: !outsideMalaysiaState,
+            [styles.outsideMalaysiaCheckoutItemContainer]: outsideMalaysiaState,
+          })}
+          >
             <DataGrid
               rows={extractedCartItem}
               columns={columns}
