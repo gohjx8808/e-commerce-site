@@ -25,10 +25,10 @@ const Footer = () => {
             © 2021 yjartjournal
           </Typography>
           <Box className={styles.grow} />
-          <IconButton aria-label="facebook" color="inherit" target="_blank" href="https://www.facebook.com/YJartjournal.madewithlove/">
+          <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal.madewithlove/">
             <Facebook />
           </IconButton>
-          <IconButton aria-label="instagram" color="inherit" target="_blank" href="https://www.instagram.com/yj_artjournal/">
+          <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yj_artjournal/">
             <Instagram />
           </IconButton>
         </Toolbar>

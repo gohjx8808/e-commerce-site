@@ -81,7 +81,7 @@ const CustomDrawer = (props:CustomDrawerOwnProps) => {
       }}
     >
       <div className={classes.toolbar}>
-        <IconButton onClick={handleDrawerClose}>
+        <IconButton onClick={handleDrawerClose} aria-label="close drawer">
           <ChevronLeftIcon />
         </IconButton>
       </div>

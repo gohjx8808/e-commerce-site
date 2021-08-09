@@ -26,9 +26,6 @@ const useStyle = makeStyles((theme) => ({
   sectionContainer: {
     paddingTop: 20,
   },
-  unboldH6: {
-    fontWeight: 'normal',
-  },
   productCarouselNavButton: {
     backgroundColor: 'transparent!important',
     color: 'black!important',
@@ -36,6 +33,7 @@ const useStyle = makeStyles((theme) => ({
   hyperlink: {
     textDecorationLine: 'underline',
     color: theme.palette.secondary.main,
+    fontWeight: 'bold',
   },
   imageListRoot: {
     display: 'flex',
@@ -139,10 +137,10 @@ const HomeScreen = () => {
         </Carousel>
         <Grid container justifyContent="center" alignItems="center" className={styles.sectionContainer} direction="column">
           <Typography variant="h4" color="secondary">Welcome!</Typography>
-          <Typography variant="h6" className={styles.unboldH6}>Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
-          <Typography variant="h6" className={styles.unboldH6}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
+          <Typography variant="h6">Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
+          <Typography variant="h6">You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
           <Button>
-            <Typography variant="subtitle1" className={`${styles.unboldH6} ${styles.hyperlink}`}>Learn more!</Typography>
+            <Typography variant="subtitle1" className={styles.hyperlink}>Learn more!</Typography>
           </Button>
         </Grid>
         <Grid container className={styles.sectionContainer} direction="column">
@@ -168,7 +166,7 @@ const HomeScreen = () => {
           })}
         </ImageList>
       </Box>
-      <IconButton>
+      <IconButton aria-label="more product images">
         <ExpandMore />
       </IconButton>
     </Grid>
