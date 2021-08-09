@@ -12,7 +12,7 @@ import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch } from '../../../hooks';
 import { formatPrice } from '../../../utils/helper';
-import { addToShoppingCart, toggleEnlargedProductImageBackdrop, updateSelectedProductImage } from '../src/productReducers';
+import { addToShoppingCart, toggleEnlargedProductImageModal, updateSelectedProductImage } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 
 interface ProductCardOwnProps{
@@ -40,7 +40,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
 
   const triggerEnlargeImage = (imageData:IGatsbyImageData) => {
     dispatch(updateSelectedProductImage(imageData));
-    dispatch(toggleEnlargedProductImageBackdrop(true));
+    dispatch(toggleEnlargedProductImageModal(true));
   };
 
   return (

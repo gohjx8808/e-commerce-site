@@ -2,19 +2,19 @@ import Dialog from '@material-ui/core/Dialog';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { toggleEnlargedProductImageBackdrop } from '../src/productReducers';
+import { toggleEnlargedProductImageModal } from '../src/productReducers';
 
-const EnlargedProductImageBackdrop = () => {
+const EnlargedProductImageModal = () => {
   const dispatch = useAppDispatch();
   const selectedProductImage = useAppSelector((state) => state.product.selectedProductImage);
   const isEnlargedProductImageBackdropOpen = useAppSelector(
-    (state) => state.product.isEnlargedProductImageBackdropOpen,
+    (state) => state.product.isEnlargedProductImageModalOpen,
   );
 
   return (
     <Dialog
       open={isEnlargedProductImageBackdropOpen}
-      onClose={() => dispatch(toggleEnlargedProductImageBackdrop(false))}
+      onClose={() => dispatch(toggleEnlargedProductImageModal(false))}
     >
       <GatsbyImage
         image={selectedProductImage!}
@@ -24,4 +24,4 @@ const EnlargedProductImageBackdrop = () => {
   );
 };
 
-export default EnlargedProductImageBackdrop;
+export default EnlargedProductImageModal;

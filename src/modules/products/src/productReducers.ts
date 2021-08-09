@@ -8,7 +8,7 @@ interface productState{
   prevOrderCount:number
   prevShippingInfo:products.storageShippingInfoPayload
   selectedProductImage:IGatsbyImageData|null
-  isEnlargedProductImageBackdropOpen:boolean
+  isEnlargedProductImageModalOpen:boolean
 }
 
 const INITIAL_STATE:productState = {
@@ -31,7 +31,7 @@ const INITIAL_STATE:productState = {
     paymentOptions: '',
   },
   selectedProductImage: null,
-  isEnlargedProductImageBackdropOpen: false,
+  isEnlargedProductImageModalOpen: false,
 };
 
 export const productSlice = createSlice({
@@ -82,8 +82,8 @@ export const productSlice = createSlice({
     updateSelectedProductImage: (state, action:PayloadAction<IGatsbyImageData>) => {
       state.selectedProductImage = action.payload;
     },
-    toggleEnlargedProductImageBackdrop: (state, action:PayloadAction<boolean>) => {
-      state.isEnlargedProductImageBackdropOpen = action.payload;
+    toggleEnlargedProductImageModal: (state, action:PayloadAction<boolean>) => {
+      state.isEnlargedProductImageModalOpen = action.payload;
     },
   },
 });
@@ -99,7 +99,7 @@ export const {
   sendPaymentEmailAction,
   saveShippingInfo,
   updateSelectedProductImage,
-  toggleEnlargedProductImageBackdrop,
+  toggleEnlargedProductImageModal,
 } = productSlice.actions;
 
 export default productSlice.reducer;
