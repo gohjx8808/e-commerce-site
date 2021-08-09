@@ -9,6 +9,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-scroll';
 import { useAppSelector } from '../../../hooks';
 import productStyle from '../src/productStyle';
+import EnlargedProductImageBackdrop from './EnlargedProductImageBackdrop';
 import ProductCard from './ProductCard';
 
 interface categoryAmountData{
@@ -145,6 +146,7 @@ const Products = () => {
           </Grid>
         </Grid>
       ))}
+      <EnlargedProductImageBackdrop />
     </>
   );
 };

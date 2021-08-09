@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IGatsbyImageData } from 'gatsby-plugin-image';
 
 interface productState{
   shoppingCartItem:products.shoppingCartItemData[]
@@ -6,6 +7,8 @@ interface productState{
   selectedCheckoutItemsID:string[]
   prevOrderCount:number
   prevShippingInfo:products.storageShippingInfoPayload
+  selectedProductImage:IGatsbyImageData|null
+  isEnlargedProductImageBackdropOpen:boolean
 }
 
 const INITIAL_STATE:productState = {
@@ -27,6 +30,8 @@ const INITIAL_STATE:productState = {
     saveShippingInfo: false,
     paymentOptions: '',
   },
+  selectedProductImage: null,
+  isEnlargedProductImageBackdropOpen: false,
 };
 
 export const productSlice = createSlice({
@@ -74,6 +79,12 @@ export const productSlice = createSlice({
     saveShippingInfo: (state, action:PayloadAction<products.submitShippingInfoPayload>) => {
       state.prevShippingInfo = { ...action.payload, state: action.payload.state.value };
     },
+    updateSelectedProductImage: (state, action:PayloadAction<IGatsbyImageData>) => {
+      state.selectedProductImage = action.payload;
+    },
+    toggleEnlargedProductImageBackdrop: (state, action:PayloadAction<boolean>) => {
+      state.isEnlargedProductImageBackdropOpen = action.payload;
+    },
   },
 });
 
@@ -87,6 +98,8 @@ export const {
   updatePrevOrderCount,
   sendPaymentEmailAction,
   saveShippingInfo,
+  updateSelectedProductImage,
+  toggleEnlargedProductImageBackdrop,
 } = productSlice.actions;
 
 export default productSlice.reducer;

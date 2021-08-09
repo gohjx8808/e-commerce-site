@@ -10,6 +10,7 @@ const productStyle = makeStyles((theme) => ({
     minHeight: 300,
     alignItems: 'center',
     display: 'flex',
+    cursor: 'pointer',
   },
   priceText: {
     color: theme.palette.secondary.main,

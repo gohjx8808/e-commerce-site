@@ -8,6 +8,7 @@ export const loadState = () => {
     parseState.product.productFilterKeyword = null;
     parseState.account.isEditAccDetailModalDisplay = false;
     parseState.auth.isSignOutConfirmationModalOpen = false;
+    parseState.product.isEnlargedProductImageBackdropOpen = false;
     return parseState;
   } catch (err) {
     return undefined;

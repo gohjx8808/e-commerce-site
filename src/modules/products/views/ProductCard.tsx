@@ -6,13 +6,13 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { AddShoppingCart } from '@material-ui/icons';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { GatsbyImage, getImage, IGatsbyImageData } from 'gatsby-plugin-image';
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch } from '../../../hooks';
 import { formatPrice } from '../../../utils/helper';
-import { addToShoppingCart } from '../src/productReducers';
+import { addToShoppingCart, toggleEnlargedProductImageBackdrop, updateSelectedProductImage } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 
 interface ProductCardOwnProps{
@@ -38,6 +38,11 @@ const ProductCard = (props:ProductCardOwnProps) => {
     enqueueSnackbar(`${productData.name} is added to your cart!`);
   };
 
+  const triggerEnlargeImage = (imageData:IGatsbyImageData) => {
+    dispatch(updateSelectedProductImage(imageData));
+    dispatch(toggleEnlargedProductImageBackdrop(true));
+  };
+
   return (
     <Grid item lg={3} md={6} sm={6} xs={12}>
       <Card variant="outlined" className={styles.productCard}>
@@ -46,7 +51,11 @@ const ProductCard = (props:ProductCardOwnProps) => {
           {product.productImage.map((image) => {
             const imageData = getImage(image)!;
             return (
-              <Box className={styles.carouselImageContainer} key={imageData.images.fallback?.src}>
+              <Box
+                className={styles.carouselImageContainer}
+                key={imageData.images.fallback?.src}
+                onClick={() => triggerEnlargeImage(imageData)}
+              >
                 <GatsbyImage
                   image={imageData}
                   alt={product.name}
