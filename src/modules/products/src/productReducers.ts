@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IGatsbyImageData } from 'gatsby-plugin-image';
+import { ImageDataLike } from 'gatsby-plugin-image';
 
 interface productState{
   shoppingCartItem:products.shoppingCartItemData[]
@@ -7,8 +7,9 @@ interface productState{
   selectedCheckoutItemsID:string[]
   prevOrderCount:number
   prevShippingInfo:products.storageShippingInfoPayload
-  selectedProductImage:IGatsbyImageData|null
+  selectedProductImage:ImageDataLike|null
   isEnlargedProductImageModalOpen:boolean
+  selectedProductImageList:ImageDataLike[]
 }
 
 const INITIAL_STATE:productState = {
@@ -31,6 +32,7 @@ const INITIAL_STATE:productState = {
     paymentOptions: '',
   },
   selectedProductImage: null,
+  selectedProductImageList: [],
   isEnlargedProductImageModalOpen: false,
 };
 
@@ -79,8 +81,11 @@ export const productSlice = createSlice({
     saveShippingInfo: (state, action:PayloadAction<products.submitShippingInfoPayload>) => {
       state.prevShippingInfo = { ...action.payload, state: action.payload.state.value };
     },
-    updateSelectedProductImage: (state, action:PayloadAction<IGatsbyImageData>) => {
+    updateSelectedProductImage: (state, action:PayloadAction<ImageDataLike>) => {
       state.selectedProductImage = action.payload;
+    },
+    updateSelectedProductImageList: (state, action:PayloadAction<ImageDataLike[]>) => {
+      state.selectedProductImageList = action.payload;
     },
     toggleEnlargedProductImageModal: (state, action:PayloadAction<boolean>) => {
       state.isEnlargedProductImageModalOpen = action.payload;
@@ -100,6 +105,7 @@ export const {
   saveShippingInfo,
   updateSelectedProductImage,
   toggleEnlargedProductImageModal,
+  updateSelectedProductImageList,
 } = productSlice.actions;
 
 export default productSlice.reducer;
