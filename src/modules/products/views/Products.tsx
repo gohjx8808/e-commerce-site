@@ -29,6 +29,8 @@ const Products = () => {
   const productFilterKeyword = useAppSelector((state) => state.product.productFilterKeyword);
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryProductAmount, setCategoryProductAmount] = useState<categoryAmountData>({});
+  const [filteredProducts, setFilteredProducts] = useState<products.innerProductQueryData[]>([]);
+  const [sortedProducts, setSortedProducts] = useState<products.innerProductQueryData[]>([]);
   const productQuery = useStaticQuery(graphql`
     query {
       productCategoriesImages: allFile(filter: {relativeDirectory: {eq: "productCategories"}}) {
@@ -74,27 +76,42 @@ const Products = () => {
   useEffect(() => {
     const categoryList = [] as string[];
     const categoryAmount = {} as categoryAmountData;
-    productQuery.ProductPrices.edges.map(
-      (product:products.innerProductQueryData) => {
-        const productCategory = product.node.category;
-        if (productCategory) {
-          if (filterProductKeyword(product.node.name)) {
-            if (categoryAmount[productCategory]) {
-              categoryAmount[productCategory] += 1;
-            } else {
-              categoryAmount[productCategory] = 1;
-            }
-          }
-          if (!categoryList.includes(productCategory)) {
-            categoryList.push(productCategory);
+    const productExtract:products.innerProductQueryData[] = productQuery.ProductPrices.edges;
+    productExtract.map((product) => {
+      const productCategory = product.node.category;
+      if (productCategory) {
+        if (filterProductKeyword(product.node.name)) {
+          if (categoryAmount[productCategory]) {
+            categoryAmount[productCategory] += 1;
+          } else {
+            categoryAmount[productCategory] = 1;
           }
         }
-        return null;
-      },
-    );
+        if (!categoryList.includes(productCategory)) {
+          categoryList.push(productCategory);
+        }
+      }
+      return null;
+    });
+    setFilteredProducts(productExtract);
     setCategoryProductAmount(categoryAmount);
     setCategories(categoryList);
   }, [productQuery, filterProductKeyword]);
+
+  useEffect(() => {
+    filteredProducts.sort((productA, productB) => {
+      const ProductAName = productA.node.name.toLowerCase();
+      const ProductBName = productB.node.name.toLowerCase();
+      if (ProductAName > ProductBName) {
+        return 1;
+      }
+      if (ProductAName < ProductBName) {
+        return -1;
+      }
+      return 0;
+    });
+    setSortedProducts(filteredProducts);
+  }, [filteredProducts]);
 
   const filterProduct = (product:products.innerProductQueryData, category:string) => {
     const isProductInFilter = filterProductKeyword(product.node.name);
@@ -138,9 +155,7 @@ const Products = () => {
             </Grid>
           )}
           <Grid container justifyContent="center" alignItems="center" direction="row" spacing={5} key={category}>
-            {productQuery.ProductPrices.edges.filter(
-              (product:products.innerProductQueryData) => filterProduct(product, category),
-            ).map((product:products.innerProductQueryData) => (
+            {sortedProducts.filter((product) => filterProduct(product, category)).map((product) => (
               <ProductCard key={product.node.contentful_id} product={product.node} />
             ))}
           </Grid>
