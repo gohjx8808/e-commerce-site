@@ -63,10 +63,10 @@ const Products = () => {
       }
     }`);
   const sortByOptions = [
-    { label: 'Sort by Name: A to Z', value: 'a2z' },
-    { label: 'Sort by Name: Z to A', value: 'z2a' },
-    { label: 'Sort by Price: Low to High', value: 'l2h' },
-    { label: 'Sort by Price: High to Low', value: 'h2l' },
+    { label: 'Name: A to Z', value: 'a2z' },
+    { label: 'Name: Z to A', value: 'z2a' },
+    { label: 'Price: Low to High', value: 'l2h' },
+    { label: 'Price: High to Low', value: 'h2l' },
   ];
 
   const filterProductKeyword = useCallback(
