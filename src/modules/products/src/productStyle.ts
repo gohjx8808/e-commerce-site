@@ -108,6 +108,9 @@ const productStyle = makeStyles((theme) => ({
     paddingBottom: 20,
     paddingTop: 20,
   },
+  sortByContainer: {
+    paddingTop: 40,
+  },
 }));
 
 export default productStyle;

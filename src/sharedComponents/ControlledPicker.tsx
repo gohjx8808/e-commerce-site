@@ -18,6 +18,7 @@ interface ControlledPickerOwnProps{
   options:optionsData[]
   lightBg?:boolean
   customClassName?:string
+  clearable?:boolean
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +45,16 @@ const useStyles = makeStyles((theme) => ({
 
 const ControlledPicker = (props:ControlledPickerOwnProps) => {
   const {
-    control, label, variant, name, defaultValue, error, options, lightBg, customClassName,
+    control,
+    label,
+    variant,
+    name,
+    defaultValue,
+    error,
+    options,
+    lightBg,
+    customClassName,
+    clearable,
   } = props;
 
   const [popupIndicatorClass, setPopupIndicatorClass] = useState('');
@@ -102,6 +112,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
               popupIndicator: popupIndicatorClass,
               clearIndicator: lightBg ? '' : styles.unFocusLabel,
             }}
+            disableClearable={!clearable}
           />
           <FormHelperText error>{error?.value.message}</FormHelperText>
         </FormControl>
@@ -118,6 +129,7 @@ ControlledPicker.defaultProps = {
   error: null,
   lightBg: false,
   customClassName: '',
+  clearable: true,
 };
 
 export default ControlledPicker;

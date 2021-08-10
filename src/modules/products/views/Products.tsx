@@ -6,8 +6,10 @@ import {
   GatsbyImage, getImage, IGatsbyImageData,
 } from 'gatsby-plugin-image';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
 import { useAppSelector } from '../../../hooks';
+import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import productStyle from '../src/productStyle';
 import EnlargedProductImageModal from './EnlargedProductImageModal';
 import ProductCard from './ProductCard';
@@ -29,8 +31,7 @@ const Products = () => {
   const productFilterKeyword = useAppSelector((state) => state.product.productFilterKeyword);
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryProductAmount, setCategoryProductAmount] = useState<categoryAmountData>({});
-  const [filteredProducts, setFilteredProducts] = useState<products.innerProductQueryData[]>([]);
-  const [sortedProducts, setSortedProducts] = useState<products.innerProductQueryData[]>([]);
+  const { control, watch } = useForm();
   const productQuery = useStaticQuery(graphql`
     query {
       productCategoriesImages: allFile(filter: {relativeDirectory: {eq: "productCategories"}}) {
@@ -61,6 +62,12 @@ const Products = () => {
         }
       }
     }`);
+  const sortByOptions = [
+    { label: 'Sort by Name: A to Z', value: 'a2z' },
+    { label: 'Sort by Name: Z to A', value: 'z2a' },
+    { label: 'Sort by Price: Low to High', value: 'l2h' },
+    { label: 'Sort by Price: High to Low', value: 'h2l' },
+  ];
 
   const filterProductKeyword = useCallback(
     (productName:string) => {
@@ -93,25 +100,56 @@ const Products = () => {
       }
       return null;
     });
-    setFilteredProducts(productExtract);
     setCategoryProductAmount(categoryAmount);
     setCategories(categoryList);
-  }, [productQuery, filterProductKeyword]);
+  }, [productQuery.ProductPrices.edges, filterProductKeyword]);
 
-  useEffect(() => {
-    filteredProducts.sort((productA, productB) => {
-      const ProductAName = productA.node.name.toLowerCase();
-      const ProductBName = productB.node.name.toLowerCase();
-      if (ProductAName > ProductBName) {
-        return 1;
-      }
-      if (ProductAName < ProductBName) {
-        return -1;
-      }
-      return 0;
-    });
-    setSortedProducts(filteredProducts);
-  }, [filteredProducts]);
+  const selectedSortBy = watch('sortBy') && watch('sortBy').value;
+
+  const sortProduct = (
+    productA: products.innerProductQueryData, productB: products.innerProductQueryData,
+  ) => {
+    const ProductAName = productA.node.name.toLowerCase();
+    const ProductBName = productB.node.name.toLowerCase();
+    const ProductAPrice = productA.node.price;
+    const ProductBPrice = productB.node.price;
+    let sortVarA;
+    let sortVarB;
+    switch (selectedSortBy) {
+      case 'a2z':
+      case 'z2a':
+      default:
+        sortVarA = ProductAName;
+        sortVarB = ProductBName;
+        break;
+      case 'l2h':
+      case 'h2l':
+        sortVarA = ProductAPrice;
+        sortVarB = ProductBPrice;
+        break;
+    }
+    switch (selectedSortBy) {
+      case 'a2z':
+      case 'l2h':
+      default:
+        if (sortVarA > sortVarB) {
+          return 1;
+        }
+        if (sortVarA < sortVarB) {
+          return -1;
+        }
+        return 0;
+      case 'z2a':
+      case 'h2l':
+        if (sortVarA > sortVarB) {
+          return -1;
+        }
+        if (sortVarA < sortVarB) {
+          return 1;
+        }
+        return 0;
+    }
+  };
 
   const filterProduct = (product:products.innerProductQueryData, category:string) => {
     const isProductInFilter = filterProductKeyword(product.node.name);
@@ -147,6 +185,22 @@ const Products = () => {
           </Button>
         );
       })}
+      <Grid container justifyContent="flex-end" alignItems="center" className={styles.sortByContainer}>
+        <Grid item xs={5} lg={3}>
+          <Grid container justifyContent="flex-end" alignItems="center">
+            <ControlledPicker
+              control={control}
+              name="sortBy"
+              options={sortByOptions}
+              variant="outlined"
+              label="Sort By"
+              lightBg
+              clearable={false}
+              defaultValue="a2z"
+            />
+          </Grid>
+        </Grid>
+      </Grid>
       {categories.map((category) => (
         <Grid container justifyContent="center" alignItems="center" direction="column" key={category}>
           {categoryProductAmount[category] && (
@@ -155,7 +209,9 @@ const Products = () => {
             </Grid>
           )}
           <Grid container justifyContent="center" alignItems="center" direction="row" spacing={5} key={category}>
-            {sortedProducts.filter((product) => filterProduct(product, category)).map((product) => (
+            {productQuery.ProductPrices.edges.filter(
+              (product:products.innerProductQueryData) => filterProduct(product, category),
+            ).sort(sortProduct).map((product:products.innerProductQueryData) => (
               <ProductCard key={product.node.contentful_id} product={product.node} />
             ))}
           </Grid>
