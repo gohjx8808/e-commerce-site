@@ -8,8 +8,9 @@ import {
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
-import { useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
+import { storeAllProducts } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 import EnlargedProductImageModal from './EnlargedProductImageModal';
 import ProductCard from './ProductCard';
@@ -28,6 +29,7 @@ interface imageInnerData{
 
 const Products = () => {
   const styles = productStyle();
+  const dispatch = useAppDispatch();
   const productFilterKeyword = useAppSelector((state) => state.product.productFilterKeyword);
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryProductAmount, setCategoryProductAmount] = useState<categoryAmountData>({});
@@ -79,6 +81,10 @@ const Products = () => {
       return true;
     }, [productFilterKeyword],
   );
+
+  useEffect(() => {
+    dispatch(storeAllProducts(productQuery.ProductPrices.edges));
+  }, [productQuery.ProductPrices.edges, dispatch]);
 
   useEffect(() => {
     const categoryList = [] as string[];

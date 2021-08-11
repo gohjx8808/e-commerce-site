@@ -10,6 +10,7 @@ interface productState{
   selectedProductImage:ImageDataLike|null
   isEnlargedProductImageModalOpen:boolean
   selectedProductImageList:ImageDataLike[]
+  allProducts:products.innerProductQueryData[]
 }
 
 const INITIAL_STATE:productState = {
@@ -34,6 +35,7 @@ const INITIAL_STATE:productState = {
   selectedProductImage: null,
   selectedProductImageList: [],
   isEnlargedProductImageModalOpen: false,
+  allProducts: [],
 };
 
 export const productSlice = createSlice({
@@ -90,6 +92,9 @@ export const productSlice = createSlice({
     toggleEnlargedProductImageModal: (state, action:PayloadAction<boolean>) => {
       state.isEnlargedProductImageModalOpen = action.payload;
     },
+    storeAllProducts: (state, action:PayloadAction<products.innerProductQueryData[]>) => {
+      state.allProducts = action.payload;
+    },
   },
 });
 
@@ -106,6 +111,7 @@ export const {
   updateSelectedProductImage,
   toggleEnlargedProductImageModal,
   updateSelectedProductImageList,
+  storeAllProducts,
 } = productSlice.actions;
 
 export default productSlice.reducer;

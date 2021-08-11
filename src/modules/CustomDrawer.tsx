@@ -11,6 +11,7 @@ import {
 import {
   HomeOutlined,
   ImageSearchOutlined,
+  PhotoLibrary,
 } from '@material-ui/icons';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { useLocation } from '@reach/router';
@@ -99,6 +100,16 @@ const CustomDrawer = (props:CustomDrawerOwnProps) => {
           </ListItemIcon>
           <ListItemText primary="Introduction" />
         </ListItem> */}
+        <ListItem
+          button
+          selected={currentPathName === routeNames.imageGallery}
+          onClick={() => navigate(routeNames.imageGallery)}
+        >
+          <ListItemIcon>
+            <PhotoLibrary />
+          </ListItemIcon>
+          <ListItemText primary="Image Gallery" />
+        </ListItem>
         <ListItem
           button
           selected={currentPathName === routeNames.products}

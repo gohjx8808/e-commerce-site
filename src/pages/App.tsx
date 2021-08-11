@@ -9,6 +9,7 @@ import React, { lazy, Suspense } from 'react';
 import AccountDetails from '../modules/account/views/AccountDetails';
 import Footer from '../modules/Footer';
 import HomeScreen from '../modules/HomeScreen';
+import ImageGallery from '../modules/ImageGallery';
 import Cart from '../modules/products/views/Cart';
 import Checkout from '../modules/products/views/Checkout';
 import ScrollTop from '../sharedComponents/ScrollTop';
@@ -52,6 +53,7 @@ const App = () => {
             <RouterPage path={routeNames.login} pageComponent={<LoginScreen />} />
             <RouterPage path={routeNames.signUp} pageComponent={<SignupScreen />} />
             <MainRoutes path={routeNames.products} pageComponent={<Products />} pageBannerTitle="Product Categories" />
+            <MainRoutes path={routeNames.imageGallery} pageComponent={<ImageGallery />} />
             <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
             <MainRoutes path={routeNames.checkout} pageComponent={<Checkout />} />
             <MainRoutes path={routeNames.account} pageComponent={<AccountDetails />} />
