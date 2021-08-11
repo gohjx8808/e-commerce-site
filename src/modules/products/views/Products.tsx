@@ -8,9 +8,8 @@ import {
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppSelector } from '../../../hooks';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
-import { storeAllProducts } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 import EnlargedProductImageModal from './EnlargedProductImageModal';
 import ProductCard from './ProductCard';
@@ -29,8 +28,8 @@ interface imageInnerData{
 
 const Products = () => {
   const styles = productStyle();
-  const dispatch = useAppDispatch();
   const productFilterKeyword = useAppSelector((state) => state.product.productFilterKeyword);
+  const allProducts = useAppSelector((state) => state.product.allProducts);
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryProductAmount, setCategoryProductAmount] = useState<categoryAmountData>({});
   const { control, watch } = useForm();
@@ -44,22 +43,6 @@ const Products = () => {
             }
             id
             name
-          }
-        }
-      }
-      ProductPrices: allContentfulProducts(filter: {node_locale: {eq: "en-US"}}) {
-        edges {
-          node {
-            name
-            contentful_id
-            category
-            productImage {
-              gatsbyImageData
-            }
-            price
-            contentDescription {
-              raw
-            }
           }
         }
       }
@@ -83,14 +66,9 @@ const Products = () => {
   );
 
   useEffect(() => {
-    dispatch(storeAllProducts(productQuery.ProductPrices.edges));
-  }, [productQuery.ProductPrices.edges, dispatch]);
-
-  useEffect(() => {
     const categoryList = [] as string[];
     const categoryAmount = {} as categoryAmountData;
-    const productExtract:products.innerProductQueryData[] = productQuery.ProductPrices.edges;
-    productExtract.map((product) => {
+    allProducts.map((product) => {
       const productCategory = product.node.category;
       if (productCategory) {
         if (filterProductKeyword(product.node.name)) {
@@ -108,7 +86,7 @@ const Products = () => {
     });
     setCategoryProductAmount(categoryAmount);
     setCategories(categoryList);
-  }, [productQuery.ProductPrices.edges, filterProductKeyword]);
+  }, [allProducts, filterProductKeyword]);
 
   const selectedSortBy = watch('sortBy') && watch('sortBy').value;
 
@@ -215,7 +193,7 @@ const Products = () => {
             </Grid>
           )}
           <Grid container justifyContent="center" alignItems="center" direction="row" spacing={5} key={category}>
-            {productQuery.ProductPrices.edges.filter(
+            {allProducts.filter(
               (product:products.innerProductQueryData) => filterProduct(product, category),
             ).sort(sortProduct).map((product:products.innerProductQueryData) => (
               <ProductCard key={product.node.contentful_id} product={product.node} />

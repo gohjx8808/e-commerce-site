@@ -40,7 +40,7 @@ const ImageGallery = () => {
     <Grid item xs={12}>
       <Box className={styles.imageListRoot}>
         <ImageList rowHeight="auto" cols={5}>
-          {allProductImages.map((image) => {
+          {allProductImages && allProductImages.map((image) => {
             const productImagesData = getImage(image)!;
             return (
               <ImageListItem

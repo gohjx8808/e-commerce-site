@@ -7,12 +7,15 @@ import ImageListItem from '@material-ui/core/ImageListItem';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { ExpandMore } from '@material-ui/icons';
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, navigate, useStaticQuery } from 'gatsby';
 import {
   GatsbyImage, getImage, ImageDataLike,
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
+import { useAppDispatch } from '../hooks';
+import routeNames from '../utils/routeNames';
+import { storeAllProducts } from './products/src/productReducers';
 
 const useStyle = makeStyles((theme) => ({
   carouselImages: {
@@ -63,6 +66,7 @@ interface imageListImages{
 
 const HomeScreen = () => {
   const [productImages, setProductImages] = useState<imageListImages[]>([]);
+  const dispatch = useAppDispatch();
   const styles = useStyle();
   const homeQuery = useStaticQuery(graphql`
     query {
@@ -99,6 +103,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const extractedProducts:products.innerProductQueryData[] = homeQuery.products.edges;
+    dispatch(storeAllProducts(extractedProducts));
     const tempProduct = [] as imageListImages[];
     extractedProducts.forEach((product) => {
       tempProduct.push({
@@ -108,7 +113,7 @@ const HomeScreen = () => {
       });
     });
     setProductImages(tempProduct);
-  }, [homeQuery]);
+  }, [dispatch, homeQuery.products.edges]);
 
   return (
     <Grid container justifyContent="center" alignItems="center">
@@ -166,7 +171,7 @@ const HomeScreen = () => {
           })}
         </ImageList>
       </Box>
-      <IconButton aria-label="more product images">
+      <IconButton aria-label="more product images" onClick={() => navigate(routeNames.imageGallery)}>
         <ExpandMore />
       </IconButton>
     </Grid>
