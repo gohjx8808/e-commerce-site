@@ -32,6 +32,7 @@ const ImageGallery = () => {
       });
       return null;
     });
+    tempProductImages.sort(() => Math.random() - 0.5);
     setAllProductImages(tempProductImages);
   }, [allProducts]);
 
