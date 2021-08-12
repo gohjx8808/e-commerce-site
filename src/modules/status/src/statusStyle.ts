@@ -19,7 +19,7 @@ export default makeStyles((theme) => ({
       textShadow: '0px 1px grey',
     },
     fontWeight: 'bold',
-    fontSize: 40,
+    fontSize: 30,
     textShadow: '0px 2px grey',
   },
   statusMsg: {
@@ -32,7 +32,7 @@ export default makeStyles((theme) => ({
       fontSize: 15,
       paddingBottom: 5,
     },
-    fontSize: 25,
+    fontSize: 24,
     paddingBottom: 20,
     textShadow: '0px 2px grey',
     textAlign: 'center',
