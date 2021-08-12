@@ -14,21 +14,28 @@ export default makeStyles((theme) => ({
     width: '80%',
   },
   statusTitle: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 20,
+      textShadow: '0px 1px grey',
     },
     fontWeight: 'bold',
     fontSize: 40,
     textShadow: '0px 2px grey',
   },
   statusMsg: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 20,
       paddingBottom: 5,
+      textShadow: '0px 1px grey',
     },
-    fontSize: 30,
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 15,
+      paddingBottom: 5,
+    },
+    fontSize: 25,
     paddingBottom: 20,
     textShadow: '0px 2px grey',
+    textAlign: 'center',
   },
   absolutePos: {
     position: 'absolute',

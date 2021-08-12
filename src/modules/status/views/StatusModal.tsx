@@ -71,7 +71,9 @@ const StatusModal = () => {
           {' '}
           {isSuccess ? 'Success' : 'Error'}
         </Typography>
-        <Typography color="secondary" className={styles.statusMsg}>{statusMsg}</Typography>
+        <Grid item lg={4} sm={7} xs={10}>
+          <Typography color="secondary" className={styles.statusMsg}>{statusMsg}</Typography>
+        </Grid>
         <Grid container justifyContent="center">
           <Button onClick={() => dispatch(toggleStatusModal(false))} color="secondary" variant="contained" className={styles.statusBtn}>
             Close
