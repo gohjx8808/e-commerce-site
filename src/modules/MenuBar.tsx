@@ -261,21 +261,23 @@ const MenuBar = () => {
                   <ShoppingCart />
                 </Badge>
               </IconButton>
-              <IconButton
-                aria-label="account"
-                color="inherit"
-                onClick={() => navigate(routeNames.account)}
-              >
-                <AccountCircle />
-              </IconButton>
               {currentUserDetail.fullName !== '' && (
-                <IconButton
-                  aria-label="logout"
-                  color="inherit"
-                  onClick={promptSignOut}
-                >
-                  <ExitToApp />
-                </IconButton>
+                <>
+                  <IconButton
+                    aria-label="account"
+                    color="inherit"
+                    onClick={() => navigate(routeNames.account)}
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <IconButton
+                    aria-label="logout"
+                    color="inherit"
+                    onClick={promptSignOut}
+                  >
+                    <ExitToApp />
+                  </IconButton>
+                </>
               )}
             </Box>
             <Box className={classes.sectionMobile}>

@@ -16,17 +16,15 @@ export default makeStyles((theme) => ({
   statusTitle: {
     [theme.breakpoints.down('sm')]: {
       fontSize: 20,
-      textShadow: '0px 1px grey',
     },
     fontWeight: 'bold',
     fontSize: 30,
-    textShadow: '0px 2px grey',
+    textShadow: '0px 1px grey',
   },
   statusMsg: {
     [theme.breakpoints.down('sm')]: {
       fontSize: 20,
       paddingBottom: 5,
-      textShadow: '0px 1px grey',
     },
     [theme.breakpoints.down('xs')]: {
       fontSize: 15,
@@ -34,7 +32,7 @@ export default makeStyles((theme) => ({
     },
     fontSize: 24,
     paddingBottom: 20,
-    textShadow: '0px 2px grey',
+    textShadow: '0px 1px grey',
     textAlign: 'center',
   },
   absolutePos: {
