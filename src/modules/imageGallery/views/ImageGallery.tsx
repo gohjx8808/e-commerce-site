@@ -2,12 +2,10 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   GatsbyImage, getImage, IGatsbyImageData, ImageDataLike,
 } from 'gatsby-plugin-image';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { toggleEnlargedImageModal, updateSelectedImage } from '../src/imageGalleryReducer';
 import imageGalleryStyles from '../src/imageGalleryStyles';
