@@ -124,7 +124,8 @@ const HomeScreen = () => {
             style: {},
           }}
           animation="slide"
-          interval={3000}
+          interval={5000}
+          timeout={800}
         >
           {homeQuery.allFile.edges.map((banner:imageInnerStructure) => {
             const bannerNode = banner.node;
