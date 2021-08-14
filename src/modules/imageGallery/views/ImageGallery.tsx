@@ -3,25 +3,21 @@ import Grid from '@material-ui/core/Grid';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
 import { makeStyles } from '@material-ui/core/styles';
-import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
+import {
+  GatsbyImage, getImage, IGatsbyImageData, ImageDataLike,
+} from 'gatsby-plugin-image';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useAppSelector } from '../hooks';
-
-const useStyle = makeStyles({
-  imageListRoot: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    paddingTop: 10,
-  },
-});
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { toggleEnlargedImageModal, updateSelectedImage } from '../src/imageGalleryReducer';
+import imageGalleryStyles from '../src/imageGalleryStyles';
+import EnlargedImageModal from './EnlargedImageModal';
 
 const ImageGallery = () => {
-  const styles = useStyle();
+  const styles = imageGalleryStyles();
   const allProducts = useAppSelector((state) => state.product.allProducts);
   const [allProductImages, setAllProductImages] = useState<ImageDataLike[]>([]);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const tempProductImages:ImageDataLike[] = [];
@@ -36,6 +32,11 @@ const ImageGallery = () => {
     setAllProductImages(tempProductImages);
   }, [allProducts]);
 
+  const handleImageClick = (image:IGatsbyImageData) => {
+    dispatch(updateSelectedImage(image));
+    dispatch(toggleEnlargedImageModal(true));
+  };
+
   return (
     <Grid item xs={12}>
       <Box className={styles.imageListRoot}>
@@ -45,8 +46,10 @@ const ImageGallery = () => {
             return (
               <ImageListItem
                 key={productImagesData.images.fallback?.src}
+                className={styles.imageListItem}
               >
                 <GatsbyImage
+                  onClick={() => handleImageClick(productImagesData)}
                   image={productImagesData}
                   alt={productImagesData.images.fallback?.src!}
                 />
@@ -55,6 +58,7 @@ const ImageGallery = () => {
           })}
         </ImageList>
       </Box>
+      <EnlargedImageModal />
     </Grid>
   );
 };

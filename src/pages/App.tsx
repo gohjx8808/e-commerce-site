@@ -9,7 +9,7 @@ import React, { lazy, Suspense } from 'react';
 import AccountDetails from '../modules/account/views/AccountDetails';
 import Footer from '../modules/Footer';
 import HomeScreen from '../modules/HomeScreen';
-import ImageGallery from '../modules/ImageGallery';
+import ImageGallery from '../modules/imageGallery/views/ImageGallery';
 import Cart from '../modules/products/views/Cart';
 import Checkout from '../modules/products/views/Checkout';
 import ScrollTop from '../sharedComponents/ScrollTop';
