@@ -9,6 +9,9 @@ export default makeStyles((theme) => ({
     height: '100vh',
   },
   loginIconContainer: {
+    [theme.breakpoints.down('xs')]: {
+      width: '30%',
+    },
     width: '20%',
   },
   icon: {
@@ -30,6 +33,9 @@ export default makeStyles((theme) => ({
     marginBottom: 10,
   },
   signupIconContainer: {
+    [theme.breakpoints.down('xs')]: {
+      width: '40%',
+    },
     width: '10%',
   },
   fullWidthInput: {
@@ -45,7 +51,7 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
     [theme.breakpoints.only('xs')]: {
       alignItems: 'flex-start',
-      height: '180vh',
+      height: '195vh',
     },
     height: '110vh',
   },

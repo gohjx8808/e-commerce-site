@@ -52,7 +52,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
   };
 
   return (
-    <Grid item lg={3} md={6} sm={6} xs={12}>
+    <Grid item lg={3} md={6} sm={6} xs={6}>
       <Card variant="outlined" className={styles.productCard}>
         <CardHeader title={product.name} className={styles.cardTitle} />
         <Carousel indicators={false} autoPlay={false}>

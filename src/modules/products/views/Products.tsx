@@ -146,31 +146,35 @@ const Products = () => {
 
   return (
     <>
-      {categories.map((category) => {
+      <Grid container direction="row">
+        {categories.map((category) => {
         // eslint-disable-next-line max-len
-        const currentCategoryImageData:imageInnerData = productQuery.productCategoriesImages.edges.find(
-          (image:imageInnerData) => image.node.name === category.toLowerCase().replace(' series', ''),
-        );
-        const categoryImage = getImage(currentCategoryImageData.node.childImageSharp)!;
-        return (
-          <Button disabled={!categoryProductAmount[category]} key={category} style={{ width: '20%' }}>
-            <Link
-              to={category}
-              spy
-              smooth
-              offset={-60}
-            >
-              <GatsbyImage
-                image={categoryImage}
-                alt={currentCategoryImageData.node.name}
-                imgStyle={{ borderRadius: 10 }}
-              />
-            </Link>
-          </Button>
-        );
-      })}
+          const currentCategoryImageData:imageInnerData = productQuery.productCategoriesImages.edges.find(
+            (image:imageInnerData) => image.node.name === category.toLowerCase().replace(' series', ''),
+          );
+          const categoryImage = getImage(currentCategoryImageData.node.childImageSharp)!;
+          return (
+            <Grid item xs={6} sm={3}>
+              <Button disabled={!categoryProductAmount[category]} key={category}>
+                <Link
+                  to={category}
+                  spy
+                  smooth
+                  offset={-60}
+                >
+                  <GatsbyImage
+                    image={categoryImage}
+                    alt={currentCategoryImageData.node.name}
+                    imgClassName={styles.productCategoryImg}
+                  />
+                </Link>
+              </Button>
+            </Grid>
+          );
+        })}
+      </Grid>
       <Grid container justifyContent="flex-end" alignItems="center" className={styles.sortByContainer}>
-        <Grid item xs={5} lg={3}>
+        <Grid item xs={12} sm={5} lg={3}>
           <Grid container justifyContent="flex-end" alignItems="center">
             <ControlledPicker
               control={control}
@@ -192,7 +196,7 @@ const Products = () => {
               <Typography variant="h6" id={category} className={styles.categorySpacing}>{category}</Typography>
             </Grid>
           )}
-          <Grid container justifyContent="center" alignItems="center" direction="row" spacing={5} key={category}>
+          <Grid container justifyContent="center" alignItems="center" direction="row" spacing={2} key={category}>
             {allProducts.filter(
               (product:products.innerProductQueryData) => filterProduct(product, category),
             ).sort(sortProduct).map((product:products.innerProductQueryData) => (

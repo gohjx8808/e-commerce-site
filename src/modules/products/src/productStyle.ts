@@ -7,7 +7,6 @@ const productStyle = makeStyles((theme) => ({
     borderRadius: '6px',
   },
   carouselImageContainer: {
-    minHeight: 300,
     alignItems: 'center',
     display: 'flex',
     cursor: 'zoom-in',
@@ -110,6 +109,9 @@ const productStyle = makeStyles((theme) => ({
   },
   sortByContainer: {
     paddingTop: 40,
+  },
+  productCategoryImg: {
+    borderRadius: 10,
   },
 }));
 

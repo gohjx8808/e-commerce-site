@@ -43,11 +43,10 @@ const useStyle = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
     paddingTop: 10,
   },
   imageList: {
-    height: 450,
+    maxHeight: 450,
   },
 }));
 
