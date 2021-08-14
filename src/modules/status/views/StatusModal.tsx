@@ -19,6 +19,13 @@ interface statusQueryInnerData{
   }
 }
 
+const defaultIGatsbyData:IGatsbyImageData = {
+  layout: 'fixed',
+  width: 0,
+  height: 0,
+  images: {},
+};
+
 const StatusModal = () => {
   const dispatch = useAppDispatch();
   const isStatusModalOpen = useAppSelector((state) => state.status.isStatusModalOpen);
@@ -26,8 +33,8 @@ const StatusModal = () => {
   const statusMsg = useAppSelector((state) => state.status.statusMsg);
   const isSuccess = useAppSelector((state) => state.status.isSuccess);
   const styles = statusStyle();
-  const [successImg, setSuccessImg] = useState<IGatsbyImageData>();
-  const [failImg, setFailImg] = useState<IGatsbyImageData>();
+  const [successImg, setSuccessImg] = useState<IGatsbyImageData>(defaultIGatsbyData);
+  const [failImg, setFailImg] = useState<IGatsbyImageData>(defaultIGatsbyData);
 
   const statusQuery = useStaticQuery(graphql` 
   query {
@@ -46,9 +53,9 @@ const StatusModal = () => {
   useEffect(() => {
     statusQuery.allFile.edges.map((imageData:statusQueryInnerData) => {
       if (imageData.node.name === 'fail') {
-        setFailImg(getImage(imageData.node.childImageSharp));
+        setFailImg(getImage(imageData.node.childImageSharp)!);
       } else if (imageData.node.name === 'success') {
-        setSuccessImg(getImage(imageData.node.childImageSharp));
+        setSuccessImg(getImage(imageData.node.childImageSharp)!);
       }
       return null;
     });

@@ -3,6 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   loginBg: {
     backgroundColor: theme.palette.primary.main,
+    [theme.breakpoints.down('xs')]: {
+      height: '95vh',
+    },
     height: '100vh',
   },
   loginIconContainer: {
@@ -19,7 +22,12 @@ export default makeStyles((theme) => ({
     width: '100%',
   },
   loginBtn: {
-    width: '20%',
+    [theme.breakpoints.down('xs')]: {
+      paddingRight: 20,
+      paddingLeft: 20,
+    },
+    paddingRight: 40,
+    paddingLeft: 40,
   },
   spacingVertical: {
     marginTop: 10,
@@ -40,7 +48,6 @@ export default makeStyles((theme) => ({
     height: '120vh',
   },
   loginCard: {
-    width: '50%',
     backgroundColor: '#B67B5E',
   },
   signupCard: {
