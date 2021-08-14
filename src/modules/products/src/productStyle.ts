@@ -113,6 +113,9 @@ const productStyle = makeStyles((theme) => ({
   productCategoryImg: {
     borderRadius: 10,
   },
+  linkingText:{
+    
+  }
 }));
 
 export default productStyle;
