@@ -17,16 +17,13 @@ const useStyles = makeStyles({
     borderColor: 'white',
     borderWidth: 1,
     border: 'dashed',
-    width: '40%',
     borderRadius: 2,
     padding: 5,
     margin: 10,
   },
   whiteTitle: {
     color: 'white',
-  },
-  passwordRequirementInnerContainer: {
-    width: '55%',
+    textAlign: 'center',
   },
 });
 
@@ -85,7 +82,7 @@ const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
   }, [password, rePassword, validatePassword]);
 
   return (
-    <Grid item className={styles.passwordRequirementContainer}>
+    <Grid item xs={12} sm={9} className={styles.passwordRequirementContainer}>
       <Grid container justifyContent="center" alignItems="center">
         <Typography variant="h6" className={styles.whiteTitle}>Password Requirements:</Typography>
         {passwordRequirements.map((item) => <ChecklistItem data={item} key={item.key} />)}
@@ -113,18 +110,20 @@ const ChecklistItem = (props:ChecklistItemOwnProps) => {
   return (
     <Grid item xs={12}>
       <Grid container justifyContent="center">
-        <Grid container className={checklistStyle.passwordRequirementInnerContainer} direction="row" alignItems="center">
-          <Grid item>
-            {meetsReq ? (
-              <Done className={checklistStyle.met} />
-            ) : (
-              <Close className={checklistStyle.whiteTitle} />
-            )}
-          </Grid>
-          <Grid item>
-            <Typography className={meetsReq ? checklistStyle.met : checklistStyle.whiteTitle}>
-              {data.label}
-            </Typography>
+        <Grid item xs={12} sm={8} lg={5}>
+          <Grid container direction="row" alignItems="center">
+            <Grid item>
+              {meetsReq ? (
+                <Done className={checklistStyle.met} />
+              ) : (
+                <Close className={checklistStyle.whiteTitle} />
+              )}
+            </Grid>
+            <Grid item>
+              <Typography className={meetsReq ? checklistStyle.met : checklistStyle.whiteTitle}>
+                {data.label}
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

@@ -184,27 +184,29 @@ const MenuBar = () => {
             </MenuItem>
           </>
         )}
-      <MenuItem>
-        <IconButton
-          aria-label="account"
-          color="inherit"
-          onClick={() => navigate(routeNames.account)}
-        >
-          <AccountCircle />
-        </IconButton>
-        <Typography>Profile</Typography>
-      </MenuItem>
       {currentUserDetail.fullName !== '' && (
-        <MenuItem>
-          <IconButton
-            aria-label="logout"
-            color="inherit"
-            onClick={promptSignOut}
-          >
-            <ExitToApp />
-          </IconButton>
-          <Typography>Logout</Typography>
-        </MenuItem>
+        <>
+          <MenuItem>
+            <IconButton
+              aria-label="account"
+              color="inherit"
+              onClick={() => navigate(routeNames.account)}
+            >
+              <AccountCircle />
+            </IconButton>
+            <Typography>Profile</Typography>
+          </MenuItem>
+          <MenuItem>
+            <IconButton
+              aria-label="logout"
+              color="inherit"
+              onClick={promptSignOut}
+            >
+              <ExitToApp />
+            </IconButton>
+            <Typography>Logout</Typography>
+          </MenuItem>
+        </>
       )}
     </Menu>
   );

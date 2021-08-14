@@ -67,7 +67,7 @@ const LoginScreen = () => {
                 </Box>
               </Grid>
               <CardContent>
-                <form onSubmit={handleSubmit(submitLogin)} className={styles.formContainer}>
+                <form onSubmit={handleSubmit(submitLogin)}>
                   <Grid container justifyContent="center" alignItems="center">
                     <ControlledTextInput
                       control={control}

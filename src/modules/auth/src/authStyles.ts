@@ -17,10 +17,6 @@ export default makeStyles((theme) => ({
   loginTitle: {
     color: 'white',
   },
-  formContainer: {
-    margin: theme.spacing(1),
-    width: '100%',
-  },
   loginBtn: {
     [theme.breakpoints.down('xs')]: {
       paddingRight: 20,
@@ -37,10 +33,20 @@ export default makeStyles((theme) => ({
     width: '10%',
   },
   fullWidthInput: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100%!important',
+    },
+    [theme.breakpoints.only('sm')]: {
+      width: '80%!important',
+    },
     width: '90%!important',
   },
   signUpHeight: {
     backgroundColor: theme.palette.primary.main,
+    [theme.breakpoints.only('xs')]: {
+      alignItems: 'flex-start',
+      height: '180vh',
+    },
     height: '110vh',
   },
   errorSignUpHeight: {

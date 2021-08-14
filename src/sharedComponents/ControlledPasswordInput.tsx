@@ -21,7 +21,7 @@ interface ControlledPasswordInputOwnProps{
   labelWidth?:number
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   unFocusStyle: {
     color: 'white',
     '& .MuiOutlinedInput-notchedOutline': {
@@ -35,11 +35,14 @@ const useStyles = makeStyles({
     color: 'white',
   },
   container: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
     width: '80%',
     marginTop: 5,
     marginBottom: 5,
   },
-});
+}));
 
 const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
   const {

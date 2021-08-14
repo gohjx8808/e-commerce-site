@@ -75,7 +75,7 @@ const SignupScreen = () => {
               </Box>
             </Grid>
             <CardContent>
-              <form onSubmit={handleSubmit(submitSignup)} className={styles.formContainer}>
+              <form onSubmit={handleSubmit(submitSignup)}>
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid item xs={12}>
                     <Grid container justifyContent="center" alignItems="center">

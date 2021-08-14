@@ -78,6 +78,7 @@ function* submitLoginSaga() {
     } catch (error) {
       yield put(updateStatusTitle('Log In'));
       yield put(updateStatusMsg('Invalid credentials! Please try again.'));
+      yield put(toggleSuccess(false));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
     }
