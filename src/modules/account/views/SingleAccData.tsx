@@ -14,9 +14,9 @@ const SingleAccData = (props:SingleAccDataOwnProps) => {
   const { label, data, Icon } = props;
 
   return (
-    <Grid item xs={6}>
+    <Grid item sm={6} xs={12}>
       <Grid container justifyContent="center" alignItems="center">
-        <Grid item xs={6}>
+        <Grid item sm={6} xs={12}>
           <Grid container alignItems="center" spacing={1}>
             <Grid item>
               {Icon}
@@ -26,7 +26,7 @@ const SingleAccData = (props:SingleAccDataOwnProps) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item sm={6} xs={12}>
           <Grid container alignItems="center">
             <Typography>{data}</Typography>
           </Grid>

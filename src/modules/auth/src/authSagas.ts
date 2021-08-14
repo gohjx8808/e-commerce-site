@@ -120,6 +120,7 @@ function* logoutSaga() {
       yield put(toggleLoadingOverlay(false));
       yield put(toggleSignOutConfirmationModal(false));
       yield put(toggleStatusModal(true));
+      navigate('/');
     } catch {
       yield put(toggleSuccess(false));
       yield put(updateStatusMsg('Network error! Please try again.'));

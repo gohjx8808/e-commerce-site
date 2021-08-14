@@ -151,7 +151,6 @@ const MenuBar = () => {
   };
 
   const promptSignOut = () => {
-    console.log('ggg');
     dispatch(toggleSignOutConfirmationModal(true));
   };
 
@@ -175,17 +174,17 @@ const MenuBar = () => {
             </Grid>
           </MenuItem>
         ) : (
-          <>
+          <div>
             <MenuItem>
               <Button color="inherit" onClick={() => navigate(routeNames.login)}>Login</Button>
             </MenuItem>
             <MenuItem>
               <Button color="inherit" onClick={() => navigate(routeNames.signUp)}>Sign Up</Button>
             </MenuItem>
-          </>
+          </div>
         )}
       {currentUserDetail.fullName !== '' && (
-        <>
+        <div>
           <MenuItem>
             <IconButton
               aria-label="account"
@@ -206,7 +205,7 @@ const MenuBar = () => {
             </IconButton>
             <Typography>Logout</Typography>
           </MenuItem>
-        </>
+        </div>
       )}
     </Menu>
   );
