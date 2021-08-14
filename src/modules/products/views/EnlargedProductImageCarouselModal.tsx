@@ -6,7 +6,7 @@ import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { toggleEnlargedProductImageModal } from '../src/productReducers';
 
-const EnlargedProductImageModal = () => {
+const EnlargedProductImageCarouselModal = () => {
   const dispatch = useAppDispatch();
   const selectedProductImage = useAppSelector((state) => state.product.selectedProductImage);
   const selectedProductImageList = useAppSelector(
@@ -46,4 +46,4 @@ const EnlargedProductImageModal = () => {
   );
 };
 
-export default EnlargedProductImageModal;
+export default EnlargedProductImageCarouselModal;

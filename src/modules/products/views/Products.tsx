@@ -11,7 +11,7 @@ import { Link } from 'react-scroll';
 import { useAppSelector } from '../../../hooks';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import productStyle from '../src/productStyle';
-import EnlargedProductImageModal from './EnlargedProductImageModal';
+import EnlargedProductImageCarouselModal from './EnlargedProductImageCarouselModal';
 import ProductCard from './ProductCard';
 
 interface categoryAmountData{
@@ -201,7 +201,7 @@ const Products = () => {
           </Grid>
         </Grid>
       ))}
-      <EnlargedProductImageModal />
+      <EnlargedProductImageCarouselModal />
     </>
   );
 };
