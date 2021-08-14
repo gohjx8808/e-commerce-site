@@ -146,7 +146,7 @@ const Products = () => {
 
   return (
     <>
-      <Grid container direction="row">
+      <Grid container direction="row" justifyContent="center">
         {categories.map((category) => {
         // eslint-disable-next-line max-len
           const currentCategoryImageData:imageInnerData = productQuery.productCategoriesImages.edges.find(
@@ -154,7 +154,7 @@ const Products = () => {
           );
           const categoryImage = getImage(currentCategoryImageData.node.childImageSharp)!;
           return (
-            <Grid item xs={6} sm={3}>
+            <Grid item xs={6} sm={2}>
               <Button disabled={!categoryProductAmount[category]} key={category}>
                 <Link
                   to={category}
