@@ -19,16 +19,17 @@ const productStyle = makeStyles((theme) => ({
     },
   },
   productNameContainer: {
-    color: theme.palette.secondary.main,
-    textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
       height: 70,
     },
     height: 95,
   },
   productName: {
+    color: theme.palette.secondary.main,
+    textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
       fontSize: '0.8rem',
+      fontWeight: 'bold',
     },
   },
   shoppingCartIcon: {
