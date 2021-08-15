@@ -8,6 +8,7 @@ import { RouteComponentProps, Router } from '@reach/router';
 import React, { lazy, Suspense } from 'react';
 import AccountDetails from '../modules/account/views/AccountDetails';
 import Footer from '../modules/Footer';
+import HomeBanner from '../modules/HomeBanner';
 import HomeScreen from '../modules/HomeScreen';
 import ImageGallery from '../modules/imageGallery/views/ImageGallery';
 import Cart from '../modules/products/views/Cart';
@@ -52,7 +53,7 @@ const App = () => {
         <Suspense fallback={<div>Loading...</div>}>
           <SEO />
           <Router>
-            <MainRoutes path="/" pageComponent={<HomeScreen />} />
+            <MainRoutes path="/" pageComponent={<HomeScreen />} homeCarouselBanner />
             <RouterPage path={routeNames.login} pageComponent={<LoginScreen />} />
             <RouterPage path={routeNames.signUp} pageComponent={<SignupScreen />} />
             <MainRoutes path={routeNames.products} pageComponent={<Products />} pageBannerTitle="Product Categories" />
@@ -82,14 +83,15 @@ const RouterPage = (
 };
 
 const MainRoutes = (props: {
-   pageComponent: JSX.Element, pageBannerTitle?:string
+   pageComponent: JSX.Element, pageBannerTitle?:string, homeCarouselBanner?:boolean
   } & RouteComponentProps) => {
-  const { pageComponent, pageBannerTitle } = props;
+  const { pageComponent, pageBannerTitle, homeCarouselBanner } = props;
   const styles = useStyles();
 
   return (
     <Box className={styles.contentContainer}>
       <MenuBar />
+      {homeCarouselBanner && <HomeBanner />}
       {pageBannerTitle && (
         <Grid item xs={12} className={styles.pageBannerBg}>
           <Grid container justifyContent="center" alignItems="center">
@@ -112,6 +114,7 @@ const MainRoutes = (props: {
 
 MainRoutes.defaultProps = {
   pageBannerTitle: null,
+  homeCarouselBanner: false,
 };
 
 export default App;

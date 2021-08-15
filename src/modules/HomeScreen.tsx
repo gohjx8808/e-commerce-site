@@ -12,26 +12,13 @@ import {
   GatsbyImage, getImage, ImageDataLike,
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
-import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch } from '../hooks';
 import routeNames from '../utils/routeNames';
 import { storeAllProducts } from './products/src/productReducers';
 
 const useStyle = makeStyles((theme) => ({
-  carouselImages: {
-    borderRadius: 10,
-  },
-  carouselNavWrapper: {
-    '&:hover': {
-      backgroundColor: '#FFFFFF60',
-    },
-  },
   sectionContainer: {
     paddingTop: 20,
-  },
-  productCarouselNavButton: {
-    backgroundColor: 'transparent!important',
-    color: 'black!important',
   },
   hyperlink: {
     textDecorationLine: 'underline',
@@ -48,14 +35,10 @@ const useStyle = makeStyles((theme) => ({
   imageList: {
     maxHeight: 450,
   },
+  centerText: {
+    textAlign: 'center',
+  },
 }));
-
-interface imageInnerStructure{
-  node:{
-    childImageSharp:ImageDataLike
-    id:string
-  }
-}
 
 interface imageListImages{
   productImage:ImageDataLike
@@ -69,16 +52,6 @@ const HomeScreen = () => {
   const styles = useStyle();
   const homeQuery = useStaticQuery(graphql`
     query {
-      allFile(filter: {relativeDirectory: {eq: "banner"}}) {
-        edges {
-          node {
-            childImageSharp {
-              gatsbyImageData
-            }
-            id
-          }
-        }
-      }
       products: allContentfulProducts(filter: {node_locale: {eq: "en-US"}}) {
         edges {
           node {
@@ -117,33 +90,10 @@ const HomeScreen = () => {
   return (
     <Grid container justifyContent="center" alignItems="center">
       <Grid item xs={12}>
-        <Carousel
-          navButtonsWrapperProps={{ className: styles.carouselNavWrapper, style: {} }}
-          navButtonsProps={{
-            className: styles.productCarouselNavButton,
-            style: {},
-          }}
-          animation="slide"
-          interval={5000}
-          timeout={800}
-        >
-          {homeQuery.allFile.edges.map((banner:imageInnerStructure) => {
-            const bannerNode = banner.node;
-            const bannerRealImageData = getImage(bannerNode.childImageSharp)!;
-            return (
-              <GatsbyImage
-                image={bannerRealImageData}
-                alt={bannerNode.id}
-                key={bannerNode.id}
-                imgClassName={styles.carouselImages}
-              />
-            );
-          })}
-        </Carousel>
-        <Grid container justifyContent="center" alignItems="center" className={styles.sectionContainer} direction="column">
+        <Grid container justifyContent="center" alignItems="center" direction="column">
           <Typography variant="h4" color="secondary">Welcome!</Typography>
-          <Typography variant="h6">Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
-          <Typography variant="h6">You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
+          <Typography variant="h6" className={styles.centerText}>Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
+          <Typography variant="h6" className={styles.centerText}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
           <Button>
             <Typography variant="subtitle1" className={styles.hyperlink}>Learn more!</Typography>
           </Button>
