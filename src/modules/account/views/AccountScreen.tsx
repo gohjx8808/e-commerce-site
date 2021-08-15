@@ -1,9 +1,11 @@
+import Grid from '@material-ui/core/Grid';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import React from 'react';
+import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import AccountDetails from './AccountDetails';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -38,21 +40,28 @@ export default function AccountScreen() {
   };
 
   return (
-    <div className={styles.root}>
-      <TabContext value={value}>
-        <TabList onChange={handleChange} aria-label="account tabs" orientation="vertical" className={styles.desktopSideTab}>
-          <Tab label="Account Details" value="accDetails" />
-          <Tab label="Address Book" value="addressBook" />
-        </TabList>
-        <TabList onChange={handleChange} aria-label="account tabs" variant="scrollable" className={styles.smallerViewTabs}>
-          <Tab label="Account Details" value="accDetails" />
-          <Tab label="Address Book" value="addressBook" />
-        </TabList>
-        <TabPanel value="accDetails">
-          <AccountDetails />
-        </TabPanel>
-        <TabPanel value="addressBook">Item Two</TabPanel>
-      </TabContext>
-    </div>
+    <Grid item xs={12}>
+      <Grid item md={10} xs={12}>
+        <Grid container justifyContent="flex-start" alignItems="center">
+          <CustomBreadcrumbs />
+        </Grid>
+      </Grid>
+      <div className={styles.root}>
+        <TabContext value={value}>
+          <TabList onChange={handleChange} aria-label="account tabs" orientation="vertical" className={styles.desktopSideTab}>
+            <Tab label="Account Details" value="accDetails" />
+            <Tab label="Address Book" value="addressBook" />
+          </TabList>
+          <TabList onChange={handleChange} aria-label="account tabs" variant="scrollable" className={styles.smallerViewTabs}>
+            <Tab label="Account Details" value="accDetails" />
+            <Tab label="Address Book" value="addressBook" />
+          </TabList>
+          <TabPanel value="accDetails">
+            <AccountDetails />
+          </TabPanel>
+          <TabPanel value="addressBook">Item Two</TabPanel>
+        </TabContext>
+      </div>
+    </Grid>
   );
 }
