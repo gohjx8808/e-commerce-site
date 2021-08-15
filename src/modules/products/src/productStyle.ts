@@ -14,11 +14,22 @@ const productStyle = makeStyles((theme) => ({
   priceText: {
     color: theme.palette.secondary.main,
     fontWeight: 'bold',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '0.8rem',
+    },
   },
-  cardTitle: {
+  productNameContainer: {
     color: theme.palette.secondary.main,
     textAlign: 'center',
+    [theme.breakpoints.down('xs')]: {
+      height: 70,
+    },
     height: 95,
+  },
+  productName: {
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '0.8rem',
+    },
   },
   shoppingCartIcon: {
     color: theme.palette.secondary.main,
