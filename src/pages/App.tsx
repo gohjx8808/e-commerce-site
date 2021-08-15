@@ -7,6 +7,7 @@ import { KeyboardArrowUp } from '@material-ui/icons';
 import { RouteComponentProps, Router } from '@reach/router';
 import React, { lazy, Suspense } from 'react';
 import AccountDetails from '../modules/account/views/AccountDetails';
+import AccountScreen from '../modules/account/views/AccountScreen';
 import Footer from '../modules/Footer';
 import HomeBanner from '../modules/HomeBanner';
 import HomeScreen from '../modules/HomeScreen';
@@ -60,7 +61,7 @@ const App = () => {
             <MainRoutes path={routeNames.imageGallery} pageComponent={<ImageGallery />} />
             <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
             <MainRoutes path={routeNames.checkout} pageComponent={<Checkout />} />
-            <MainRoutes path={routeNames.account} pageComponent={<AccountDetails />} />
+            <MainRoutes path={routeNames.account} pageComponent={<AccountScreen />} />
           </Router>
           <StatusModal />
           <LoadingOverlay />
