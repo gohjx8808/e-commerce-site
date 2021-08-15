@@ -1,4 +1,5 @@
 import Grid from '@material-ui/core/Grid';
+import { responsiveFontSizes } from '@material-ui/core/styles';
 import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { SnackbarProvider } from 'notistack';
@@ -25,7 +26,7 @@ const IndexPage = () => {
   });
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={responsiveFontSizes(theme)}>
       <SnackbarProvider
         anchorOrigin={{
           vertical: 'bottom',
