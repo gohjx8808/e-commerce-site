@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import { KeyboardArrowUp } from '@material-ui/icons';
 import { RouteComponentProps, Router } from '@reach/router';
 import React, { lazy, Suspense } from 'react';
-import AccountDetails from '../modules/account/views/AccountDetails';
 import AccountScreen from '../modules/account/views/AccountScreen';
 import Footer from '../modules/Footer';
 import HomeBanner from '../modules/HomeBanner';

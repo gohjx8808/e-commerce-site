@@ -34,5 +34,16 @@ declare namespace auth{
     fullName:string
     gender:string
     phoneNumber:string
+    addressBook:addressData[]
+  }
+
+  interface addressData{
+    addressLine1: string
+    addressLine2:string
+    postcode: string
+    city: string
+    state: string
+    outsideMalaysiaState: string
+    country: string
   }
 }

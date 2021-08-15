@@ -13,6 +13,7 @@ const INITIAL_STATE:authState = {
     fullName: '',
     email: '',
     phoneNumber: '',
+    addressBook: [],
   },
   isSignOutConfirmationModalOpen: false,
 };
