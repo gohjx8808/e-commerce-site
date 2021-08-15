@@ -113,9 +113,15 @@ const productStyle = makeStyles((theme) => ({
   productCategoryImg: {
     borderRadius: 10,
   },
-  linkingText:{
-    
-  }
+  noPaddingBottomContent: {
+    paddingBottom: '16px!important',
+  },
+  shoppingCartBtn: {
+    [theme.breakpoints.down('xs')]: {
+      padding: 0,
+      fontSize: 20,
+    },
+  },
 }));
 
 export default productStyle;

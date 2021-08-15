@@ -72,12 +72,12 @@ const ProductCard = (props:ProductCardOwnProps) => {
             );
           })}
         </Carousel>
-        <CardContent>
+        <CardContent className={styles.noPaddingBottomContent}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Typography className={styles.priceText}>
               {formatPrice(product.price, 'MYR')}
             </Typography>
-            <IconButton aria-label="addToCart" size="medium" onClick={() => onAddToCart(product)}>
+            <IconButton aria-label="addToCart" onClick={() => onAddToCart(product)} className={styles.shoppingCartBtn}>
               <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
             </IconButton>
           </Grid>
