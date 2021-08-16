@@ -54,7 +54,7 @@ const EditAccDetailModal = () => {
       </Grid>
       <form onSubmit={handleSubmit(onEditSubmit)}>
         <DialogContent>
-          <Grid container justifyContent="center" alignItems="center" spacing={1}>
+          <Grid container justifyContent="center" alignItems="center" spacing={2}>
             <Grid item xs={12}>
               <ControlledTextInput
                 control={control}
@@ -63,72 +63,59 @@ const EditAccDetailModal = () => {
                 lightBg
                 label="Full Name"
                 labelWidth={68}
-                customClassName={styles.inputFullWidth}
                 defaultValue={currentUserDetails.fullName}
                 startAdornment={<Person />}
                 error={errors.fullName}
               />
             </Grid>
-            <Grid item xs={12}>
-              <Grid container justifyContent="center" alignItems="center" spacing={3}>
-                <Grid item sm={6} xs={12}>
-                  <ControlledTextInput
-                    control={control}
-                    name="email"
-                    variant="outlined"
-                    lightBg
-                    label="Email"
-                    labelWidth={40}
-                    customClassName={styles.inputFullWidth}
-                    defaultValue={currentUserDetails.email}
-                    startAdornment={<Email />}
-                    error={errors.email}
-                  />
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                  <ControlledTextInput
-                    control={control}
-                    name="phoneNumber"
-                    variant="outlined"
-                    lightBg
-                    label="Phone Number"
-                    labelWidth={100}
-                    customClassName={styles.inputFullWidth}
-                    defaultValue={currentUserDetails.phoneNumber}
-                    startAdornment={<Phone />}
-                    error={errors.phoneNumber}
-                  />
-                </Grid>
-              </Grid>
+            <Grid item sm={6} xs={12}>
+              <ControlledTextInput
+                control={control}
+                name="email"
+                variant="outlined"
+                lightBg
+                label="Email"
+                labelWidth={40}
+                defaultValue={currentUserDetails.email}
+                startAdornment={<Email />}
+                error={errors.email}
+              />
             </Grid>
-            <Grid item xs={12}>
-              <Grid container justifyContent="center" alignItems="center" spacing={3}>
-                <Grid item sm={6} xs={12}>
-                  <ControlledPicker
-                    control={control}
-                    name="gender"
-                    variant="outlined"
-                    lightBg
-                    label="Gender"
-                    options={genderOptions}
-                    customClassName={styles.inputFullWidth}
-                    defaultValue={currentUserDetails.gender}
-                    error={errors.gender}
-                  />
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                  <ControlledDatePicker
-                    control={control}
-                    name="dob"
-                    variant="outlined"
-                    lightBg
-                    label="Date of Birth"
-                    customClassName={styles.inputFullWidth}
-                    defaultValue={currentUserDetails.dob}
-                    error={errors.dob}
-                  />
-                </Grid>
-              </Grid>
+            <Grid item sm={6} xs={12}>
+              <ControlledTextInput
+                control={control}
+                name="phoneNumber"
+                variant="outlined"
+                lightBg
+                label="Phone Number"
+                labelWidth={100}
+                defaultValue={currentUserDetails.phoneNumber}
+                startAdornment={<Phone />}
+                error={errors.phoneNumber}
+              />
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <ControlledPicker
+                control={control}
+                name="gender"
+                variant="outlined"
+                lightBg
+                label="Gender"
+                options={genderOptions}
+                defaultValue={currentUserDetails.gender}
+                error={errors.gender}
+              />
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <ControlledDatePicker
+                control={control}
+                name="dob"
+                variant="outlined"
+                lightBg
+                label="Date of Birth"
+                defaultValue={currentUserDetails.dob}
+                error={errors.dob}
+              />
             </Grid>
           </Grid>
         </DialogContent>

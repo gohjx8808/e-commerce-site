@@ -38,15 +38,6 @@ export default makeStyles((theme) => ({
     },
     width: '10%',
   },
-  fullWidthInput: {
-    [theme.breakpoints.down('xs')]: {
-      width: '100%!important',
-    },
-    [theme.breakpoints.only('sm')]: {
-      width: '80%!important',
-    },
-    width: '90%!important',
-  },
   signUpHeight: {
     backgroundColor: theme.palette.primary.main,
     [theme.breakpoints.only('xs')]: {

@@ -180,167 +180,143 @@ const Checkout = () => {
             <Typography variant="h6">Shipping Information</Typography>
             <Card className={styles.secondaryBorder} variant="outlined">
               <CardContent className={styles.cartTitleCardContent}>
-                <Grid container justifyContent="center" alignItems="center">
-                  <ControlledTextInput
-                    control={control}
-                    name="fullName"
-                    variant="outlined"
-                    label="Full Name"
-                    lightBg
-                    customClassName={styles.shippingInfoFullWidth}
-                    error={errors.fullName}
-                    defaultValue={prevShippingInfo.fullName}
-                  />
-                  <Grid item lg={6} xs={12}>
-                    <Grid container justifyContent="center" alignItems="center">
-                      <ControlledTextInput
-                        control={control}
-                        name="email"
-                        variant="outlined"
-                        label="Email Address"
-                        labelWidth={105}
-                        lightBg
-                        customClassName={styles.shippingInfoHalfWidth}
-                        error={errors.email}
-                        defaultValue={prevShippingInfo.email}
-                      />
-                    </Grid>
+                <Grid container justifyContent="center" alignItems="center" spacing={2}>
+                  <Grid item xs={12}>
+                    <ControlledTextInput
+                      control={control}
+                      name="fullName"
+                      variant="outlined"
+                      label="Full Name"
+                      lightBg
+                      error={errors.fullName}
+                      defaultValue={prevShippingInfo.fullName}
+                    />
                   </Grid>
                   <Grid item lg={6} xs={12}>
-                    <Grid container justifyContent="center" alignItems="center">
-                      <ControlledTextInput
-                        control={control}
-                        name="phoneNo"
-                        variant="outlined"
-                        label="Phone Number"
-                        labelWidth={105}
-                        lightBg
-                        customClassName={styles.shippingInfoHalfWidth}
-                        startAdornment={(
-                          <InputAdornment position="start">
-                            +
-                          </InputAdornment>
+                    <ControlledTextInput
+                      control={control}
+                      name="email"
+                      variant="outlined"
+                      label="Email Address"
+                      labelWidth={105}
+                      lightBg
+                      error={errors.email}
+                      defaultValue={prevShippingInfo.email}
+                    />
+                  </Grid>
+                  <Grid item lg={6} xs={12}>
+                    <ControlledTextInput
+                      control={control}
+                      name="phoneNo"
+                      variant="outlined"
+                      label="Phone Number"
+                      labelWidth={105}
+                      lightBg
+                      startAdornment={(
+                        <InputAdornment position="start">
+                          +
+                        </InputAdornment>
                         )}
-                        error={errors.phoneNo}
-                        defaultValue={prevShippingInfo.phoneNo}
-                      />
-                    </Grid>
+                      error={errors.phoneNo}
+                      defaultValue={prevShippingInfo.phoneNo}
+                    />
                   </Grid>
-                  <ControlledTextInput
-                    control={control}
-                    name="addressLine1"
-                    variant="outlined"
-                    label="Address Line 1"
-                    labelWidth={105}
-                    lightBg
-                    customClassName={styles.shippingInfoFullWidth}
-                    error={errors.addressLine1}
-                    defaultValue={prevShippingInfo.addressLine1}
-                  />
-                  <ControlledTextInput
-                    control={control}
-                    name="addressLine2"
-                    variant="outlined"
-                    label="Address Line 2"
-                    labelWidth={110}
-                    lightBg
-                    customClassName={styles.shippingInfoFullWidth}
-                    defaultValue={prevShippingInfo.addressLine2}
-                  />
-                  <Grid item lg={6} xs={12}>
-                    <Grid container justifyContent="center" alignItems="center">
-                      <ControlledTextInput
-                        control={control}
-                        name="postcode"
-                        variant="outlined"
-                        label="Postcode"
-                        lightBg
-                        maxLength={10}
-                        customClassName={styles.shippingInfoHalfWidth}
-                        error={errors.postcode}
-                        defaultValue={prevShippingInfo.postcode}
-                      />
-                    </Grid>
+                  <Grid item xs={12}>
+                    <ControlledTextInput
+                      control={control}
+                      name="addressLine1"
+                      variant="outlined"
+                      label="Address Line 1"
+                      labelWidth={105}
+                      lightBg
+                      error={errors.addressLine1}
+                      defaultValue={prevShippingInfo.addressLine1}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <ControlledTextInput
+                      control={control}
+                      name="addressLine2"
+                      variant="outlined"
+                      label="Address Line 2"
+                      labelWidth={110}
+                      lightBg
+                      defaultValue={prevShippingInfo.addressLine2}
+                    />
                   </Grid>
                   <Grid item lg={6} xs={12}>
-                    <Grid container justifyContent="center" alignItems="center">
-                      <ControlledTextInput
-                        control={control}
-                        name="city"
-                        variant="outlined"
-                        label="City"
-                        lightBg
-                        labelWidth={25}
-                        customClassName={styles.shippingInfoHalfWidth}
-                        error={errors.city}
-                        defaultValue={prevShippingInfo.city}
-                      />
-                    </Grid>
+                    <ControlledTextInput
+                      control={control}
+                      name="postcode"
+                      variant="outlined"
+                      label="Postcode"
+                      lightBg
+                      maxLength={10}
+                      error={errors.postcode}
+                      defaultValue={prevShippingInfo.postcode}
+                    />
                   </Grid>
                   <Grid item lg={6} xs={12}>
-                    <Grid container justifyContent="center" alignItems="center">
-                      <ControlledPicker
-                        control={control}
-                        options={stateOptions}
-                        name="state"
-                        variant="outlined"
-                        lightBg
-                        label="State"
-                        customClassName={styles.shippingInfoHalfWidth}
-                        error={errors.state}
-                        defaultValue={prevShippingInfo.state}
-                      />
-                    </Grid>
+                    <ControlledTextInput
+                      control={control}
+                      name="city"
+                      variant="outlined"
+                      label="City"
+                      lightBg
+                      labelWidth={25}
+                      error={errors.city}
+                      defaultValue={prevShippingInfo.city}
+                    />
+                  </Grid>
+                  <Grid item lg={6} xs={12}>
+                    <ControlledPicker
+                      control={control}
+                      options={stateOptions}
+                      name="state"
+                      variant="outlined"
+                      lightBg
+                      label="State"
+                      error={errors.state}
+                      defaultValue={prevShippingInfo.state}
+                    />
                   </Grid>
                   {outsideMalaysiaState && (
                     <Grid item lg={6} xs={12}>
-                      <Grid container justifyContent="center" alignItems="center">
-                        <ControlledTextInput
-                          control={control}
-                          name="outsideMalaysiaState"
-                          variant="outlined"
-                          label="Foreign Country State"
-                          labelWidth={155}
-                          lightBg
-                          customClassName={styles.shippingInfoHalfWidth}
-                          error={errors.outsideMalaysiaState}
-                          defaultValue={prevShippingInfo.outsideMalaysiaState}
-                        />
-                      </Grid>
+                      <ControlledTextInput
+                        control={control}
+                        name="outsideMalaysiaState"
+                        variant="outlined"
+                        label="Foreign Country State"
+                        labelWidth={155}
+                        lightBg
+                        error={errors.outsideMalaysiaState}
+                        defaultValue={prevShippingInfo.outsideMalaysiaState}
+                      />
                     </Grid>
                   )}
                   <Grid item lg={outsideMalaysiaState ? 12 : 6} xs={12}>
-                    <Grid container justifyContent="center" alignItems="center">
-                      <ControlledTextInput
-                        control={control}
-                        name="country"
-                        variant="outlined"
-                        label="Country"
-                        labelWidth={55}
-                        lightBg
-                        customClassName={
-                          outsideMalaysiaState
-                            ? styles.shippingInfoFullWidth : styles.shippingInfoHalfWidth
-                          }
-                        error={errors.country}
-                        defaultValue={prevShippingInfo.country}
-                      />
-                    </Grid>
+                    <ControlledTextInput
+                      control={control}
+                      name="country"
+                      variant="outlined"
+                      label="Country"
+                      labelWidth={55}
+                      lightBg
+                      error={errors.country}
+                      defaultValue={prevShippingInfo.country}
+                    />
                   </Grid>
                   <Grid item xs={12}>
-                    <Grid container justifyContent="center" alignItems="center">
-                      <ControlledTextInput
-                        control={control}
-                        name="notesToSeller"
-                        variant="outlined"
-                        label="Notes to seller (optional)"
-                        labelWidth={160}
-                        lightBg
-                        customClassName={styles.shippingInfoFullWidth}
-                        multiline
-                        rows={4}
-                      />
-                    </Grid>
+                    <ControlledTextInput
+                      control={control}
+                      name="notesToSeller"
+                      variant="outlined"
+                      label="Notes to seller (optional)"
+                      labelWidth={160}
+                      lightBg
+                      multiline
+                      rows={4}
+                    />
                   </Grid>
                   <Grid container justifyContent="flex-start" alignItems="center" className={styles.rmbPadding}>
                     <ControlledCheckbox

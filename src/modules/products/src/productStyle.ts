@@ -69,11 +69,11 @@ const productStyle = makeStyles((theme) => ({
     paddingLeft: '10%',
   },
   checkoutItemContainer: {
-    height: 520,
+    height: 540,
     width: '100%',
   },
   outsideMalaysiaCheckoutItemContainer: {
-    height: 580,
+    height: 620,
     width: '100%',
   },
   totalPayTextContainer: {
@@ -82,24 +82,15 @@ const productStyle = makeStyles((theme) => ({
   totalPayText: {
     fontWeight: 525,
   },
-  shippingInfoFullWidth: {
-    width: '95%!important',
-  },
-  shippingInfoHalfWidth: {
-    [theme.breakpoints.up('lg')]: {
-      width: '90%!important',
-    },
-    width: '95%!important',
-  },
   secondaryBorder: {
     borderColor: `${theme.palette.secondary.main}!important`,
     borderWidth: '2px!important',
   },
   checkoutOrderCard: {
-    height: 620,
+    height: 645,
   },
   outsideMalaysiaCheckoutOrderCard: {
-    height: 687,
+    height: 720,
   },
   rmbPadding: {
     paddingLeft: 20,
