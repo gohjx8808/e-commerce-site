@@ -28,7 +28,7 @@ interface ControlledTextInputOwnProps{
   rows?:number
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   unFocusStyle: {
     color: 'white',
     '& .MuiOutlinedInput-notchedOutline': {
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     width: '100%',
   },
-}));
+});
 
 const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
   const {

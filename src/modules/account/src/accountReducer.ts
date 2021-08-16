@@ -23,6 +23,7 @@ const INITIAL_STATE:accState = {
     country: '',
     default: false,
     tag: '',
+    email: '',
   },
 };
 
