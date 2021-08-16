@@ -31,18 +31,13 @@ const useStyles = makeStyles((theme) => ({
     '&:hover .MuiOutlinedInput-notchedOutline': {
       borderColor: 'lightgrey',
     },
-    marginTop: 0,
+    marginTop: 5,
   },
   unFocusLabel: {
     color: 'white',
   },
   container: {
-    [theme.breakpoints.down('xs')]: {
-      width: '100%',
-    },
-    width: '80%',
-    marginTop: 5,
-    marginBottom: 5,
+    width: '100%',
   },
   errorColor: {
     color: theme.palette.error.main,

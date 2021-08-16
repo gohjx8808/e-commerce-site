@@ -57,6 +57,10 @@ export default makeStyles((theme) => ({
   },
   errorSignUpHeight: {
     backgroundColor: theme.palette.primary.main,
+    [theme.breakpoints.only('xs')]: {
+      alignItems: 'flex-start',
+      height: '220vh',
+    },
     height: '120vh',
   },
   loginCard: {

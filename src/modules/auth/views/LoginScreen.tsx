@@ -68,23 +68,27 @@ const LoginScreen = () => {
               </Grid>
               <CardContent>
                 <form onSubmit={handleSubmit(submitLogin)}>
-                  <Grid container justifyContent="center" alignItems="center">
-                    <ControlledTextInput
-                      control={control}
-                      name="email"
-                      label="Email"
-                      variant="outlined"
-                      error={errors.email}
-                      labelWidth={40}
-                      type="email"
-                    />
-                    <ControlledPasswordInput
-                      control={control}
-                      name="password"
-                      label="Password"
-                      variant="outlined"
-                      error={errors.password}
-                    />
+                  <Grid container justifyContent="center" alignItems="center" spacing={2}>
+                    <Grid item xs={12} sm={10}>
+                      <ControlledTextInput
+                        control={control}
+                        name="email"
+                        label="Email"
+                        variant="outlined"
+                        error={errors.email}
+                        labelWidth={40}
+                        type="email"
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={10}>
+                      <ControlledPasswordInput
+                        control={control}
+                        name="password"
+                        label="Password"
+                        variant="outlined"
+                        error={errors.password}
+                      />
+                    </Grid>
                   </Grid>
                   <Grid container justifyContent="center" alignItems="center" className={styles.spacingVertical}>
                     <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
