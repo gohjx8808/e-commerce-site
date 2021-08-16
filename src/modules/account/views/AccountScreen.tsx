@@ -7,6 +7,7 @@ import TabPanel from '@material-ui/lab/TabPanel';
 import React from 'react';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import AccountDetails from './AccountDetails';
+import AddressBook from './AddressBook';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -59,7 +60,9 @@ export default function AccountScreen() {
           <TabPanel value="accDetails">
             <AccountDetails />
           </TabPanel>
-          <TabPanel value="addressBook">Item Two</TabPanel>
+          <TabPanel value="addressBook">
+            <AddressBook />
+          </TabPanel>
         </TabContext>
       </div>
     </Grid>

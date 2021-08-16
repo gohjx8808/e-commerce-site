@@ -38,6 +38,8 @@ declare namespace auth{
   }
 
   interface addressData{
+    fullName:string
+    phoneNumber:string
     addressLine1: string
     addressLine2:string
     postcode: string
@@ -45,5 +47,7 @@ declare namespace auth{
     state: string
     outsideMalaysiaState: string
     country: string
+    default:boolean
+    tag:string
   }
 }

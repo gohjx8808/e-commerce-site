@@ -13,4 +13,18 @@ declare namespace account{
     phoneNumber:string
     dob:string
   }
+
+  interface submitAddEditAddressPayload{
+    fullName:string
+    phoneNumber:string
+    addressLine1: string
+    addressLine2:string
+    postcode: string
+    city: string
+    state: string
+    outsideMalaysiaState: string
+    country: string
+    default:boolean
+    tag:string
+  }
 }
