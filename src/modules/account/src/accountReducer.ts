@@ -4,12 +4,26 @@ interface accState{
   isEditAccDetailModalDisplay:boolean
   isAddressModalOpen:boolean
   addressActionType:string
+  selectedAddress:account.submitAddEditAddressPayload
 }
 
 const INITIAL_STATE:accState = {
   isEditAccDetailModalDisplay: false,
   isAddressModalOpen: false,
   addressActionType: '',
+  selectedAddress: {
+    fullName: '',
+    phoneNumber: '',
+    addressLine1: '',
+    addressLine2: '',
+    postcode: '',
+    city: '',
+    state: '',
+    outsideMalaysiaState: '',
+    country: '',
+    default: false,
+    tag: '',
+  },
 };
 
 export const accountSlice = createSlice({

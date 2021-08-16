@@ -6,14 +6,15 @@ import Button from '@material-ui/core/Button';
 import { Add } from '@material-ui/icons';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { toggleAddressModal, updateAddressActionType } from '../src/accountReducer';
+import AddressModal from './AddressModal';
 
 const AddressBook = () => {
   const dispatch = useAppDispatch();
   const addressList = useAppSelector((state) => state.auth.currentUser.addressBook);
 
   const showAddressModal = (actionType:string) => {
-    dispatch(toggleAddressModal(true));
     dispatch(updateAddressActionType(actionType));
+    dispatch(toggleAddressModal(true));
   };
 
   return (
@@ -33,6 +34,7 @@ const AddressBook = () => {
             <Typography>No address added yet!</Typography>
           </Grid>
         )}
+      <AddressModal />
     </Grid>
   );
 };

@@ -7,21 +7,24 @@ import Grid from '@material-ui/core/Grid';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
+import { stateOptions } from '../../../utils/constants';
 import { toggleAddressModal } from '../src/accountReducer';
 
 const AddressModal = () => {
-  const addressTagOptions:optionsData[] = [
-    { label: 'home', value: 'home' },
-    { label: 'work', value: 'work' },
-  ];
   const dispatch = useAppDispatch();
   const isAddressModalOpen = useAppSelector((state) => state.account.isAddressModalOpen);
   const addressActionType = useAppSelector((state) => state.account.addressActionType);
+  const selectedAddress = useAppSelector((state) => state.account.selectedAddress);
   const { control, handleSubmit, formState: { errors } } = useForm();
 
   const closeModal = () => {
     dispatch(toggleAddressModal(false));
+  };
+
+  const onSubmitForm = (hookData:account.submitAddEditAddressPayload) => {
+
   };
 
   return (
@@ -39,7 +42,7 @@ const AddressModal = () => {
           Address
         </DialogTitle>
       </Grid>
-      {/* <form onSubmit={handleSubmit(onEditSubmit)}>
+      <form onSubmit={handleSubmit(onSubmitForm)}>
         <DialogContent>
           <Grid container justifyContent="center" alignItems="center" spacing={1}>
             <Grid item xs={12}>
@@ -50,9 +53,7 @@ const AddressModal = () => {
                 lightBg
                 label="Full Name"
                 labelWidth={68}
-                customClassName={styles.inputFullWidth}
-                defaultValue={currentUserDetails.fullName}
-                startAdornment={<Person />}
+                defaultValue={selectedAddress && selectedAddress.fullName}
                 error={errors.fullName}
               />
             </Grid>
@@ -61,28 +62,12 @@ const AddressModal = () => {
                 <Grid item sm={6} xs={12}>
                   <ControlledTextInput
                     control={control}
-                    name="email"
-                    variant="outlined"
-                    lightBg
-                    label="Email"
-                    labelWidth={40}
-                    customClassName={styles.inputFullWidth}
-                    defaultValue={currentUserDetails.email}
-                    startAdornment={<Email />}
-                    error={errors.email}
-                  />
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                  <ControlledTextInput
-                    control={control}
                     name="phoneNumber"
                     variant="outlined"
                     lightBg
                     label="Phone Number"
                     labelWidth={100}
-                    customClassName={styles.inputFullWidth}
-                    defaultValue={currentUserDetails.phoneNumber}
-                    startAdornment={<Phone />}
+                    defaultValue={selectedAddress && selectedAddress.phoneNumber}
                     error={errors.phoneNumber}
                   />
                 </Grid>
@@ -93,33 +78,20 @@ const AddressModal = () => {
                 <Grid item sm={6} xs={12}>
                   <ControlledPicker
                     control={control}
-                    name="gender"
+                    name="state"
                     variant="outlined"
                     lightBg
-                    label="Gender"
-                    options={genderOptions}
-                    customClassName={styles.inputFullWidth}
-                    defaultValue={currentUserDetails.gender}
-                    error={errors.gender}
-                  />
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                  <ControlledDatePicker
-                    control={control}
-                    name="dob"
-                    variant="outlined"
-                    lightBg
-                    label="Date of Birth"
-                    customClassName={styles.inputFullWidth}
-                    defaultValue={currentUserDetails.dob}
-                    error={errors.dob}
+                    label="State"
+                    options={stateOptions}
+                    defaultValue={selectedAddress && selectedAddress.state}
+                    error={errors.state}
                   />
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions className={styles.editAccDetailActionBtnContainer}>
+        <DialogActions>
           <Button onClick={closeModal} color="secondary">
             Cancel
           </Button>
@@ -127,7 +99,7 @@ const AddressModal = () => {
             Submit
           </Button>
         </DialogActions>
-      </form> */}
+      </form>
     </Dialog>
   );
 };
