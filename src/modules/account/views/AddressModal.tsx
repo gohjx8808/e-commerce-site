@@ -4,6 +4,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -12,7 +13,14 @@ import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import { stateOptions } from '../../../utils/constants';
 import { toggleAddressModal } from '../src/accountReducer';
 
+const useStyle = makeStyles({
+  fullInputWidth: {
+    width: '100%',
+  },
+});
+
 const AddressModal = () => {
+  const styles = useStyle();
   const dispatch = useAppDispatch();
   const isAddressModalOpen = useAppSelector((state) => state.account.isAddressModalOpen);
   const addressActionType = useAppSelector((state) => state.account.addressActionType);
@@ -54,11 +62,12 @@ const AddressModal = () => {
                 label="Full Name"
                 labelWidth={68}
                 defaultValue={selectedAddress && selectedAddress.fullName}
+                customClassName={styles.fullInputWidth}
                 error={errors.fullName}
               />
             </Grid>
             <Grid item xs={12}>
-              <Grid container justifyContent="center" alignItems="center" spacing={3}>
+              <Grid container justifyContent="center" alignItems="center" spacing={2}>
                 <Grid item sm={6} xs={12}>
                   <ControlledTextInput
                     control={control}
@@ -71,6 +80,51 @@ const AddressModal = () => {
                     error={errors.phoneNumber}
                   />
                 </Grid>
+                <Grid item lg={6} xs={12}>
+                  <ControlledTextInput
+                    control={control}
+                    name="email"
+                    variant="outlined"
+                    label="Email Address"
+                    labelWidth={105}
+                    lightBg
+                    error={errors.email}
+                    defaultValue={selectedAddress && selectedAddress.email}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <ControlledTextInput
+              control={control}
+              name="addressLine1"
+              variant="outlined"
+              label="Address Line 1"
+              labelWidth={105}
+              lightBg
+              error={errors.addressLine1}
+              defaultValue={selectedAddress && selectedAddress.addressLine1}
+            />
+            <ControlledTextInput
+              control={control}
+              name="addressLine2"
+              variant="outlined"
+              label="Address Line 2"
+              labelWidth={110}
+              lightBg
+              defaultValue={selectedAddress && selectedAddress.addressLine2}
+            />
+            <Grid item lg={6} xs={12}>
+              <Grid container justifyContent="center" alignItems="center">
+                <ControlledTextInput
+                  control={control}
+                  name="postcode"
+                  variant="outlined"
+                  label="Postcode"
+                  lightBg
+                  maxLength={10}
+                  error={errors.postcode}
+                  defaultValue={selectedAddress && selectedAddress.postcode}
+                />
               </Grid>
             </Grid>
             <Grid item xs={12}>

@@ -17,6 +17,7 @@ declare namespace account{
   interface submitAddEditAddressPayload{
     fullName:string
     phoneNumber:string
+    email:string
     addressLine1: string
     addressLine2:string
     postcode: string

@@ -34,7 +34,7 @@ const AddressBook = () => {
             <Typography>No address added yet!</Typography>
           </Grid>
         )}
-      <AddressModal />
+      {/* <AddressModal /> */}
     </Grid>
   );
 };

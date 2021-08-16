@@ -40,6 +40,7 @@ declare namespace auth{
   interface addressData{
     fullName:string
     phoneNumber:string
+    email:string
     addressLine1: string
     addressLine2:string
     postcode: string
