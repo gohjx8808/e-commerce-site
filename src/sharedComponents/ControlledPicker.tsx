@@ -112,7 +112,9 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
             }}
             disableClearable={!clearable}
           />
-          <FormHelperText error>{error?.value.message}</FormHelperText>
+          <FormHelperText error>
+            {error?.value ? error?.value.message : error?.message}
+          </FormHelperText>
         </FormControl>
       )}
       defaultValue={options.find((option) => option.value === defaultValue)}
