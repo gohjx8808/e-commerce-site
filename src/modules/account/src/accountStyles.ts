@@ -17,6 +17,9 @@ const accountStyles = makeStyles({
   editAccDetailActionBtnContainer: {
     padding: '20px!important',
   },
+  modalSubmitContainer: {
+    padding: 20,
+  },
 });
 
 export default accountStyles;

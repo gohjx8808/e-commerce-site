@@ -4,28 +4,24 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import { stateOptions } from '../../../utils/constants';
 import { toggleAddressModal } from '../src/accountReducer';
-
-const useStyle = makeStyles({
-  fullInputWidth: {
-    width: '100%',
-  },
-});
+import accountStyles from '../src/accountStyles';
 
 const AddressModal = () => {
-  const styles = useStyle();
+  const styles = accountStyles();
   const dispatch = useAppDispatch();
   const isAddressModalOpen = useAppSelector((state) => state.account.isAddressModalOpen);
   const addressActionType = useAppSelector((state) => state.account.addressActionType);
   const selectedAddress = useAppSelector((state) => state.account.selectedAddress);
-  const { control, handleSubmit, formState: { errors } } = useForm();
+  const {
+    control, handleSubmit, formState: { errors }, watch, setValue,
+  } = useForm();
 
   const closeModal = () => {
     dispatch(toggleAddressModal(false));
@@ -34,6 +30,16 @@ const AddressModal = () => {
   const onSubmitForm = (hookData:account.submitAddEditAddressPayload) => {
 
   };
+
+  const outsideMalaysiaState = (selectedAddress && selectedAddress.state === 'Outside Malaysia') || (watch('state') && watch('state').value === 'Outside Malaysia');
+
+  useEffect(() => {
+    if (!outsideMalaysiaState) {
+      setValue('country', 'Malaysia');
+    } else {
+      setValue('country', '');
+    }
+  }, [setValue, outsideMalaysiaState]);
 
   return (
     <Dialog
@@ -52,7 +58,7 @@ const AddressModal = () => {
       </Grid>
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <DialogContent>
-          <Grid container justifyContent="center" alignItems="center" spacing={1}>
+          <Grid container justifyContent="center" alignItems="center" spacing={2}>
             <Grid item xs={12}>
               <ControlledTextInput
                 control={control}
@@ -62,90 +68,122 @@ const AddressModal = () => {
                 label="Full Name"
                 labelWidth={68}
                 defaultValue={selectedAddress && selectedAddress.fullName}
-                customClassName={styles.fullInputWidth}
                 error={errors.fullName}
               />
             </Grid>
-            <Grid item xs={12}>
-              <Grid container justifyContent="center" alignItems="center" spacing={2}>
-                <Grid item sm={6} xs={12}>
-                  <ControlledTextInput
-                    control={control}
-                    name="phoneNumber"
-                    variant="outlined"
-                    lightBg
-                    label="Phone Number"
-                    labelWidth={100}
-                    defaultValue={selectedAddress && selectedAddress.phoneNumber}
-                    error={errors.phoneNumber}
-                  />
-                </Grid>
-                <Grid item lg={6} xs={12}>
-                  <ControlledTextInput
-                    control={control}
-                    name="email"
-                    variant="outlined"
-                    label="Email Address"
-                    labelWidth={105}
-                    lightBg
-                    error={errors.email}
-                    defaultValue={selectedAddress && selectedAddress.email}
-                  />
-                </Grid>
-              </Grid>
+            <Grid item sm={6} xs={12}>
+              <ControlledTextInput
+                control={control}
+                name="phoneNumber"
+                variant="outlined"
+                lightBg
+                label="Phone Number"
+                labelWidth={100}
+                defaultValue={selectedAddress && selectedAddress.phoneNumber}
+                error={errors.phoneNumber}
+              />
             </Grid>
-            <ControlledTextInput
-              control={control}
-              name="addressLine1"
-              variant="outlined"
-              label="Address Line 1"
-              labelWidth={105}
-              lightBg
-              error={errors.addressLine1}
-              defaultValue={selectedAddress && selectedAddress.addressLine1}
-            />
-            <ControlledTextInput
-              control={control}
-              name="addressLine2"
-              variant="outlined"
-              label="Address Line 2"
-              labelWidth={110}
-              lightBg
-              defaultValue={selectedAddress && selectedAddress.addressLine2}
-            />
             <Grid item lg={6} xs={12}>
-              <Grid container justifyContent="center" alignItems="center">
+              <ControlledTextInput
+                control={control}
+                name="email"
+                variant="outlined"
+                label="Email Address"
+                labelWidth={95}
+                lightBg
+                error={errors.email}
+                defaultValue={selectedAddress && selectedAddress.email}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <ControlledTextInput
+                control={control}
+                name="addressLine1"
+                variant="outlined"
+                label="Address Line 1"
+                labelWidth={100}
+                lightBg
+                error={errors.addressLine1}
+                defaultValue={selectedAddress && selectedAddress.addressLine1}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <ControlledTextInput
+                control={control}
+                name="addressLine2"
+                variant="outlined"
+                label="Address Line 2"
+                labelWidth={100}
+                lightBg
+                defaultValue={selectedAddress && selectedAddress.addressLine2}
+              />
+            </Grid>
+            <Grid item lg={6} xs={12}>
+              <ControlledTextInput
+                control={control}
+                name="postcode"
+                variant="outlined"
+                label="Postcode"
+                lightBg
+                labelWidth={60}
+                maxLength={10}
+                error={errors.postcode}
+                defaultValue={selectedAddress && selectedAddress.postcode}
+              />
+            </Grid>
+            <Grid item lg={6} xs={12}>
+              <ControlledTextInput
+                control={control}
+                name="city"
+                variant="outlined"
+                label="City"
+                lightBg
+                labelWidth={25}
+                error={errors.city}
+                defaultValue={selectedAddress && selectedAddress.city}
+              />
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <ControlledPicker
+                control={control}
+                name="state"
+                variant="outlined"
+                lightBg
+                label="State"
+                options={stateOptions}
+                defaultValue={selectedAddress && selectedAddress.state}
+                error={errors.state}
+              />
+            </Grid>
+            {outsideMalaysiaState && (
+              <Grid item lg={6} xs={12}>
                 <ControlledTextInput
                   control={control}
-                  name="postcode"
+                  name="outsideMalaysiaState"
                   variant="outlined"
-                  label="Postcode"
+                  label="Foreign Country State"
+                  labelWidth={145}
                   lightBg
-                  maxLength={10}
-                  error={errors.postcode}
-                  defaultValue={selectedAddress && selectedAddress.postcode}
+                  error={errors.outsideMalaysiaState}
+                  defaultValue={selectedAddress && selectedAddress.outsideMalaysiaState}
                 />
               </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container justifyContent="center" alignItems="center" spacing={3}>
-                <Grid item sm={6} xs={12}>
-                  <ControlledPicker
-                    control={control}
-                    name="state"
-                    variant="outlined"
-                    lightBg
-                    label="State"
-                    options={stateOptions}
-                    defaultValue={selectedAddress && selectedAddress.state}
-                    error={errors.state}
-                  />
-                </Grid>
-              </Grid>
+            )}
+            <Grid item lg={outsideMalaysiaState ? 12 : 6} xs={12}>
+              <ControlledTextInput
+                control={control}
+                name="country"
+                variant="outlined"
+                label="Country"
+                labelWidth={55}
+                lightBg
+                error={errors.country}
+                defaultValue={selectedAddress && selectedAddress.country}
+              />
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions>
+        <DialogActions className={styles.modalSubmitContainer}>
           <Button onClick={closeModal} color="secondary">
             Cancel
           </Button>
