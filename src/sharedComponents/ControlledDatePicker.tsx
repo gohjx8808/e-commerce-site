@@ -1,5 +1,4 @@
 import LuxonUtils from '@date-io/luxon';
-import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
 import { KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
 import MuiPickersUtilsProvider from '@material-ui/pickers/MuiPickersUtilsProvider';
@@ -31,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     '&:hover .MuiOutlinedInput-notchedOutline': {
       borderColor: 'lightgrey',
     },
-    marginTop: 5,
   },
   unFocusLabel: {
     color: 'white',
@@ -76,33 +74,29 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
           onChange, value,
         },
       }) => (
-        <FormControl variant={variant} className={clsx(styles.container, customClassName)}>
-          <MuiPickersUtilsProvider utils={LuxonUtils}>
-            <KeyboardDatePicker
-              variant="inline"
-              format="dd/MM/yyyy"
-              margin="normal"
-              label={label}
-              value={value ? new Date(value) : null}
-              onChange={(selectedDate:MaterialUiPickersDate) => onChange(selectedDate ? selectedDate.toString() : '')}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-                className: inputColorClass,
-              }}
-              color={lightBg ? 'secondary' : 'primary'}
-              inputVariant={variant}
-              className={!lightBg ? styles.unFocusStyle : ''}
-              InputLabelProps={{ classes: { root: !lightBg ? styles.unFocusLabel : '' } }}
-              InputProps={{ classes: { root: !lightBg ? styles.unFocusLabel : '' } }}
-              disableFuture
-              maxDateMessage="Invalid date"
-              minDateMessage="Invalid date"
-              autoOk
-              error={!!error}
-              helperText={error?.message}
-            />
-          </MuiPickersUtilsProvider>
-        </FormControl>
+        <MuiPickersUtilsProvider utils={LuxonUtils}>
+          <KeyboardDatePicker
+            format="dd/MM/yyyy"
+            label={label}
+            value={value ? new Date(value) : null}
+            onChange={(selectedDate:MaterialUiPickersDate) => onChange(selectedDate ? selectedDate.toString() : '')}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+              className: inputColorClass,
+            }}
+            color={lightBg ? 'secondary' : 'primary'}
+            inputVariant={variant}
+            className={clsx(styles.container, customClassName, !lightBg && styles.unFocusStyle)}
+            InputLabelProps={{ classes: { root: !lightBg ? styles.unFocusLabel : '' } }}
+            InputProps={{ classes: { root: !lightBg ? styles.unFocusLabel : '' } }}
+            disableFuture
+            maxDateMessage="Invalid date"
+            minDateMessage="Invalid date"
+            autoOk
+            error={!!error}
+            helperText={error?.message}
+          />
+        </MuiPickersUtilsProvider>
       )}
       defaultValue={defaultValue}
     />
