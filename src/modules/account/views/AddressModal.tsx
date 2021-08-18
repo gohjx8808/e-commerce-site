@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import { stateOptions } from '../../../utils/constants';
-import { toggleAddressModal } from '../src/accountReducer';
+import { submitAddAddressAction, toggleAddressModal } from '../src/accountReducer';
 import { addressSchema } from '../src/accountScheme';
 import accountStyles from '../src/accountStyles';
 
@@ -33,10 +33,10 @@ const AddressModal = () => {
   };
 
   const onSubmitForm = (hookData:account.submitAddEditAddressPayload) => {
-
+    dispatch(submitAddAddressAction(hookData));
   };
 
-  const outsideMalaysiaState = (selectedAddress && selectedAddress.state === 'Outside Malaysia') || (watch('state') && watch('state').value === 'Outside Malaysia');
+  const outsideMalaysiaState = (selectedAddress && selectedAddress.state.value === 'Outside Malaysia') || (watch('state') && watch('state').value === 'Outside Malaysia');
 
   useEffect(() => {
     if (!outsideMalaysiaState) {
@@ -84,7 +84,7 @@ const AddressModal = () => {
                 lightBg
                 label="Phone Number"
                 labelWidth={100}
-                defaultValue={selectedAddress ? selectedAddress.phoneNumber : '60'}
+                defaultValue={selectedAddress && selectedAddress.phoneNumber ? selectedAddress.phoneNumber : '60'}
                 error={errors.phoneNumber}
                 startAdornment={(
                   <InputAdornment position="start">
@@ -161,7 +161,7 @@ const AddressModal = () => {
                 lightBg
                 label="State"
                 options={stateOptions}
-                defaultValue={selectedAddress && selectedAddress.state}
+                defaultValue={selectedAddress && selectedAddress.state.value}
                 error={errors.state}
               />
             </Grid>

@@ -13,12 +13,15 @@ const INITIAL_STATE:accState = {
   addressActionType: '',
   selectedAddress: {
     fullName: '',
-    phoneNumber: '',
+    phoneNumber: '60',
     addressLine1: '',
     addressLine2: '',
     postcode: '',
     city: '',
-    state: '',
+    state: {
+      label: '',
+      value: '',
+    },
     outsideMalaysiaState: '',
     country: '',
     default: false,
