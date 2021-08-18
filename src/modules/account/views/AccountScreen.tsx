@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     display: 'flex',
   },
+  fullWidth: {
+    width: '100%',
+  },
 }));
 
 export default function AccountScreen() {
@@ -72,7 +75,7 @@ export default function AccountScreen() {
           <TabPanel value="accDetails">
             <AccountDetails />
           </TabPanel>
-          <TabPanel value="addressBook">
+          <TabPanel value="addressBook" className={styles.fullWidth}>
             <AddressBook />
           </TabPanel>
         </TabContext>

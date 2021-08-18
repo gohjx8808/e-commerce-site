@@ -20,6 +20,13 @@ const accountStyles = makeStyles({
   modalSubmitContainer: {
     padding: 20,
   },
+  addressListContainer: {
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  bottomSpacing: {
+    paddingBottom: 20,
+  },
 });
 
 export default accountStyles;

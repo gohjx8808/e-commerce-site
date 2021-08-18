@@ -7,8 +7,10 @@ import { Add } from '@material-ui/icons';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { toggleAddressModal, updateAddressActionType } from '../src/accountReducer';
 import AddressModal from './AddressModal';
+import accountStyles from '../src/accountStyles';
 
 const AddressBook = () => {
+  const styles = accountStyles();
   const dispatch = useAppDispatch();
   const addressList = useAppSelector((state) => state.auth.currentUser.addressBook);
 
@@ -21,14 +23,23 @@ const AddressBook = () => {
 
   return (
     <Grid item xs={12}>
-      <Grid container justifyContent="flex-end" alignItems="center">
-        <Button variant="contained" startIcon={<Add />} color="secondary" onClick={() => showAddressModal('Add')}>Add New Address</Button>
+      <Grid container justifyContent="flex-end" alignItems="center" className={styles.bottomSpacing}>
+        <Button variant="contained" startIcon={<Add />} color="secondary" onClick={() => showAddressModal('Add')}>
+          Add New Address
+        </Button>
       </Grid>
       {addressList && addressList.length > 0
         ? (
           <Grid container justifyContent="center" alignItems="center">
             <Grid item xs={12}>
-              <Divider />
+              {addressList.map((address) => (
+                <>
+                  <Divider />
+                  <Grid item xs={12} className={styles.addressListContainer}>
+                    <Typography className={styles.boldText}>{address.fullName}</Typography>
+                  </Grid>
+                </>
+              ))}
             </Grid>
           </Grid>
         ) : (
