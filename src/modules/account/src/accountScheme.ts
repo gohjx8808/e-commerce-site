@@ -27,4 +27,5 @@ export const addressSchema = yup.object().shape({
     then: yup.string().required('Foreign country state is required'),
   }),
   country: yup.string().required('Country is required'),
+  default: yup.string().required('Default option is required'),
 });

@@ -10,8 +10,9 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
+import ControlledRadioButton from '../../../sharedComponents/ControlledRadioButton';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
-import { stateOptions } from '../../../utils/constants';
+import { booleanOptions, stateOptions } from '../../../utils/constants';
 import { submitAddAddressAction, toggleAddressModal } from '../src/accountReducer';
 import { addressSchema } from '../src/accountScheme';
 import accountStyles from '../src/accountStyles';
@@ -93,7 +94,7 @@ const AddressModal = () => {
                 )}
               />
             </Grid>
-            <Grid item lg={6} xs={12}>
+            <Grid item sm={6} xs={12}>
               <ControlledTextInput
                 control={control}
                 name="email"
@@ -128,7 +129,7 @@ const AddressModal = () => {
                 defaultValue={selectedAddress && selectedAddress.addressLine2}
               />
             </Grid>
-            <Grid item lg={6} xs={12}>
+            <Grid item sm={6} xs={12}>
               <ControlledTextInput
                 control={control}
                 name="postcode"
@@ -141,7 +142,7 @@ const AddressModal = () => {
                 defaultValue={selectedAddress && selectedAddress.postcode}
               />
             </Grid>
-            <Grid item lg={6} xs={12}>
+            <Grid item sm={6} xs={12}>
               <ControlledTextInput
                 control={control}
                 name="city"
@@ -166,7 +167,7 @@ const AddressModal = () => {
               />
             </Grid>
             {outsideMalaysiaState && (
-              <Grid item lg={6} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <ControlledTextInput
                   control={control}
                   name="outsideMalaysiaState"
@@ -179,7 +180,7 @@ const AddressModal = () => {
                 />
               </Grid>
             )}
-            <Grid item lg={outsideMalaysiaState ? 12 : 6} xs={12}>
+            <Grid item sm={outsideMalaysiaState ? 12 : 6} xs={12}>
               <ControlledTextInput
                 control={control}
                 name="country"
@@ -189,6 +190,17 @@ const AddressModal = () => {
                 lightBg
                 error={errors.country}
                 defaultValue={selectedAddress && selectedAddress.country}
+              />
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <ControlledRadioButton
+                options={booleanOptions}
+                control={control}
+                name="default"
+                label="Default"
+                error={errors.default}
+                flexDirection="column"
+                defaultValue={selectedAddress && selectedAddress.default}
               />
             </Grid>
           </Grid>

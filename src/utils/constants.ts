@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const stateOptions = [
   { value: 'Johor', label: 'Johor' },
   { value: 'Kedah', label: 'Kedah' },
@@ -17,4 +16,9 @@ export const stateOptions = [
   { value: 'Selangor', label: 'Selangor' },
   { value: 'Terengganu', label: 'Terengganu' },
   { value: 'Outside Malaysia', label: 'Outside Malaysia' },
+];
+
+export const booleanOptions = [
+  { value: '0', label: 'No' },
+  { value: '1', label: 'Yes' },
 ];

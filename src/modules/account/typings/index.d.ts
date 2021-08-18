@@ -25,22 +25,7 @@ declare namespace account{
     state: optionsData
     outsideMalaysiaState: string
     country: string
-    default:boolean
-    tag:string
-  }
-
-  interface submitAddEditAddressPayload{
-    fullName:string
-    phoneNumber:string
-    email:string
-    addressLine1: string
-    addressLine2:string
-    postcode: string
-    city: string
-    state: optionsData
-    outsideMalaysiaState: string
-    country: string
-    default:boolean
+    default:string
     tag:string
   }
 
@@ -55,7 +40,7 @@ declare namespace account{
     state: string
     outsideMalaysiaState: string
     country: string
-    default:boolean
+    default:string
     tag:string
   }
 }

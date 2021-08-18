@@ -6,6 +6,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import { makeStyles } from '@material-ui/styles';
+import clsx from 'clsx';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
@@ -15,7 +16,8 @@ interface ControlledRadioButtonOwnProps{
   name:string,
   defaultValue?:string
   error?:FieldError
-  options:optionsData[]
+  options:optionsData[],
+  flexDirection?:string
 }
 
 const useStyles = makeStyles({
@@ -34,6 +36,9 @@ const useStyles = makeStyles({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  colFlex: {
+    flexDirection: 'column',
+  },
 });
 
 const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
@@ -44,6 +49,7 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
     defaultValue,
     error,
     options,
+    flexDirection,
   } = props;
 
   const styles = useStyles();
@@ -58,7 +64,10 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
         },
       }) => (
         <Box className={styles.leftPadding}>
-          <FormControl className={styles.rowFlex} error={!!error}>
+          <FormControl
+            className={clsx({ [styles.rowFlex]: flexDirection === 'row', [styles.colFlex]: flexDirection === 'column' })}
+            error={!!error}
+          >
             <FormLabel component="legend" className={styles.labelColor} focused={false}>{label}</FormLabel>
             <RadioGroup
               aria-label={label}
@@ -89,6 +98,7 @@ ControlledRadioButton.defaultProps = {
   defaultValue: '',
   label: '',
   error: null,
+  flexDirection: 'row',
 };
 
 export default ControlledRadioButton;

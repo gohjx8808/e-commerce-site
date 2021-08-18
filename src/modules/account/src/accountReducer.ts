@@ -24,7 +24,7 @@ const INITIAL_STATE:accState = {
     },
     outsideMalaysiaState: '',
     country: '',
-    default: false,
+    default: '',
     tag: '',
     email: '',
   },
