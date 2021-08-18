@@ -25,7 +25,7 @@ declare namespace account{
     state: optionsData
     outsideMalaysiaState: string
     country: string
-    default:string
+    defaultOption:string
     tag:string
   }
 

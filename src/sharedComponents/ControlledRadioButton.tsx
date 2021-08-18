@@ -1,4 +1,3 @@
-import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -21,13 +20,10 @@ interface ControlledRadioButtonOwnProps{
 }
 
 const useStyles = makeStyles({
-  leftPadding: {
-    paddingLeft: 20,
-    paddingTop: 10,
-  },
   labelColor: {
-    color: 'black',
     paddingRight: 20,
+    paddingBottom: 10,
+    paddingTop: 5,
   },
   spaceBetweenRadio: {
     paddingRight: 20,
@@ -63,7 +59,7 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
           onChange, value,
         },
       }) => (
-        <Box className={styles.leftPadding}>
+        <>
           <FormControl
             className={clsx({ [styles.rowFlex]: flexDirection === 'row', [styles.colFlex]: flexDirection === 'column' })}
             error={!!error}
@@ -87,7 +83,7 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
             </RadioGroup>
           </FormControl>
           <FormHelperText error>{error?.message}</FormHelperText>
-        </Box>
+        </>
       )}
       defaultValue={defaultValue}
     />
