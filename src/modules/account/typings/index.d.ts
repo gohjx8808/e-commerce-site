@@ -40,7 +40,7 @@ declare namespace account{
     state: string
     outsideMalaysiaState: string
     country: string
-    default:string
+    defaultOption:string
     tag:string
   }
 }

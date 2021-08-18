@@ -17,6 +17,8 @@ const AddressBook = () => {
     dispatch(toggleAddressModal(true));
   };
 
+  console.log(addressList);
+
   return (
     <Grid item xs={12}>
       <Grid container justifyContent="flex-end" alignItems="center">

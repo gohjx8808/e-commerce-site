@@ -48,7 +48,7 @@ declare namespace auth{
     state: string
     outsideMalaysiaState: string
     country: string
-    default:boolean
+    defaultOption:string
     tag:string
   }
 }

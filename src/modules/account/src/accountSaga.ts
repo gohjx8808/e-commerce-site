@@ -1,16 +1,16 @@
 import {
-  fork, select, take, call, put,
+  call, fork, put, select, take,
 } from 'redux-saga/effects';
-import { submitEditAccDetail, submitAddNewAddress } from './accountApi';
 import { RootState } from '../../../store';
-import {
-  submitAddAddressAction, submitEditAccDetailsAction, toggleAddressModal, toggleEditAccDetailModal,
-} from './accountReducer';
 import { getCurrentUserDetailsAction } from '../../auth/src/authReducer';
 import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
 import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
 } from '../../status/src/statusReducer';
+import { submitAddNewAddress, submitEditAccDetail } from './accountApi';
+import {
+  submitAddAddressAction, submitEditAccDetailsAction, toggleAddressModal, toggleEditAccDetailModal,
+} from './accountReducer';
 
 export default function* accountRuntime() {
   yield fork(submitEditAccDetailsSaga);
@@ -53,16 +53,14 @@ function* submitAddAddressSaga() {
     const currentUserDetails:auth.currentUserDetails = yield select(
       (state:RootState) => state.auth.currentUser,
     );
-    let currAddressBook = [];
     const processedAddressData = { ...payload, state: payload.state.value };
+    let currentAddresses:account.finalSubmitAddEditAddressPayload[] = [];
     if (currentUserDetails.addressBook) {
-      currAddressBook = [...currentUserDetails.addressBook];
-      currAddressBook.push(processedAddressData);
-    } else {
-      currAddressBook = [processedAddressData];
+      currentAddresses = currentUserDetails.addressBook;
     }
+    currentAddresses.push(processedAddressData);
     try {
-      yield call(submitAddNewAddress, currAddressBook, currentUserDetails.uid);
+      yield call(submitAddNewAddress, currentAddresses, currentUserDetails.uid);
       yield put(getCurrentUserDetailsAction(currentUserDetails.uid));
       yield put(toggleSuccess(true));
       yield put(updateStatusMsg('Your address has been successfully added!'));
