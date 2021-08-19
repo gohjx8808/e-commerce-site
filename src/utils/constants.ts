@@ -22,3 +22,6 @@ export const booleanOptions = [
   { value: '0', label: 'No' },
   { value: '1', label: 'Yes' },
 ];
+
+export const homeColor = 'orange';
+export const workColor = 'blue';

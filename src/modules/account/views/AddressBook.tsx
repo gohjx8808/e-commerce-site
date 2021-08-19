@@ -1,10 +1,11 @@
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {
-  Add, Delete, Edit, Email, Home, Person, Phone,
+  Add, Delete, Edit, Email, Home, Person, Phone, Work,
 } from '@material-ui/icons';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -79,6 +80,25 @@ const AddressBook = () => {
                               </Grid>
                             </Grid>
                           </Grid>
+                          {address.tag && (
+                            <Grid item className={styles.tagChipPadding}>
+                              <Chip
+                                className={address.tag === 'Home' ? styles.homeTagColor : styles.workTagColor}
+                                label={address.tag}
+                                variant="outlined"
+                                icon={address.tag === 'Home' ? <Home className={styles.homeTagColor} /> : <Work className={styles.workTagColor} />}
+                              />
+                            </Grid>
+                          )}
+                          {address.defaultOption && (
+                            <Grid item className={styles.tagChipPadding}>
+                              <Chip
+                                className={styles.defaultColor}
+                                label="Default"
+                                variant="outlined"
+                              />
+                            </Grid>
+                          )}
                         </Grid>
                       </Grid>
                       <Grid item>

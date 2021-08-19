@@ -14,7 +14,9 @@ import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledRadioButton from '../../../sharedComponents/ControlledRadioButton';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import ControlledToggleButton from '../../../sharedComponents/ControlledToggleButton';
-import { booleanOptions, stateOptions } from '../../../utils/constants';
+import {
+  booleanOptions, homeColor, stateOptions, workColor,
+} from '../../../utils/constants';
 import { submitAddAddressAction, toggleAddressModal } from '../src/accountReducer';
 import { addressSchema } from '../src/accountScheme';
 import accountStyles from '../src/accountStyles';
@@ -23,14 +25,14 @@ const addressTag:toggleButtonOptionData[] = [
   {
     icon: <Home />,
     label: 'Home',
-    value: 'home',
-    activeColor: 'orange',
+    value: 'Home',
+    activeColor: homeColor,
   },
   {
     icon: <Work />,
     label: 'Work',
-    value: 'work',
-    activeColor: 'blue',
+    value: 'Work',
+    activeColor: workColor,
   },
 ];
 
