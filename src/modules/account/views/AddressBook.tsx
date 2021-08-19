@@ -1,9 +1,10 @@
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {
-  Add, Email, Home, Person, Phone,
+  Add, Delete, Edit, Email, Home, Person, Phone,
 } from '@material-ui/icons';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -37,44 +38,56 @@ const AddressBook = () => {
                 <>
                   <Divider />
                   <Grid item xs={12} className={styles.topSpacing}>
-                    <Grid container alignItems="center" direction="row">
+                    <Grid container justifyContent="space-between" alignItems="center" direction="row">
                       <Grid item>
-                        <Grid container direction="row" spacing={1}>
+                        <Grid container alignItems="center" direction="row">
                           <Grid item>
-                            <Person />
+                            <Grid container direction="row" spacing={1}>
+                              <Grid item>
+                                <Person />
+                              </Grid>
+                              <Grid item>
+                                <Typography className={styles.boldText}>
+                                  {address.fullName}
+                                </Typography>
+                              </Grid>
+                            </Grid>
                           </Grid>
+                          <Divider orientation="vertical" flexItem variant="middle" />
                           <Grid item>
-                            <Typography className={styles.boldText}>
-                              {address.fullName}
-                            </Typography>
+                            <Grid container direction="row" spacing={1}>
+                              <Grid item>
+                                <Phone />
+                              </Grid>
+                              <Grid item>
+                                <Typography className={styles.boldText}>
+                                  {internationalPhoneNumberFormatter(address.phoneNumber)}
+                                </Typography>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                          <Divider orientation="vertical" flexItem variant="middle" />
+                          <Grid item>
+                            <Grid container direction="row" spacing={1}>
+                              <Grid item>
+                                <Email />
+                              </Grid>
+                              <Grid item>
+                                <Typography className={styles.boldText}>
+                                  {address.email}
+                                </Typography>
+                              </Grid>
+                            </Grid>
                           </Grid>
                         </Grid>
                       </Grid>
-                      <Divider orientation="vertical" flexItem variant="middle" />
                       <Grid item>
-                        <Grid container direction="row" spacing={1}>
-                          <Grid item>
-                            <Phone />
-                          </Grid>
-                          <Grid item>
-                            <Typography className={styles.boldText}>
-                              {internationalPhoneNumberFormatter(address.phoneNumber)}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      <Divider orientation="vertical" flexItem variant="middle" />
-                      <Grid item>
-                        <Grid container direction="row" spacing={1}>
-                          <Grid item>
-                            <Email />
-                          </Grid>
-                          <Grid item>
-                            <Typography className={styles.boldText}>
-                              {address.email}
-                            </Typography>
-                          </Grid>
-                        </Grid>
+                        <IconButton>
+                          <Edit />
+                        </IconButton>
+                        <IconButton>
+                          <Delete />
+                        </IconButton>
                       </Grid>
                     </Grid>
                   </Grid>
