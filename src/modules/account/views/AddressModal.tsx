@@ -15,9 +15,9 @@ import ControlledRadioButton from '../../../sharedComponents/ControlledRadioButt
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import ControlledToggleButton from '../../../sharedComponents/ControlledToggleButton';
 import {
-  booleanOptions, homeColor, stateOptions, workColor,
+  booleanOptions, defaultAddressData, homeColor, stateOptions, workColor,
 } from '../../../utils/constants';
-import { submitAddAddressAction, toggleAddressModal } from '../src/accountReducer';
+import { submitAddAddressAction, toggleAddressModal, updateSelectedAddress } from '../src/accountReducer';
 import { addressSchema } from '../src/accountScheme';
 import accountStyles from '../src/accountStyles';
 
@@ -43,20 +43,21 @@ const AddressModal = () => {
   const addressActionType = useAppSelector((state) => state.account.addressActionType);
   const selectedAddress = useAppSelector((state) => state.account.selectedAddress);
   const {
-    control, handleSubmit, formState: { errors }, watch, setValue,
+    control, handleSubmit, formState: { errors }, watch, setValue, reset,
   } = useForm({
     resolver: yupResolver(addressSchema),
   });
 
   const closeModal = () => {
+    dispatch(updateSelectedAddress(defaultAddressData));
     dispatch(toggleAddressModal(false));
   };
 
   const onSubmitForm = (hookData:account.submitAddEditAddressPayload) => {
-    dispatch(submitAddAddressAction(hookData));
+    dispatch(submitAddAddressAction({ ...hookData, state: hookData.state.value }));
   };
 
-  const outsideMalaysiaState = (selectedAddress && selectedAddress.state.value === 'Outside Malaysia') || (watch('state') && watch('state').value === 'Outside Malaysia');
+  const outsideMalaysiaState = (selectedAddress && selectedAddress.state === 'Outside Malaysia') || (watch('state') && watch('state').value === 'Outside Malaysia');
 
   useEffect(() => {
     if (!outsideMalaysiaState) {
@@ -65,6 +66,26 @@ const AddressModal = () => {
       setValue('country', '');
     }
   }, [setValue, outsideMalaysiaState]);
+
+  useEffect(() => {
+    if (selectedAddress) {
+      reset({
+        fullName: selectedAddress.fullName,
+        email: selectedAddress.email,
+        phoneNumber: selectedAddress.phoneNumber,
+        addressLine1: selectedAddress.addressLine1,
+        addressLine2: selectedAddress.addressLine2,
+        postcode: selectedAddress.postcode,
+        city: selectedAddress.city,
+        state: selectedAddress.state
+          ? { label: selectedAddress.state, value: selectedAddress.state } : null,
+        outsideMalaysiaState: selectedAddress.outsideMalaysiaState,
+        country: selectedAddress.country,
+        defaultOption: selectedAddress.defaultOption,
+        tag: selectedAddress.tag,
+      });
+    }
+  }, [reset, selectedAddress]);
 
   return (
     <Dialog
@@ -92,7 +113,6 @@ const AddressModal = () => {
                 lightBg
                 label="Full Name"
                 labelWidth={68}
-                defaultValue={selectedAddress && selectedAddress.fullName}
                 error={errors.fullName}
               />
             </Grid>
@@ -104,7 +124,6 @@ const AddressModal = () => {
                 lightBg
                 label="Phone Number"
                 labelWidth={100}
-                defaultValue={selectedAddress && selectedAddress.phoneNumber ? selectedAddress.phoneNumber : '60'}
                 error={errors.phoneNumber}
                 startAdornment={(
                   <InputAdornment position="start">
@@ -122,7 +141,6 @@ const AddressModal = () => {
                 labelWidth={95}
                 lightBg
                 error={errors.email}
-                defaultValue={selectedAddress && selectedAddress.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -134,7 +152,6 @@ const AddressModal = () => {
                 labelWidth={100}
                 lightBg
                 error={errors.addressLine1}
-                defaultValue={selectedAddress && selectedAddress.addressLine1}
               />
             </Grid>
             <Grid item xs={12}>
@@ -145,7 +162,6 @@ const AddressModal = () => {
                 label="Address Line 2"
                 labelWidth={100}
                 lightBg
-                defaultValue={selectedAddress && selectedAddress.addressLine2}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -158,7 +174,6 @@ const AddressModal = () => {
                 labelWidth={60}
                 maxLength={10}
                 error={errors.postcode}
-                defaultValue={selectedAddress && selectedAddress.postcode}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -170,7 +185,6 @@ const AddressModal = () => {
                 lightBg
                 labelWidth={25}
                 error={errors.city}
-                defaultValue={selectedAddress && selectedAddress.city}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -181,7 +195,6 @@ const AddressModal = () => {
                 lightBg
                 label="State"
                 options={stateOptions}
-                defaultValue={selectedAddress && selectedAddress.state.value}
                 error={errors.state}
               />
             </Grid>
@@ -195,7 +208,6 @@ const AddressModal = () => {
                   labelWidth={145}
                   lightBg
                   error={errors.outsideMalaysiaState}
-                  defaultValue={selectedAddress && selectedAddress.outsideMalaysiaState}
                 />
               </Grid>
             )}
@@ -208,7 +220,6 @@ const AddressModal = () => {
                 labelWidth={55}
                 lightBg
                 error={errors.country}
-                defaultValue={selectedAddress && selectedAddress.country}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -219,7 +230,6 @@ const AddressModal = () => {
                 label="Default"
                 error={errors.defaultOption}
                 flexDirection="column"
-                defaultValue={selectedAddress && selectedAddress.defaultOption}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -228,7 +238,6 @@ const AddressModal = () => {
                 control={control}
                 name="tag"
                 error={errors.tag}
-                defaultValue={selectedAddress && selectedAddress.tag}
                 label="Tag"
               />
             </Grid>

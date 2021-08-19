@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { internationalPhoneNumberFormatter } from '../../../utils/helper';
-import { toggleAddressModal, updateAddressActionType } from '../src/accountReducer';
+import { toggleAddressModal, updateAddressActionType, updateSelectedAddress } from '../src/accountReducer';
 import accountStyles from '../src/accountStyles';
 import AddressModal from './AddressModal';
 
@@ -21,6 +21,12 @@ const AddressBook = () => {
 
   const showAddressModal = (actionType:string) => {
     dispatch(updateAddressActionType(actionType));
+    dispatch(toggleAddressModal(true));
+  };
+
+  const onEditAddress = (selectedAddress:account.finalSubmitAddEditAddressPayload) => {
+    dispatch(updateSelectedAddress(selectedAddress));
+    dispatch(updateAddressActionType('Edit'));
     dispatch(toggleAddressModal(true));
   };
 
@@ -36,7 +42,7 @@ const AddressBook = () => {
           <Grid container justifyContent="center" alignItems="center">
             <Grid item xs={12}>
               {addressList.map((address) => (
-                <>
+                <Grid key={address.addressLine1}>
                   <Divider />
                   <Grid item xs={12} className={styles.topSpacing}>
                     <Grid container justifyContent="space-between" alignItems="center" direction="row">
@@ -90,7 +96,7 @@ const AddressBook = () => {
                               />
                             </Grid>
                           )}
-                          {address.defaultOption && (
+                          {address.defaultOption === '1' && (
                             <Grid item className={styles.tagChipPadding}>
                               <Chip
                                 className={styles.defaultColor}
@@ -102,10 +108,10 @@ const AddressBook = () => {
                         </Grid>
                       </Grid>
                       <Grid item>
-                        <IconButton>
+                        <IconButton color="secondary" onClick={() => onEditAddress(address)}>
                           <Edit />
                         </IconButton>
-                        <IconButton>
+                        <IconButton className={styles.defaultColor}>
                           <Delete />
                         </IconButton>
                       </Grid>
@@ -133,7 +139,7 @@ const AddressBook = () => {
                       </Typography>
                     </Grid>
                   </Grid>
-                </>
+                </Grid>
               ))}
             </Grid>
           </Grid>

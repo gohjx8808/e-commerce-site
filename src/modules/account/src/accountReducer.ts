@@ -1,33 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { defaultAddressData } from '../../../utils/constants';
 
 interface accState{
   isEditAccDetailModalDisplay:boolean
   isAddressModalOpen:boolean
   addressActionType:string
-  selectedAddress:account.submitAddEditAddressPayload
+  selectedAddress:account.finalSubmitAddEditAddressPayload
 }
 
 const INITIAL_STATE:accState = {
   isEditAccDetailModalDisplay: false,
   isAddressModalOpen: false,
   addressActionType: '',
-  selectedAddress: {
-    fullName: '',
-    phoneNumber: '60',
-    addressLine1: '',
-    addressLine2: '',
-    postcode: '',
-    city: '',
-    state: {
-      label: '',
-      value: '',
-    },
-    outsideMalaysiaState: '',
-    country: '',
-    defaultOption: '',
-    tag: '',
-    email: '',
-  },
+  selectedAddress: defaultAddressData,
 };
 
 export const accountSlice = createSlice({
@@ -44,10 +29,15 @@ export const accountSlice = createSlice({
       state.isAddressModalOpen = action.payload;
     },
     submitAddAddressAction: (
-      _state, _action:PayloadAction<account.submitAddEditAddressPayload>,
+      _state, _action:PayloadAction<account.finalSubmitAddEditAddressPayload>,
     ) => {},
     updateAddressActionType: (state, action:PayloadAction<string>) => {
       state.addressActionType = action.payload;
+    },
+    updateSelectedAddress: (
+      state, action:PayloadAction<account.finalSubmitAddEditAddressPayload>,
+    ) => {
+      state.selectedAddress = action.payload;
     },
   },
 });
@@ -58,6 +48,7 @@ export const {
   toggleAddressModal,
   submitAddAddressAction,
   updateAddressActionType,
+  updateSelectedAddress,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

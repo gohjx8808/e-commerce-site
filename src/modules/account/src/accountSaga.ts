@@ -53,12 +53,11 @@ function* submitAddAddressSaga() {
     const currentUserDetails:auth.currentUserDetails = yield select(
       (state:RootState) => state.auth.currentUser,
     );
-    const processedAddressData = { ...payload, state: payload.state.value };
     let currentAddresses:account.finalSubmitAddEditAddressPayload[] = [];
     if (currentUserDetails.addressBook) {
       currentAddresses = currentUserDetails.addressBook;
     }
-    currentAddresses.push(processedAddressData);
+    currentAddresses.push(payload);
     try {
       yield call(submitAddNewAddress, currentAddresses, currentUserDetails.uid);
       yield put(getCurrentUserDetailsAction(currentUserDetails.uid));
