@@ -19,6 +19,9 @@ const IndexPage = () => {
       secondary: {
         main: '#B67B5E',
       },
+      text: {
+        primary: '#6b3e2e',
+      },
     },
     typography: {
       fontFamily: 'Sitka Display Semibold',
