@@ -118,7 +118,7 @@ const AddressBook = () => {
                           )}
                         </Grid>
                       </Grid>
-                      <Grid item>
+                      <Grid item className={styles.desktopView}>
                         <IconButton color="secondary" onClick={() => onEditAddress(address)}>
                           <Edit />
                         </IconButton>
@@ -152,6 +152,17 @@ const AddressBook = () => {
                         {address.country}
                       </Typography>
                     </Grid>
+                  </Grid>
+                  <Grid container justifyContent="flex-end" className={styles.mobileView}>
+                    <IconButton color="secondary" onClick={() => onEditAddress(address)}>
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      className={styles.defaultColor}
+                      onClick={() => onDeleteAddress(address)}
+                    >
+                      <Delete />
+                    </IconButton>
                   </Grid>
                 </Grid>
               ))}

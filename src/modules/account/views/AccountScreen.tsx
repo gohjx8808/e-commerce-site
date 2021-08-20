@@ -15,22 +15,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    [theme.breakpoints.up('lg')]: {
-      display: 'flex',
-    },
-  },
-  desktopSideTab: {
-    width: '15%',
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
-    display: 'flex',
-  },
-  smallerViewTabs: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-    display: 'flex',
   },
   fullWidth: {
     width: '100%',
@@ -45,12 +29,10 @@ export default function AccountScreen() {
     setValue(newValue);
   };
 
-  const dekstopTabRef = useRef<TabsActions>(null);
   const mobileTabRef = useRef<TabsActions>(null);
 
   useEffect(() => {
     setTimeout(() => {
-      dekstopTabRef.current?.updateIndicator();
       mobileTabRef.current?.updateIndicator();
     }, 100);
   });
@@ -64,11 +46,7 @@ export default function AccountScreen() {
       </Grid>
       <div className={styles.root}>
         <TabContext value={value}>
-          <TabList action={dekstopTabRef} onChange={handleChange} aria-label="account tabs" orientation="vertical" className={styles.desktopSideTab}>
-            <Tab label="Account Details" value="accDetails" />
-            <Tab label="Address Book" value="addressBook" />
-          </TabList>
-          <TabList action={mobileTabRef} onChange={handleChange} aria-label="account tabs" variant="scrollable" className={styles.smallerViewTabs}>
+          <TabList action={mobileTabRef} onChange={handleChange} aria-label="account tabs" variant="scrollable">
             <Tab label="Account Details" value="accDetails" />
             <Tab label="Address Book" value="addressBook" />
           </TabList>

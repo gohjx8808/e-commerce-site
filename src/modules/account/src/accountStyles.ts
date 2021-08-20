@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { homeColor, workColor } from '../../../utils/constants';
 
-const accountStyles = makeStyles({
+const accountStyles = makeStyles((theme) => ({
   boldText: {
     fontWeight: 'bold',
   },
@@ -42,6 +42,18 @@ const accountStyles = makeStyles({
     color: 'red!important',
     borderColor: 'red!important',
   },
-});
+  desktopView: {
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+    display: 'none',
+  },
+  mobileView: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+    },
+    display: 'none',
+  },
+}));
 
 export default accountStyles;
