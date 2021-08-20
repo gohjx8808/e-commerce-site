@@ -104,8 +104,11 @@ const MainRoutes = (props: {
 
   useEffect(() => {
     if (protectedRoute) {
-      setIsAuthenticated(currentUserDetail.uid !== '');
-      navigate('/');
+      if (currentUserDetail.uid !== '') {
+        setIsAuthenticated(true);
+      } else {
+        navigate('/');
+      }
     } else {
       setIsAuthenticated(true);
     }

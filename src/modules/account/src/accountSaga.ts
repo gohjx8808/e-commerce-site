@@ -93,10 +93,10 @@ function* submitAddEditAddressSaga() {
           (state:RootState) => state.account.selectedAddress,
         );
         currentAddresses = [...currentUserDetails.addressBook];
+        const editIndex = currentAddresses.findIndex((address) => address === selectedAddress);
         if (payload.defaultOption === '1') {
           currentAddresses = removeDefaultAddressFunc(currentAddresses);
         }
-        const editIndex = currentAddresses.findIndex((address) => address === selectedAddress);
         currentAddresses[editIndex] = payload;
       }
       yield call(updateAddress, currentAddresses, currentUserDetails.uid);
