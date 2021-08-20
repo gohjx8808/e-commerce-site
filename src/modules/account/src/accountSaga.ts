@@ -1,6 +1,7 @@
 import {
   call, fork, put, select, take,
 } from 'redux-saga/effects';
+import { defaultAddressData } from '../../../utils/constants';
 import { RootState } from '../../../store';
 import { getCurrentUserDetailsAction } from '../../auth/src/authReducer';
 import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
@@ -9,8 +10,25 @@ import {
 } from '../../status/src/statusReducer';
 import { submitAddNewAddress, submitEditAccDetail } from './accountApi';
 import {
-  submitAddAddressAction, submitEditAccDetailsAction, toggleAddressModal, toggleEditAccDetailModal,
+  submitAddAddressAction,
+  submitEditAccDetailsAction,
+  toggleAddressModal,
+  toggleEditAccDetailModal,
+  updateSelectedAddress,
 } from './accountReducer';
+
+const addressStatus:customObject = {
+  Edit: {
+    title: 'Edit Address',
+    successMsg: 'Your address has been successfully updated!',
+    failMsg: 'Your address has failed to update!',
+  },
+  Add: {
+    title: 'Add Address',
+    successMsg: 'Your address has been successfully added!',
+    failMsg: 'Your address has failed to add!',
+  },
+};
 
 export default function* accountRuntime() {
   yield fork(submitEditAccDetailsSaga);
@@ -53,23 +71,68 @@ function* submitAddAddressSaga() {
     const currentUserDetails:auth.currentUserDetails = yield select(
       (state:RootState) => state.auth.currentUser,
     );
-    let currentAddresses:account.finalSubmitAddEditAddressPayload[] = [];
-    if (currentUserDetails.addressBook) {
-      currentAddresses = currentUserDetails.addressBook;
-    }
-    currentAddresses.push(payload);
+    const addressActionType:string = yield select(
+      (state:RootState) => state.account.addressActionType,
+    );
+    yield put(updateStatusTitle(addressStatus[addressActionType].title));
     try {
+      let currentAddresses:account.finalSubmitAddEditAddressPayload[] = [];
+      if (addressActionType === 'Add') {
+        if (currentUserDetails.addressBook) {
+          currentAddresses = [...currentUserDetails.addressBook];
+          if (payload.defaultOption === '1') {
+            let addIndex = -1;
+            let removeDefaultAddress:account.finalSubmitAddEditAddressPayload;
+            currentAddresses.map((address) => {
+              if (address.defaultOption === '1') {
+                addIndex = currentAddresses.findIndex((findAddress) => findAddress === address);
+                // eslint-disable-next-line no-param-reassign
+                removeDefaultAddress = { ...address, defaultOption: '0' };
+              }
+              if (addIndex !== -1) {
+                currentAddresses[addIndex] = removeDefaultAddress;
+              }
+              return null;
+            });
+          }
+        }
+        currentAddresses.push(payload);
+      } else if (addressActionType === 'Edit') {
+        const selectedAddress:account.finalSubmitAddEditAddressPayload = yield select(
+          (state:RootState) => state.account.selectedAddress,
+        );
+        currentAddresses = [...currentUserDetails.addressBook];
+        if (payload.defaultOption === '1') {
+          let defaultIndex = -1;
+          let removeDefaultAddress:account.finalSubmitAddEditAddressPayload;
+          currentAddresses.map((address) => {
+            if (address.defaultOption === '1') {
+              defaultIndex = currentAddresses.findIndex((findAddress) => findAddress === address);
+              // eslint-disable-next-line no-param-reassign
+              removeDefaultAddress = { ...address, defaultOption: '0' };
+            }
+            if (defaultIndex !== -1) {
+              currentAddresses[defaultIndex] = removeDefaultAddress;
+            }
+            return null;
+          });
+        }
+        const editIndex = currentAddresses.findIndex((address) => address === selectedAddress);
+        currentAddresses[editIndex] = payload;
+      }
       yield call(submitAddNewAddress, currentAddresses, currentUserDetails.uid);
       yield put(getCurrentUserDetailsAction(currentUserDetails.uid));
+      yield put(updateSelectedAddress(defaultAddressData));
       yield put(toggleSuccess(true));
-      yield put(updateStatusMsg('Your address has been successfully added!'));
+      yield put(updateStatusMsg(addressStatus[addressActionType].successMsg));
       yield put(toggleAddressModal(false));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleEditAccDetailModal(false));
       yield put(toggleStatusModal(true));
     } catch (error) {
+      console.log(error);
       yield put(toggleSuccess(false));
-      yield put(updateStatusMsg('Your address has failed to add!'));
+      yield put(updateStatusMsg(addressStatus[addressActionType].failMsg));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
     }

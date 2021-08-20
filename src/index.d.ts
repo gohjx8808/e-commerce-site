@@ -9,3 +9,7 @@ interface toggleButtonOptionData{
   value:string
   activeColor:string
 }
+
+interface customObject{
+  [key:string]:any
+}

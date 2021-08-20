@@ -19,8 +19,8 @@ const AddressBook = () => {
   const dispatch = useAppDispatch();
   const addressList = useAppSelector((state) => state.auth.currentUser.addressBook);
 
-  const showAddressModal = (actionType:string) => {
-    dispatch(updateAddressActionType(actionType));
+  const onAddAddress = () => {
+    dispatch(updateAddressActionType('Add'));
     dispatch(toggleAddressModal(true));
   };
 
@@ -33,7 +33,7 @@ const AddressBook = () => {
   return (
     <Grid item xs={12}>
       <Grid container justifyContent="flex-end" alignItems="center" className={styles.bottomSpacing}>
-        <Button variant="contained" startIcon={<Add />} color="secondary" onClick={() => showAddressModal('Add')}>
+        <Button variant="contained" startIcon={<Add />} color="secondary" onClick={onAddAddress}>
           Add New Address
         </Button>
       </Grid>

@@ -79,7 +79,7 @@ const AddressModal = () => {
         city: selectedAddress.city,
         state: selectedAddress.state
           ? { label: selectedAddress.state, value: selectedAddress.state } : null,
-        outsideMalaysiaState: selectedAddress.outsideMalaysiaState,
+        outsideMalaysiaState: selectedAddress.outsideMalaysiaState ? selectedAddress.outsideMalaysiaState : '',
         country: selectedAddress.country,
         defaultOption: selectedAddress.defaultOption,
         tag: selectedAddress.tag,
