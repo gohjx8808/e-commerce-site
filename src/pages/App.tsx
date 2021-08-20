@@ -5,7 +5,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { KeyboardArrowUp } from '@material-ui/icons';
 import { RouteComponentProps, Router } from '@reach/router';
-import React, { lazy, Suspense } from 'react';
+import { navigate } from 'gatsby';
+import React, { lazy, Suspense, useState } from 'react';
+import { useEffect } from 'react';
+import { useAppSelector } from '../hooks';
 import AccountScreen from '../modules/account/views/AccountScreen';
 import Footer from '../modules/Footer';
 import HomeBanner from '../modules/HomeBanner';
@@ -60,7 +63,11 @@ const App = () => {
             <MainRoutes path={routeNames.imageGallery} pageComponent={<ImageGallery />} />
             <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
             <MainRoutes path={routeNames.checkout} pageComponent={<Checkout />} />
-            <MainRoutes path={routeNames.account} pageComponent={<AccountScreen />} />
+            <MainRoutes
+              path={routeNames.account}
+              pageComponent={<AccountScreen />}
+              protectedRoute
+            />
           </Router>
           <StatusModal />
           <LoadingOverlay />
@@ -83,10 +90,30 @@ const RouterPage = (
 };
 
 const MainRoutes = (props: {
-   pageComponent: JSX.Element, pageBannerTitle?:string, homeCarouselBanner?:boolean
+   pageComponent: JSX.Element,
+   pageBannerTitle?:string,
+   homeCarouselBanner?:boolean,
+   protectedRoute?:boolean
   } & RouteComponentProps) => {
-  const { pageComponent, pageBannerTitle, homeCarouselBanner } = props;
+  const {
+    pageComponent, pageBannerTitle, homeCarouselBanner, protectedRoute,
+  } = props;
   const styles = useStyles();
+  const currentUserDetail = useAppSelector((state) => state.auth.currentUser);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    if (protectedRoute) {
+      setIsAuthenticated(currentUserDetail.uid !== '');
+      navigate('/');
+    } else {
+      setIsAuthenticated(true);
+    }
+  }, [protectedRoute, currentUserDetail.uid]);
+
+  if (!isAuthenticated) {
+    return (<HomeScreen />);
+  }
 
   return (
     <Box className={styles.contentContainer}>
@@ -115,6 +142,7 @@ const MainRoutes = (props: {
 MainRoutes.defaultProps = {
   pageBannerTitle: null,
   homeCarouselBanner: false,
+  protectedRoute: false,
 };
 
 export default App;
