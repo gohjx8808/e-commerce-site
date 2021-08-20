@@ -10,9 +10,15 @@ import {
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { internationalPhoneNumberFormatter } from '../../../utils/helper';
-import { toggleAddressModal, updateAddressActionType, updateSelectedAddress } from '../src/accountReducer';
+import {
+  toggleAddressModal,
+  toggleDeleteAddressConfirmationModal,
+  updateAddressActionType,
+  updateSelectedAddress,
+} from '../src/accountReducer';
 import accountStyles from '../src/accountStyles';
 import AddressModal from './AddressModal';
+import DeleteAddressConfirmationModal from './DeleteAddressConfirmationModal';
 
 const AddressBook = () => {
   const styles = accountStyles();
@@ -28,6 +34,11 @@ const AddressBook = () => {
     dispatch(updateSelectedAddress(selectedAddress));
     dispatch(updateAddressActionType('Edit'));
     dispatch(toggleAddressModal(true));
+  };
+
+  const onDeleteAddress = (selectedAddress:account.finalSubmitAddEditAddressPayload) => {
+    dispatch(updateSelectedAddress(selectedAddress));
+    dispatch(toggleDeleteAddressConfirmationModal(true));
   };
 
   return (
@@ -111,7 +122,10 @@ const AddressBook = () => {
                         <IconButton color="secondary" onClick={() => onEditAddress(address)}>
                           <Edit />
                         </IconButton>
-                        <IconButton className={styles.defaultColor}>
+                        <IconButton
+                          className={styles.defaultColor}
+                          onClick={() => onDeleteAddress(address)}
+                        >
                           <Delete />
                         </IconButton>
                       </Grid>
@@ -149,6 +163,7 @@ const AddressBook = () => {
           </Grid>
         )}
       <AddressModal />
+      <DeleteAddressConfirmationModal />
     </Grid>
   );
 };

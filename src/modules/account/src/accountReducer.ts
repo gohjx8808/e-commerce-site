@@ -6,6 +6,7 @@ interface accState{
   isAddressModalOpen:boolean
   addressActionType:string
   selectedAddress:account.finalSubmitAddEditAddressPayload
+  isDeleteAddressConfirmationModalOpen:boolean
 }
 
 const INITIAL_STATE:accState = {
@@ -13,6 +14,7 @@ const INITIAL_STATE:accState = {
   isAddressModalOpen: false,
   addressActionType: '',
   selectedAddress: defaultAddressData,
+  isDeleteAddressConfirmationModalOpen: false,
 };
 
 export const accountSlice = createSlice({
@@ -28,7 +30,7 @@ export const accountSlice = createSlice({
     toggleAddressModal: (state, action:PayloadAction<boolean>) => {
       state.isAddressModalOpen = action.payload;
     },
-    submitAddAddressAction: (
+    submitAddEditAddressAction: (
       _state, _action:PayloadAction<account.finalSubmitAddEditAddressPayload>,
     ) => {},
     updateAddressActionType: (state, action:PayloadAction<string>) => {
@@ -39,6 +41,12 @@ export const accountSlice = createSlice({
     ) => {
       state.selectedAddress = action.payload;
     },
+    toggleDeleteAddressConfirmationModal: (state, action:PayloadAction<boolean>) => {
+      state.isDeleteAddressConfirmationModalOpen = action.payload;
+    },
+    deleteAddressAction: (
+      _state, _action:PayloadAction,
+    ) => {},
   },
 });
 
@@ -46,9 +54,11 @@ export const {
   toggleEditAccDetailModal,
   submitEditAccDetailsAction,
   toggleAddressModal,
-  submitAddAddressAction,
+  submitAddEditAddressAction,
   updateAddressActionType,
   updateSelectedAddress,
+  deleteAddressAction,
+  toggleDeleteAddressConfirmationModal,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

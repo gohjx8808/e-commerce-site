@@ -6,9 +6,10 @@ export const loadState = () => {
     }
     const parseState = JSON.parse(serialState);
     parseState.product.productFilterKeyword = null;
-    parseState.account.isEditAccDetailModalDisplay = false;
     parseState.overlay.isLoadingOverlayOpen = false;
+    parseState.account.isEditAccDetailModalDisplay = false;
     parseState.account.isAddressModalOpen = false;
+    parseState.account.isDeleteAddressConfirmationModalOpen = false;
     parseState.auth.isSignOutConfirmationModalOpen = false;
     parseState.status.isStatusModalOpen = false;
     parseState.product.isEnlargedProductImageBackdropOpen = false;

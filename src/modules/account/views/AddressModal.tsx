@@ -17,7 +17,7 @@ import ControlledToggleButton from '../../../sharedComponents/ControlledToggleBu
 import {
   booleanOptions, defaultAddressData, homeColor, stateOptions, workColor,
 } from '../../../utils/constants';
-import { submitAddAddressAction, toggleAddressModal, updateSelectedAddress } from '../src/accountReducer';
+import { submitAddEditAddressAction, toggleAddressModal, updateSelectedAddress } from '../src/accountReducer';
 import { addressSchema } from '../src/accountScheme';
 import accountStyles from '../src/accountStyles';
 
@@ -54,7 +54,7 @@ const AddressModal = () => {
   };
 
   const onSubmitForm = (hookData:account.submitAddEditAddressPayload) => {
-    dispatch(submitAddAddressAction({ ...hookData, state: hookData.state.value }));
+    dispatch(submitAddEditAddressAction({ ...hookData, state: hookData.state.value }));
   };
 
   const outsideMalaysiaState = (selectedAddress && selectedAddress.state === 'Outside Malaysia') || (watch('state') && watch('state').value === 'Outside Malaysia');

@@ -1,18 +1,20 @@
 import {
   call, fork, put, select, take,
 } from 'redux-saga/effects';
-import { defaultAddressData } from '../../../utils/constants';
 import { RootState } from '../../../store';
+import { defaultAddressData } from '../../../utils/constants';
 import { getCurrentUserDetailsAction } from '../../auth/src/authReducer';
 import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
 import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
 } from '../../status/src/statusReducer';
-import { submitAddNewAddress, submitEditAccDetail } from './accountApi';
+import { submitEditAccDetail, updateAddress } from './accountApi';
 import {
-  submitAddAddressAction,
+  deleteAddressAction,
+  submitAddEditAddressAction,
   submitEditAccDetailsAction,
   toggleAddressModal,
+  toggleDeleteAddressConfirmationModal,
   toggleEditAccDetailModal,
   updateSelectedAddress,
 } from './accountReducer';
@@ -32,7 +34,8 @@ const addressStatus:customObject = {
 
 export default function* accountRuntime() {
   yield fork(submitEditAccDetailsSaga);
-  yield fork(submitAddAddressSaga);
+  yield fork(submitAddEditAddressSaga);
+  yield fork(deleteAddressSaga);
 }
 
 function* submitEditAccDetailsSaga() {
@@ -62,10 +65,10 @@ function* submitEditAccDetailsSaga() {
   }
 }
 
-function* submitAddAddressSaga() {
+function* submitAddEditAddressSaga() {
   while (true) {
-    const { payload }:ReturnType<typeof submitAddAddressAction> = yield take(
-      submitAddAddressAction,
+    const { payload }:ReturnType<typeof submitAddEditAddressAction> = yield take(
+      submitAddEditAddressAction,
     );
     yield put(toggleLoadingOverlay(true));
     const currentUserDetails:auth.currentUserDetails = yield select(
@@ -96,7 +99,7 @@ function* submitAddAddressSaga() {
         const editIndex = currentAddresses.findIndex((address) => address === selectedAddress);
         currentAddresses[editIndex] = payload;
       }
-      yield call(submitAddNewAddress, currentAddresses, currentUserDetails.uid);
+      yield call(updateAddress, currentAddresses, currentUserDetails.uid);
       yield put(getCurrentUserDetailsAction(currentUserDetails.uid));
       yield put(updateSelectedAddress(defaultAddressData));
       yield put(toggleSuccess(true));
@@ -123,4 +126,36 @@ function removeDefaultAddressFunc(addressList:account.finalSubmitAddEditAddressP
     return address;
   });
   return removedDefault;
+}
+
+function* deleteAddressSaga() {
+  while (true) {
+    yield take(deleteAddressAction);
+    yield put(toggleLoadingOverlay(true));
+    const selectedAddress:account.finalSubmitAddEditAddressPayload = yield select(
+      (state:RootState) => state.account.selectedAddress,
+    );
+    const currentUserDetails:auth.currentUserDetails = yield select(
+      (state:RootState) => state.auth.currentUser,
+    );
+    const currentAddressList = [...currentUserDetails.addressBook];
+    yield put(updateStatusTitle('Delete Address'));
+    try {
+      const removeIndex = currentAddressList.findIndex((address) => address === selectedAddress);
+      currentAddressList.splice(removeIndex, 1);
+      yield call(updateAddress, currentAddressList, currentUserDetails.uid);
+      yield put(getCurrentUserDetailsAction(currentUserDetails.uid));
+      yield put(updateSelectedAddress(defaultAddressData));
+      yield put(toggleSuccess(true));
+      yield put(updateStatusMsg('Your address has been successfully deleted!'));
+      yield put(toggleLoadingOverlay(false));
+      yield put(toggleDeleteAddressConfirmationModal(false));
+      yield put(toggleStatusModal(true));
+    } catch (error) {
+      yield put(toggleSuccess(false));
+      yield put(updateStatusMsg('Your address has failed to be deleted!'));
+      yield put(toggleLoadingOverlay(false));
+      yield put(toggleStatusModal(true));
+    }
+  }
 }
