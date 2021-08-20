@@ -81,19 +81,7 @@ function* submitAddAddressSaga() {
         if (currentUserDetails.addressBook) {
           currentAddresses = [...currentUserDetails.addressBook];
           if (payload.defaultOption === '1') {
-            let addIndex = -1;
-            let removeDefaultAddress:account.finalSubmitAddEditAddressPayload;
-            currentAddresses.map((address) => {
-              if (address.defaultOption === '1') {
-                addIndex = currentAddresses.findIndex((findAddress) => findAddress === address);
-                // eslint-disable-next-line no-param-reassign
-                removeDefaultAddress = { ...address, defaultOption: '0' };
-              }
-              if (addIndex !== -1) {
-                currentAddresses[addIndex] = removeDefaultAddress;
-              }
-              return null;
-            });
+            currentAddresses = removeDefaultAddressFunc(currentAddresses);
           }
         }
         currentAddresses.push(payload);
@@ -103,19 +91,7 @@ function* submitAddAddressSaga() {
         );
         currentAddresses = [...currentUserDetails.addressBook];
         if (payload.defaultOption === '1') {
-          let defaultIndex = -1;
-          let removeDefaultAddress:account.finalSubmitAddEditAddressPayload;
-          currentAddresses.map((address) => {
-            if (address.defaultOption === '1') {
-              defaultIndex = currentAddresses.findIndex((findAddress) => findAddress === address);
-              // eslint-disable-next-line no-param-reassign
-              removeDefaultAddress = { ...address, defaultOption: '0' };
-            }
-            if (defaultIndex !== -1) {
-              currentAddresses[defaultIndex] = removeDefaultAddress;
-            }
-            return null;
-          });
+          currentAddresses = removeDefaultAddressFunc(currentAddresses);
         }
         const editIndex = currentAddresses.findIndex((address) => address === selectedAddress);
         currentAddresses[editIndex] = payload;
@@ -130,11 +106,21 @@ function* submitAddAddressSaga() {
       yield put(toggleEditAccDetailModal(false));
       yield put(toggleStatusModal(true));
     } catch (error) {
-      console.log(error);
       yield put(toggleSuccess(false));
       yield put(updateStatusMsg(addressStatus[addressActionType].failMsg));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
     }
   }
+}
+
+function removeDefaultAddressFunc(addressList:account.finalSubmitAddEditAddressPayload[]) {
+  const removedDefault = addressList.map((address) => {
+    if (address.defaultOption === '1') {
+      // eslint-disable-next-line no-param-reassign
+      address = { ...address, defaultOption: '0' };
+    }
+    return address;
+  });
+  return removedDefault;
 }
