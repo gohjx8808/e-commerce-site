@@ -77,6 +77,7 @@ function* submitAddEditAddressSaga() {
     const addressActionType:string = yield select(
       (state:RootState) => state.account.addressActionType,
     );
+    const isDirectAction:boolean = yield select((state:RootState) => state.account.isDirectAction);
     yield put(updateStatusTitle(addressStatus[addressActionType].title));
     try {
       let currentAddresses:account.finalSubmitAddEditAddressPayload[] = [];
@@ -102,17 +103,21 @@ function* submitAddEditAddressSaga() {
       yield call(updateAddress, currentAddresses, currentUserDetails.uid);
       yield put(getCurrentUserDetailsAction(currentUserDetails.uid));
       yield put(updateSelectedAddress(defaultAddressData));
-      yield put(toggleSuccess(true));
-      yield put(updateStatusMsg(addressStatus[addressActionType].successMsg));
-      yield put(toggleAddressModal(false));
-      yield put(toggleLoadingOverlay(false));
-      yield put(toggleEditAccDetailModal(false));
-      yield put(toggleStatusModal(true));
+      if (isDirectAction) {
+        yield put(toggleSuccess(true));
+        yield put(updateStatusMsg(addressStatus[addressActionType].successMsg));
+        yield put(toggleAddressModal(false));
+        yield put(toggleLoadingOverlay(false));
+        yield put(toggleEditAccDetailModal(false));
+        yield put(toggleStatusModal(true));
+      }
     } catch (error) {
-      yield put(toggleSuccess(false));
-      yield put(updateStatusMsg(addressStatus[addressActionType].failMsg));
-      yield put(toggleLoadingOverlay(false));
-      yield put(toggleStatusModal(true));
+      if (isDirectAction) {
+        yield put(toggleSuccess(false));
+        yield put(updateStatusMsg(addressStatus[addressActionType].failMsg));
+        yield put(toggleLoadingOverlay(false));
+        yield put(toggleStatusModal(true));
+      }
     }
   }
 }

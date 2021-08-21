@@ -2,10 +2,12 @@ import { navigate } from '@reach/router';
 import firebase from 'gatsby-plugin-firebase';
 import {
   all,
-  call, fork, put, take,
+  call, fork, put, select, take,
 } from 'redux-saga/effects';
-import { defaultAddressData } from '../../../utils/constants';
-import { updateSelectedAddress } from '../../account/src/accountReducer';
+import { RootState } from '../../../store';
+import {
+  submitAddEditAddressAction, toggleIsDirectAction, updateAddressActionType,
+} from '../../account/src/accountReducer';
 import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
 import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
@@ -33,11 +35,28 @@ function* sendPaymentEmailSaga() {
     > = yield take(sendPaymentEmailAction);
     yield put(toggleLoadingOverlay(true));
     try {
+      const currentUserDetails:auth.currentUserDetails = yield select(
+        (state:RootState) => state.auth.currentUser,
+      );
       yield call(sendPaymentEmailApi, payload);
       yield call(updateOrderCount, payload.currentOrderCount);
       const toBeRemovedItems = payload.selectedCheckoutItems;
       yield all(toBeRemovedItems.map((item) => put(removeItemFromCart(item.id))));
       if (payload.saveShippingInfo) {
+        const saveAddressData:account.finalSubmitAddEditAddressPayload = {
+          fullName: payload.fullName,
+          email: payload.email,
+          phoneNumber: payload.phoneNumber,
+          addressLine1: payload.addressLine1,
+          addressLine2: payload.addressLine2,
+          postcode: payload.postcode,
+          city: payload.city,
+          state: payload.state.value,
+          outsideMalaysiaState: payload.outsideMalaysiaState,
+          country: payload.country,
+          defaultOption: '0',
+          tag: '',
+        };
         const shippingInfo:products.submitShippingInfoPayload = {
           fullName: payload.fullName,
           email: payload.email,
@@ -46,13 +65,19 @@ function* sendPaymentEmailSaga() {
           addressLine2: payload.addressLine2,
           postcode: payload.postcode,
           city: payload.city,
-          state: payload.state,
+          state: payload.state.value,
           outsideMalaysiaState: payload.outsideMalaysiaState,
           country: payload.country,
           saveShippingInfo: payload.saveShippingInfo,
           paymentOptions: payload.paymentOptions,
         };
-        yield put(saveShippingInfo(shippingInfo));
+        if (currentUserDetails.uid !== '') {
+          yield put(updateAddressActionType('Add'));
+          yield put(toggleIsDirectAction(false));
+          yield put(submitAddEditAddressAction(saveAddressData));
+        } else {
+          yield put(saveShippingInfo(shippingInfo));
+        }
       } else {
         const emptyShippingInfo:products.submitShippingInfoPayload = {
           fullName: '',
@@ -62,7 +87,7 @@ function* sendPaymentEmailSaga() {
           addressLine2: '',
           postcode: '',
           city: '',
-          state: { label: '', value: '' },
+          state: '',
           outsideMalaysiaState: '',
           country: '',
           saveShippingInfo: false,
@@ -70,7 +95,6 @@ function* sendPaymentEmailSaga() {
         };
         yield put(saveShippingInfo(emptyShippingInfo));
       }
-      yield put(updateSelectedAddress(defaultAddressData));
       yield put(toggleSuccess(true));
       yield put(updateStatusTitle('Your order is confirmed'));
       yield put(updateStatusMsg('An email regarding payment details will be sent to your email shortly. Please kindly proceed your payment within 24 hours.'));

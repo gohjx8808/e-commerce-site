@@ -96,7 +96,6 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
                 InputLabelProps={{
                   classes: { root: lightBg ? '' : styles.unFocusLabel },
                 }}
-                InputProps={{ readOnly }}
                 error={!!error}
                 color={lightBg ? 'secondary' : 'primary'}
               />
@@ -106,6 +105,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
             onChange={(_event: any, newValue:optionsData) => {
               onChange(newValue);
             }}
+            disabled={readOnly}
             autoComplete
             classes={{
               root: !lightBg ? styles.unFocusStyle : '',

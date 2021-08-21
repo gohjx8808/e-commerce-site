@@ -7,6 +7,7 @@ interface accState{
   addressActionType:string
   selectedAddress:account.finalSubmitAddEditAddressPayload
   isDeleteAddressConfirmationModalOpen:boolean
+  isDirectAction:boolean
 }
 
 const INITIAL_STATE:accState = {
@@ -15,6 +16,7 @@ const INITIAL_STATE:accState = {
   addressActionType: '',
   selectedAddress: defaultAddressData,
   isDeleteAddressConfirmationModalOpen: false,
+  isDirectAction: true,
 };
 
 export const accountSlice = createSlice({
@@ -47,6 +49,9 @@ export const accountSlice = createSlice({
     deleteAddressAction: (
       _state, _action:PayloadAction,
     ) => {},
+    toggleIsDirectAction: (state, action:PayloadAction<boolean>) => {
+      state.isDirectAction = action.payload;
+    },
   },
 });
 
@@ -59,6 +64,7 @@ export const {
   updateSelectedAddress,
   deleteAddressAction,
   toggleDeleteAddressConfirmationModal,
+  toggleIsDirectAction,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

@@ -117,24 +117,26 @@ const Checkout = () => {
   }, [selectedState]);
 
   useEffect(() => {
-    reset({
-      fullName: selectedAddress.fullName,
-      email: selectedAddress.email,
-      phoneNumber: selectedAddress.phoneNumber,
-      addressLine1: selectedAddress.addressLine1,
-      addressLine2: selectedAddress.addressLine2,
-      postcode: selectedAddress.postcode,
-      city: selectedAddress.city,
-      state: selectedAddress.state
-        ? { label: selectedAddress.state, value: selectedAddress.state } : null,
-      outsideMalaysiaState: selectedAddress.outsideMalaysiaState,
-      country: selectedAddress.country,
-      saveShippingInfo: false,
-      paymentOptions: '',
-    });
+    if (selectedAddress.addressLine1) {
+      reset({
+        fullName: selectedAddress.fullName,
+        email: selectedAddress.email,
+        phoneNumber: selectedAddress.phoneNumber,
+        addressLine1: selectedAddress.addressLine1,
+        addressLine2: selectedAddress.addressLine2,
+        postcode: selectedAddress.postcode,
+        city: selectedAddress.city,
+        state: selectedAddress.state
+          ? { label: selectedAddress.state, value: selectedAddress.state } : null,
+        outsideMalaysiaState: selectedAddress.outsideMalaysiaState,
+        country: selectedAddress.country,
+        saveShippingInfo: false,
+        paymentOptions: '',
+      });
+    }
   }, [reset, selectedAddress]);
 
-  const proceedToPayment = async (hookData:products.submitShippingInfoPayload) => {
+  const proceedToPayment = async (hookData:products.rawShippingInfoPayload) => {
     const emailData = {
       ...hookData,
       currentOrderCount: prevOrderCount + 1,
@@ -257,7 +259,7 @@ const Checkout = () => {
                         )}
                       error={errors.phoneNumber}
                       defaultValue={prevShippingInfo.phoneNumber}
-                      readOnly={!!selectedAddress.phoneNumber}
+                      readOnly={!!selectedAddress.email}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -321,7 +323,7 @@ const Checkout = () => {
                       label="State"
                       error={errors.state}
                       defaultValue={prevShippingInfo.state ? prevShippingInfo.state : null}
-                      readOnly={!!selectedAddress.city}
+                      readOnly={!!selectedAddress.state}
                     />
                   </Grid>
                   {outsideMalaysiaState && (
@@ -364,14 +366,16 @@ const Checkout = () => {
                       rows={4}
                     />
                   </Grid>
-                  <Grid container justifyContent="flex-start" alignItems="center" className={styles.rmbPadding}>
-                    <ControlledCheckbox
-                      name="saveShippingInfo"
-                      control={control}
-                      label={currentUserDetails.uid === '' ? 'Use this shipping information for the next time' : 'Save to address book'}
-                      defaultValue={prevShippingInfo.saveShippingInfo}
-                    />
-                  </Grid>
+                  {!selectedAddress.addressLine1 && (
+                    <Grid container justifyContent="flex-start" alignItems="center" className={styles.rmbPadding}>
+                      <ControlledCheckbox
+                        name="saveShippingInfo"
+                        control={control}
+                        label={currentUserDetails.uid === '' ? 'Use this shipping information for the next time' : 'Save to address book'}
+                        defaultValue={prevShippingInfo.saveShippingInfo}
+                      />
+                    </Grid>
+                  )}
                 </Grid>
               </CardContent>
             </Card>

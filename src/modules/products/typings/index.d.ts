@@ -50,14 +50,14 @@ declare namespace products{
     addressLine2:string
     postcode: string
     city: string
-    state: optionsData
+    state: string
     outsideMalaysiaState: string
     country: string
     saveShippingInfo:boolean
     paymentOptions:string
   }
 
-  interface storageShippingInfoPayload{
+  interface rawShippingInfoPayload{
     fullName:string
     email: string
     phoneNumber: string
@@ -65,7 +65,7 @@ declare namespace products{
     addressLine2:string
     postcode: string
     city: string
-    state: string
+    state: optionsData
     outsideMalaysiaState: string
     country: string
     saveShippingInfo:boolean

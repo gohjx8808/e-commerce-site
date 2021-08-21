@@ -13,6 +13,7 @@ import { internationalPhoneNumberFormatter } from '../../../utils/helper';
 import {
   toggleAddressModal,
   toggleDeleteAddressConfirmationModal,
+  toggleIsDirectAction,
   updateAddressActionType,
   updateSelectedAddress,
 } from '../src/accountReducer';
@@ -27,12 +28,14 @@ const AddressBook = () => {
 
   const onAddAddress = () => {
     dispatch(updateAddressActionType('Add'));
+    dispatch(toggleIsDirectAction(true));
     dispatch(toggleAddressModal(true));
   };
 
   const onEditAddress = (selectedAddress:account.finalSubmitAddEditAddressPayload) => {
     dispatch(updateSelectedAddress(selectedAddress));
     dispatch(updateAddressActionType('Edit'));
+    dispatch(toggleIsDirectAction(true));
     dispatch(toggleAddressModal(true));
   };
 

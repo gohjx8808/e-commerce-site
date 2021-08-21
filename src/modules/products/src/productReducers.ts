@@ -6,7 +6,7 @@ interface productState{
   productFilterKeyword:string
   selectedCheckoutItemsID:string[]
   prevOrderCount:number
-  prevShippingInfo:products.storageShippingInfoPayload
+  prevShippingInfo:products.submitShippingInfoPayload
   selectedProductImage:ImageDataLike|null
   isEnlargedProductImageModalOpen:boolean
   selectedProductImageList:ImageDataLike[]
@@ -81,7 +81,7 @@ export const productSlice = createSlice({
     },
     sendPaymentEmailAction: (_state, _action:PayloadAction<products.sendEmailPayload>) => {},
     saveShippingInfo: (state, action:PayloadAction<products.submitShippingInfoPayload>) => {
-      state.prevShippingInfo = { ...action.payload, state: action.payload.state.value };
+      state.prevShippingInfo = action.payload;
     },
     updateSelectedProductImage: (state, action:PayloadAction<ImageDataLike>) => {
       state.selectedProductImage = action.payload;
