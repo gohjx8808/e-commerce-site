@@ -125,7 +125,7 @@ const Checkout = () => {
       addressLine2: selectedAddress.addressLine2,
       postcode: selectedAddress.postcode,
       city: selectedAddress.city,
-      state: { label: selectedAddress.state, value: selectedAddress.state },
+      state: selectedAddress.state ? selectedAddress.state : null,
       outsideMalaysiaState: selectedAddress.outsideMalaysiaState,
       country: selectedAddress.country,
       saveShippingInfo: false,
@@ -312,9 +312,7 @@ const Checkout = () => {
                       lightBg
                       label="State"
                       error={errors.state}
-                      defaultValue={{
-                        label: prevShippingInfo.state, value: prevShippingInfo.state,
-                      }}
+                      defaultValue={prevShippingInfo.state ? prevShippingInfo.state : null}
                     />
                   </Grid>
                   {outsideMalaysiaState && (

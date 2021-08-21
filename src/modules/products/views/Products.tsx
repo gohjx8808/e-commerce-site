@@ -184,7 +184,7 @@ const Products = () => {
               label="Sort By"
               lightBg
               clearable={false}
-              defaultValue={{ label: 'Name: A to Z', value: 'a2z' }}
+              defaultValue="a2z"
             />
           </Grid>
         </Grid>

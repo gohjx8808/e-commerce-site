@@ -13,7 +13,7 @@ interface ControlledPickerOwnProps{
   label?:string,
   variant?:variantData,
   name:string,
-  defaultValue?:optionsData
+  defaultValue?:string|null
   error?:any
   options:optionsData[]
   lightBg?:boolean
@@ -117,13 +117,13 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
           </FormHelperText>
         </FormControl>
       )}
-      defaultValue={defaultValue}
+      defaultValue={options.find((option) => option.value === defaultValue) || null}
     />
   );
 };
 
 ControlledPicker.defaultProps = {
-  defaultValue: { label: '', value: '' },
+  defaultValue: null,
   variant: undefined,
   label: '',
   error: null,
