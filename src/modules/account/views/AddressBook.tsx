@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import {
   Add, Delete, Edit, Email, Home, Person, Phone, Work,
 } from '@material-ui/icons';
+import clsx from 'clsx';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { internationalPhoneNumberFormatter } from '../../../utils/helper';
@@ -101,7 +102,7 @@ const AddressBook = () => {
                             </Grid>
                           </Grid>
                           {address.tag && (
-                            <Grid item className={styles.tagChipPadding}>
+                            <Grid item className={clsx(styles.tagChipPadding, styles.lgUpView)}>
                               <Chip
                                 className={address.tag === 'Home' ? styles.homeTagColor : styles.workTagColor}
                                 label={address.tag}
@@ -111,7 +112,7 @@ const AddressBook = () => {
                             </Grid>
                           )}
                           {address.defaultOption === '1' && (
-                            <Grid item className={styles.tagChipPadding}>
+                            <Grid item className={clsx(styles.tagChipPadding, styles.lgUpView)}>
                               <Chip
                                 className={styles.defaultColor}
                                 label="Default"
@@ -134,7 +135,7 @@ const AddressBook = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid container direction="row" spacing={1} className={styles.bottomSpacing}>
+                  <Grid container direction="row" spacing={1} className={styles.lgBottomSpacing}>
                     <Grid item>
                       <Home />
                     </Grid>
@@ -156,16 +157,39 @@ const AddressBook = () => {
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Grid container justifyContent="flex-end" className={styles.mobileView}>
-                    <IconButton color="secondary" onClick={() => onEditAddress(address)}>
-                      <Edit />
-                    </IconButton>
-                    <IconButton
-                      className={styles.defaultColor}
-                      onClick={() => onDeleteAddress(address)}
-                    >
-                      <Delete />
-                    </IconButton>
+                  <Grid container justifyContent={address.defaultOption === '1' ? 'flex-start' : 'space-between'} alignItems="center" className={clsx(styles.mobileView, styles.mdDownBottomSpacing)}>
+                    {address.tag && (
+                      <Grid item>
+                        <Chip
+                          className={address.tag === 'Home' ? styles.homeTagColor : styles.workTagColor}
+                          label={address.tag}
+                          variant="outlined"
+                          icon={address.tag === 'Home' ? <Home className={styles.homeTagColor} /> : <Work className={styles.workTagColor} />}
+                        />
+                      </Grid>
+                    )}
+                    {address.defaultOption === '1' && (
+                      <Grid item className={styles.tagChipPadding}>
+                        <Chip
+                          className={styles.defaultColor}
+                          label="Default"
+                          variant="outlined"
+                        />
+                      </Grid>
+                    )}
+                    <Grid item xs={address.defaultOption === '1' ? 12 : 6}>
+                      <Grid container justifyContent="flex-end" alignItems="center" className={styles.mobileView}>
+                        <IconButton color="secondary" onClick={() => onEditAddress(address)}>
+                          <Edit />
+                        </IconButton>
+                        <IconButton
+                          className={styles.defaultColor}
+                          onClick={() => onDeleteAddress(address)}
+                        >
+                          <Delete />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               ))}

@@ -74,6 +74,22 @@ const accountStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
+  lgUpView: {
+    [theme.breakpoints.up('lg')]: {
+      display: 'block',
+    },
+    display: 'none',
+  },
+  lgBottomSpacing: {
+    [theme.breakpoints.up('lg')]: {
+      paddingBottom: 20,
+    },
+  },
+  mdDownBottomSpacing: {
+    [theme.breakpoints.down('md')]: {
+      paddingBottom: 20,
+    },
+  },
 }));
 
 export default accountStyles;
