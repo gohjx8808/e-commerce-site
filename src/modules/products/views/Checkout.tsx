@@ -27,6 +27,7 @@ import { formatPrice } from '../../../utils/helper';
 import { sendPaymentEmailAction } from '../src/productReducers';
 import productSchema from '../src/productSchema';
 import productStyle from '../src/productStyle';
+import CheckoutAddressListModal from './CheckoutAddressListModal';
 
 const Checkout = () => {
   const styles = productStyle();
@@ -40,6 +41,7 @@ const Checkout = () => {
   const [extractedCartItem, setExtractedCartItem] = useState<products.shoppingCartItemData[]>([]);
   const [pageSize, setPageSize] = useState<number>(5);
   const [shippingFee, setShippingFee] = useState<number>(0);
+  const [isCheckoutAddressListModalOpen, setIsCheckoutAddressListModalOpen] = useState(false);
   const {
     control, watch, setValue, handleSubmit, formState: { errors },
   } = useForm({
@@ -125,6 +127,10 @@ const Checkout = () => {
     dispatch(sendPaymentEmailAction(emailData));
   };
 
+  const toggleCheckoutAddressListModal = () => {
+    setIsCheckoutAddressListModalOpen(!isCheckoutAddressListModalOpen);
+  };
+
   return (
     <Grid container justifyContent="center" spacing={3}>
       <Grid item xs={11} lg={12}>
@@ -186,7 +192,7 @@ const Checkout = () => {
                 <Grid container justifyContent="center" alignItems="center" spacing={2}>
                   <Tooltip title="Please login to use this feature" className={styles.proceedPaymentBtnContainer} disableHoverListener={currentUserDetails.uid !== ''}>
                     <span>
-                      <Button variant="outlined" color="secondary" disabled={currentUserDetails.uid === ''}>
+                      <Button variant="outlined" color="secondary" disabled={currentUserDetails.uid === ''} onClick={toggleCheckoutAddressListModal}>
                         Select address from address book
                       </Button>
                     </span>
@@ -366,6 +372,10 @@ const Checkout = () => {
           </Grid>
         </form>
       </Grid>
+      <CheckoutAddressListModal
+        isVisible={isCheckoutAddressListModalOpen}
+        toggleModal={toggleCheckoutAddressListModal}
+      />
     </Grid>
   );
 };
