@@ -175,31 +175,29 @@ const MenuBar = () => {
           </MenuItem>
         ) : (
           <div>
-            <MenuItem>
-              <Button color="inherit" onClick={() => navigate(routeNames.login)}>Login</Button>
+            <MenuItem onClick={() => navigate(routeNames.login)}>
+              <Button color="inherit">Login</Button>
             </MenuItem>
-            <MenuItem>
-              <Button color="inherit" onClick={() => navigate(routeNames.signUp)}>Sign Up</Button>
+            <MenuItem onClick={() => navigate(routeNames.signUp)}>
+              <Button color="inherit">Sign Up</Button>
             </MenuItem>
           </div>
         )}
       {currentUserDetail.fullName !== '' && (
         <div>
-          <MenuItem>
+          <MenuItem onClick={() => navigate(routeNames.account)}>
             <IconButton
               aria-label="account"
               color="inherit"
-              onClick={() => navigate(routeNames.account)}
             >
               <AccountCircle />
             </IconButton>
             <Typography>Profile</Typography>
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={promptSignOut}>
             <IconButton
               aria-label="logout"
               color="inherit"
-              onClick={promptSignOut}
             >
               <ExitToApp />
             </IconButton>
