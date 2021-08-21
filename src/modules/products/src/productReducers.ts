@@ -21,7 +21,7 @@ const INITIAL_STATE:productState = {
   prevShippingInfo: {
     fullName: '',
     email: '',
-    phoneNo: '60',
+    phoneNumber: '60',
     addressLine1: '',
     addressLine2: '',
     postcode: '',

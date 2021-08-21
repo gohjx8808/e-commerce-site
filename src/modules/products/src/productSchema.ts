@@ -3,7 +3,7 @@ import * as yup from 'yup';
 const shippingInfoSchema = yup.object().shape({
   fullName: yup.string().required('Full name is required'),
   email: yup.string().email('Invalid email').required('Email is required'),
-  phoneNo: yup.number().typeError('Phone number is required'),
+  phoneNumber: yup.number().typeError('Phone number is required'),
   addressLine1: yup.string().required('Address line 1 is required'),
   postcode: yup.number().typeError('Invalid postcode'),
   city: yup.string().required('City is required'),

@@ -154,8 +154,8 @@ const Products = () => {
           );
           const categoryImage = getImage(currentCategoryImageData.node.childImageSharp)!;
           return (
-            <Grid item xs={6} sm={2}>
-              <Button disabled={!categoryProductAmount[category]} key={category}>
+            <Grid item xs={6} sm={2} key={category}>
+              <Button disabled={!categoryProductAmount[category]}>
                 <Link
                   to={category}
                   spy
@@ -184,7 +184,7 @@ const Products = () => {
               label="Sort By"
               lightBg
               clearable={false}
-              defaultValue="a2z"
+              defaultValue={{ label: 'Name: A to Z', value: 'a2z' }}
             />
           </Grid>
         </Grid>

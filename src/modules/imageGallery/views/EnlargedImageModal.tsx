@@ -18,7 +18,7 @@ const EnlargedImageModal = () => {
     >
       <GatsbyImage
         image={selectedProductImage}
-        alt={selectedProductImage.images.fallback?.src!}
+        alt=""
       />
     </Dialog>
   );

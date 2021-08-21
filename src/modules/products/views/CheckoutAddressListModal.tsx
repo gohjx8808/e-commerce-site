@@ -37,6 +37,7 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
             button
             selected={address === selectedAddress}
             onClick={() => onSelectAddress(address)}
+            key={address.addressLine1}
           >
             <ListItemText
               primary={(

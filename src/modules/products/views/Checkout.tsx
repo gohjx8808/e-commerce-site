@@ -37,13 +37,14 @@ const Checkout = () => {
   const selectedCheckoutItemsID = useAppSelector((state) => state.product.selectedCheckoutItemsID);
   const prevOrderCount = useAppSelector((state) => state.product.prevOrderCount);
   const prevShippingInfo = useAppSelector((state) => state.product.prevShippingInfo);
+  const selectedAddress = useAppSelector((state) => state.account.selectedAddress);
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<products.shoppingCartItemData[]>([]);
   const [pageSize, setPageSize] = useState<number>(5);
   const [shippingFee, setShippingFee] = useState<number>(0);
   const [isCheckoutAddressListModalOpen, setIsCheckoutAddressListModalOpen] = useState(false);
   const {
-    control, watch, setValue, handleSubmit, formState: { errors },
+    control, watch, setValue, handleSubmit, formState: { errors }, reset,
   } = useForm({
     resolver: yupResolver(productSchema.shippingInfoSchema),
   });
@@ -114,6 +115,23 @@ const Checkout = () => {
       setShippingFee(0);
     }
   }, [selectedState]);
+
+  useEffect(() => {
+    reset({
+      fullName: selectedAddress.fullName,
+      email: selectedAddress.email,
+      phoneNumber: selectedAddress.phoneNumber,
+      addressLine1: selectedAddress.addressLine1,
+      addressLine2: selectedAddress.addressLine2,
+      postcode: selectedAddress.postcode,
+      city: selectedAddress.city,
+      state: { label: selectedAddress.state, value: selectedAddress.state },
+      outsideMalaysiaState: selectedAddress.outsideMalaysiaState,
+      country: selectedAddress.country,
+      saveShippingInfo: false,
+      paymentOptions: '',
+    });
+  }, [reset, selectedAddress]);
 
   const proceedToPayment = async (hookData:products.submitShippingInfoPayload) => {
     const emailData = {
@@ -224,7 +242,7 @@ const Checkout = () => {
                   <Grid item lg={6} xs={12}>
                     <ControlledTextInput
                       control={control}
-                      name="phoneNo"
+                      name="phoneNumber"
                       variant="outlined"
                       label="Phone Number"
                       labelWidth={105}
@@ -234,8 +252,8 @@ const Checkout = () => {
                           +
                         </InputAdornment>
                         )}
-                      error={errors.phoneNo}
-                      defaultValue={prevShippingInfo.phoneNo}
+                      error={errors.phoneNumber}
+                      defaultValue={prevShippingInfo.phoneNumber}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -294,7 +312,9 @@ const Checkout = () => {
                       lightBg
                       label="State"
                       error={errors.state}
-                      defaultValue={prevShippingInfo.state}
+                      defaultValue={{
+                        label: prevShippingInfo.state, value: prevShippingInfo.state,
+                      }}
                     />
                   </Grid>
                   {outsideMalaysiaState && (

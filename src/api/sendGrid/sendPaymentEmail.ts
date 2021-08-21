@@ -34,7 +34,7 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
     dynamic_template_data: {
       order_code: `YJ${String(postData.currentOrderCount).padStart(4, '0')}`,
       customer_name: postData.fullName,
-      phoneNo: postData.phoneNo,
+      phoneNo: postData.phoneNumber,
       address_line_1: postData.addressLine1,
       address_line_2: postData.addressLine2,
       postcode: postData.postcode,

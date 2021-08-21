@@ -45,7 +45,7 @@ declare namespace products{
   interface submitShippingInfoPayload{
     fullName:string
     email: string
-    phoneNo: string
+    phoneNumber: string
     addressLine1: string
     addressLine2:string
     postcode: string
@@ -60,7 +60,7 @@ declare namespace products{
   interface storageShippingInfoPayload{
     fullName:string
     email: string
-    phoneNo: string
+    phoneNumber: string
     addressLine1: string
     addressLine2:string
     postcode: string
@@ -75,7 +75,7 @@ declare namespace products{
   interface sendEmailPayload{
     fullName:string
     email: string
-    phoneNo: string
+    phoneNumber: string
     addressLine1: string
     addressLine2:string
     postcode: string

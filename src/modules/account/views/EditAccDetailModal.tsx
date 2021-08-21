@@ -102,7 +102,9 @@ const EditAccDetailModal = () => {
                 lightBg
                 label="Gender"
                 options={genderOptions}
-                defaultValue={currentUserDetails.gender}
+                defaultValue={{
+                  label: currentUserDetails.gender, value: currentUserDetails.gender,
+                }}
                 error={errors.gender}
               />
             </Grid>

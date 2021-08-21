@@ -39,11 +39,12 @@ const ImageGallery = () => {
     <Grid item xs={12}>
       <Box className={styles.imageListRoot}>
         <ImageList rowHeight="auto" cols={5}>
-          {allProductImages && allProductImages.map((image) => {
+          {allProductImages && allProductImages.map((image, index) => {
             const productImagesData = getImage(image)!;
             return (
               <ImageListItem
-                key={productImagesData.images.fallback?.src}
+                // eslint-disable-next-line react/no-array-index-key
+                key={productImagesData.images.fallback?.src! + index}
                 className={styles.imageListItem}
               >
                 <GatsbyImage

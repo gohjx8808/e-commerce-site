@@ -39,7 +39,7 @@ function* sendPaymentEmailSaga() {
         const shippingInfo:products.submitShippingInfoPayload = {
           fullName: payload.fullName,
           email: payload.email,
-          phoneNo: payload.phoneNo,
+          phoneNumber: payload.phoneNumber,
           addressLine1: payload.addressLine1,
           addressLine2: payload.addressLine2,
           postcode: payload.postcode,
@@ -55,7 +55,7 @@ function* sendPaymentEmailSaga() {
         const emptyShippingInfo:products.submitShippingInfoPayload = {
           fullName: '',
           email: '',
-          phoneNo: '60',
+          phoneNumber: '60',
           addressLine1: '',
           addressLine2: '',
           postcode: '',

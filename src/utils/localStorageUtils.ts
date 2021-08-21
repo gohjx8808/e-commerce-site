@@ -1,3 +1,5 @@
+import { defaultAddressData } from './constants';
+
 export const loadState = () => {
   try {
     const serialState = localStorage.getItem('appState');
@@ -10,6 +12,7 @@ export const loadState = () => {
     parseState.account.isEditAccDetailModalDisplay = false;
     parseState.account.isAddressModalOpen = false;
     parseState.account.isDeleteAddressConfirmationModalOpen = false;
+    parseState.account.selectedAddress = defaultAddressData;
     parseState.auth.isSignOutConfirmationModalOpen = false;
     parseState.status.isStatusModalOpen = false;
     parseState.product.isEnlargedProductImageBackdropOpen = false;
