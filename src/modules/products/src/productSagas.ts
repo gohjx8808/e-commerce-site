@@ -14,7 +14,11 @@ import {
 } from '../../status/src/statusReducer';
 import { getPrevOrderCount, sendPaymentEmailApi, updateOrderCount } from './productApi';
 import {
-  removeItemFromCart, saveShippingInfo, sendPaymentEmailAction, updatePrevOrderCount,
+  removeItemFromCart,
+  saveShippingInfo,
+  sendPaymentEmailAction,
+  updatePrevOrderCount,
+  updateSelectedCheckoutItemsID,
 } from './productReducers';
 
 export default function* productRuntime() {
@@ -95,6 +99,7 @@ function* sendPaymentEmailSaga() {
         };
         yield put(saveShippingInfo(emptyShippingInfo));
       }
+      yield put(updateSelectedCheckoutItemsID([]));
       yield put(toggleSuccess(true));
       yield put(updateStatusTitle('Your order is confirmed'));
       yield put(updateStatusMsg('An email regarding payment details will be sent to your email shortly. Please kindly proceed your payment within 24 hours.'));

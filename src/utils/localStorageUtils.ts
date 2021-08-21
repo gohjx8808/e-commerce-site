@@ -16,6 +16,7 @@ export const loadState = () => {
     parseState.auth.isSignOutConfirmationModalOpen = false;
     parseState.status.isStatusModalOpen = false;
     parseState.product.isEnlargedProductImageBackdropOpen = false;
+    parseState.product.selectedCheckoutItemsID = [];
     return parseState;
   } catch (err) {
     return undefined;
