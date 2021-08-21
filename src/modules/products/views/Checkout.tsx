@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import {
   DataGrid, GridColDef, GridPageChangeParams,
@@ -19,6 +20,7 @@ import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import ControlledRadioButton from '../../../sharedComponents/ControlledRadioButton';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
+import DividerWithText from '../../../sharedComponents/DividerWithText';
 import ExpandedCell from '../../../sharedComponents/ExpandedCell';
 import { stateOptions } from '../../../utils/constants';
 import { formatPrice } from '../../../utils/helper';
@@ -29,6 +31,7 @@ import productStyle from '../src/productStyle';
 const Checkout = () => {
   const styles = productStyle();
   const dispatch = useAppDispatch();
+  const currentUserDetails = useAppSelector((state) => state.auth.currentUser);
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
   const selectedCheckoutItemsID = useAppSelector((state) => state.product.selectedCheckoutItemsID);
   const prevOrderCount = useAppSelector((state) => state.product.prevOrderCount);
@@ -181,6 +184,14 @@ const Checkout = () => {
             <Card className={styles.secondaryBorder} variant="outlined">
               <CardContent className={styles.cartTitleCardContent}>
                 <Grid container justifyContent="center" alignItems="center" spacing={2}>
+                  <Tooltip title="Please login to use this feature" className={styles.proceedPaymentBtnContainer} disableHoverListener={currentUserDetails.uid !== ''}>
+                    <span>
+                      <Button variant="outlined" color="secondary" disabled={currentUserDetails.uid === ''}>
+                        Select address from address book
+                      </Button>
+                    </span>
+                  </Tooltip>
+                  <DividerWithText text="Or" />
                   <Grid item xs={12}>
                     <ControlledTextInput
                       control={control}
