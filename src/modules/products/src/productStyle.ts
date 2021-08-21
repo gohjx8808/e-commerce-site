@@ -48,10 +48,6 @@ const productStyle = makeStyles((theme) => ({
   boldText: {
     fontWeight: 'bold',
   },
-  cartItemImageContainer: {
-    width: '30%',
-    marginTop: 5,
-  },
   cartItemImage: {
     borderRadius: 5,
   },
@@ -137,6 +133,18 @@ const productStyle = makeStyles((theme) => ({
       marginRight: '2px!important',
       marginLeft: '2px!important',
     },
+  },
+  dekstopView: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'flex',
+    },
+    display: 'none',
+  },
+  mobileView: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'flex',
+    },
+    display: 'none',
   },
 }));
 

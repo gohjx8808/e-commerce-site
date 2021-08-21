@@ -1,4 +1,3 @@
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,13 +5,17 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
+import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Add, Remove } from '@material-ui/icons';
+import clsx from 'clsx';
 import { navigate } from 'gatsby';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
+import { formatPrice } from '../../../utils/helper';
 import routeNames from '../../../utils/routeNames';
 import {
   increaseQuantity, reduceQuantity, removeItemFromCart, updateSelectedCheckoutItemsID,
@@ -111,6 +114,9 @@ const Cart = () => {
     }
   };
 
+  const theme = useTheme();
+  const smUpView = useMediaQuery(theme.breakpoints.up('sm'));
+
   return (
     <Grid container justifyContent="center" alignItems="center" spacing={2}>
       <Grid item xs={11}>
@@ -121,27 +127,28 @@ const Cart = () => {
           <Grid item xs={11}>
             <Card className={styles.cartCard}>
               <CardContent className={styles.cartTitleCardContent}>
-                <Grid container justifyContent="center" alignItems="center">
-                  <Grid item xs={2}>
+                <Grid container justifyContent={smUpView ? 'center' : 'flex-start'} alignItems="center">
+                  <Grid item sm={2} xs={12}>
                     <Grid
                       container
-                      justifyContent="center"
+                      justifyContent={smUpView ? 'center' : 'flex-start'}
                       alignItems="center"
                     >
                       <Checkbox
                         color="secondary"
                         onChange={onChangeSelect}
                         indeterminate={
-                      selectedCheckoutItemsID.length < cartItems.length
-                      && selectedCheckoutItemsID.length > 0
-                  }
+                          selectedCheckoutItemsID.length < cartItems.length
+                          && selectedCheckoutItemsID.length > 0
+                        }
                         checked={selectedCheckoutItemsID.length > 0}
                         id="selectAll"
                         inputProps={{ 'aria-label': 'checkAll' }}
                       />
+                      {!smUpView && <Typography>Select all items</Typography>}
                     </Grid>
                   </Grid>
-                  {cartTitle.map((title) => (
+                  {smUpView && cartTitle.map((title) => (
                     <Grid item xs={title === 'Item' ? 4 : 2} key={title}>
                       <Grid
                         container
@@ -160,88 +167,158 @@ const Cart = () => {
             <Card className={styles.cartCard}>
               <CardContent className={styles.cartTitleCardContent}>
                 {cartItems.map((cartItem, index) => (
-                  <Grid
-                    container
-                    justifyContent="center"
-                    alignItems="center"
-                    key={cartItem.id}
-                    className={`${styles.cartItemCard} ${index === 0 ? '' : styles.topBorderedCartItemCard}`}
-                  >
-                    <Grid item xs={2}>
-                      <Grid
-                        container
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <Checkbox
-                          checked={selectedCheckoutItemsID.includes(cartItem.id)}
-                          color="secondary"
-                          onChange={onChangeSelect}
-                          id={cartItem.id}
-                          inputProps={{
-                            'aria-label': cartItem.id,
-                            'data-price': +cartItem.itemPrice,
-                          } as CartItemCheckboxProps}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Grid
-                        container
-                        justifyContent="center"
-                        alignItems="center"
-                        direction="column"
-                      >
-                        <Typography>{cartItem.name}</Typography>
-                        <Box
-                          className={styles.cartItemImageContainer}
-                          key={cartItem.img!.images.fallback?.src}
+                  <Grid key={cartItem.id}>
+                    <Grid
+                      container
+                      justifyContent="center"
+                      alignItems="center"
+                      className={clsx(
+                        styles.cartItemCard, styles.dekstopView, {
+                          [styles.topBorderedCartItemCard]: index !== 0,
+                        },
+                      )}
+                    >
+                      <Grid item xs={2}>
+                        <Grid
+                          container
+                          justifyContent="center"
+                          alignItems="center"
                         >
-                          <GatsbyImage
-                            image={cartItem.img!}
-                            alt={cartItem.id}
-                            imgClassName={styles.cartItemImage}
+                          <Checkbox
+                            checked={selectedCheckoutItemsID.includes(cartItem.id)}
+                            color="secondary"
+                            onChange={onChangeSelect}
+                            id={cartItem.id}
+                            inputProps={{
+                              'aria-label': cartItem.id,
+                              'data-price': +cartItem.itemPrice,
+                            } as CartItemCheckboxProps}
                           />
-                        </Box>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                    <Grid item xs={2}>
-                      <Grid
-                        container
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <Typography>{cartItem.price}</Typography>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={2}>
-                      <Grid
-                        container
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <IconButton
-                          onClick={
-                        () => onReduceItemQuantity(cartItem)
-                      }
+                      <Grid item xs={4}>
+                        <Grid
+                          container
+                          justifyContent="center"
+                          alignItems="center"
+                          direction="column"
                         >
-                          <Remove />
-                        </IconButton>
-                        <Typography>{cartItem.quantity}</Typography>
-                        <IconButton onClick={() => onIncreaseItemQuantity(cartItem.id)}>
-                          <Add />
-                        </IconButton>
+                          <Typography>{cartItem.name}</Typography>
+                          <Grid sm={4}>
+                            <GatsbyImage
+                              image={cartItem.img!}
+                              alt={cartItem.id}
+                              imgClassName={styles.cartItemImage}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={2}>
+                        <Grid
+                          container
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <Typography>{cartItem.price}</Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={2}>
+                        <Grid
+                          container
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <IconButton
+                            size="small"
+                            onClick={
+                              () => onReduceItemQuantity(cartItem)
+                            }
+                          >
+                            <Remove />
+                          </IconButton>
+                          <Typography>{cartItem.quantity}</Typography>
+                          <IconButton size="small" onClick={() => onIncreaseItemQuantity(cartItem.id)}>
+                            <Add />
+                          </IconButton>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={2}>
+                        <Grid
+                          container
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <Typography>
+                            {cartItem.itemPrice}
+                          </Typography>
+                        </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item xs={2}>
-                      <Grid
-                        container
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        <Typography>
-                          {cartItem.itemPrice}
-                        </Typography>
+                    <Grid
+                      container
+                      justifyContent="center"
+                      alignItems="center"
+                      className={clsx(
+                        styles.cartItemCard, styles.mobileView, {
+                          [styles.topBorderedCartItemCard]: index !== 0,
+                        },
+                      )}
+                    >
+                      <Grid item xs={2}>
+                        <Grid
+                          container
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <Checkbox
+                            checked={selectedCheckoutItemsID.includes(cartItem.id)}
+                            color="secondary"
+                            onChange={onChangeSelect}
+                            id={cartItem.id}
+                            inputProps={{
+                              'aria-label': cartItem.id,
+                              'data-price': +cartItem.itemPrice,
+                            } as CartItemCheckboxProps}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={10}>
+                        <Grid container direction="column" justifyContent="center" alignItems="center">
+                          <Typography>{cartItem.name}</Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid container justifyContent="flex-end">
+                        <Grid item xs={10}>
+                          <Grid container direction="column" justifyContent="center" alignItems="center">
+                            <Grid item xs={8}>
+                              <GatsbyImage
+                                image={cartItem.img!}
+                                alt={cartItem.id}
+                                imgClassName={styles.cartItemImage}
+                              />
+                            </Grid>
+                            <Grid
+                              container
+                              justifyContent="center"
+                              alignItems="center"
+                            >
+                              <IconButton
+                                onClick={
+                              () => onReduceItemQuantity(cartItem)
+                            }
+                              >
+                                <Remove />
+                              </IconButton>
+                              <Typography>{cartItem.quantity}</Typography>
+                              <IconButton onClick={() => onIncreaseItemQuantity(cartItem.id)}>
+                                <Add />
+                              </IconButton>
+                            </Grid>
+                            <Typography>
+                              {formatPrice(+cartItem.itemPrice, 'MYR')}
+                            </Typography>
+                          </Grid>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -253,10 +330,10 @@ const Cart = () => {
             <Card className={styles.cartCard}>
               <CardContent className={styles.cartTitleCardContent}>
                 <Grid container justifyContent="center" alignItems="center">
-                  <Grid item xs={10}>
+                  <Grid item sm={10} xs={7}>
                     <Typography className={styles.totalTitle}>Total</Typography>
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item sm={2} xs={5}>
                     <Typography className={styles.totalTitle}>
                       RM
                       {' '}
