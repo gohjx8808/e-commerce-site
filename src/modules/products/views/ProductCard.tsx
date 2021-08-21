@@ -59,7 +59,14 @@ const ProductCard = (props:ProductCardOwnProps) => {
           className={styles.productNameContainer}
           titleTypographyProps={{ className: styles.productName }}
         />
-        <Carousel indicators={false} autoPlay={false}>
+        <Carousel
+          indicators={false}
+          autoPlay={false}
+          navButtonsProps={{
+            className: styles.productCardCarouselNavButton,
+            style: {},
+          }}
+        >
           {product.productImage.map((image) => {
             const imageData = getImage(image)!;
             return (

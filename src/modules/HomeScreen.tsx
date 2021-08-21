@@ -77,12 +77,16 @@ const HomeScreen = () => {
     const extractedProducts:products.innerProductQueryData[] = homeQuery.products.edges;
     dispatch(storeAllProducts(extractedProducts));
     const tempProduct = [] as imageListImages[];
-    extractedProducts.forEach((product) => {
-      tempProduct.push({
-        productImage: product.node.productImage[0],
-        rows: parseInt(product.node.row, 10),
-        cols: parseInt(product.node.column, 10),
-      });
+    extractedProducts.every((product) => {
+      if (tempProduct.length < 25) {
+        tempProduct.push({
+          productImage: product.node.productImage[0],
+          rows: parseInt(product.node.row, 10),
+          cols: parseInt(product.node.column, 10),
+        });
+        return true;
+      }
+      return false;
     });
     setProductImages(tempProduct);
   }, [dispatch, homeQuery.products.edges]);
@@ -94,9 +98,6 @@ const HomeScreen = () => {
           <Typography variant="h4" color="secondary">Welcome!</Typography>
           <Typography variant="h6" className={styles.centerText}>Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
           <Typography variant="h6" className={styles.centerText}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
-          <Button>
-            <Typography variant="subtitle1" className={styles.hyperlink}>Learn more!</Typography>
-          </Button>
         </Grid>
         <Grid container className={styles.sectionContainer} direction="column">
           <Typography variant="h5" color="secondary">Product Gallery</Typography>

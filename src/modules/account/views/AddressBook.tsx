@@ -62,7 +62,7 @@ const AddressBook = () => {
                     <Grid container justifyContent="space-between" alignItems="center" direction="row">
                       <Grid item>
                         <Grid container alignItems="center" direction="row">
-                          <Grid item>
+                          <Grid item className={styles.xsFullWidth}>
                             <Grid container direction="row" spacing={1}>
                               <Grid item>
                                 <Person />
@@ -74,8 +74,8 @@ const AddressBook = () => {
                               </Grid>
                             </Grid>
                           </Grid>
-                          <Divider orientation="vertical" flexItem variant="middle" />
-                          <Grid item>
+                          <Divider orientation="vertical" flexItem variant="middle" className={styles.smUpView} />
+                          <Grid item className={styles.xsFullWidth}>
                             <Grid container direction="row" spacing={1}>
                               <Grid item>
                                 <Phone />
@@ -87,8 +87,8 @@ const AddressBook = () => {
                               </Grid>
                             </Grid>
                           </Grid>
-                          <Divider orientation="vertical" flexItem variant="middle" />
-                          <Grid item>
+                          <Divider orientation="vertical" flexItem variant="middle" className={styles.smUpView} />
+                          <Grid item className={styles.xsFullWidth}>
                             <Grid container direction="row" spacing={1}>
                               <Grid item>
                                 <Email />

@@ -12,9 +12,6 @@ const accountStyles = makeStyles((theme) => ({
   editBtnTopSpacing: {
     paddingTop: 20,
   },
-  inputFullWidth: {
-    width: '100%!important',
-  },
   editAccDetailActionBtnContainer: {
     padding: '20px!important',
   },
@@ -53,6 +50,29 @@ const accountStyles = makeStyles((theme) => ({
       display: 'flex',
     },
     display: 'none',
+  },
+  noPaddingLeft: {
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: 0,
+    },
+  },
+  accDetailsRoot: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  },
+  fullWidth: {
+    width: '100%',
+  },
+  smUpView: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    },
+    display: 'none',
+  },
+  xsFullWidth: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
   },
 }));
 

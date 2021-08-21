@@ -131,6 +131,13 @@ const productStyle = makeStyles((theme) => ({
       fontSize: 20,
     },
   },
+  productCardCarouselNavButton: {
+    [theme.breakpoints.down('xs')]: {
+      padding: '2px!important',
+      marginRight: '2px!important',
+      marginLeft: '2px!important',
+    },
+  },
 }));
 
 export default productStyle;
