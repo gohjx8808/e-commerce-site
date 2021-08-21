@@ -125,7 +125,8 @@ const Checkout = () => {
       addressLine2: selectedAddress.addressLine2,
       postcode: selectedAddress.postcode,
       city: selectedAddress.city,
-      state: selectedAddress.state ? selectedAddress.state : null,
+      state: selectedAddress.state
+        ? { label: selectedAddress.state, value: selectedAddress.state } : null,
       outsideMalaysiaState: selectedAddress.outsideMalaysiaState,
       country: selectedAddress.country,
       saveShippingInfo: false,
