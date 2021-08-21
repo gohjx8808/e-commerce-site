@@ -8,6 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { updateSelectedAddress } from '../../account/src/accountReducer';
 import productStyle from '../src/productStyle';
 
 interface CheckoutAddressListModalOwnProps{
@@ -20,13 +21,23 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
   const styles = productStyle();
   const { isVisible, toggleModal } = props;
   const addressList = useAppSelector((state) => state.auth.currentUser.addressBook);
+  const selectedAddress = useAppSelector((state) => state.account.selectedAddress);
+
+  const onSelectAddress = (address:account.finalSubmitAddEditAddressPayload) => {
+    dispatch(updateSelectedAddress(address));
+    toggleModal();
+  };
 
   return (
     <Dialog onClose={toggleModal} aria-labelledby="addressBook" open={isVisible} fullWidth>
       <DialogTitle id="addressBook">Address Book</DialogTitle>
       <List>
         {addressList.map((address) => (
-          <ListItem button>
+          <ListItem
+            button
+            selected={address === selectedAddress}
+            onClick={() => onSelectAddress(address)}
+          >
             <ListItemText
               primary={(
                 <>

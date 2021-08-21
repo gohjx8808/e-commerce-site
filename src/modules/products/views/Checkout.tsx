@@ -339,7 +339,7 @@ const Checkout = () => {
                     <ControlledCheckbox
                       name="saveShippingInfo"
                       control={control}
-                      label="Use this shipping information for the next time"
+                      label={currentUserDetails.uid === '' ? 'Use this shipping information for the next time' : 'Save to address book'}
                       defaultValue={prevShippingInfo.saveShippingInfo}
                     />
                   </Grid>
