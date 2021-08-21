@@ -1,4 +1,5 @@
 import { Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
@@ -8,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { defaultAddressData } from '../../../utils/constants';
 import { updateSelectedAddress } from '../../account/src/accountReducer';
 import productStyle from '../src/productStyle';
 
@@ -28,9 +30,19 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
     toggleModal();
   };
 
+  const clearSelection = () => {
+    dispatch(updateSelectedAddress(defaultAddressData));
+    toggleModal();
+  };
+
   return (
     <Dialog onClose={toggleModal} aria-labelledby="addressBook" open={isVisible} fullWidth>
-      <DialogTitle id="addressBook">Address Book</DialogTitle>
+      <DialogTitle id="addressBook">
+        <Grid container justifyContent="space-between">
+          <Typography variant="h4">Address Book</Typography>
+          {selectedAddress.addressLine1 && <Button variant="outlined" onClick={clearSelection}>Clear selection</Button>}
+        </Grid>
+      </DialogTitle>
       <List>
         {addressList.map((address) => (
           <ListItem

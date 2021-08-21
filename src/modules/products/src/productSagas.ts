@@ -4,6 +4,8 @@ import {
   all,
   call, fork, put, take,
 } from 'redux-saga/effects';
+import { defaultAddressData } from '../../../utils/constants';
+import { updateSelectedAddress } from '../../account/src/accountReducer';
 import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
 import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
@@ -68,6 +70,7 @@ function* sendPaymentEmailSaga() {
         };
         yield put(saveShippingInfo(emptyShippingInfo));
       }
+      yield put(updateSelectedAddress(defaultAddressData));
       yield put(toggleSuccess(true));
       yield put(updateStatusTitle('Your order is confirmed'));
       yield put(updateStatusMsg('An email regarding payment details will be sent to your email shortly. Please kindly proceed your payment within 24 hours.'));
@@ -76,7 +79,7 @@ function* sendPaymentEmailSaga() {
       navigate('/');
     } catch (e) {
       yield put(toggleSuccess(false));
-      yield put(updateStatusTitle('Error'));
+      yield put(updateStatusTitle(''));
       yield put(updateStatusMsg('Please check your internet connection or contact us at yj.artjournal@gmail.com for assistance.'));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));

@@ -226,6 +226,7 @@ const Checkout = () => {
                       lightBg
                       error={errors.fullName}
                       defaultValue={prevShippingInfo.fullName}
+                      readOnly={!!selectedAddress.fullName}
                     />
                   </Grid>
                   <Grid item lg={6} xs={12}>
@@ -238,6 +239,7 @@ const Checkout = () => {
                       lightBg
                       error={errors.email}
                       defaultValue={prevShippingInfo.email}
+                      readOnly={!!selectedAddress.email}
                     />
                   </Grid>
                   <Grid item lg={6} xs={12}>
@@ -255,6 +257,7 @@ const Checkout = () => {
                         )}
                       error={errors.phoneNumber}
                       defaultValue={prevShippingInfo.phoneNumber}
+                      readOnly={!!selectedAddress.phoneNumber}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -267,6 +270,7 @@ const Checkout = () => {
                       lightBg
                       error={errors.addressLine1}
                       defaultValue={prevShippingInfo.addressLine1}
+                      readOnly={!!selectedAddress.addressLine1}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -278,6 +282,7 @@ const Checkout = () => {
                       labelWidth={110}
                       lightBg
                       defaultValue={prevShippingInfo.addressLine2}
+                      readOnly={!!selectedAddress.addressLine1}
                     />
                   </Grid>
                   <Grid item lg={6} xs={12}>
@@ -290,6 +295,7 @@ const Checkout = () => {
                       maxLength={10}
                       error={errors.postcode}
                       defaultValue={prevShippingInfo.postcode}
+                      readOnly={!!selectedAddress.postcode}
                     />
                   </Grid>
                   <Grid item lg={6} xs={12}>
@@ -302,6 +308,7 @@ const Checkout = () => {
                       labelWidth={25}
                       error={errors.city}
                       defaultValue={prevShippingInfo.city}
+                      readOnly={!!selectedAddress.city}
                     />
                   </Grid>
                   <Grid item lg={6} xs={12}>
@@ -314,6 +321,7 @@ const Checkout = () => {
                       label="State"
                       error={errors.state}
                       defaultValue={prevShippingInfo.state ? prevShippingInfo.state : null}
+                      readOnly={!!selectedAddress.city}
                     />
                   </Grid>
                   {outsideMalaysiaState && (
@@ -327,6 +335,7 @@ const Checkout = () => {
                         lightBg
                         error={errors.outsideMalaysiaState}
                         defaultValue={prevShippingInfo.outsideMalaysiaState}
+                        readOnly={!!selectedAddress.outsideMalaysiaState}
                       />
                     </Grid>
                   )}
@@ -340,6 +349,7 @@ const Checkout = () => {
                       lightBg
                       error={errors.country}
                       defaultValue={prevShippingInfo.country}
+                      readOnly={!!selectedAddress.country}
                     />
                   </Grid>
                   <Grid item xs={12}>

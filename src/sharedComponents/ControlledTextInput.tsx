@@ -26,6 +26,7 @@ interface ControlledTextInputOwnProps{
   startAdornment?:React.ReactNode
   multiline?:boolean
   rows?:number
+  readOnly?:boolean
 }
 
 const useStyles = makeStyles({
@@ -62,6 +63,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
     startAdornment,
     multiline,
     rows,
+    readOnly,
   } = props;
 
   const styles = useStyles();
@@ -111,6 +113,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             startAdornment={startAdornment && <InputAdornment position="start">{startAdornment}</InputAdornment>}
             inputProps={{
               maxLength,
+              readOnly,
             }}
             multiline={multiline}
             rows={rows}
@@ -136,6 +139,7 @@ ControlledTextInput.defaultProps = {
   startAdornment: null,
   multiline: false,
   rows: 1,
+  readOnly: false,
 };
 
 export default ControlledTextInput;

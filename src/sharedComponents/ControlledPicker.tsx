@@ -19,6 +19,7 @@ interface ControlledPickerOwnProps{
   lightBg?:boolean
   customClassName?:string
   clearable?:boolean
+  readOnly?:boolean
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -53,6 +54,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
     lightBg,
     customClassName,
     clearable,
+    readOnly,
   } = props;
 
   const [popupIndicatorClass, setPopupIndicatorClass] = useState('');
@@ -94,6 +96,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
                 InputLabelProps={{
                   classes: { root: lightBg ? '' : styles.unFocusLabel },
                 }}
+                InputProps={{ readOnly }}
                 error={!!error}
                 color={lightBg ? 'secondary' : 'primary'}
               />
@@ -130,6 +133,7 @@ ControlledPicker.defaultProps = {
   lightBg: false,
   customClassName: '',
   clearable: true,
+  readOnly: false,
 };
 
 export default ControlledPicker;
