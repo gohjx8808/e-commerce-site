@@ -2,10 +2,11 @@ import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { AddShoppingCart } from '@material-ui/icons';
 import clsx from 'clsx';
 import {
@@ -32,6 +33,8 @@ const ProductCard = (props:ProductCardOwnProps) => {
   const { product } = props;
   const styles = productStyle();
   const dispatch = useAppDispatch();
+  const theme = useTheme();
+  const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -40,7 +43,8 @@ const ProductCard = (props:ProductCardOwnProps) => {
       id: productData.contentful_id,
       name: productData.name,
       img: getImage(productData.productImage[0]),
-      price: productData.price.toFixed(2),
+      price: productData.discountedPrice
+        ? productData.discountedPrice.toFixed(2) : productData.price.toFixed(2),
       quantity: 1,
     } as products.shoppingCartItemData;
     dispatch(addToShoppingCart(formattedData));
@@ -98,17 +102,26 @@ const ProductCard = (props:ProductCardOwnProps) => {
                   </Typography>
                 </Grid>
                 {product.discountedPrice && (
-                  <Grid item>
-                    <Typography className={styles.discountedPriceText}>
-                      {formatPrice(product.discountedPrice, 'MYR')}
-                    </Typography>
+                  <Grid item xs={12} sm>
+                    <Grid container justifyContent="space-between" alignItems="center">
+                      <Typography className={styles.discountedPriceText}>
+                        {formatPrice(product.discountedPrice, 'MYR')}
+                      </Typography>
+                      {isXsView && (
+                        <IconButton aria-label="addToCart" onClick={() => onAddToCart(product)} className={styles.shoppingCartBtn}>
+                          <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
+                        </IconButton>
+                      )}
+                    </Grid>
                   </Grid>
                 )}
               </Grid>
             </Grid>
-            <IconButton aria-label="addToCart" onClick={() => onAddToCart(product)} className={styles.shoppingCartBtn}>
-              <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
-            </IconButton>
+            {!(product.discountedPrice && isXsView) && (
+              <IconButton aria-label="addToCart" onClick={() => onAddToCart(product)} className={styles.shoppingCartBtn}>
+                <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
+              </IconButton>
+            )}
           </Grid>
         </CardContent>
       </Card>
