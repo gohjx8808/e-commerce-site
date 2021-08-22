@@ -18,6 +18,7 @@ declare namespace products{
     productImage:import('gatsby-plugin-image').ImageDataLike[]
     row:string
     column:string
+    discountedPrice:number
   }
 
   interface productContentDescription{

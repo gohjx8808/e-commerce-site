@@ -2,10 +2,12 @@ import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
+import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { AddShoppingCart } from '@material-ui/icons';
+import clsx from 'clsx';
 import {
   GatsbyImage, getImage, ImageDataLike,
 } from 'gatsby-plugin-image';
@@ -85,9 +87,30 @@ const ProductCard = (props:ProductCardOwnProps) => {
         </Carousel>
         <CardContent className={styles.noPaddingBottomContent}>
           <Grid container justifyContent="space-between" alignItems="center">
-            <Typography className={styles.priceText}>
-              {formatPrice(product.price, 'MYR')}
-            </Typography>
+            <Grid item>
+              <Grid container spacing={1} alignItems="center">
+                <Grid item>
+                  <Typography className={clsx(styles.priceText, {
+                    [styles.dicountedPriceOriText]: product.discountedPrice,
+                  })}
+                  >
+                    {formatPrice(product.price, 'MYR')}
+                  </Typography>
+                </Grid>
+                {product.discountedPrice && (
+                  <>
+                    <Grid item>
+                      <Typography className={styles.discountedPriceText}>
+                        {formatPrice(product.discountedPrice, 'MYR')}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Chip className={styles.dicountMarginChip} label={`-${(((product.price - product.discountedPrice) / product.price) * 100).toFixed(0)}%`} />
+                    </Grid>
+                  </>
+                )}
+              </Grid>
+            </Grid>
             <IconButton aria-label="addToCart" onClick={() => onAddToCart(product)} className={styles.shoppingCartBtn}>
               <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
             </IconButton>

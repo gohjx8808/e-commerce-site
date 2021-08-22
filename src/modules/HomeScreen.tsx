@@ -1,5 +1,4 @@
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import ImageList from '@material-ui/core/ImageList';
@@ -67,6 +66,7 @@ const HomeScreen = () => {
             }
             row
             column
+            discountedPrice
           }
         }
       }

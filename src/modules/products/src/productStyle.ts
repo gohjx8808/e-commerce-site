@@ -18,6 +18,20 @@ const productStyle = makeStyles((theme) => ({
       fontSize: '0.8rem',
     },
   },
+  dicountedPriceOriText: {
+    textDecoration: 'line-through',
+    textDecorationColor: 'red',
+  },
+  discountedPriceText: {
+    color: 'red',
+    fontWeight: 'bold',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '0.8rem',
+    },
+  },
+  dicountMarginChip: {
+    backgroundColor: '#FF7F7F',
+  },
   productNameContainer: {
     [theme.breakpoints.down('xs')]: {
       height: 70,
