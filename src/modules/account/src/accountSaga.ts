@@ -80,8 +80,12 @@ function* submitAddEditAddressSaga() {
     const isDirectAction:boolean = yield select((state:RootState) => state.account.isDirectAction);
     yield put(updateStatusTitle(addressStatus[addressActionType].title));
     try {
-      let currentAddresses = [...currentUserDetails.addressBook];
-      const isAddressExist = sameAddressDetector(currentAddresses, payload);
+      let currentAddresses:auth.addressData[] = [];
+      let isAddressExist = false;
+      if (currentUserDetails.addressBook) {
+        currentAddresses = [...currentUserDetails.addressBook];
+        isAddressExist = sameAddressDetector(currentAddresses, payload);
+      }
       if (addressActionType === 'Add') {
         if (!isAddressExist) {
           if (currentAddresses.length > 0) {
@@ -90,7 +94,6 @@ function* submitAddEditAddressSaga() {
             }
           }
           currentAddresses.push(payload);
-          console.log(currentAddresses);
         }
       } else if (addressActionType === 'Edit') {
         const selectedAddress:account.finalSubmitAddEditAddressPayload = yield select(
