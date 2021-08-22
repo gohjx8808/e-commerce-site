@@ -80,32 +80,41 @@ function* submitAddEditAddressSaga() {
     const isDirectAction:boolean = yield select((state:RootState) => state.account.isDirectAction);
     yield put(updateStatusTitle(addressStatus[addressActionType].title));
     try {
-      let currentAddresses:account.finalSubmitAddEditAddressPayload[] = [];
+      let currentAddresses = [...currentUserDetails.addressBook];
+      const isAddressExist = sameAddressDetector(currentAddresses, payload);
       if (addressActionType === 'Add') {
-        if (currentUserDetails.addressBook) {
-          currentAddresses = [...currentUserDetails.addressBook];
-          if (payload.defaultOption === '1') {
-            currentAddresses = removeDefaultAddressFunc(currentAddresses);
+        if (!isAddressExist) {
+          if (currentAddresses.length > 0) {
+            if (payload.defaultOption === '1') {
+              currentAddresses = removeDefaultAddressFunc(currentAddresses);
+            }
           }
+          currentAddresses.push(payload);
+          console.log(currentAddresses);
         }
-        currentAddresses.push(payload);
       } else if (addressActionType === 'Edit') {
         const selectedAddress:account.finalSubmitAddEditAddressPayload = yield select(
           (state:RootState) => state.account.selectedAddress,
         );
-        currentAddresses = [...currentUserDetails.addressBook];
         const editIndex = currentAddresses.findIndex((address) => address === selectedAddress);
         if (payload.defaultOption === '1') {
           currentAddresses = removeDefaultAddressFunc(currentAddresses);
         }
         currentAddresses[editIndex] = payload;
       }
-      yield call(updateAddress, currentAddresses, currentUserDetails.uid);
+      if (!isAddressExist) {
+        yield call(updateAddress, currentAddresses, currentUserDetails.uid);
+      }
       yield put(getCurrentUserDetailsAction(currentUserDetails.uid));
       yield put(updateSelectedAddress(defaultAddressData));
       if (isDirectAction) {
-        yield put(toggleSuccess(true));
-        yield put(updateStatusMsg(addressStatus[addressActionType].successMsg));
+        if (!isAddressExist) {
+          yield put(toggleSuccess(true));
+          yield put(updateStatusMsg(addressStatus[addressActionType].successMsg));
+        } else {
+          yield put(toggleSuccess(false));
+          yield put(updateStatusMsg('Duplicated address detected. Please add a different address.'));
+        }
         yield put(toggleAddressModal(false));
         yield put(toggleLoadingOverlay(false));
         yield put(toggleEditAccDetailModal(false));
@@ -163,4 +172,24 @@ function* deleteAddressSaga() {
       yield put(toggleStatusModal(true));
     }
   }
+}
+
+function sameAddressDetector(
+  currentAddressList:account.finalSubmitAddEditAddressPayload[],
+  insertAddress:account.finalSubmitAddEditAddressPayload,
+) {
+  const foundAddress = currentAddressList.findIndex((address) => {
+    const sameAddressLine1 = address.addressLine1 === insertAddress.addressLine1;
+    const sameAddressLine2 = address.addressLine2 === insertAddress.addressLine2;
+    const samePostcode = address.postcode === insertAddress.postcode;
+    const sameCity = address.city === insertAddress.city;
+    const sameState = address.state === insertAddress.state;
+    const sameForeignState = address.outsideMalaysiaState === insertAddress.outsideMalaysiaState;
+    const sameCountry = address.country === insertAddress.country;
+
+    return sameAddressLine1 && sameAddressLine2 && samePostcode && sameCity && sameState
+      && sameForeignState && sameCountry;
+  });
+
+  return foundAddress !== -1;
 }

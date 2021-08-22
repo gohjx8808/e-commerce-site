@@ -215,7 +215,7 @@ const Cart = () => {
                           direction="column"
                         >
                           <Typography>{cartItem.name}</Typography>
-                          <Grid sm={4}>
+                          <Grid item sm={4}>
                             <GatsbyImage
                               image={cartItem.img!}
                               alt={cartItem.id}

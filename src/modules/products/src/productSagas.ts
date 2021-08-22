@@ -56,7 +56,7 @@ function* sendPaymentEmailSaga() {
           postcode: payload.postcode,
           city: payload.city,
           state: payload.state.value,
-          outsideMalaysiaState: payload.outsideMalaysiaState,
+          outsideMalaysiaState: payload.outsideMalaysiaState || '',
           country: payload.country,
           defaultOption: '0',
           tag: '',

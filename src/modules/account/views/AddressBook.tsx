@@ -177,7 +177,7 @@ const AddressBook = () => {
                         />
                       </Grid>
                     )}
-                    <Grid item xs={address.defaultOption === '1' ? 12 : 6}>
+                    <Grid item xs={address.defaultOption === '1' || (address.defaultOption === '0' && !address.tag) ? 12 : 6}>
                       <Grid container justifyContent="flex-end" alignItems="center" className={styles.mobileView}>
                         <IconButton color="secondary" onClick={() => onEditAddress(address)}>
                           <Edit />
