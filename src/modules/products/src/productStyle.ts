@@ -29,9 +29,6 @@ const productStyle = makeStyles((theme) => ({
       fontSize: '0.8rem',
     },
   },
-  dicountMarginChip: {
-    backgroundColor: '#FF7F7F',
-  },
   productNameContainer: {
     [theme.breakpoints.down('xs')]: {
       height: 70,
