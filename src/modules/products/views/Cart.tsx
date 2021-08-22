@@ -117,6 +117,17 @@ const Cart = () => {
   const theme = useTheme();
   const smUpView = useMediaQuery(theme.breakpoints.up('sm'));
 
+  const determineSmWidth = (title:string) => {
+    switch (title) {
+      case 'Item':
+        return 4;
+      case 'Quantity':
+        return 3;
+      default:
+        return 2;
+    }
+  };
+
   return (
     <Grid container justifyContent="center" alignItems="center" spacing={2}>
       <Grid item xs={11}>
@@ -128,7 +139,7 @@ const Cart = () => {
             <Card className={styles.cartCard}>
               <CardContent className={styles.cartTitleCardContent}>
                 <Grid container justifyContent={smUpView ? 'center' : 'flex-start'} alignItems="center">
-                  <Grid item sm={2} xs={12}>
+                  <Grid item xs={12} sm={1} md={2}>
                     <Grid
                       container
                       justifyContent={smUpView ? 'center' : 'flex-start'}
@@ -149,7 +160,7 @@ const Cart = () => {
                     </Grid>
                   </Grid>
                   {smUpView && cartTitle.map((title) => (
-                    <Grid item xs={title === 'Item' ? 4 : 2} key={title}>
+                    <Grid item sm={determineSmWidth(title)} md={title === 'Item' ? 4 : 2} key={title}>
                       <Grid
                         container
                         justifyContent="center"
@@ -178,7 +189,7 @@ const Cart = () => {
                         },
                       )}
                     >
-                      <Grid item xs={2}>
+                      <Grid item sm={1} md={2}>
                         <Grid
                           container
                           justifyContent="center"
@@ -196,7 +207,7 @@ const Cart = () => {
                           />
                         </Grid>
                       </Grid>
-                      <Grid item xs={4}>
+                      <Grid item sm={4}>
                         <Grid
                           container
                           justifyContent="center"
@@ -213,7 +224,7 @@ const Cart = () => {
                           </Grid>
                         </Grid>
                       </Grid>
-                      <Grid item xs={2}>
+                      <Grid item sm={2}>
                         <Grid
                           container
                           justifyContent="center"
@@ -222,14 +233,13 @@ const Cart = () => {
                           <Typography>{cartItem.price}</Typography>
                         </Grid>
                       </Grid>
-                      <Grid item xs={2}>
+                      <Grid item sm={3} md={2}>
                         <Grid
                           container
                           justifyContent="center"
                           alignItems="center"
                         >
                           <IconButton
-                            size="small"
                             onClick={
                               () => onReduceItemQuantity(cartItem)
                             }
@@ -237,12 +247,12 @@ const Cart = () => {
                             <Remove />
                           </IconButton>
                           <Typography>{cartItem.quantity}</Typography>
-                          <IconButton size="small" onClick={() => onIncreaseItemQuantity(cartItem.id)}>
+                          <IconButton onClick={() => onIncreaseItemQuantity(cartItem.id)}>
                             <Add />
                           </IconButton>
                         </Grid>
                       </Grid>
-                      <Grid item xs={2}>
+                      <Grid item sm={2}>
                         <Grid
                           container
                           justifyContent="center"
@@ -304,8 +314,8 @@ const Cart = () => {
                             >
                               <IconButton
                                 onClick={
-                              () => onReduceItemQuantity(cartItem)
-                            }
+                                  () => onReduceItemQuantity(cartItem)
+                                }
                               >
                                 <Remove />
                               </IconButton>
