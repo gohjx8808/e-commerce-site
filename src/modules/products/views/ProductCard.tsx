@@ -98,16 +98,11 @@ const ProductCard = (props:ProductCardOwnProps) => {
                   </Typography>
                 </Grid>
                 {product.discountedPrice && (
-                  <>
-                    <Grid item>
-                      <Typography className={styles.discountedPriceText}>
-                        {formatPrice(product.discountedPrice, 'MYR')}
-                      </Typography>
-                    </Grid>
-                    <Grid item>
-                      <Chip className={styles.dicountMarginChip} label={`-${(((product.price - product.discountedPrice) / product.price) * 100).toFixed(0)}%`} />
-                    </Grid>
-                  </>
+                  <Grid item>
+                    <Typography className={styles.discountedPriceText}>
+                      {formatPrice(product.discountedPrice, 'MYR')}
+                    </Typography>
+                  </Grid>
                 )}
               </Grid>
             </Grid>
