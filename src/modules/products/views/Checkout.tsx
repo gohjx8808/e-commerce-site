@@ -6,8 +6,10 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { useTheme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   DataGrid, GridColDef, GridPageChangeParams,
 } from '@material-ui/data-grid';
@@ -30,6 +32,8 @@ import productStyle from '../src/productStyle';
 import CheckoutAddressListModal from './CheckoutAddressListModal';
 
 const Checkout = () => {
+  const theme = useTheme();
+  const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
   const styles = productStyle();
   const dispatch = useAppDispatch();
   const currentUserDetails = useAppSelector((state) => state.auth.currentUser);
@@ -69,6 +73,23 @@ const Checkout = () => {
     },
     {
       field: 'price', headerName: 'Price per Unit', flex: 1, align: 'center', headerAlign: 'center', sortable: false,
+    },
+    {
+      field: 'quantity', headerName: 'Quantity', flex: 1, align: 'center', headerAlign: 'center', sortable: false,
+    },
+    {
+      field: 'itemPrice',
+      headerName: 'Total Price',
+      sortable: false,
+      flex: 1,
+      align: 'center',
+      headerAlign: 'center',
+    },
+  ];
+
+  const xsColumns: GridColDef[] = [
+    {
+      field: 'name', headerName: 'Name', flex: 1, renderCell: ExpandedCell,
     },
     {
       field: 'quantity', headerName: 'Quantity', flex: 1, align: 'center', headerAlign: 'center', sortable: false,
@@ -173,7 +194,7 @@ const Checkout = () => {
           >
             <DataGrid
               rows={extractedCartItem}
-              columns={columns}
+              columns={isXsView ? xsColumns : columns}
               disableColumnMenu
               pageSize={pageSize}
               onPageSizeChange={handlePageSizeChange}
@@ -184,22 +205,34 @@ const Checkout = () => {
             />
           </Box>
           <Divider />
-          <Grid container justifyContent="flex-end" className={styles.totalPayTextContainer}>
-            <Grid container>
-              <Typography variant="subtitle1" className={`${styles.totalPayText} ${styles.checkListFront}`}>
-                Shipping Fee:
-              </Typography>
-              <Typography variant="subtitle1" className={`${styles.totalPayText} ${styles.checkListBack}`}>
-                {shippingFee !== 0 ? formatPrice(shippingFee, 'MYR') : '-'}
-              </Typography>
+          <Grid container alignItems="center" className={styles.totalPayTextContainer} spacing={1}>
+            <Grid item lg={9} sm={10} xs={6}>
+              <Grid container justifyContent="flex-end">
+                <Typography variant="subtitle1" className={styles.totalPayText}>
+                  Shipping Fee:
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid container>
-              <Typography variant="subtitle1" className={`${styles.totalPayText} ${styles.checkListFront}`}>
-                Total Amount to Pay:
-              </Typography>
-              <Typography variant="subtitle1" className={`${styles.totalPayText} ${styles.checkListBack}`}>
-                {formatPrice(totalAmount + shippingFee, 'MYR')}
-              </Typography>
+            <Grid item lg={3} sm={2} xs={6}>
+              <Grid container justifyContent="flex-end">
+                <Typography variant="subtitle1" className={styles.totalPayText}>
+                  {shippingFee !== 0 ? formatPrice(shippingFee, 'MYR') : '-'}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item lg={9} sm={10} xs={6}>
+              <Grid container justifyContent="flex-end">
+                <Typography variant="subtitle1" className={styles.totalPayText}>
+                  Total Amount to Pay:
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item lg={3} sm={2} xs={6}>
+              <Grid container justifyContent="flex-end">
+                <Typography variant="subtitle1" className={styles.totalPayText}>
+                  {formatPrice(totalAmount + shippingFee, 'MYR')}
+                </Typography>
+              </Grid>
             </Grid>
           </Grid>
         </Card>
@@ -382,7 +415,7 @@ const Checkout = () => {
           </Grid>
           <Grid item xs={12}>
             <Grid container justifyContent="center" direction="row" alignItems="center" className={styles.proceedPaymentBtnContainer}>
-              <Grid item xs={8}>
+              <Grid item xs={12} sm={9} md={8}>
                 <Grid container justifyContent="flex-start" alignItems="center">
                   <ControlledRadioButton
                     control={control}
@@ -391,10 +424,11 @@ const Checkout = () => {
                     options={paymentOptions}
                     error={errors.paymentOptions}
                     defaultValue={prevShippingInfo.paymentOptions}
+                    flexDirection={isXsView ? 'column' : 'row'}
                   />
                 </Grid>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={3} md={4}>
                 <Grid container justifyContent="flex-end" alignItems="center">
                   <Button variant="contained" color="secondary" size="medium" type="submit">
                     Proceed To Payment

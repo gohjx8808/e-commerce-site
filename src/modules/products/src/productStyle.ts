@@ -80,6 +80,7 @@ const productStyle = makeStyles((theme) => ({
   },
   totalPayText: {
     fontWeight: 525,
+    textAlign: 'right',
   },
   secondaryBorder: {
     borderColor: `${theme.palette.secondary.main}!important`,
@@ -88,6 +89,9 @@ const productStyle = makeStyles((theme) => ({
   checkoutOrderCard: {
     [theme.breakpoints.up('lg')]: {
       height: 755,
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: 430,
     },
     height: 400,
   },
@@ -99,14 +103,6 @@ const productStyle = makeStyles((theme) => ({
   },
   proceedPaymentBtnContainer: {
     marginTop: 10,
-  },
-  checkListFront: {
-    flex: 3,
-    textAlign: 'right',
-  },
-  checkListBack: {
-    flex: 1,
-    textAlign: 'right',
   },
   categorySpacing: {
     paddingBottom: 20,
