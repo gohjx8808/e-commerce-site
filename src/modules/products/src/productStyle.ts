@@ -101,10 +101,7 @@ const productStyle = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       height: 755,
     },
-    [theme.breakpoints.down('xs')]: {
-      height: 430,
-    },
-    height: 400,
+    height: 410,
   },
   outsideMalaysiaCheckoutOrderCard: {
     height: 830,

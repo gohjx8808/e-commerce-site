@@ -223,7 +223,7 @@ const Checkout = () => {
             <Grid item lg={9} sm={10} xs={6}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={styles.totalPayText}>
-                  Total Amount to Pay:
+                  Total Amount:
                 </Typography>
               </Grid>
             </Grid>
