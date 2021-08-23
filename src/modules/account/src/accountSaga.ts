@@ -105,13 +105,13 @@ function* submitAddEditAddressSaga() {
         }
         currentAddresses[editIndex] = payload;
       }
-      if (!isAddressExist) {
+      if (!isAddressExist || addressActionType === 'Edit') {
         yield call(updateAddress, currentAddresses, currentUserDetails.uid);
       }
       yield put(getCurrentUserDetailsAction(currentUserDetails.uid));
       yield put(updateSelectedAddress(defaultAddressData));
       if (isDirectAction) {
-        if (!isAddressExist) {
+        if (!isAddressExist || addressActionType === 'Edit') {
           yield put(toggleSuccess(true));
           yield put(updateStatusMsg(addressStatus[addressActionType].successMsg));
         } else {
