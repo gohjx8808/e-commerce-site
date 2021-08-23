@@ -4,6 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Link from '@material-ui/core/Link';
 import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -15,6 +16,7 @@ import {
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import Carousel from 'react-material-ui-carousel';
+import { Link as GatsbyLink } from 'gatsby';
 import { useAppDispatch } from '../../../hooks';
 import { formatPrice } from '../../../utils/helper';
 import {
@@ -60,11 +62,13 @@ const ProductCard = (props:ProductCardOwnProps) => {
   return (
     <Grid item lg={3} md={6} sm={6} xs={6}>
       <Card variant="outlined" className={styles.productCard}>
-        <CardHeader
-          title={product.name}
-          className={styles.productNameContainer}
-          titleTypographyProps={{ className: styles.productName }}
-        />
+        <Link component={GatsbyLink} to={`/products/${product.contentful_id}`} rel="noreferrer">
+          <CardHeader
+            title={product.name}
+            className={styles.productNameContainer}
+            titleTypographyProps={{ className: styles.productName }}
+          />
+        </Link>
         <Carousel
           indicators={false}
           autoPlay={false}

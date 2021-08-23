@@ -150,6 +150,9 @@ const productStyle = makeStyles((theme) => ({
     },
     display: 'none',
   },
+  productDescriptionBg: {
+    backgroundColor: theme.palette.background.paper,
+  },
 }));
 
 export default productStyle;

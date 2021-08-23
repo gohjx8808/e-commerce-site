@@ -16,6 +16,8 @@ import HomeScreen from '../modules/HomeScreen';
 import ImageGallery from '../modules/imageGallery/views/ImageGallery';
 import Cart from '../modules/products/views/Cart';
 import Checkout from '../modules/products/views/Checkout';
+import EnlargedProductImageCarouselModal from '../modules/products/views/EnlargedProductImageCarouselModal';
+import ProductDescription from '../modules/products/views/ProductDescription';
 import ScrollTop from '../sharedComponents/ScrollTop';
 import routeNames from '../utils/routeNames';
 
@@ -60,6 +62,10 @@ const App = () => {
             <RouterPage path={routeNames.login} pageComponent={<LoginScreen />} />
             <RouterPage path={routeNames.signUp} pageComponent={<SignupScreen />} />
             <MainRoutes path={routeNames.products} pageComponent={<Products />} pageBannerTitle="Product Categories" />
+            <MainRoutes
+              path={routeNames.productDescription}
+              pageComponent={<ProductDescription />}
+            />
             <MainRoutes path={routeNames.imageGallery} pageComponent={<ImageGallery />} />
             <MainRoutes path={routeNames.cart} pageComponent={<Cart />} />
             <MainRoutes path={routeNames.checkout} pageComponent={<Checkout />} />
@@ -71,6 +77,7 @@ const App = () => {
           </Router>
           <StatusModal />
           <LoadingOverlay />
+          <EnlargedProductImageCarouselModal />
         </Suspense>
       )}
     </>
