@@ -153,6 +153,36 @@ const productStyle = makeStyles((theme) => ({
   productDescriptionBg: {
     backgroundColor: theme.palette.background.paper,
   },
+  centerText: {
+    textAlign: 'center',
+  },
+  minusIconButton: {
+    borderRadius: 0,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderWidth: 0.5,
+    borderStyle: 'solid',
+    borderColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.main,
+    padding: 8,
+  },
+  plusIconButton: {
+    borderRadius: 0,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    borderWidth: 0.5,
+    borderStyle: 'solid',
+    padding: 8,
+    borderColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.main,
+  },
+  quantityInput: {
+    borderRadius: 0,
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderStyle: 'solid',
+    borderColor: theme.palette.secondary.main,
+  },
 }));
 
 export default productStyle;
