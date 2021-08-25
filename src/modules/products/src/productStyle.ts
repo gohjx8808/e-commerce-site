@@ -116,7 +116,7 @@ const productStyle = makeStyles((theme) => ({
     paddingBottom: 20,
     paddingTop: 20,
   },
-  sortByContainer: {
+  topSpacing: {
     paddingTop: 40,
   },
   productCategoryImg: {

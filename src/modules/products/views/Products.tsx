@@ -172,7 +172,7 @@ const Products = () => {
           );
         })}
       </Grid>
-      <Grid container justifyContent="flex-end" alignItems="center" className={styles.sortByContainer}>
+      <Grid container justifyContent="flex-end" alignItems="center" className={styles.topSpacing}>
         <Grid item xs={12} sm={5} lg={3}>
           <Grid container justifyContent="flex-end" alignItems="center">
             <ControlledPicker
