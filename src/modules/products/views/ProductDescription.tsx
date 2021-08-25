@@ -102,8 +102,8 @@ const ProductDescription = () => {
         </Carousel>
       </Grid>
       <Grid item xs={8}>
-        <Grid container direction="column" spacing={3}>
-          <Grid item>
+        <Grid container direction="column" spacing={3} alignItems="center">
+          <Grid item xs={12}>
             <Typography variant="h5" className={styles.boldText}>Description</Typography>
             {jsonContentDescription.content.map((description) => (
               <Typography variant="h6" key={description.content[0].value}>
@@ -111,36 +111,38 @@ const ProductDescription = () => {
               </Typography>
             ))}
           </Grid>
-          <Grid item>
-            <Grid container justifyContent="center">
-              <IconButton className={styles.minusIconButton} onClick={reduceItemQuantity}>
-                <Remove />
-              </IconButton>
-              <Grid item xs={1}>
-                <FormControl hiddenLabel variant="filled" className={styles.quantityInput} size="small">
-                  <FilledInput
-                    disableUnderline
-                    inputProps={{ className: styles.centerText }}
-                    value={itemQuantity}
-                    onChange={handleItemQuantityChange}
-                  />
-                </FormControl>
+          <Grid item xs={12}>
+            <Grid container spacing={2}>
+              <Grid item xs={7}>
+                <Grid container justifyContent="flex-end">
+                  <IconButton className={styles.minusIconButton} onClick={reduceItemQuantity}>
+                    <Remove />
+                  </IconButton>
+                  <Grid item xs={2}>
+                    <FormControl hiddenLabel variant="filled" className={styles.quantityInput} size="small">
+                      <FilledInput
+                        disableUnderline
+                        inputProps={{ className: styles.centerText }}
+                        value={itemQuantity}
+                        onChange={handleItemQuantityChange}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <IconButton className={styles.plusIconButton} onClick={increaseItemQuantity} size="medium">
+                    <Add />
+                  </IconButton>
+                </Grid>
               </Grid>
-              <IconButton className={styles.plusIconButton} onClick={increaseItemQuantity} size="medium">
-                <Add />
-              </IconButton>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Grid container justifyContent="center">
-              <Button
-                variant="contained"
-                color="secondary"
-                endIcon={<AddShoppingCart />}
-                size="large"
-              >
-                Add to cart
-              </Button>
+              <Grid item xs={5}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  endIcon={<AddShoppingCart />}
+                  size="large"
+                >
+                  Add to cart
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

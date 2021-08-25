@@ -155,6 +155,7 @@ const productStyle = makeStyles((theme) => ({
   },
   centerText: {
     textAlign: 'center',
+    backgroundColor: theme.palette.background.paper,
   },
   minusIconButton: {
     borderRadius: 0,
