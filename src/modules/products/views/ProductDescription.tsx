@@ -14,6 +14,7 @@ import React from 'react';
 import { useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { formatPrice } from '../../../utils/helper';
 import {
   addToShoppingCart,
   toggleEnlargedProductImageModal,
@@ -117,6 +118,7 @@ const ProductDescription = () => {
                 <GatsbyImage
                   image={imageData}
                   alt={selectedProduct.name}
+                  className={styles.productDescriptionImg}
                 />
               </Box>
             );
@@ -132,13 +134,28 @@ const ProductDescription = () => {
             </Typography>
           ))}
         </Grid>
-        <Grid container spacing={2} justifyContent="flex-end" className={styles.topSpacing}>
-          <Grid item xs={8}>
+        <Grid container spacing={2} alignItems="center" className={styles.topSpacing}>
+          <Grid item xs={6}>
+            <Typography
+              variant="h5"
+              className={clsx(styles.boldText, {
+                [styles.dicountedPriceOriText]: selectedProduct.discountedPrice,
+              })}
+            >
+              {formatPrice(selectedProduct.price, 'MYR')}
+            </Typography>
+            {selectedProduct.discountedPrice && (
+            <Typography variant="h5" className={styles.discountedPriceText}>
+              {formatPrice(selectedProduct.discountedPrice, 'MYR')}
+            </Typography>
+            )}
+          </Grid>
+          <Grid item xs={2}>
             <Grid container justifyContent="flex-end">
               <IconButton className={styles.minusIconButton} onClick={reduceItemQuantity}>
                 <Remove />
               </IconButton>
-              <Grid item xs={2}>
+              <Grid item xs={4}>
                 <FormControl hiddenLabel variant="filled" className={styles.quantityInput} size="small">
                   <FilledInput
                     disableUnderline
@@ -153,16 +170,18 @@ const ProductDescription = () => {
               </IconButton>
             </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <Button
-              variant="contained"
-              color="secondary"
-              endIcon={<AddShoppingCart />}
-              size="large"
-              onClick={onAddToCart}
-            >
-              Add to cart
-            </Button>
+          <Grid item xs={3}>
+            <Grid container justifyContent="flex-end">
+              <Button
+                variant="contained"
+                color="secondary"
+                endIcon={<AddShoppingCart />}
+                size="large"
+                onClick={onAddToCart}
+              >
+                Add to cart
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

@@ -159,8 +159,8 @@ const productStyle = makeStyles((theme) => ({
   },
   minusIconButton: {
     borderRadius: 0,
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
     borderWidth: 0.5,
     borderStyle: 'solid',
     borderColor: theme.palette.secondary.main,
@@ -169,8 +169,8 @@ const productStyle = makeStyles((theme) => ({
   },
   plusIconButton: {
     borderRadius: 0,
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
     borderWidth: 0.5,
     borderStyle: 'solid',
     padding: 8,
@@ -186,6 +186,9 @@ const productStyle = makeStyles((theme) => ({
   },
   bottomSpacing: {
     paddingBottom: 20,
+  },
+  productDescriptionImg: {
+    borderRadius: 5,
   },
 }));
 
