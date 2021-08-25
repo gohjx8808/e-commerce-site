@@ -49,7 +49,7 @@ export const productSlice = createSlice({
         action.payload.itemPrice = (+action.payload.price * +action.payload.quantity).toFixed(2);
         state.shoppingCartItem.push(action.payload);
       } else {
-        state.shoppingCartItem[targetIndex].quantity += 1;
+        state.shoppingCartItem[targetIndex].quantity += action.payload.quantity;
         state.shoppingCartItem[targetIndex].itemPrice = (+state.shoppingCartItem[targetIndex].price
           * +state.shoppingCartItem[targetIndex].quantity).toFixed(2);
       }

@@ -7,12 +7,19 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { Add, AddShoppingCart, Remove } from '@material-ui/icons';
 import { useParams } from '@reach/router';
+import clsx from 'clsx';
 import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { toggleEnlargedProductImageModal, updateSelectedProductImage, updateSelectedProductImageList } from '../src/productReducers';
+import {
+  addToShoppingCart,
+  toggleEnlargedProductImageModal,
+  updateSelectedProductImage,
+  updateSelectedProductImageList,
+} from '../src/productReducers';
 import productStyle from '../src/productStyle';
 
 interface ProductDescriptionParams{
@@ -40,6 +47,7 @@ const ProductDescription = () => {
     (product) => product.node.contentful_id === params.id,
   )?.node!;
   const [itemQuantity, setItemQuantity] = useState(1);
+  const { enqueueSnackbar } = useSnackbar();
 
   const triggerEnlargeImage = (imageData:ImageDataLike, carouselImageList:ImageDataLike[]) => {
     dispatch(updateSelectedProductImage(imageData));
@@ -47,7 +55,8 @@ const ProductDescription = () => {
     dispatch(toggleEnlargedProductImageModal(true));
   };
 
-  const jsonContentDescription:jsonContentDescriptionData = JSON.parse(
+  const jsonContentDescription:jsonContentDescriptionData = selectedProduct.contentDescription
+  && JSON.parse(
     selectedProduct.contentDescription.raw,
   );
 
@@ -68,6 +77,19 @@ const ProductDescription = () => {
     } else {
       setItemQuantity(1);
     }
+  };
+
+  const onAddToCart = () => {
+    const formattedData = {
+      id: selectedProduct.contentful_id,
+      name: selectedProduct.name,
+      img: getImage(selectedProduct.productImage[0]),
+      price: selectedProduct.discountedPrice
+        ? selectedProduct.discountedPrice.toFixed(2) : selectedProduct.price.toFixed(2),
+      quantity: itemQuantity,
+    } as products.shoppingCartItemData;
+    dispatch(addToShoppingCart(formattedData));
+    enqueueSnackbar(`${selectedProduct.name} had been added to your cart!`);
   };
 
   return (
@@ -103,8 +125,8 @@ const ProductDescription = () => {
       </Grid>
       <Grid item xs={8}>
         <Grid container direction="column">
-          <Typography variant="h5" className={styles.boldText}>Description</Typography>
-          {jsonContentDescription.content.map((description) => (
+          <Typography variant="h5" className={clsx(styles.boldText, styles.bottomSpacing)}>Description</Typography>
+          {jsonContentDescription && jsonContentDescription.content.map((description) => (
             <Typography variant="h6" key={description.content[0].value}>
               {description.content[0].value}
             </Typography>
@@ -137,6 +159,7 @@ const ProductDescription = () => {
               color="secondary"
               endIcon={<AddShoppingCart />}
               size="large"
+              onClick={onAddToCart}
             >
               Add to cart
             </Button>

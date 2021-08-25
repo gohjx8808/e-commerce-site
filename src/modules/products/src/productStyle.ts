@@ -184,6 +184,9 @@ const productStyle = makeStyles((theme) => ({
     borderStyle: 'solid',
     borderColor: theme.palette.secondary.main,
   },
+  bottomSpacing: {
+    paddingBottom: 20,
+  },
 }));
 
 export default productStyle;
