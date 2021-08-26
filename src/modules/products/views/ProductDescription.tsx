@@ -14,6 +14,7 @@ import React from 'react';
 import { useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import { formatPrice } from '../../../utils/helper';
 import {
   addToShoppingCart,
@@ -96,6 +97,7 @@ const ProductDescription = () => {
   return (
     <Grid container spacing={4} className={styles.productDescriptionBg}>
       <Grid item xs={12}>
+        <CustomBreadcrumbs customActiveName={selectedProduct.name} />
         <Typography variant="h4">{selectedProduct.name}</Typography>
       </Grid>
       <Grid item xs={4}>

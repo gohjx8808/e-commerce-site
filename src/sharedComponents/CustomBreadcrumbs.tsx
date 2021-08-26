@@ -15,7 +15,12 @@ const useStyle = makeStyles({
   },
 });
 
-const CustomBreadcrumbs = () => {
+interface CustomBreadcrumbsOwnProps{
+  customActiveName?:string
+}
+
+const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
+  const { customActiveName } = props;
   const location = useLocation();
   const breadcrumbNameMap: { [key: string]: string } = {
     [routeNames.login]: 'Login',
@@ -24,6 +29,7 @@ const CustomBreadcrumbs = () => {
     '/': 'Home',
     [routeNames.checkout]: 'Checkout',
     [routeNames.account]: 'My Account',
+    [routeNames.products]: 'Products',
   };
   const [routesInBetween, setRoutesInBetween] = useState<string[]>([]);
   const styles = useStyle();
@@ -43,9 +49,15 @@ const CustomBreadcrumbs = () => {
           {breadcrumbNameMap[`/${route}`]}
         </Link>
       ))}
-      <Typography color="textPrimary">{breadcrumbNameMap[location.pathname]}</Typography>
+      <Typography color="textPrimary">
+        {customActiveName || breadcrumbNameMap[location.pathname]}
+      </Typography>
     </Breadcrumbs>
   );
+};
+
+CustomBreadcrumbs.defaultProps = {
+  customActiveName: '',
 };
 
 export default CustomBreadcrumbs;
