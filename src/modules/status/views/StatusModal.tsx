@@ -2,7 +2,9 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { graphql, useStaticQuery } from 'gatsby';
 import {
   GatsbyImage, getImage, IGatsbyImageData, ImageDataLike,
@@ -27,6 +29,8 @@ const defaultIGatsbyData:IGatsbyImageData = {
 };
 
 const StatusModal = () => {
+  const theme = useTheme();
+  const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
   const dispatch = useAppDispatch();
   const isStatusModalOpen = useAppSelector((state) => state.status.isStatusModalOpen);
   const statusTitle = useAppSelector((state) => state.status.statusTitle);
@@ -52,14 +56,20 @@ const StatusModal = () => {
 
   useEffect(() => {
     statusQuery.allFile.edges.map((imageData:statusQueryInnerData) => {
-      if (imageData.node.name === 'fail') {
+      if (isXsView) {
+        if (imageData.node.name === 'fail_mobile') {
+          setFailImg(getImage(imageData.node.childImageSharp)!);
+        } else if (imageData.node.name === 'success_mobile') {
+          setSuccessImg(getImage(imageData.node.childImageSharp)!);
+        }
+      } else if (imageData.node.name === 'fail') {
         setFailImg(getImage(imageData.node.childImageSharp)!);
       } else if (imageData.node.name === 'success') {
         setSuccessImg(getImage(imageData.node.childImageSharp)!);
       }
       return null;
     });
-  }, [statusQuery.allFile.edges]);
+  }, [statusQuery.allFile.edges, isXsView]);
 
   return (
     <Backdrop
@@ -70,15 +80,17 @@ const StatusModal = () => {
         <GatsbyImage image={isSuccess ? successImg! : failImg!} alt="fail" />
       </Box>
       <Grid container direction="column" justifyContent="center" alignItems="center" className={styles.absolutePos}>
-        <Typography
-          className={styles.statusTitle}
-          color="secondary"
-        >
-          {statusTitle}
-          {' '}
-          {isSuccess ? 'Success' : 'Error'}
-        </Typography>
-        <Grid item lg={4} sm={7} xs={10}>
+        <Grid item lg={4} sm={7} xs={9}>
+          <Typography
+            className={styles.statusTitle}
+            color="secondary"
+          >
+            {statusTitle}
+            {' '}
+            {isSuccess ? 'Success' : 'Error'}
+          </Typography>
+        </Grid>
+        <Grid item lg={4} sm={7} xs={9}>
           <Typography color="secondary" className={styles.statusMsg}>{statusMsg}</Typography>
         </Grid>
         <Grid container justifyContent="center">

@@ -20,6 +20,7 @@ export default makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: 30,
     textShadow: '0px 1px grey',
+    textAlign: 'center',
   },
   statusMsg: {
     [theme.breakpoints.down('sm')]: {
