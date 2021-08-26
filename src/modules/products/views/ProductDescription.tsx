@@ -4,7 +4,9 @@ import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Add, AddShoppingCart, Remove } from '@material-ui/icons';
 import { useParams } from '@reach/router';
 import clsx from 'clsx';
@@ -44,6 +46,8 @@ const ProductDescription = () => {
   const styles = productStyle();
   const dispatch = useAppDispatch();
   const params:ProductDescriptionParams = useParams();
+  const theme = useTheme();
+  const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
   const allProducts = useAppSelector((state) => state.product.allProducts);
   const selectedProduct = allProducts.find(
     (product) => product.node.contentful_id === params.id,
@@ -100,34 +104,38 @@ const ProductDescription = () => {
         <CustomBreadcrumbs customActiveName={selectedProduct.name} />
         <Typography variant="h4">{selectedProduct.name}</Typography>
       </Grid>
-      <Grid item xs={4}>
-        <Carousel
-          autoPlay
-          indicators={false}
-          navButtonsProps={{
-            className: styles.productCardCarouselNavButton,
-            style: {},
-          }}
-        >
-          {selectedProduct.productImage.map((image) => {
-            const imageData = getImage(image)!;
-            return (
-              <Box
-                className={styles.carouselImageContainer}
-                key={imageData.images.fallback?.src}
-                onClick={() => triggerEnlargeImage(image, selectedProduct.productImage)}
-              >
-                <GatsbyImage
-                  image={imageData}
-                  alt={selectedProduct.name}
-                  className={styles.productDescriptionImg}
-                />
-              </Box>
-            );
-          })}
-        </Carousel>
+      <Grid item lg={4} sm={12}>
+        <Grid container justifyContent="center">
+          <Grid item lg={12} sm={6} xs={12}>
+            <Carousel
+              autoPlay
+              indicators={false}
+              navButtonsProps={{
+                className: styles.productCardCarouselNavButton,
+                style: {},
+              }}
+            >
+              {selectedProduct.productImage.map((image) => {
+                const imageData = getImage(image)!;
+                return (
+                  <Box
+                    className={styles.carouselImageContainer}
+                    key={imageData.images.fallback?.src}
+                    onClick={() => triggerEnlargeImage(image, selectedProduct.productImage)}
+                  >
+                    <GatsbyImage
+                      image={imageData}
+                      alt={selectedProduct.name}
+                      className={styles.productDescriptionImg}
+                    />
+                  </Box>
+                );
+              })}
+            </Carousel>
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item xs={8}>
+      <Grid item lg={8} xs={12}>
         <Grid container direction="column">
           <Typography variant="h5" className={clsx(styles.boldText, styles.bottomSpacing)}>Description</Typography>
           {jsonContentDescription && jsonContentDescription.content.map((description) => (
@@ -137,7 +145,7 @@ const ProductDescription = () => {
           ))}
         </Grid>
         <Grid container spacing={2} alignItems="center" className={styles.topSpacing}>
-          <Grid item xs={6}>
+          <Grid item md={6} sm={4} xs={12}>
             <Typography
               variant="h5"
               className={clsx(styles.boldText, {
@@ -152,12 +160,12 @@ const ProductDescription = () => {
             </Typography>
             )}
           </Grid>
-          <Grid item xs={2}>
+          <Grid item md={2} sm={4} xs={9}>
             <Grid container justifyContent="flex-end">
               <IconButton className={styles.minusIconButton} onClick={reduceItemQuantity}>
                 <Remove />
               </IconButton>
-              <Grid item xs={4}>
+              <Grid item md={4} sm={2} xs={4}>
                 <FormControl hiddenLabel variant="filled" className={styles.quantityInput} size="small">
                   <FilledInput
                     disableUnderline
@@ -172,17 +180,21 @@ const ProductDescription = () => {
               </IconButton>
             </Grid>
           </Grid>
-          <Grid item xs={3}>
-            <Grid container justifyContent="flex-end">
-              <Button
-                variant="contained"
-                color="secondary"
-                endIcon={<AddShoppingCart />}
-                size="large"
-                onClick={onAddToCart}
-              >
-                Add to cart
-              </Button>
+          <Grid item md={3} sm={4} xs={3}>
+            <Grid container justifyContent={isXsView ? 'center' : 'flex-end'}>
+              {isXsView
+                ? <IconButton onClick={onAddToCart} color="secondary"><AddShoppingCart /></IconButton>
+                : (
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    endIcon={<AddShoppingCart />}
+                    size="large"
+                    onClick={onAddToCart}
+                  >
+                    Add to cart
+                  </Button>
+                )}
             </Grid>
           </Grid>
         </Grid>
