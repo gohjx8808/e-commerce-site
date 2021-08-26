@@ -20,14 +20,12 @@ const productStyle = makeStyles((theme) => ({
   },
   dicountedPriceOriText: {
     textDecoration: 'line-through',
-    textDecorationColor: 'red',
+    textDecorationColor: 'grey',
+    color: 'grey',
   },
   discountedPriceText: {
-    color: 'red',
+    color: theme.palette.secondary.main,
     fontWeight: 'bold',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '0.8rem',
-    },
   },
   productNameContainer: {
     [theme.breakpoints.down('xs')]: {

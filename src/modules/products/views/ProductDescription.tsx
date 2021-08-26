@@ -145,27 +145,33 @@ const ProductDescription = () => {
           ))}
         </Grid>
         <Grid container spacing={2} alignItems="center" className={styles.topSpacing}>
-          <Grid item md={6} sm={4} xs={12}>
-            <Typography
-              variant="h5"
-              className={clsx(styles.boldText, {
-                [styles.dicountedPriceOriText]: selectedProduct.discountedPrice,
-              })}
-            >
-              {formatPrice(selectedProduct.price, 'MYR')}
-            </Typography>
-            {selectedProduct.discountedPrice && (
-            <Typography variant="h5" className={styles.discountedPriceText}>
-              {formatPrice(selectedProduct.discountedPrice, 'MYR')}
-            </Typography>
-            )}
+          <Grid item md={6} sm={5} xs={12}>
+            <Grid container spacing={2}>
+              <Grid item>
+                <Typography
+                  variant="h5"
+                  className={clsx(styles.boldText, {
+                    [styles.dicountedPriceOriText]: selectedProduct.discountedPrice,
+                  })}
+                >
+                  {formatPrice(selectedProduct.price, 'MYR')}
+                </Typography>
+              </Grid>
+              <Grid item>
+                {selectedProduct.discountedPrice && (
+                <Typography variant="h5" className={styles.discountedPriceText}>
+                  {formatPrice(selectedProduct.discountedPrice, 'MYR')}
+                </Typography>
+                )}
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item md={2} sm={4} xs={9}>
+          <Grid item md={2} sm={3} xs={9}>
             <Grid container justifyContent="flex-end">
               <IconButton className={styles.minusIconButton} onClick={reduceItemQuantity}>
                 <Remove />
               </IconButton>
-              <Grid item md={4} sm={2} xs={4}>
+              <Grid item xs={4}>
                 <FormControl hiddenLabel variant="filled" className={styles.quantityInput} size="small">
                   <FilledInput
                     disableUnderline
