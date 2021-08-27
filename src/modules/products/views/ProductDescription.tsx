@@ -1,5 +1,6 @@
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
@@ -230,14 +231,20 @@ const ProductDescription = () => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
+        <Divider />
+      </Grid>
+      <Grid item xs={12}>
         <Typography variant="h6">You may also like</Typography>
-        <Carousel autoPlay>
+        <Carousel>
           {productRecommendation.map((productArray) => (
             <Grid container spacing={2} justifyContent="center">
               {productArray.map((product) => {
                 const imageData = getImage(product.productImage[0])!;
                 return (
                   <Grid item xs={2}>
+                    <Grid container alignItems="center" justifyContent="center" className={styles.productRecommendationNameContainer}>
+                      <Typography variant="h6" className={styles.centerText}>{product.name}</Typography>
+                    </Grid>
                     <GatsbyImage
                       image={imageData}
                       alt={product.name}

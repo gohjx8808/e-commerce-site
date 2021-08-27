@@ -188,6 +188,9 @@ const productStyle = makeStyles((theme) => ({
   productDescriptionImg: {
     borderRadius: 8,
   },
+  productRecommendationNameContainer: {
+    height: 64,
+  },
 }));
 
 export default productStyle;
