@@ -13,6 +13,7 @@ import clsx from 'clsx';
 import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
 import { useSnackbar } from 'notistack';
 import React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -52,8 +53,31 @@ const ProductDescription = () => {
   const selectedProduct = allProducts.find(
     (product) => product.node.contentful_id === params.id,
   )?.node!;
+
   const [itemQuantity, setItemQuantity] = useState(1);
+  const [productRecommendation, setProductRecommendation] = useState<products.productData[][]>([]);
   const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    const otherProducts = allProducts.filter(
+      (product) => product.node.contentful_id !== params.id,
+    ).sort(() => Math.random() - 0.5).slice(0, 10);
+    const overallProductArray:products.productData[][] = [];
+    let innerProductArray:products.productData[] = [];
+    let counter = 0;
+
+    otherProducts.map((product) => {
+      if (counter !== 0 && counter % 5 === 0) {
+        overallProductArray.push(innerProductArray);
+        innerProductArray = [];
+      }
+      innerProductArray.push(product.node);
+      counter += 1;
+      return null;
+    });
+    overallProductArray.push(innerProductArray);
+    setProductRecommendation(overallProductArray);
+  }, [allProducts, params.id]);
 
   const triggerEnlargeImage = (imageData:ImageDataLike, carouselImageList:ImageDataLike[]) => {
     dispatch(updateSelectedProductImage(imageData));
@@ -204,6 +228,27 @@ const ProductDescription = () => {
             </Grid>
           </Grid>
         </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="h6">You may also like</Typography>
+        <Carousel autoPlay>
+          {productRecommendation.map((productArray) => (
+            <Grid container spacing={2} justifyContent="center">
+              {productArray.map((product) => {
+                const imageData = getImage(product.productImage[0])!;
+                return (
+                  <Grid item xs={2}>
+                    <GatsbyImage
+                      image={imageData}
+                      alt={product.name}
+                      className={styles.productDescriptionImg}
+                    />
+                  </Grid>
+                );
+              })}
+            </Grid>
+          ))}
+        </Carousel>
       </Grid>
     </Grid>
   );

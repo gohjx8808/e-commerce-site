@@ -186,7 +186,7 @@ const productStyle = makeStyles((theme) => ({
     paddingBottom: 20,
   },
   productDescriptionImg: {
-    borderRadius: 5,
+    borderRadius: 8,
   },
 }));
 
