@@ -1,7 +1,20 @@
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({ plugins: [new NodePolyfillPlugin()], resolve: { fallback: { fs: 'empty' } } });
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+  if (stage === 'build-html') {
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /redux-state-sync/,
+            use: loaders.null(),
+          },
+        ],
+      },
+      plugins: [new NodePolyfillPlugin()],
+      resolve: { fallback: { fs: 'empty' } },
+    });
+  }
 };
 
 exports.onCreatePage = ({ page, actions }) => {
