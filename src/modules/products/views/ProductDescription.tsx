@@ -19,6 +19,7 @@ import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import { formatPrice } from '../../../utils/helper';
+import routeNames from '../../../utils/routeNames';
 import {
   addToShoppingCart,
   toggleEnlargedProductImageModal,
@@ -233,7 +234,12 @@ const ProductDescription = () => {
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h6">You may also like...</Typography>
+        <Grid container justifyContent="space-between">
+          <Typography variant="h6">You may also like...</Typography>
+          <Link target="_blank" rel="noreferrer" href={routeNames.products} color="textPrimary">
+            <Typography variant="body1">View All Products</Typography>
+          </Link>
+        </Grid>
         <Carousel className={styles.minorSpacingTop}>
           {productRecommendation.map((productArray) => (
             <Grid container spacing={2} justifyContent="center">
