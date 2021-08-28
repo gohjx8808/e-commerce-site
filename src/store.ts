@@ -10,7 +10,10 @@ const sagaMiddleware = createSagaMiddleware();
 const persistedState = loadState();
 
 const config = {
-  blacklist: ['auth/submitSignIn', 'status/toggleStatusModal', 'auth/getCurrentUserDetailsAction'],
+  whitelist: [
+    'product/addToShoppingCart',
+    'auth/clearCurrentUser',
+  ],
 };
 
 export function initializeStore(initialState = persistedState) {
