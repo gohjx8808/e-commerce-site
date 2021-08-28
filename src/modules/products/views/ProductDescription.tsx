@@ -67,15 +67,16 @@ const ProductDescription = () => {
   const isKeyChainSeries = selectedProduct.category === 'Keychain Series';
 
   useEffect(() => {
+    const productRecommendationAmount = isXsView ? 4 : 10;
     const otherProducts = allProducts.filter(
       (product) => product.node.contentful_id !== params.id,
-    ).sort(() => Math.random() - 0.5).slice(0, 10);
+    ).sort(() => Math.random() - 0.5).slice(0, productRecommendationAmount);
     const overallProductArray:products.productData[][] = [];
     let innerProductArray:products.productData[] = [];
     let counter = 0;
 
     otherProducts.map((product) => {
-      if (counter !== 0 && counter % 5 === 0) {
+      if (counter !== 0 && counter % (productRecommendationAmount / 2) === 0) {
         overallProductArray.push(innerProductArray);
         innerProductArray = [];
       }
@@ -85,7 +86,7 @@ const ProductDescription = () => {
     });
     overallProductArray.push(innerProductArray);
     setProductRecommendation(overallProductArray);
-  }, [allProducts, params.id]);
+  }, [allProducts, params.id, isXsView]);
 
   const triggerEnlargeImage = (imageData:ImageDataLike, carouselImageList:ImageDataLike[]) => {
     dispatch(updateSelectedProductImage(imageData));
@@ -235,9 +236,9 @@ const ProductDescription = () => {
               </Grid>
               <Grid item>
                 {selectedProduct.discountedPrice && (
-                <Typography variant="h5" className={styles.discountedPriceText}>
-                  {formatPrice(selectedProduct.discountedPrice, 'MYR')}
-                </Typography>
+                  <Typography variant="h5" className={styles.discountedPriceText}>
+                    {formatPrice(selectedProduct.discountedPrice, 'MYR')}
+                  </Typography>
                 )}
               </Grid>
             </Grid>
@@ -285,19 +286,20 @@ const ProductDescription = () => {
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        <Grid container justifyContent="space-between">
-          <Typography variant="h6">You may also like...</Typography>
-          <Link target="_blank" rel="noreferrer" href={routeNames.products} color="textPrimary">
-            <Typography variant="body1">View All Products</Typography>
-          </Link>
-        </Grid>
-        <Carousel className={styles.minorSpacingTop}>
+        <Typography variant="h6">You may also like...</Typography>
+        <Carousel
+          className={styles.minorSpacingTop}
+          navButtonsProps={{
+            className: styles.productCardCarouselNavButton,
+            style: {},
+          }}
+        >
           {productRecommendation.map((productArray) => (
             <Grid container spacing={2} justifyContent="center" key={productArray.toString()}>
               {productArray.map((product) => {
                 const imageData = getImage(product.productImage[0])!;
                 return (
-                  <Grid item xs={2} key={product.contentful_id}>
+                  <Grid item xs={6} sm={2} key={product.contentful_id}>
                     <Link target="_blank" rel="noreferrer" href={`/products/${product.contentful_id}`}>
                       <Grid container alignItems="center" justifyContent="center" className={styles.productRecommendationNameContainer}>
                         <Typography variant="h6" color="secondary" className={styles.centerText}>{product.name}</Typography>
@@ -314,6 +316,11 @@ const ProductDescription = () => {
             </Grid>
           ))}
         </Carousel>
+        <Grid container justifyContent="flex-end">
+          <Link target="_blank" rel="noreferrer" href={routeNames.products} color="textPrimary">
+            <Typography variant="body1">View All Products</Typography>
+          </Link>
+        </Grid>
       </Grid>
       <ProductErrorSnackbar isSnackbarOpen={isErrorSnackbarOpen} toggleSnackbar={toggleErrorSnackbar} msg="Please select one variation to proceed!" />
     </Grid>
