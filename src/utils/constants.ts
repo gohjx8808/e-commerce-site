@@ -40,3 +40,8 @@ export const defaultAddressData = {
   tag: '',
   email: '',
 };
+
+export const itemVariationOptions = [
+  { label: 'With Keychain', value: 'With Keychain' },
+  { label: 'Without Keychain', value: 'Without Keychain' },
+];

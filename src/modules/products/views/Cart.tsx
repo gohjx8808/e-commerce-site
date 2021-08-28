@@ -21,7 +21,7 @@ import {
   increaseQuantity, reduceQuantity, removeItemFromCart, updateSelectedCheckoutItemsID,
 } from '../src/productReducers';
 import productStyle from '../src/productStyle';
-import CheckoutErrorSnackbar from './CheckoutErrorSnackbar';
+import ProductErrorSnackbar from './ProductErrorSnackbar';
 import ItemRemoveConfirmationDialog from './ItemRemoveConfirmationDialog';
 
 type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -391,9 +391,10 @@ const Cart = () => {
         toggleModal={toggleRemoveConfirmModalDisplay}
         confirmRemove={confirmItemRemove}
       />
-      <CheckoutErrorSnackbar
+      <ProductErrorSnackbar
         isSnackbarOpen={isCheckoutError}
         toggleSnackbar={() => setIsCheckoutError(false)}
+        msg="Please select at least one item to proceed!"
       />
     </Grid>
   );

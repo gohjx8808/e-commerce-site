@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { alpha, makeStyles } from '@material-ui/core/styles';
 
 const productStyle = makeStyles((theme) => ({
   productCard: {
@@ -193,6 +193,17 @@ const productStyle = makeStyles((theme) => ({
   },
   minorSpacingTop: {
     paddingTop: 10,
+  },
+  itemVariation: {
+    borderRadius: '8px!important',
+    borderWidth: '1px!important',
+    borderColor: 'rgb(0 0 0 / 38%)!important',
+    marginRight: 5,
+  },
+  productVariationActiveColor: {
+    borderColor: `${theme.palette.secondary.main}!important`,
+    color: `${theme.palette.secondary.main}!important`,
+    backgroundColor: `${alpha(theme.palette.secondary.main, 0.12)}!important`,
   },
 }));
 

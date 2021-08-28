@@ -10,6 +10,8 @@ import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Add, AddShoppingCart, Remove } from '@material-ui/icons';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { useParams } from '@reach/router';
 import clsx from 'clsx';
 import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
@@ -18,6 +20,7 @@ import React, { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
+import { itemVariationOptions } from '../../../utils/constants';
 import { formatPrice } from '../../../utils/helper';
 import routeNames from '../../../utils/routeNames';
 import {
@@ -27,6 +30,7 @@ import {
   updateSelectedProductImageList,
 } from '../src/productReducers';
 import productStyle from '../src/productStyle';
+import ProductErrorSnackbar from './ProductErrorSnackbar';
 
 interface ProductDescriptionParams{
   id:string
@@ -56,8 +60,11 @@ const ProductDescription = () => {
   )?.node!;
 
   const [itemQuantity, setItemQuantity] = useState(1);
+  const [itemVariation, setItemVariation] = useState('');
+  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
   const [productRecommendation, setProductRecommendation] = useState<products.productData[][]>([]);
   const { enqueueSnackbar } = useSnackbar();
+  const isKeyChainSeries = selectedProduct.category === 'Keychain Series';
 
   useEffect(() => {
     const otherProducts = allProducts.filter(
@@ -111,16 +118,24 @@ const ProductDescription = () => {
   };
 
   const onAddToCart = () => {
-    const formattedData = {
-      id: selectedProduct.contentful_id,
-      name: selectedProduct.name,
-      img: getImage(selectedProduct.productImage[0]),
-      price: selectedProduct.discountedPrice
-        ? selectedProduct.discountedPrice.toFixed(2) : selectedProduct.price.toFixed(2),
-      quantity: itemQuantity,
-    } as products.shoppingCartItemData;
-    dispatch(addToShoppingCart(formattedData));
-    enqueueSnackbar(`${selectedProduct.name} had been added to your cart!`);
+    if ((itemVariation && isKeyChainSeries) || !isKeyChainSeries) {
+      const formattedData = {
+        id: selectedProduct.contentful_id,
+        name: selectedProduct.name,
+        img: getImage(selectedProduct.productImage[0]),
+        price: selectedProduct.discountedPrice
+          ? selectedProduct.discountedPrice.toFixed(2) : selectedProduct.price.toFixed(2),
+        quantity: itemQuantity,
+      } as products.shoppingCartItemData;
+      dispatch(addToShoppingCart(formattedData));
+      enqueueSnackbar(`${selectedProduct.name} had been added to your cart!`);
+    } else {
+      toggleErrorSnackbar();
+    }
+  };
+
+  const toggleErrorSnackbar = () => {
+    setIsErrorSnackbarOpen(!isErrorSnackbarOpen);
   };
 
   return (
@@ -169,6 +184,33 @@ const ProductDescription = () => {
             </Typography>
           ))}
         </Grid>
+        {isKeyChainSeries && (
+          <>
+            <Typography variant="h6" className={clsx(styles.boldText, styles.minorSpacingTop)}>Variations</Typography>
+            <ToggleButtonGroup
+              value={itemVariation}
+              exclusive
+              onChange={(_event: React.MouseEvent<HTMLElement>, newValue: string) => {
+                setItemVariation(newValue);
+              }}
+              aria-label="variation"
+            >
+              {itemVariationOptions.map((option) => (
+                <ToggleButton
+                  key={option.value}
+                  className={styles.itemVariation}
+                  classes={{
+                    selected: styles.productVariationActiveColor,
+                  }}
+                  value={option.value}
+                  aria-label={option.label}
+                >
+                  <Typography>{option.label}</Typography>
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          </>
+        )}
         <Grid container spacing={2} alignItems="center" className={styles.topSpacing}>
           <Grid item md={6} sm={5} xs={12}>
             <Grid container spacing={2}>
@@ -264,6 +306,7 @@ const ProductDescription = () => {
           ))}
         </Carousel>
       </Grid>
+      <ProductErrorSnackbar isSnackbarOpen={isErrorSnackbarOpen} toggleSnackbar={toggleErrorSnackbar} msg="Please select one variation to proceed!" />
     </Grid>
   );
 };
