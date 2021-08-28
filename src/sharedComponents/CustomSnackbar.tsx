@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   card: {
-    backgroundColor: 'grey',
+    backgroundColor: theme.palette.secondary.main,
     width: '100%',
   },
   snackbarMsg: {

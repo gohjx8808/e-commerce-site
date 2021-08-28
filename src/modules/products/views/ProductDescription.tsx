@@ -60,7 +60,7 @@ const ProductDescription = () => {
   )?.node!;
 
   const [itemQuantity, setItemQuantity] = useState(1);
-  const [itemVariation, setItemVariation] = useState('');
+  const [selectedItemVariation, setSelectedItemVariation] = useState('');
   const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
   const [productRecommendation, setProductRecommendation] = useState<products.productData[][]>([]);
   const { enqueueSnackbar } = useSnackbar();
@@ -118,17 +118,26 @@ const ProductDescription = () => {
   };
 
   const onAddToCart = () => {
-    if ((itemVariation && isKeyChainSeries) || !isKeyChainSeries) {
+    if ((selectedItemVariation && isKeyChainSeries) || !isKeyChainSeries) {
+      let variationSuffix = '';
+      if (isKeyChainSeries) {
+        if (selectedItemVariation === 'With Keychain') {
+          variationSuffix = ' (W)';
+        } else {
+          variationSuffix = ' (N)';
+        }
+      }
+      const productName = selectedProduct.name + variationSuffix;
       const formattedData = {
-        id: selectedProduct.contentful_id,
-        name: selectedProduct.name,
+        id: selectedProduct.contentful_id + variationSuffix,
+        name: productName,
         img: getImage(selectedProduct.productImage[0]),
         price: selectedProduct.discountedPrice
           ? selectedProduct.discountedPrice.toFixed(2) : selectedProduct.price.toFixed(2),
         quantity: itemQuantity,
       } as products.shoppingCartItemData;
       dispatch(addToShoppingCart(formattedData));
-      enqueueSnackbar(`${selectedProduct.name} had been added to your cart!`);
+      enqueueSnackbar(`${productName} had been added to your cart!`);
     } else {
       toggleErrorSnackbar();
     }
@@ -188,10 +197,10 @@ const ProductDescription = () => {
           <>
             <Typography variant="h6" className={clsx(styles.boldText, styles.minorSpacingTop)}>Variations</Typography>
             <ToggleButtonGroup
-              value={itemVariation}
+              value={selectedItemVariation}
               exclusive
               onChange={(_event: React.MouseEvent<HTMLElement>, newValue: string) => {
-                setItemVariation(newValue);
+                setSelectedItemVariation(newValue);
               }}
               aria-label="variation"
             >
@@ -284,11 +293,11 @@ const ProductDescription = () => {
         </Grid>
         <Carousel className={styles.minorSpacingTop}>
           {productRecommendation.map((productArray) => (
-            <Grid container spacing={2} justifyContent="center">
+            <Grid container spacing={2} justifyContent="center" key={productArray.toString()}>
               {productArray.map((product) => {
                 const imageData = getImage(product.productImage[0])!;
                 return (
-                  <Grid item xs={2}>
+                  <Grid item xs={2} key={product.contentful_id}>
                     <Link target="_blank" rel="noreferrer" href={`/products/${product.contentful_id}`}>
                       <Grid container alignItems="center" justifyContent="center" className={styles.productRecommendationNameContainer}>
                         <Typography variant="h6" color="secondary" className={styles.centerText}>{product.name}</Typography>
