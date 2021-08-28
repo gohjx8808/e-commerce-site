@@ -191,6 +191,9 @@ const productStyle = makeStyles((theme) => ({
   productRecommendationNameContainer: {
     height: 64,
   },
+  minorSpacingTop: {
+    paddingTop: 10,
+  },
 }));
 
 export default productStyle;

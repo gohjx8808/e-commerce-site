@@ -5,6 +5,7 @@ import FilledInput from '@material-ui/core/FilledInput';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Link from '@material-ui/core/Link';
 import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -13,9 +14,7 @@ import { useParams } from '@reach/router';
 import clsx from 'clsx';
 import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
 import { useSnackbar } from 'notistack';
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
@@ -234,22 +233,24 @@ const ProductDescription = () => {
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h6">You may also like</Typography>
-        <Carousel>
+        <Typography variant="h6">You may also like...</Typography>
+        <Carousel className={styles.minorSpacingTop}>
           {productRecommendation.map((productArray) => (
             <Grid container spacing={2} justifyContent="center">
               {productArray.map((product) => {
                 const imageData = getImage(product.productImage[0])!;
                 return (
                   <Grid item xs={2}>
-                    <Grid container alignItems="center" justifyContent="center" className={styles.productRecommendationNameContainer}>
-                      <Typography variant="h6" className={styles.centerText}>{product.name}</Typography>
-                    </Grid>
-                    <GatsbyImage
-                      image={imageData}
-                      alt={product.name}
-                      className={styles.productDescriptionImg}
-                    />
+                    <Link target="_blank" rel="noreferrer" href={`/products/${product.contentful_id}`}>
+                      <Grid container alignItems="center" justifyContent="center" className={styles.productRecommendationNameContainer}>
+                        <Typography variant="h6" color="secondary" className={styles.centerText}>{product.name}</Typography>
+                      </Grid>
+                      <GatsbyImage
+                        image={imageData}
+                        alt={product.name}
+                        className={styles.productDescriptionImg}
+                      />
+                    </Link>
                   </Grid>
                 );
               })}
