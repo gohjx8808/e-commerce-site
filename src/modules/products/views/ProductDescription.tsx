@@ -1,3 +1,7 @@
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import {
+  Block, BLOCKS, Document, Inline, MARKS,
+} from '@contentful/rich-text-types';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -34,18 +38,6 @@ import ProductErrorSnackbar from './ProductErrorSnackbar';
 
 interface ProductDescriptionParams{
   id:string
-}
-
-interface jsonContentDescriptionData{
-  content:contentData[]
-}
-
-interface contentData{
-  content:innerContentData[]
-}
-
-interface innerContentData{
-  value:string
 }
 
 const ProductDescription = () => {
@@ -94,7 +86,7 @@ const ProductDescription = () => {
     dispatch(toggleEnlargedProductImageModal(true));
   };
 
-  const jsonContentDescription:jsonContentDescriptionData = selectedProduct.contentDescription
+  const jsonContentDescription:Document = selectedProduct.contentDescription
   && JSON.parse(
     selectedProduct.contentDescription.raw,
   );
@@ -148,6 +140,19 @@ const ProductDescription = () => {
     setIsErrorSnackbarOpen(!isErrorSnackbarOpen);
   };
 
+  const options = {
+    renderMark: {
+      [MARKS.BOLD]: (text:React.ReactNode) => (
+        <span className={styles.boldText}>{text}</span>
+      ),
+    },
+    renderNode: {
+      [BLOCKS.PARAGRAPH]: (_node:Block | Inline, children:React.ReactNode) => (
+        <div><Typography variant="h6">{children}</Typography></div>
+      ),
+    },
+  };
+
   return (
     <Grid container spacing={4} className={styles.productDescriptionBg}>
       <Grid item xs={12}>
@@ -188,11 +193,7 @@ const ProductDescription = () => {
       <Grid item lg={8} xs={12}>
         <Grid container direction="column">
           <Typography variant="h5" className={clsx(styles.boldText, styles.bottomSpacing)}>Description</Typography>
-          {jsonContentDescription && jsonContentDescription.content.map((description) => (
-            <Typography variant="h6" key={description.content[0].value}>
-              {description.content[0].value}
-            </Typography>
-          ))}
+          {documentToReactComponents(jsonContentDescription, options)}
         </Grid>
         {isKeyChainSeries && (
           <>
