@@ -43,48 +43,55 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
           {selectedAddress.addressLine1 && <Button variant="outlined" onClick={clearSelection}>Clear selection</Button>}
         </Grid>
       </DialogTitle>
-      <List>
-        {addressList && addressList.map((address) => (
-          <ListItem
-            button
-            selected={address === selectedAddress}
-            onClick={() => onSelectAddress(address)}
-            key={address.addressLine1}
-          >
-            <ListItemText
-              primary={(
-                <>
-                  <Grid container>
-                    <Grid item xs={5}>
-                      <Typography className={styles.boldText}>{address.fullName}</Typography>
+
+      {addressList ? (
+        <List>
+          {addressList.map((address) => (
+            <ListItem
+              button
+              selected={address === selectedAddress}
+              onClick={() => onSelectAddress(address)}
+              key={address.addressLine1}
+            >
+              <ListItemText
+                primary={(
+                  <>
+                    <Grid container>
+                      <Grid item xs={5}>
+                        <Typography className={styles.boldText}>{address.fullName}</Typography>
+                      </Grid>
+                      <Divider orientation="vertical" flexItem variant="middle" />
+                      <Grid item xs={5}>
+                        <Typography className={styles.boldText}>{address.phoneNumber}</Typography>
+                      </Grid>
                     </Grid>
-                    <Divider orientation="vertical" flexItem variant="middle" />
-                    <Grid item xs={5}>
-                      <Typography className={styles.boldText}>{address.phoneNumber}</Typography>
-                    </Grid>
-                  </Grid>
-                  <Typography className={styles.boldText}>{address.email}</Typography>
-                  <Typography>
-                    {address.addressLine1}
-                    {' '}
-                    {address.addressLine2}
-                  </Typography>
-                  <Typography>
-                    {address.postcode}
-                    {' '}
-                    {address.city}
-                  </Typography>
-                  <Typography>
-                    {address.outsideMalaysiaState ? address.outsideMalaysiaState : address.state}
-                    {', '}
-                    {address.country}
-                  </Typography>
-                </>
-              )}
-            />
-          </ListItem>
-        ))}
-      </List>
+                    <Typography className={styles.boldText}>{address.email}</Typography>
+                    <Typography>
+                      {address.addressLine1}
+                      {' '}
+                      {address.addressLine2}
+                    </Typography>
+                    <Typography>
+                      {address.postcode}
+                      {' '}
+                      {address.city}
+                    </Typography>
+                    <Typography>
+                      {address.outsideMalaysiaState ? address.outsideMalaysiaState : address.state}
+                      {', '}
+                      {address.country}
+                    </Typography>
+                  </>
+                )}
+              />
+            </ListItem>
+          ))}
+        </List>
+      ) : (
+        <Grid container justifyContent="center" className={styles.bottomSpacing}>
+          <Typography variant="h6">No address is added yet!</Typography>
+        </Grid>
+      )}
     </Dialog>
   );
 };
