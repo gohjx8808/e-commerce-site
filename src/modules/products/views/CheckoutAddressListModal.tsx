@@ -44,7 +44,7 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
         </Grid>
       </DialogTitle>
       <List>
-        {addressList.map((address) => (
+        {addressList && addressList.map((address) => (
           <ListItem
             button
             selected={address === selectedAddress}

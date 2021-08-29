@@ -90,5 +90,6 @@ declare namespace products{
     shippingFee:number
     selectedCheckoutItems:shoppingCartItemData[]
     saveShippingInfo:boolean
+    note:string
   }
 }

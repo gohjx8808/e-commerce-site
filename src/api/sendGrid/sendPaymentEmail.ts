@@ -26,6 +26,7 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
       checkoutItems: postData.selectedCheckoutItems,
       shippingFee: formatPrice(postData.shippingFee, 'MYR'),
       totalAmount: formatPrice(postData.totalAmount, 'MYR'),
+      note: postData.note,
     },
   }, {
     to: 'piggy.chiah@gmail.com',
@@ -44,6 +45,7 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
       checkoutItems: postData.selectedCheckoutItems,
       shippingFee: formatPrice(postData.shippingFee, 'MYR'),
       totalAmount: formatPrice(postData.totalAmount, 'MYR'),
+      note: postData.note,
     },
   }];
 

@@ -390,7 +390,7 @@ const Checkout = () => {
                   <Grid item xs={12}>
                     <ControlledTextInput
                       control={control}
-                      name="notesToSeller"
+                      name="note"
                       variant="outlined"
                       label="Notes to seller (optional)"
                       labelWidth={160}
