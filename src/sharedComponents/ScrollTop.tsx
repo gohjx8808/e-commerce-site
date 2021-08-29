@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   mostBottom: {
     [theme.breakpoints.down('md')]: {
-      bottom: theme.spacing(10),
+      bottom: theme.spacing(8),
     },
   },
 }));
@@ -46,13 +46,11 @@ const ScrollTop = (props: Props) => {
   };
 
   useEffect(() => {
-    const handleOnScroll = () => {
-      const mostBottomAnchor = document.querySelector('#most-bottom-anchor')!;
-      setIsMostBottom(isInViewport(mostBottomAnchor));
-    };
-    window.addEventListener('scroll', handleOnScroll);
+    const mostBottomAnchor = document.querySelector('#most-bottom-anchor')!;
+    const handleOnScroll = () => setIsMostBottom(isInViewport(mostBottomAnchor));
+    window.addEventListener('scroll', handleOnScroll, true);
 
-    return () => window.removeEventListener('scroll', handleOnScroll);
+    return () => window.removeEventListener('scroll', handleOnScroll, true);
   }, []);
 
   const isInViewport = (element:Element) => {
