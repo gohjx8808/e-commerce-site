@@ -2,7 +2,6 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {
@@ -18,6 +17,7 @@ import { useLocation } from '@reach/router';
 import clsx from 'clsx';
 import { navigate } from 'gatsby';
 import React from 'react';
+import StyledMenuItem from '../sharedComponents/StyledMenuItem';
 import routeNames from '../utils/routeNames';
 
 const drawerWidth = 210;
@@ -85,19 +85,19 @@ const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
       </div>
       <Divider />
       <List>
-        <ListItem button selected={currentPathName === '/'} onClick={() => navigate('/')}>
+        <StyledMenuItem button selected={currentPathName === '/'} onClick={() => navigate('/')}>
           <ListItemIcon>
             <HomeOutlined />
           </ListItemIcon>
           <ListItemText primary="Home" />
-        </ListItem>
+        </StyledMenuItem>
         {/* <ListItem button selected={currentPathName === '/introduction'}>
           <ListItemIcon>
             <InsertEmoticon />
           </ListItemIcon>
           <ListItemText primary="Introduction" />
         </ListItem> */}
-        <ListItem
+        <StyledMenuItem
           button
           selected={currentPathName === routeNames.imageGallery}
           onClick={() => navigate(routeNames.imageGallery)}
@@ -106,8 +106,8 @@ const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
             <PhotoLibrary />
           </ListItemIcon>
           <ListItemText primary="Image Gallery" />
-        </ListItem>
-        <ListItem
+        </StyledMenuItem>
+        <StyledMenuItem
           button
           selected={currentPathName === routeNames.products}
           onClick={() => navigate(routeNames.products)}
@@ -116,7 +116,7 @@ const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
             <ImageSearchOutlined />
           </ListItemIcon>
           <ListItemText primary="Products" />
-        </ListItem>
+        </StyledMenuItem>
         {/* <ListItem button selected={currentPathName === '/sharingCorner'}>
           <ListItemIcon>
             <ChatOutlined />
