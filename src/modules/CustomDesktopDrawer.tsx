@@ -41,10 +41,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: 0,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(7) + 1,
-    },
+    width: theme.spacing(7) + 1,
   },
   toolbar: {
     display: 'flex',
@@ -56,12 +53,12 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
-interface CustomDrawerOwnProps{
+interface CustomDesktopDrawerOwnProps{
   drawerOpen:boolean
   handleDrawerClose:()=>void
 }
 
-const CustomDrawer = (props:CustomDrawerOwnProps) => {
+const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
   const { drawerOpen, handleDrawerClose } = props;
   const classes = useStyles();
   const location = useLocation();
@@ -143,4 +140,4 @@ const CustomDrawer = (props:CustomDrawerOwnProps) => {
   );
 };
 
-export default CustomDrawer;
+export default CustomDesktopDrawer;

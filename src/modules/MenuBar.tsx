@@ -8,10 +8,11 @@ import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import Menu from '@material-ui/core/Menu';
 import {
-  alpha, createStyles, makeStyles, Theme,
+  alpha, createStyles, makeStyles, Theme, useTheme,
 } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ExitToApp, ShoppingCart } from '@material-ui/icons';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -27,7 +28,8 @@ import StyledMenuItem from '../sharedComponents/StyledMenuItem';
 import routeNames from '../utils/routeNames';
 import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
 import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
-import CustomDrawer from './CustomDrawer';
+import CustomDesktopDrawer from './CustomDesktopDrawer';
+import CustomMobileDrawer from './CustomMobileDrawer';
 import { updateProductFilterKeyword } from './products/src/productReducers';
 
 const drawerWidth = 210;
@@ -101,15 +103,19 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
   },
   hide: {
-    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -135,6 +141,8 @@ const MenuBar = () => {
   const shoppingCartItem = useAppSelector((state) => state.product.shoppingCartItem);
   const [totalQuantity, setTotalQuantity] = useState(0);
   const dispatch = useAppDispatch();
+  const theme = useTheme();
+  const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
 
   useEffect(() => {
     let total = 0;
@@ -222,12 +230,8 @@ const MenuBar = () => {
     dispatch(updateProductFilterKeyword(event.target.value));
   };
 
-  const handleDrawerOpen = () => {
-    setDrawerOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setDrawerOpen(false);
+  const toggleDrawer = () => {
+    setDrawerOpen(!drawerOpen);
   };
 
   return (
@@ -247,7 +251,7 @@ const MenuBar = () => {
               })}
               color="inherit"
               aria-label="open drawer"
-              onClick={handleDrawerOpen}
+              onClick={toggleDrawer}
             >
               <MenuIcon />
             </IconButton>
@@ -326,7 +330,9 @@ const MenuBar = () => {
       </ElevationScroll>
       <Toolbar id="back-to-top-anchor" />
       {renderMobileMenu}
-      <CustomDrawer drawerOpen={drawerOpen} handleDrawerClose={handleDrawerClose} />
+      {!isXsView
+        ? <CustomDesktopDrawer drawerOpen={drawerOpen} handleDrawerClose={toggleDrawer} />
+        : <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />}
       <SignOutConfirmationModal />
     </Box>
   );
