@@ -18,11 +18,13 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
+import { useLocation } from '@reach/router';
 import clsx from 'clsx';
 import { navigate } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
+import StyledMenuItem from '../sharedComponents/StyledMenuItem';
 import routeNames from '../utils/routeNames';
 import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
 import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
@@ -95,6 +97,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   nameBtn: {
     textTransform: 'none',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
   hide: {
     display: 'none',
@@ -124,6 +129,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const MenuBar = () => {
   const classes = useStyles();
+  const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mobileMoreAnchor, setMobileMoreAnchor] = useState<null | HTMLElement>(null);
   const currentUserDetail = useAppSelector((state) => state.auth.currentUser);
@@ -185,7 +191,10 @@ const MenuBar = () => {
         )}
       {currentUserDetail.fullName !== '' && (
         <div>
-          <MenuItem onClick={() => navigate(routeNames.account)}>
+          <StyledMenuItem
+            onClick={() => navigate(routeNames.account)}
+            selected={location.pathname === routeNames.account}
+          >
             <IconButton
               aria-label="account"
               color="inherit"
@@ -193,8 +202,8 @@ const MenuBar = () => {
               <AccountCircle />
             </IconButton>
             <Typography>Profile</Typography>
-          </MenuItem>
-          <MenuItem onClick={promptSignOut}>
+          </StyledMenuItem>
+          <StyledMenuItem onClick={promptSignOut}>
             <IconButton
               aria-label="logout"
               color="inherit"
@@ -202,7 +211,7 @@ const MenuBar = () => {
               <ExitToApp />
             </IconButton>
             <Typography>Logout</Typography>
-          </MenuItem>
+          </StyledMenuItem>
         </div>
       )}
     </Menu>
