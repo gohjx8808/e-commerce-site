@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import {
   alpha, createStyles, makeStyles, Theme,
 } from '@material-ui/core/styles';
@@ -174,19 +173,19 @@ const MenuBar = () => {
     >
       {currentUserDetail.fullName !== ''
         ? (
-          <MenuItem>
+          <StyledMenuItem disableRipple>
             <Grid container justifyContent="center" alignItems="center">
               <Typography>{`Welcome, ${currentUserDetail.fullName}`}</Typography>
             </Grid>
-          </MenuItem>
+          </StyledMenuItem>
         ) : (
           <div>
-            <MenuItem onClick={() => navigate(routeNames.login)}>
+            <StyledMenuItem onClick={() => navigate(routeNames.login)}>
               <Button color="inherit">Login</Button>
-            </MenuItem>
-            <MenuItem onClick={() => navigate(routeNames.signUp)}>
+            </StyledMenuItem>
+            <StyledMenuItem onClick={() => navigate(routeNames.signUp)}>
               <Button color="inherit">Sign Up</Button>
-            </MenuItem>
+            </StyledMenuItem>
           </div>
         )}
       {currentUserDetail.fullName !== '' && (
