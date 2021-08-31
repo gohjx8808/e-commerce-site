@@ -31,12 +31,6 @@ const LoadingOverlay = lazy(() => import('../modules/overlay/views/LoadingOverla
 const StatusModal = lazy(() => import('../modules/status/views/StatusModal'));
 
 const useStyles = makeStyles((theme) => ({
-  contentContainer: {
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: 0,
-    },
-    marginLeft: theme.spacing(7) + 1,
-  },
   content: {
     flexGrow: 1,
   },
