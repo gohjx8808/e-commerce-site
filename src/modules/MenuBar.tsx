@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   inputRoot: {
     color: 'inherit',
   },
-  inputInput: {
+  searchInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
@@ -125,10 +125,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     }),
   },
   menuIconShift: {
-    [theme.breakpoints.up('md')]: {
-      paddingLeft: 5,
-      paddingRight: 5,
-    },
+    paddingLeft: 5,
+    paddingRight: 5,
   },
 }));
 
@@ -235,7 +233,7 @@ const MenuBar = () => {
   };
 
   return (
-    <Box>
+    <>
       <CssBaseline />
       <ElevationScroll>
         <AppBar
@@ -266,7 +264,7 @@ const MenuBar = () => {
                 placeholder="Search…"
                 classes={{
                   root: classes.inputRoot,
-                  input: classes.inputInput,
+                  input: classes.searchInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={onChangeProductFilterKeyword}
@@ -328,13 +326,12 @@ const MenuBar = () => {
           </Toolbar>
         </AppBar>
       </ElevationScroll>
-      <Toolbar id="back-to-top-anchor" />
       {renderMobileMenu}
       {!isXsView
         ? <CustomDesktopDrawer drawerOpen={drawerOpen} handleDrawerClose={toggleDrawer} />
         : <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />}
       <SignOutConfirmationModal />
-    </Box>
+    </>
   );
 };
 

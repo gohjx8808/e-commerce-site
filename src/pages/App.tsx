@@ -6,8 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import { KeyboardArrowUp } from '@material-ui/icons';
 import { RouteComponentProps, Router } from '@reach/router';
 import { navigate } from 'gatsby';
-import React, { lazy, Suspense, useState } from 'react';
-import { useEffect } from 'react';
+import React, {
+  lazy, Suspense, useEffect, useState,
+} from 'react';
 import { useAppSelector } from '../hooks';
 import AccountScreen from '../modules/account/views/AccountScreen';
 import Footer from '../modules/Footer';
@@ -38,8 +39,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
-    minHeight: '87vh',
   },
   pageBannerBg: {
     backgroundColor: theme.palette.secondary.main,
@@ -47,6 +46,21 @@ const useStyles = makeStyles((theme) => ({
   },
   pageBannerText: {
     color: 'white',
+  },
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  },
+  root: {
+    display: 'flex',
+  },
+  pageComponentContainer: {
+    minHeight: '50vh',
+    padding: theme.spacing(3),
   },
 }));
 
@@ -126,27 +140,31 @@ const MainRoutes = (props: {
   }
 
   return (
-    <Box className={styles.contentContainer}>
+    <div className={styles.root}>
       <MenuBar />
-      {homeCarouselBanner && <HomeBanner />}
-      {pageBannerTitle && (
-        <Grid item xs={12} className={styles.pageBannerBg}>
-          <Grid container justifyContent="center" alignItems="center">
-            <Typography variant="h4" className={styles.pageBannerText}>{pageBannerTitle}</Typography>
+      <main className={styles.content}>
+        <div id="back-to-top-anchor" />
+        <div className={styles.toolbar} />
+        {homeCarouselBanner && <HomeBanner />}
+        {pageBannerTitle && (
+          <Grid item xs={12} className={styles.pageBannerBg}>
+            <Grid container justifyContent="center" alignItems="center">
+              <Typography variant="h4" className={styles.pageBannerText}>{pageBannerTitle}</Typography>
+            </Grid>
           </Grid>
-        </Grid>
-      )}
-      <Box className={styles.content}>
-        {pageComponent}
-      </Box>
-      <div id="most-bottom-anchor" />
-      <Footer />
-      <ScrollTop>
-        <Fab color="secondary" size="medium" aria-label="scroll back to top">
-          <KeyboardArrowUp />
-        </Fab>
-      </ScrollTop>
-    </Box>
+        )}
+        <Box className={styles.pageComponentContainer}>
+          {pageComponent}
+        </Box>
+        <div id="most-bottom-anchor" />
+        <Footer />
+        <ScrollTop>
+          <Fab color="secondary" size="medium" aria-label="scroll back to top">
+            <KeyboardArrowUp />
+          </Fab>
+        </ScrollTop>
+      </main>
+    </div>
   );
 };
 
