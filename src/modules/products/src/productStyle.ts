@@ -205,6 +205,10 @@ const productStyle = makeStyles((theme) => ({
     color: `${theme.palette.secondary.main}!important`,
     backgroundColor: `${alpha(theme.palette.secondary.main, 0.12)}!important`,
   },
+  verticalMargin: {
+    marginTop: 10,
+    marginBottom: 5,
+  },
 }));
 
 export default productStyle;

@@ -26,6 +26,7 @@ import {
   updateSelectedProductImageList,
 } from '../src/productReducers';
 import productStyle from '../src/productStyle';
+import ItemVariationMenu from './ItemVariationMenu';
 
 interface ProductCardOwnProps{
   product:products.productData
@@ -37,20 +38,29 @@ const ProductCard = (props:ProductCardOwnProps) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const onAddToCart = (productData:products.productData) => {
-    const formattedData = {
-      id: productData.contentful_id,
-      name: productData.name,
-      img: getImage(productData.productImage[0]),
-      price: productData.discountedPrice
-        ? productData.discountedPrice.toFixed(2) : productData.price.toFixed(2),
-      quantity: 1,
-    } as products.shoppingCartItemData;
-    dispatch(addToShoppingCart(formattedData));
-    enqueueSnackbar(`${productData.name} is added to your cart!`);
+  const onAddToCart = (productData:products.productData, event: React.MouseEvent<HTMLElement>) => {
+    if (productData.category === 'Keychain Series') {
+      setAnchorEl(event.currentTarget);
+    } else {
+      const formattedData = {
+        id: productData.contentful_id,
+        name: productData.name,
+        img: getImage(productData.productImage[0]),
+        price: productData.discountedPrice
+          ? productData.discountedPrice.toFixed(2) : productData.price.toFixed(2),
+        quantity: 1,
+      } as products.shoppingCartItemData;
+      dispatch(addToShoppingCart(formattedData));
+      enqueueSnackbar(`${productData.name} is added to your cart!`);
+    }
   };
 
   const triggerEnlargeImage = (imageData:ImageDataLike, carouselImageList:ImageDataLike[]) => {
@@ -112,7 +122,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
                         {formatPrice(product.discountedPrice, 'MYR')}
                       </Typography>
                       {isXsView && (
-                        <IconButton aria-label="addToCart" onClick={() => onAddToCart(product)} className={styles.shoppingCartBtn}>
+                        <IconButton aria-label="addToCart" onClick={(event) => onAddToCart(product, event)} className={styles.shoppingCartBtn}>
                           <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
                         </IconButton>
                       )}
@@ -122,13 +132,14 @@ const ProductCard = (props:ProductCardOwnProps) => {
               </Grid>
             </Grid>
             {!(product.discountedPrice && isXsView) && (
-              <IconButton aria-label="addToCart" onClick={() => onAddToCart(product)} className={styles.shoppingCartBtn}>
+              <IconButton aria-label="addToCart" onClick={(event) => onAddToCart(product, event)} className={styles.shoppingCartBtn}>
                 <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
               </IconButton>
             )}
           </Grid>
         </CardContent>
       </Card>
+      <ItemVariationMenu anchorEl={anchorEl} handleClose={handleClose} />
     </Grid>
   );
 };
