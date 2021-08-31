@@ -51,9 +51,10 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     display: 'flex',
+    minHeight: '100vh',
   },
   pageComponentContainer: {
-    minHeight: '50vh',
+    minHeight: '65vh',
     padding: theme.spacing(3),
   },
 }));

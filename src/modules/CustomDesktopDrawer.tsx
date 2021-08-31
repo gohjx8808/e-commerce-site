@@ -84,7 +84,7 @@ const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
         </IconButton>
       </div>
       <Divider />
-      <List>
+      <List role="menu">
         <StyledMenuItem button selected={currentPathName === '/'} onClick={() => navigate('/')}>
           <ListItemIcon>
             <HomeOutlined />
