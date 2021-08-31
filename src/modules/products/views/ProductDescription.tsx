@@ -25,7 +25,7 @@ import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import { itemVariationOptions } from '../../../utils/constants';
-import { formatPrice } from '../../../utils/helper';
+import { formatPrice, getProductVariationSuffix } from '../../../utils/helper';
 import routeNames from '../../../utils/routeNames';
 import {
   addToShoppingCart,
@@ -112,14 +112,7 @@ const ProductDescription = () => {
 
   const onAddToCart = () => {
     if ((selectedItemVariation && isKeyChainSeries) || !isKeyChainSeries) {
-      let variationSuffix = '';
-      if (isKeyChainSeries) {
-        if (selectedItemVariation === 'With Keychain') {
-          variationSuffix = ' (W)';
-        } else {
-          variationSuffix = ' (N)';
-        }
-      }
+      const variationSuffix = getProductVariationSuffix(isKeyChainSeries, selectedItemVariation);
       const productName = selectedProduct.name + variationSuffix;
       const formattedData = {
         id: selectedProduct.contentful_id + variationSuffix,

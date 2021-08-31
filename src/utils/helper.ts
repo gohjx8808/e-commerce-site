@@ -11,3 +11,17 @@ export const internationalPhoneNumberFormatter = (phoneNumber:number|string) => 
   const strPhoneNumber = phoneNumber.toString();
   return `+${strPhoneNumber.substring(0, 2)} ${strPhoneNumber.substring(2, 4)}-${strPhoneNumber.substring(4, 7)} ${strPhoneNumber.substring(7)}`;
 };
+
+export const getProductVariationSuffix = (
+  isKeyChainSeries:boolean, selectedItemVariation:string,
+) => {
+  let variationSuffix = '';
+  if (isKeyChainSeries) {
+    if (selectedItemVariation === 'With Keychain') {
+      variationSuffix = ' (W)';
+    } else {
+      variationSuffix = ' (N)';
+    }
+  }
+  return variationSuffix;
+};

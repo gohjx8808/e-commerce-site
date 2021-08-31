@@ -18,7 +18,7 @@ import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { Link as GatsbyLink } from 'gatsby';
 import { useAppDispatch } from '../../../hooks';
-import { formatPrice } from '../../../utils/helper';
+import { formatPrice, getProductVariationSuffix } from '../../../utils/helper';
 import {
   addToShoppingCart,
   toggleEnlargedProductImageModal,
@@ -46,21 +46,25 @@ const ProductCard = (props:ProductCardOwnProps) => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const onAddToCart = (productData:products.productData, event: React.MouseEvent<HTMLElement>) => {
-    if (productData.category === 'Keychain Series') {
-      setAnchorEl(event.currentTarget);
-    } else {
-      const formattedData = {
-        id: productData.contentful_id,
-        name: productData.name,
-        img: getImage(productData.productImage[0]),
-        price: productData.discountedPrice
-          ? productData.discountedPrice.toFixed(2) : productData.price.toFixed(2),
-        quantity: 1,
-      } as products.shoppingCartItemData;
-      dispatch(addToShoppingCart(formattedData));
-      enqueueSnackbar(`${productData.name} is added to your cart!`);
-    }
+  const isKeyChainSeries = product.category === 'Keychain Series';
+
+  const onAddToCart = (productData:products.productData, variation?:string) => {
+    const variationSuffix = getProductVariationSuffix(isKeyChainSeries, variation!);
+    const productName = productData.name + variationSuffix;
+    const formattedData = {
+      id: productData.contentful_id + variationSuffix,
+      name: productName,
+      img: getImage(productData.productImage[0]),
+      price: productData.discountedPrice
+        ? productData.discountedPrice.toFixed(2) : productData.price.toFixed(2),
+      quantity: 1,
+    } as products.shoppingCartItemData;
+    dispatch(addToShoppingCart(formattedData));
+    enqueueSnackbar(`${productName} had been added to your cart!`);
+  };
+
+  const triggerItemVariationMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
   };
 
   const triggerEnlargeImage = (imageData:ImageDataLike, carouselImageList:ImageDataLike[]) => {
@@ -122,7 +126,17 @@ const ProductCard = (props:ProductCardOwnProps) => {
                         {formatPrice(product.discountedPrice, 'MYR')}
                       </Typography>
                       {isXsView && (
-                        <IconButton aria-label="addToCart" onClick={(event) => onAddToCart(product, event)} className={styles.shoppingCartBtn}>
+                        <IconButton
+                          aria-label="addToCart"
+                          onClick={(event) => {
+                            if (product.category === 'Keychain Series') {
+                              triggerItemVariationMenu(event);
+                            } else {
+                              onAddToCart(product);
+                            }
+                          }}
+                          className={styles.shoppingCartBtn}
+                        >
                           <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
                         </IconButton>
                       )}
@@ -132,14 +146,28 @@ const ProductCard = (props:ProductCardOwnProps) => {
               </Grid>
             </Grid>
             {!(product.discountedPrice && isXsView) && (
-              <IconButton aria-label="addToCart" onClick={(event) => onAddToCart(product, event)} className={styles.shoppingCartBtn}>
+              <IconButton
+                aria-label="addToCart"
+                onClick={(event) => {
+                  if (product.category === 'Keychain Series') {
+                    triggerItemVariationMenu(event);
+                  } else {
+                    onAddToCart(product);
+                  }
+                }}
+                className={styles.shoppingCartBtn}
+              >
                 <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
               </IconButton>
             )}
           </Grid>
         </CardContent>
       </Card>
-      <ItemVariationMenu anchorEl={anchorEl} handleClose={handleClose} />
+      <ItemVariationMenu
+        anchorEl={anchorEl}
+        handleClose={handleClose}
+        addToCart={(variation) => onAddToCart(product, variation)}
+      />
     </Grid>
   );
 };
