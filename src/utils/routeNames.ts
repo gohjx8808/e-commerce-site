@@ -7,4 +7,5 @@ export default {
   imageGallery: '/imageGallery',
   checkout: '/cart/checkout',
   account: '/account',
+  feedbackForm: '/feedback',
 };

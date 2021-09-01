@@ -3,7 +3,9 @@ import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
-import { HomeOutlined, ImageSearchOutlined, PhotoLibrary } from '@material-ui/icons';
+import {
+  HomeOutlined, ImageSearchOutlined, PhotoLibrary, SpeakerNotes,
+} from '@material-ui/icons';
 import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
 import React from 'react';
@@ -78,17 +80,21 @@ const CustomMobileDrawer = (props:CustomMobileDrawerOwnProps) => {
             </ListItemIcon>
             <ListItemText primary="Products" />
           </StyledMenuItem>
+          <StyledMenuItem
+            button
+            selected={currentPathName === routeNames.feedbackForm}
+            onClick={() => navigate(routeNames.feedbackForm)}
+          >
+            <ListItemIcon>
+              <SpeakerNotes />
+            </ListItemIcon>
+            <ListItemText primary="Feedback" />
+          </StyledMenuItem>
           {/* <ListItem button selected={currentPathName === '/sharingCorner'}>
           <ListItemIcon>
             <ChatOutlined />
           </ListItemIcon>
           <ListItemText primary="Sharing Corner" />
-        </ListItem> */}
-          {/* <ListItem button selected={currentPathName === '/contactUs'}>
-          <ListItemIcon>
-            <PermContactCalendarOutlined />
-          </ListItemIcon>
-          <ListItemText primary="Contact Us" />
         </ListItem> */}
           {/* <ListItem button selected={currentPathName === '/faq'}>
           <ListItemIcon>

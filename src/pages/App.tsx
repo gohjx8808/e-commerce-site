@@ -11,6 +11,7 @@ import React, {
 } from 'react';
 import { useAppSelector } from '../hooks';
 import AccountScreen from '../modules/account/views/AccountScreen';
+import FeedbackForm from '../modules/feedback/views/FeedbackForm';
 import Footer from '../modules/Footer';
 import HomeBanner from '../modules/HomeBanner';
 import HomeScreen from '../modules/HomeScreen';
@@ -83,6 +84,7 @@ const App = () => {
               pageComponent={<AccountScreen />}
               protectedRoute
             />
+            <MainRoutes path={routeNames.feedbackForm} pageComponent={<FeedbackForm />} />
           </Router>
           <StatusModal />
           <LoadingOverlay />

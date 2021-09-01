@@ -11,6 +11,7 @@ import {
   HomeOutlined,
   ImageSearchOutlined,
   PhotoLibrary,
+  SpeakerNotes,
 } from '@material-ui/icons';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { useLocation } from '@reach/router';
@@ -117,17 +118,21 @@ const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
           </ListItemIcon>
           <ListItemText primary="Products" />
         </StyledMenuItem>
+        <StyledMenuItem
+          button
+          selected={currentPathName === routeNames.feedbackForm}
+          onClick={() => navigate(routeNames.feedbackForm)}
+        >
+          <ListItemIcon>
+            <SpeakerNotes />
+          </ListItemIcon>
+          <ListItemText primary="Feedback" />
+        </StyledMenuItem>
         {/* <ListItem button selected={currentPathName === '/sharingCorner'}>
           <ListItemIcon>
             <ChatOutlined />
           </ListItemIcon>
           <ListItemText primary="Sharing Corner" />
-        </ListItem> */}
-        {/* <ListItem button selected={currentPathName === '/contactUs'}>
-          <ListItemIcon>
-            <PermContactCalendarOutlined />
-          </ListItemIcon>
-          <ListItemText primary="Contact Us" />
         </ListItem> */}
         {/* <ListItem button selected={currentPathName === '/faq'}>
           <ListItemIcon>
