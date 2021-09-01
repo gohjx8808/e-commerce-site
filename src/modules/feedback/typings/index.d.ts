@@ -1,6 +1,7 @@
 declare namespace feedback{
   interface submitFeedbackFormPayload{
-    feedback:string
+    nickname:string
     email:string
+    feedback:string
   }
 }
