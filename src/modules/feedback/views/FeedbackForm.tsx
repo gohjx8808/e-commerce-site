@@ -1,12 +1,19 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import Button from '@material-ui/core/Button';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
+import { feedbackFormSchema } from '../src/feedbackSchema';
 
 const FeedbackForm = () => {
-  const { control, formState: { errors } } = useForm();
+  const { control, formState: { errors }, handleSubmit } = useForm({
+    resolver: yupResolver(feedbackFormSchema),
+  });
+
+  const onSubmitFeedbackForm = (hookData:feedback.submitFeedbackFormPayload) => {
+    console.log(hookData);
+  };
 
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center">
@@ -37,7 +44,7 @@ const FeedbackForm = () => {
       </Grid>
       <Grid item xs={12}>
         <Grid container justifyContent="flex-end">
-          <Button variant="contained" color="secondary">Submit</Button>
+          <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmitFeedbackForm)}>Submit</Button>
         </Grid>
       </Grid>
     </Grid>
