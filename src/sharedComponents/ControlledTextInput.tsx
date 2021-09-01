@@ -27,6 +27,7 @@ interface ControlledTextInputOwnProps{
   multiline?:boolean
   rows?:number
   readOnly?:boolean
+  infoText?:string
 }
 
 const useStyles = makeStyles({
@@ -64,6 +65,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
     multiline,
     rows,
     readOnly,
+    infoText,
   } = props;
 
   const styles = useStyles();
@@ -119,6 +121,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             rows={rows}
           />
           <FormHelperText error>{error?.message}</FormHelperText>
+          <FormHelperText>{infoText}</FormHelperText>
         </FormControl>
       )}
       defaultValue={defaultValue}
@@ -140,6 +143,7 @@ ControlledTextInput.defaultProps = {
   multiline: false,
   rows: 1,
   readOnly: false,
+  infoText: '',
 };
 
 export default ControlledTextInput;

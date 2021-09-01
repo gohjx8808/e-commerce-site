@@ -84,7 +84,7 @@ const App = () => {
               pageComponent={<AccountScreen />}
               protectedRoute
             />
-            <MainRoutes path={routeNames.feedbackForm} pageComponent={<FeedbackForm />} />
+            <MainRoutes path={routeNames.feedbackForm} pageComponent={<FeedbackForm />} pageBannerTitle="Feedback Form" />
           </Router>
           <StatusModal />
           <LoadingOverlay />
