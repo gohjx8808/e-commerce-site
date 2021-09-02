@@ -1,3 +1,4 @@
+import { navigate } from 'gatsby';
 import {
   fork, put, take, call,
 } from 'redux-saga/effects';
@@ -20,9 +21,10 @@ function* submitFeedbackSaga() {
     try {
       yield call(sendFeedbackEmail, payload);
       yield put(toggleSuccess(true));
-      yield put(updateStatusMsg('Your feedback is submitted successfully. We truly appreciate your precious feedback!'));
+      yield put(updateStatusMsg('Love to know that! Thank you for your precious feedback. Together we can make it better!'));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
+      navigate('/');
     } catch (error) {
       yield put(toggleSuccess(false));
       yield put(updateStatusMsg('Somethings wrong happened! Please try again.'));

@@ -86,8 +86,6 @@ const StatusModal = () => {
             color="secondary"
           >
             {statusTitle}
-            {' '}
-            {isSuccess ? 'Success' : 'Error'}
           </Typography>
         </Grid>
         <Grid item lg={4} sm={7} xs={9}>
