@@ -21,7 +21,7 @@ import {
   toggleSignOutConfirmationModal,
 } from './authReducer';
 
-export default function* authSaga() {
+export default function* authRuntime() {
   yield fork(submitSignUpSaga);
   yield fork(submitLoginSaga);
   yield fork(getUserDetailSaga);

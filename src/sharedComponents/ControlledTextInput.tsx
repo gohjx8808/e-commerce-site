@@ -28,6 +28,7 @@ interface ControlledTextInputOwnProps{
   rows?:number
   readOnly?:boolean
   infoText?:string
+  placeholder?:string
 }
 
 const useStyles = makeStyles({
@@ -66,6 +67,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
     rows,
     readOnly,
     infoText,
+    placeholder,
   } = props;
 
   const styles = useStyles();
@@ -103,6 +105,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             color={lightBg ? 'secondary' : 'primary'}
             classes={{ root: !lightBg ? styles.unFocusStyle : '' }}
             error={!!error}
+            placeholder={placeholder}
             endAdornment={error && (
               <InputAdornment position="end">
                 <IconButton
@@ -144,6 +147,7 @@ ControlledTextInput.defaultProps = {
   rows: 1,
   readOnly: false,
   infoText: '',
+  placeholder: '',
 };
 
 export default ControlledTextInput;

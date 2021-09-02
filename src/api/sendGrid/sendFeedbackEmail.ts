@@ -11,7 +11,7 @@ const sendFeedbackEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunction
     from: 'piggy.chiah@gmail.com',
     templateId: 'd-3712d484569b41f18e1525a602254adf',
     dynamic_template_data: {
-      nickname: '',
+      nickname: postData.nickname,
       email: postData.email,
       feedback: postData.feedback,
     },

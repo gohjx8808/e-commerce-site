@@ -5,6 +5,7 @@ import { authSlice } from './modules/auth/src/authReducer';
 import { productSlice } from './modules/products/src/productReducers';
 import { accountSlice } from './modules/account/src/accountReducer';
 import { imageGallerySlice } from './modules/imageGallery/src/imageGalleryReducer';
+import { feedbackSlice } from './modules/feedback/src/feedbackReducer';
 
 export default combineReducers({
   auth: authSlice.reducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   product: productSlice.reducer,
   account: accountSlice.reducer,
   imageGallery: imageGallerySlice.reducer,
+  feedback: feedbackSlice.reducer,
 });

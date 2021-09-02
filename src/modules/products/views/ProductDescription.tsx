@@ -141,7 +141,7 @@ const ProductDescription = () => {
     },
     renderNode: {
       [BLOCKS.PARAGRAPH]: (_node:Block | Inline, children:React.ReactNode) => (
-        <div><Typography variant="h6">{children}</Typography></div>
+        <div><Typography variant="h6" className={styles.unboldText}>{children}</Typography></div>
       ),
     },
   };

@@ -5,18 +5,21 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useAppDispatch } from '../../../hooks';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
+import { submitFeedback } from '../src/feedbackReducer';
 import { feedbackFormSchema } from '../src/feedbackSchema';
 import feedbackStyles from '../src/feedbackStyles';
 
 const FeedbackForm = () => {
   const styles = feedbackStyles();
+  const dispatch = useAppDispatch();
   const { control, formState: { errors }, handleSubmit } = useForm({
     resolver: yupResolver(feedbackFormSchema),
   });
 
   const onSubmitFeedbackForm = (hookData:feedback.submitFeedbackFormPayload) => {
-    console.log(hookData);
+    dispatch(submitFeedback(hookData));
   };
 
   return (
@@ -33,7 +36,7 @@ const FeedbackForm = () => {
                   label="Nickname"
                   error={errors.nickname}
                   variant="outlined"
-                  labelWidth={40}
+                  labelWidth={65}
                   infoText="How should we address you."
                 />
               </Grid>
@@ -46,7 +49,7 @@ const FeedbackForm = () => {
                   error={errors.email}
                   variant="outlined"
                   labelWidth={40}
-                  infoText="Email is solely for the purpose to reply to your feedback."
+                  infoText="Email is solely for the purpose for replying to your feedback."
                 />
               </Grid>
               <Grid item xs={12}>
@@ -55,6 +58,7 @@ const FeedbackForm = () => {
                   name="feedback"
                   lightBg
                   label="Feedback"
+                  placeholder="Tell me what do you think..."
                   multiline
                   rows={10}
                   error={errors.feedback}

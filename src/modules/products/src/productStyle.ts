@@ -209,6 +209,9 @@ const productStyle = makeStyles((theme) => ({
     marginTop: 10,
     marginBottom: 5,
   },
+  unboldText: {
+    fontWeight: 'normal',
+  },
 }));
 
 export default productStyle;
