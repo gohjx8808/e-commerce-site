@@ -24,7 +24,7 @@ const FeedbackForm = () => {
 
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center">
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={10} lg={6}>
         <Card>
           <CardContent className={styles.overallPadding}>
             <Grid container spacing={2} justifyContent="center" alignItems="center">
