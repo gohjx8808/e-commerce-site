@@ -1,8 +1,8 @@
 import Box from '@material-ui/core/Box';
-import { Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Zoom from '@material-ui/core/Zoom';
-import { createStyles, makeStyles } from '@material-ui/styles';
+import { createStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 
 import React, { useState } from 'react';
@@ -12,7 +12,7 @@ interface Props {
   children: React.ReactElement;
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles((theme) => createStyles({
   root: {
     position: 'fixed',
     bottom: theme.spacing(2),
@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     [theme.breakpoints.down('md')]: {
       bottom: theme.spacing(8),
     },
+    zIndex: theme.zIndex.appBar + 1,
   },
 }));
 

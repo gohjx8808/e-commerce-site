@@ -139,28 +139,30 @@ const MainRoutes = (props: {
   return (
     <div className={styles.root}>
       <MenuBar />
-      <main className={styles.content}>
-        <div id="back-to-top-anchor" />
-        <div className={styles.toolbar} />
-        {homeCarouselBanner && <HomeBanner />}
-        {pageBannerTitle && (
+      <Grid container direction="column">
+        <main className={styles.content}>
+          <div id="back-to-top-anchor" />
+          <div className={styles.toolbar} />
+          {homeCarouselBanner && <HomeBanner />}
+          {pageBannerTitle && (
           <Grid item xs={12} className={styles.pageBannerBg}>
             <Grid container justifyContent="center" alignItems="center">
               <Typography variant="h4" className={styles.pageBannerText}>{pageBannerTitle}</Typography>
             </Grid>
           </Grid>
-        )}
-        <Box className={styles.pageComponentContainer}>
-          {pageComponent}
-        </Box>
-        <div id="most-bottom-anchor" />
+          )}
+          <Box className={styles.pageComponentContainer}>
+            {pageComponent}
+          </Box>
+          <div id="most-bottom-anchor" />
+          <ScrollTop>
+            <Fab color="secondary" size="medium" aria-label="scroll back to top">
+              <KeyboardArrowUp />
+            </Fab>
+          </ScrollTop>
+        </main>
         <Footer />
-        <ScrollTop>
-          <Fab color="secondary" size="medium" aria-label="scroll back to top">
-            <KeyboardArrowUp />
-          </Fab>
-        </ScrollTop>
-      </main>
+      </Grid>
     </div>
   );
 };
