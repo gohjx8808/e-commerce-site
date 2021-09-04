@@ -17,12 +17,12 @@ const useStyles = makeStyles((theme) => createStyles({
     position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
+    zIndex: theme.zIndex.appBar + 1,
   },
   mostBottom: {
     [theme.breakpoints.down('md')]: {
       bottom: theme.spacing(8),
     },
-    zIndex: theme.zIndex.appBar + 1,
   },
 }));
 
