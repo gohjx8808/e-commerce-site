@@ -143,13 +143,20 @@ const Products = () => {
     return isProductInFilter && isProductInCategory;
   };
 
+  const preprocessCateogryImageName = (category:string) => {
+    if (category.toLowerCase().includes('series')) {
+      return category.toLowerCase().replace(' series', '');
+    }
+    return category.toLowerCase().replace(' accessories', '');
+  };
+
   return (
     <>
       <Grid container direction="row" justifyContent="center">
         {categories.map((category) => {
         // eslint-disable-next-line max-len
           const currentCategoryImageData:imageInnerData = productQuery.productCategoriesImages.edges.find(
-            (image:imageInnerData) => image.node.name === category.toLowerCase().replace(' series', ''),
+            (image:imageInnerData) => image.node.name === preprocessCateogryImageName(category),
           );
           const categoryImage = getImage(currentCategoryImageData.node.childImageSharp)!;
           return (
