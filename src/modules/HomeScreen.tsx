@@ -3,10 +3,13 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
+import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { ExpandMore } from '@material-ui/icons';
-import { graphql, navigate, useStaticQuery } from 'gatsby';
+import {
+  graphql, navigate, useStaticQuery, Link as GatsbyLink,
+} from 'gatsby';
 import {
   GatsbyImage, getImage, ImageDataLike,
 } from 'gatsby-plugin-image';
@@ -98,6 +101,9 @@ const HomeScreen = () => {
           <Typography variant="h4" color="secondary">Welcome!</Typography>
           <Typography variant="h6" className={styles.centerText}>Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
           <Typography variant="h6" className={styles.centerText}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
+          <Link component={GatsbyLink} to={routeNames.learnMore}>
+            <Typography variant="subtitle1" color="secondary" className={styles.centerText}>LEARN MORE</Typography>
+          </Link>
         </Grid>
         <Grid container className={styles.sectionContainer} direction="column">
           <Typography variant="h5" color="secondary">Product Gallery</Typography>

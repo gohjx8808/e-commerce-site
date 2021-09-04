@@ -16,6 +16,7 @@ import Footer from '../modules/Footer';
 import HomeBanner from '../modules/HomeBanner';
 import HomeScreen from '../modules/HomeScreen';
 import ImageGallery from '../modules/imageGallery/views/ImageGallery';
+import LearnMore from '../modules/LearnMore';
 import Cart from '../modules/products/views/Cart';
 import Checkout from '../modules/products/views/Checkout';
 import EnlargedProductImageCarouselModal from '../modules/products/views/EnlargedProductImageCarouselModal';
@@ -84,6 +85,7 @@ const App = () => {
               protectedRoute
             />
             <MainRoutes path={routeNames.feedbackForm} pageComponent={<FeedbackForm />} pageBannerTitle="Feedback Form" />
+            <MainRoutes path={routeNames.learnMore} pageComponent={<LearnMore />} />
           </Router>
           <StatusModal />
           <LoadingOverlay />

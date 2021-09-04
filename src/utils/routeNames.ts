@@ -8,4 +8,5 @@ export default {
   checkout: '/cart/checkout',
   account: '/account',
   feedbackForm: '/feedback',
+  learnMore: '/learnMore',
 };
