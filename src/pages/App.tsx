@@ -167,7 +167,6 @@ const MainRoutes = (props: {
             {pageComponent}
           </Box>
         </main>
-        <div id="most-bottom-anchor" />
         <Footer />
         <ScrollTop>
           <Fab color="secondary" size="medium" aria-label="scroll back to top">

@@ -3,10 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Zoom from '@material-ui/core/Zoom';
 import { createStyles } from '@material-ui/styles';
-import clsx from 'clsx';
-
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React from 'react';
 
 interface Props {
   children: React.ReactElement;
@@ -19,17 +16,11 @@ const useStyles = makeStyles((theme) => createStyles({
     right: theme.spacing(2),
     zIndex: theme.zIndex.appBar + 1,
   },
-  mostBottom: {
-    [theme.breakpoints.down('md')]: {
-      bottom: theme.spacing(8),
-    },
-  },
 }));
 
 const ScrollTop = (props: Props) => {
   const { children } = props;
   const classes = useStyles();
-  const [isMostBottom, setIsMostBottom] = useState(false);
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,
@@ -46,30 +37,12 @@ const ScrollTop = (props: Props) => {
     }
   };
 
-  useEffect(() => {
-    const mostBottomAnchor = document.querySelector('#most-bottom-anchor')!;
-    const handleOnScroll = () => setIsMostBottom(isInViewport(mostBottomAnchor));
-    window.addEventListener('scroll', handleOnScroll, true);
-
-    return () => window.removeEventListener('scroll', handleOnScroll, true);
-  }, []);
-
-  const isInViewport = (element:Element) => {
-    const rect = element.getBoundingClientRect();
-    return (
-      rect.top >= 0
-        && rect.left >= 0
-        && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-        && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-  };
-
   return (
     <Zoom in={trigger}>
       <Box
         onClick={handleClick}
         role="presentation"
-        className={clsx(classes.root, { [classes.mostBottom]: isMostBottom })}
+        className={classes.root}
       >
         {children}
       </Box>
