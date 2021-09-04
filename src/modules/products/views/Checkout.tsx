@@ -47,6 +47,7 @@ const Checkout = () => {
   const [pageSize, setPageSize] = useState<number>(5);
   const [shippingFee, setShippingFee] = useState<number>(0);
   const [isCheckoutAddressListModalOpen, setIsCheckoutAddressListModalOpen] = useState(false);
+  const [displayShippingFee, setDisplayShippingFee] = useState<string>('-');
   const {
     control, watch, setValue, handleSubmit, formState: { errors }, reset,
   } = useForm({
@@ -128,14 +129,24 @@ const Checkout = () => {
     const eastMalaysia = selectedState && (selectedState.value === 'Sabah' || selectedState.value === 'Sarawak' || selectedState.value === 'Labuan');
     if (selectedState && selectedState.value !== 'Outside Malaysia') {
       if (eastMalaysia) {
-        setShippingFee(14);
+        if (totalAmount >= 150) {
+          setShippingFee(0);
+          setDisplayShippingFee('Free');
+        } else {
+          setShippingFee(14);
+          setDisplayShippingFee(formatPrice(14, 'MYR'));
+        }
+      } else if (totalAmount >= 80) {
+        setDisplayShippingFee('Free');
       } else {
         setShippingFee(7);
+        setDisplayShippingFee(formatPrice(7, 'MYR'));
       }
     } else {
       setShippingFee(0);
+      setDisplayShippingFee('-');
     }
-  }, [selectedState]);
+  }, [selectedState, totalAmount]);
 
   useEffect(() => {
     if (selectedAddress.addressLine1) {
@@ -216,7 +227,7 @@ const Checkout = () => {
             <Grid item lg={3} sm={2} xs={6}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={styles.totalPayText}>
-                  {shippingFee !== 0 ? formatPrice(shippingFee, 'MYR') : '-'}
+                  {displayShippingFee}
                 </Typography>
               </Grid>
             </Grid>

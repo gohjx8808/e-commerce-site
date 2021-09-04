@@ -75,13 +75,16 @@ const productStyle = makeStyles((theme) => ({
   },
   checkoutItemContainer: {
     [theme.breakpoints.up('lg')]: {
-      height: 650,
+      height: 665,
     },
     height: 300,
     width: '100%',
   },
   outsideMalaysiaCheckoutItemContainer: {
-    height: 730,
+    [theme.breakpoints.up('lg')]: {
+      height: 745,
+    },
+    height: 300,
     width: '100%',
   },
   totalPayTextContainer: {
@@ -97,12 +100,15 @@ const productStyle = makeStyles((theme) => ({
   },
   checkoutOrderCard: {
     [theme.breakpoints.up('lg')]: {
-      height: 755,
+      height: 775,
     },
     height: 410,
   },
   outsideMalaysiaCheckoutOrderCard: {
-    height: 830,
+    [theme.breakpoints.up('lg')]: {
+      height: 855,
+    },
+    height: 410,
   },
   rmbPadding: {
     paddingLeft: 20,
