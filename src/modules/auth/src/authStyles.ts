@@ -1,13 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
-  loginBg: {
-    backgroundColor: theme.palette.primary.main,
-    [theme.breakpoints.down('xs')]: {
-      height: '95vh',
-    },
-    height: '100vh',
-  },
   loginIconContainer: {
     [theme.breakpoints.down('xs')]: {
       width: '30%',
@@ -37,22 +30,6 @@ export default makeStyles((theme) => ({
       width: '40%',
     },
     width: '10%',
-  },
-  signUpHeight: {
-    backgroundColor: theme.palette.primary.main,
-    [theme.breakpoints.only('xs')]: {
-      alignItems: 'flex-start',
-      height: '195vh',
-    },
-    height: '110vh',
-  },
-  errorSignUpHeight: {
-    backgroundColor: theme.palette.primary.main,
-    [theme.breakpoints.only('xs')]: {
-      alignItems: 'flex-start',
-      height: '220vh',
-    },
-    height: '120vh',
   },
   loginCard: {
     backgroundColor: '#B67B5E',

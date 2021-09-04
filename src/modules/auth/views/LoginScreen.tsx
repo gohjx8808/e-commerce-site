@@ -42,63 +42,56 @@ const LoginScreen = () => {
   }, [dispatch]);
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      alignItems="center"
-      className={styles.loginBg}
-    >
-      <Grid item xs={12}>
-        <Grid container justifyContent="center" alignItems="center">
-          <Grid item xs={10} sm={9} lg={6}>
-            <CustomBreadcrumbs />
-          </Grid>
+    <Grid item xs={12}>
+      <Grid container justifyContent="center" alignItems="center">
+        <Grid item xs={10} sm={9} lg={6}>
+          <CustomBreadcrumbs />
         </Grid>
-        <Grid container justifyContent="center" alignItems="center">
-          <Grid item xs={10} sm={9} lg={6}>
-            <Card className={styles.loginCard}>
-              <Grid container justifyContent="center" alignItems="center" direction="column">
-                <CardHeader
-                  title="Login"
-                  className={styles.loginTitle}
-                />
-                <Box className={styles.loginIconContainer}>
-                  <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
-                </Box>
-              </Grid>
-              <CardContent>
-                <form onSubmit={handleSubmit(submitLogin)}>
-                  <Grid container justifyContent="center" alignItems="center" spacing={2}>
-                    <Grid item xs={12} sm={10}>
-                      <ControlledTextInput
-                        control={control}
-                        name="email"
-                        label="Email"
-                        variant="outlined"
-                        error={errors.email}
-                        labelWidth={40}
-                        type="email"
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={10}>
-                      <ControlledPasswordInput
-                        control={control}
-                        name="password"
-                        label="Password"
-                        variant="outlined"
-                        error={errors.password}
-                      />
-                    </Grid>
+      </Grid>
+      <Grid container justifyContent="center" alignItems="center">
+        <Grid item xs={10} sm={9} lg={6}>
+          <Card className={styles.loginCard}>
+            <Grid container justifyContent="center" alignItems="center" direction="column">
+              <CardHeader
+                title="Login"
+                className={styles.loginTitle}
+              />
+              <Box className={styles.loginIconContainer}>
+                <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
+              </Box>
+            </Grid>
+            <CardContent>
+              <form onSubmit={handleSubmit(submitLogin)}>
+                <Grid container justifyContent="center" alignItems="center" spacing={2}>
+                  <Grid item xs={12} sm={10}>
+                    <ControlledTextInput
+                      control={control}
+                      name="email"
+                      label="Email"
+                      variant="outlined"
+                      error={errors.email}
+                      labelWidth={40}
+                      type="email"
+                    />
                   </Grid>
-                  <Grid container justifyContent="center" alignItems="center" className={styles.spacingVertical}>
-                    <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
-                      Log In
-                    </Button>
+                  <Grid item xs={12} sm={10}>
+                    <ControlledPasswordInput
+                      control={control}
+                      name="password"
+                      label="Password"
+                      variant="outlined"
+                      error={errors.password}
+                    />
                   </Grid>
-                </form>
-              </CardContent>
-            </Card>
-          </Grid>
+                </Grid>
+                <Grid container justifyContent="center" alignItems="center" className={styles.spacingVertical}>
+                  <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
+                    Log In
+                  </Button>
+                </Grid>
+              </form>
+            </CardContent>
+          </Card>
         </Grid>
       </Grid>
     </Grid>

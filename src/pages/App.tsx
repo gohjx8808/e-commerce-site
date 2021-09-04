@@ -58,6 +58,12 @@ const useStyles = makeStyles((theme) => ({
   pageComponentContainer: {
     padding: theme.spacing(3),
   },
+  authContent: {
+    flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: theme.palette.primary.main,
+  },
 }));
 
 const App = () => {
@@ -100,11 +106,16 @@ const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps,
 ) => {
   const { pageComponent } = props;
+  const styles = useStyles();
   return (
-    <>
-      {pageComponent}
-      <Footer />
-    </>
+    <div className={styles.root}>
+      <Grid container direction="column">
+        <main className={styles.authContent}>
+          {pageComponent}
+        </main>
+        <Footer />
+      </Grid>
+    </div>
   );
 };
 
