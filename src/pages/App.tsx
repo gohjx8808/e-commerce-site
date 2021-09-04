@@ -155,14 +155,14 @@ const MainRoutes = (props: {
           <Box className={styles.pageComponentContainer}>
             {pageComponent}
           </Box>
-          <div id="most-bottom-anchor" />
-          <ScrollTop>
-            <Fab color="secondary" size="medium" aria-label="scroll back to top">
-              <KeyboardArrowUp />
-            </Fab>
-          </ScrollTop>
         </main>
+        <div id="most-bottom-anchor" />
         <Footer />
+        <ScrollTop>
+          <Fab color="secondary" size="medium" aria-label="scroll back to top">
+            <KeyboardArrowUp />
+          </Fab>
+        </ScrollTop>
       </Grid>
     </div>
   );
