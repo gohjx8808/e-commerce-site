@@ -38,7 +38,7 @@ const Products = () => {
         edges {
           node {
             childImageSharp {
-              gatsbyImageData
+              gatsbyImageData(placeholder: BLURRED)
             }
             id
             name

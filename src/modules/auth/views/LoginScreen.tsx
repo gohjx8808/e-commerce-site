@@ -24,7 +24,7 @@ const LoginScreen = () => {
     query {
       file(relativePath: { eq: "icon.png" }) {
         childImageSharp {
-          gatsbyImageData
+          gatsbyImageData(placeholder: BLURRED)
         }
       }
     }

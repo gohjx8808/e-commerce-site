@@ -58,7 +58,7 @@ const HomeScreen = () => {
             contentful_id
             category
             productImage {
-              gatsbyImageData
+              gatsbyImageData(placeholder: BLURRED)
             }
             price
             contentDescription {

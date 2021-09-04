@@ -46,7 +46,7 @@ const StatusModal = () => {
         edges {
           node {
             childImageSharp {
-              gatsbyImageData
+              gatsbyImageData(placeholder: BLURRED)
             }
             name
           }

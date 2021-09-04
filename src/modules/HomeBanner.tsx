@@ -50,7 +50,7 @@ const HomeBanner = () => {
         edges {
           node {
             childImageSharp {
-              gatsbyImageData
+              gatsbyImageData(placeholder: BLURRED)
             }
             id
           }
