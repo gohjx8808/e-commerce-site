@@ -37,21 +37,13 @@ const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
       met: false,
       label: 'Minimum 8 characters',
     }, {
-      key: 'containsUL',
+      key: 'containsAC',
       met: false,
-      label: 'At least 1 uppercase letter',
-    }, {
-      key: 'containsLL',
-      met: false,
-      label: 'At least 1 lowercase letter',
+      label: 'At least 1 alphabetical character',
     }, {
       key: 'containsN',
       met: false,
       label: 'At least 1 number',
-    }, {
-      key: 'containsSC',
-      met: false,
-      label: 'At least 1 special character',
     }, {
       key: 'passwordMatch',
       met: false,
@@ -67,10 +59,8 @@ const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
   }, []);
 
   const validatePassword = useCallback(() => {
-    toggleMet('containsUL', password ? password.toLowerCase() !== password : false);
-    toggleMet('containsLL', password ? password.toUpperCase() !== password : false);
+    toggleMet('containsAC', /^[A-Za-z]+$/.test(password));
     toggleMet('containsN', /\d/.test(password));
-    toggleMet('containsSC', /[!@#$%^&*,.()\-+_={}[\]{};'\\:"|\\/<>?~`]/g.test(password));
     toggleMet('contains8C', password ? password.length >= 8 : false);
     toggleMet('passwordMatch', password !== undefined && password !== '' && password === rePassword);
   }, [password, rePassword, toggleMet]);
