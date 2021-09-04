@@ -51,6 +51,24 @@ const LearnMore = () => {
         </Typography>
       </Grid>
       <Grid item xs={11}>
+        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText)}>About Custom Order</Typography>
+        <Typography variant="h6" className={styles.justifyText}>
+          Every custom order is welcomed! Please kindly drop me a DMs in Instagram
+          {' '}
+          <Link variant="inherit" href="https://www.instagram.com/yj_artjournal/" target="_blank" rel="noopener" color="secondary">
+            @yj_artjournal
+          </Link>
+          {' '}
+          or email me at
+          {' '}
+          <Link variant="inherit" href="mailto:yj.artjournal@gmail.com" target="_blank" rel="noopener" color="secondary">
+            yj.artjournal@gmail.com
+          </Link>
+          {' '}
+          for further discussion on your ideas!
+        </Typography>
+      </Grid>
+      <Grid item xs={11}>
         <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText)}>About the Shipping (Malaysian only)</Typography>
         <Typography variant="h6" className={styles.justifyText}>
           All the parcels will be shipped via
@@ -70,7 +88,6 @@ const LearnMore = () => {
           The payment options provided are
           <span className={styles.boldText}> TNG E-wallet </span>
           and
-          {' '}
           <span className={styles.boldText}> Bank Transfer</span>
           . A payment instruction will be sent through email after checking out.
           Please make the payment within 24-hours, or the order will be cancelled.
