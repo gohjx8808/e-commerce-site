@@ -22,7 +22,7 @@ const LoginScreen = () => {
   const styles = authenticationStyles();
   const data = useStaticQuery(graphql`
     query {
-      file(relativePath: { eq: "icon.png" }) {
+      file(relativePath: { eq: "icon.jpeg" }) {
         childImageSharp {
           gatsbyImageData(placeholder: BLURRED)
         }
