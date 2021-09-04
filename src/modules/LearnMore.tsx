@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import React from 'react';
-import { Link as Gatsbylink } from 'gatsby';
 
 const useStyles = makeStyles((theme) => ({
   underlinedText: {
@@ -15,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
   },
   justifyText: {
     textAlign: 'justify',
+    [theme.breakpoints.down('xs')]: {
+      whiteSpace: 'pre-wrap',
+    },
   },
   topMargin: {
     marginTop: theme.spacing(3),
@@ -28,9 +30,10 @@ const LearnMore = () => {
     <Grid container justifyContent="center" alignItems="center" spacing={2}>
       <Grid item xs={11}>
         <Typography variant="h5" className={styles.boldText}>Welcome!</Typography>
-        <Typography variant="h6">
+        <Typography variant="h6" className={styles.justifyText}>
           Thank you for visiting my site! Here are some notes for you to know before placing
           the order 😊
+          {'\n\n'}
         </Typography>
         <Typography variant="h6" className={styles.justifyText}>
           Please kindly be noted that all the handmade products are
@@ -39,6 +42,7 @@ const LearnMore = () => {
           products like hats or bags might required longer period (about 1-2 months) if yarn
           restocking is needed. Please kindly confirm with the seller before placing the order if
           it is a rush order.
+          {'\n\n'}
         </Typography>
         <Typography variant="h6" className={styles.justifyText}>
           Since it is all handmade (with cares and love), please allow 1 to 2 cm varies with the
@@ -77,6 +81,7 @@ const LearnMore = () => {
         <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText)}>About Yarn Care</Typography>
         <Typography variant="h6" className={styles.justifyText}>
           Wash it by hand gently to avoid deformation.
+          {'\n\n'}
         </Typography>
         <Typography variant="h6" className={styles.justifyText}>
           First of all, soaked the crochet item in room temperature soapy water for about 15 - 30

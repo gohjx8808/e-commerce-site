@@ -10,6 +10,7 @@ import {
 import {
   HomeOutlined,
   ImageSearchOutlined,
+  InsertEmoticon,
   PhotoLibrary,
   SpeakerNotes,
 } from '@material-ui/icons';
@@ -92,12 +93,16 @@ const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
           </ListItemIcon>
           <ListItemText primary="Home" />
         </StyledMenuItem>
-        {/* <ListItem button selected={currentPathName === '/introduction'}>
+        <StyledMenuItem
+          button
+          selected={currentPathName === routeNames.learnMore}
+          onClick={() => navigate(routeNames.learnMore)}
+        >
           <ListItemIcon>
             <InsertEmoticon />
           </ListItemIcon>
           <ListItemText primary="Introduction" />
-        </ListItem> */}
+        </StyledMenuItem>
         <StyledMenuItem
           button
           selected={currentPathName === routeNames.imageGallery}
