@@ -27,7 +27,7 @@ const LearnMore = () => {
   return (
     <Grid container justifyContent="center" alignItems="center" spacing={2}>
       <Grid item xs={11}>
-        <Typography variant="h5" className={clsx(styles.justifyText, styles.boldText)}>Welcome!</Typography>
+        <Typography variant="h5" className={styles.boldText}>Welcome!</Typography>
         <Typography variant="h6">
           Thank you for visiting my site! Here are some notes for you to know before placing
           the order 😊
@@ -47,21 +47,21 @@ const LearnMore = () => {
         </Typography>
       </Grid>
       <Grid item xs={11}>
-        <Typography variant="h6" className={clsx(styles.justifyText, styles.boldText, styles.underlinedText)}>About the Shipping (Malaysian only)</Typography>
+        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText)}>About the Shipping (Malaysian only)</Typography>
         <Typography variant="h6" className={styles.justifyText}>
           All the parcels will be shipped via
           <span className={styles.boldText}> Pgeon Delivery</span>
           . Tracking number will be sent to you
           through the email upon completing the order. You may track your parcel through
           {' '}
-          <Link variant="inherit" href="https://www.pgeon.delivery/track-parcel" target="_blank" rel="noopener" color="textPrimary">
+          <Link variant="inherit" href="https://www.pgeon.delivery/track-parcel" target="_blank" rel="noopener" color="secondary">
             Pgeon Delivery website
           </Link>
           .
         </Typography>
       </Grid>
       <Grid item xs={11}>
-        <Typography variant="h6" className={clsx(styles.justifyText, styles.boldText, styles.underlinedText)}>About the Payment</Typography>
+        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText)}>About the Payment</Typography>
         <Typography variant="h6" className={styles.justifyText}>
           The payment options provided are
           <span className={styles.boldText}> TNG E-wallet </span>
@@ -74,7 +74,7 @@ const LearnMore = () => {
         </Typography>
       </Grid>
       <Grid item xs={11}>
-        <Typography variant="h6" className={clsx(styles.justifyText, styles.boldText, styles.underlinedText)}>About Yarn Care</Typography>
+        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText)}>About Yarn Care</Typography>
         <Typography variant="h6" className={styles.justifyText}>
           Wash it by hand gently to avoid deformation.
         </Typography>
