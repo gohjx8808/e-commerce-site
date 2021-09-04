@@ -49,7 +49,7 @@ const FeedbackForm = () => {
                   error={errors.email}
                   variant="outlined"
                   labelWidth={40}
-                  infoText="Email is solely for the purpose for replying to your feedback."
+                  infoText="Email is solely for the purpose of replying your feedback."
                 />
               </Grid>
               <Grid item xs={12}>
