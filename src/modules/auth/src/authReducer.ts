@@ -35,6 +35,7 @@ export const authSlice = createSlice({
     clearCurrentUser: (state) => {
       state.currentUser = INITIAL_STATE.currentUser;
     },
+    submitForgotPassword: (_state, _action:PayloadAction<auth.submitForgotPasswordPayload>) => {},
   },
 });
 
@@ -46,6 +47,7 @@ export const {
   signOutAction,
   toggleSignOutConfirmationModal,
   clearCurrentUser,
+  submitForgotPassword,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -40,4 +40,14 @@ export default makeStyles((theme) => ({
   topSpacing: {
     paddingTop: 20,
   },
+  noTopPadding: {
+    paddingTop: '0px!important',
+    paddingBottom: '20px!important',
+  },
+  noBottomPadding: {
+    paddingBottom: '0px!important',
+  },
+  minorTopSpacing: {
+    paddingTop: 5,
+  },
 }));

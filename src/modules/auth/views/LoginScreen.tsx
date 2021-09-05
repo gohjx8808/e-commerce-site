@@ -84,7 +84,7 @@ const LoginScreen = () => {
                       type="email"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={10}>
+                  <Grid item xs={12} sm={10} className={styles.noBottomPadding}>
                     <ControlledPasswordInput
                       control={control}
                       name="password"
@@ -92,6 +92,13 @@ const LoginScreen = () => {
                       variant="outlined"
                       error={errors.password}
                     />
+                  </Grid>
+                  <Grid item xs={12} sm={10} className={styles.noTopPadding}>
+                    <Grid container justifyContent="flex-end">
+                      <Link component={GatsbyLink} to={routeNames.forgotPassword}>
+                        <Typography>Forgot Password?</Typography>
+                      </Link>
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" className={styles.spacingVertical}>

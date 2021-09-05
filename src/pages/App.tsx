@@ -11,6 +11,7 @@ import React, {
 } from 'react';
 import { useAppSelector } from '../hooks';
 import AccountScreen from '../modules/account/views/AccountScreen';
+import ForgotPassword from '../modules/auth/views/ForgotPassword';
 import FeedbackForm from '../modules/feedback/views/FeedbackForm';
 import Footer from '../modules/Footer';
 import HomeBanner from '../modules/HomeBanner';
@@ -77,6 +78,7 @@ const App = () => {
             <MainRoutes path="/" pageComponent={<HomeScreen />} homeCarouselBanner />
             <RouterPage path={routeNames.login} pageComponent={<LoginScreen />} />
             <RouterPage path={routeNames.signUp} pageComponent={<SignupScreen />} />
+            <RouterPage path={routeNames.forgotPassword} pageComponent={<ForgotPassword />} />
             <MainRoutes path={routeNames.products} pageComponent={<Products />} pageBannerTitle="Product Categories" />
             <MainRoutes
               path={routeNames.productDescription}

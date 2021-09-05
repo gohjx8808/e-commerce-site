@@ -51,4 +51,8 @@ declare namespace auth{
     defaultOption:string
     tag:string
   }
+
+  interface submitForgotPasswordPayload{
+    email:string
+  }
 }

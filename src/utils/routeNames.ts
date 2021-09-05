@@ -1,6 +1,7 @@
 export default {
   login: '/login',
   signUp: '/signup',
+  forgotPassword: '/forgotPassword',
   cart: '/cart',
   products: '/products',
   productDescription: '/products/:id',
