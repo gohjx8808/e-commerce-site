@@ -120,6 +120,7 @@ const HomeScreen = () => {
                 rows={image.rows}
               >
                 <GatsbyImage
+                  loading="eager"
                   image={productImagesData}
                   alt={productImagesData.images.fallback?.src!}
                 />

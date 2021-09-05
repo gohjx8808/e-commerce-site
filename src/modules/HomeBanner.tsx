@@ -77,6 +77,7 @@ const HomeBanner = () => {
         const bannerRealImageData = getImage(bannerNode.childImageSharp)!;
         return (
           <GatsbyImage
+            loading="eager"
             image={bannerRealImageData}
             alt={bannerNode.id}
             key={bannerNode.id}
