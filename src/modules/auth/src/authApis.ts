@@ -17,3 +17,7 @@ export const signIn = (payload:auth.submitSignInPayload) => (
 export const getCurrentUserDetails = (uid:string) => (firebase.database().ref(`users/${uid}`).once('value'));
 
 export const signOut = () => (firebase.auth().signOut());
+
+export const resetPassword = (payload:auth.submitForgotPasswordPayload) => (
+  firebase.auth().sendPasswordResetEmail(payload.email)
+);

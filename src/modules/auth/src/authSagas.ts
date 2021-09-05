@@ -9,13 +9,14 @@ import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
 } from '../../status/src/statusReducer';
 import {
-  getCurrentUserDetails, registerUser, saveUserDetails, signIn, signOut,
+  getCurrentUserDetails, registerUser, resetPassword, saveUserDetails, signIn, signOut,
 } from './authApis';
 import {
   clearCurrentUser,
   getCurrentUserDetailsAction,
   signOutAction,
   storeSignedInUser,
+  submitForgotPassword,
   submitSignIn,
   submitSignUp,
   toggleSignOutConfirmationModal,
@@ -26,6 +27,7 @@ export default function* authRuntime() {
   yield fork(submitLoginSaga);
   yield fork(getUserDetailSaga);
   yield fork(logoutSaga);
+  yield fork(submitForgotPasswordSaga);
 }
 
 function* submitSignUpSaga() {
@@ -124,6 +126,31 @@ function* logoutSaga() {
     } catch {
       yield put(toggleSuccess(false));
       yield put(updateStatusMsg('Network error! Please try again.'));
+      yield put(toggleLoadingOverlay(false));
+      yield put(toggleStatusModal(true));
+    }
+  }
+}
+
+function* submitForgotPasswordSaga() {
+  while (true) {
+    const { payload }:ReturnType<typeof submitForgotPassword> = yield take(submitForgotPassword);
+    yield put(toggleLoadingOverlay(true));
+    yield put(updateStatusTitle('Forgot Password'));
+    try {
+      yield call(resetPassword, payload);
+      yield put(toggleSuccess(true));
+      yield put(updateStatusMsg('An email to reset your password has been sent to your registered email address.'));
+      yield put(toggleLoadingOverlay(false));
+      yield put(toggleStatusModal(true));
+      navigate(routeNames.login);
+    } catch (error) {
+      if (error.code === 'auth/user-not-found') {
+        yield put(updateStatusMsg('The email address is not registered. Please insert a registered email address!'));
+      } else {
+        yield put(updateStatusMsg('Network error! Please try again.'));
+      }
+      yield put(toggleSuccess(false));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
     }
