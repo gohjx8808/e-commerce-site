@@ -2,7 +2,7 @@ import Card from '@material-ui/core/Card';
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import CardHeader from '@material-ui/core/CardHeader';
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, useStaticQuery, Link as GatsbyLink } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import Box from '@material-ui/core/Box';
 import CardContent from '@material-ui/core/CardContent';
@@ -10,6 +10,8 @@ import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback } from 'react';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import authenticationStyles from '../src/authStyles';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
@@ -17,6 +19,7 @@ import { loginSchema } from '../src/authSchema';
 import { useAppDispatch } from '../../../hooks';
 import { submitSignIn } from '../src/authReducer';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
+import routeNames from '../../../utils/routeNames';
 
 const LoginScreen = () => {
   const styles = authenticationStyles();
@@ -45,16 +48,23 @@ const LoginScreen = () => {
     <Grid item xs={12}>
       <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={10} sm={9} lg={6}>
-          <CustomBreadcrumbs />
+          <Grid container justifyContent="space-between" alignItems="center">
+            <CustomBreadcrumbs />
+            <Typography>
+              New member?
+              {' '}
+              <Link component={GatsbyLink} to={routeNames.signUp} color="secondary">Register here!</Link>
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
       <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={10} sm={9} lg={6}>
-          <Card className={styles.loginCard}>
+          <Card className={styles.cardBg}>
             <Grid container justifyContent="center" alignItems="center" direction="column">
               <CardHeader
                 title="Login"
-                className={styles.loginTitle}
+                className={styles.whiteText}
               />
               <Box className={styles.loginIconContainer}>
                 <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />

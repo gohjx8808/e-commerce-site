@@ -10,7 +10,7 @@ export default makeStyles((theme) => ({
   icon: {
     borderRadius: 200,
   },
-  loginTitle: {
+  whiteText: {
     color: 'white',
   },
   loginBtn: {
@@ -31,14 +31,13 @@ export default makeStyles((theme) => ({
     },
     width: '10%',
   },
-  loginCard: {
-    backgroundColor: '#B67B5E',
-  },
-  signupCard: {
-    width: '80%',
-    backgroundColor: '#B67B5E',
+  cardBg: {
+    backgroundColor: theme.palette.secondary.main,
   },
   signoutModalActionContainer: {
     padding: '20px!important',
+  },
+  topSpacing: {
+    paddingTop: 20,
   },
 }));
