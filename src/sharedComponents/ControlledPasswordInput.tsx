@@ -37,6 +37,15 @@ const useStyles = makeStyles({
   container: {
     width: '100%',
   },
+  removedAutofillStyling: {
+    '&:-webkit-autofill': {
+      transitionDelay: '9999s',
+    },
+    '&:-webkit-autofill::first-line': {
+      fontFamily: 'Sitka Display Semibold',
+      fontSize: '1rem',
+    },
+  },
 });
 
 const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
@@ -87,7 +96,7 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
               </InputAdornment>
             )}
             labelWidth={labelWidth}
-            classes={{ root: styles.unFocusStyle }}
+            classes={{ root: styles.unFocusStyle, input: styles.removedAutofillStyling }}
             error={!!error}
           />
           <FormHelperText error>{error?.message}</FormHelperText>

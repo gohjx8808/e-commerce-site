@@ -40,6 +40,15 @@ const useStyles = makeStyles((theme) => ({
   errorColor: {
     color: theme.palette.error.main,
   },
+  removedAutofillStyling: {
+    '&:-webkit-autofill': {
+      transitionDelay: '9999s',
+    },
+    '&:-webkit-autofill::first-line': {
+      fontFamily: 'Sitka Display Semibold',
+      fontSize: '1rem',
+    },
+  },
 }));
 
 const ControlledPicker = (props:ControlledPickerOwnProps) => {
@@ -110,6 +119,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
             classes={{
               root: !lightBg ? styles.unFocusStyle : '',
               inputRoot: !lightBg ? styles.unFocusLabel : '',
+              input: styles.removedAutofillStyling,
               popupIndicator: popupIndicatorClass,
               clearIndicator: lightBg ? '' : styles.unFocusLabel,
             }}

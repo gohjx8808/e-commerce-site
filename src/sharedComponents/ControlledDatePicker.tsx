@@ -46,6 +46,15 @@ const useStyles = makeStyles((theme) => ({
   black: {
     color: 'black',
   },
+  removedAutofillStyling: {
+    '&:-webkit-autofill': {
+      transitionDelay: '9999s',
+    },
+    '&:-webkit-autofill::first-line': {
+      fontFamily: 'Sitka Display Semibold',
+      fontSize: '1rem',
+    },
+  },
 }));
 
 const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
@@ -88,7 +97,7 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
             inputVariant={variant}
             className={clsx(styles.container, customClassName, !lightBg && styles.unFocusStyle)}
             InputLabelProps={{ classes: { root: !lightBg ? styles.unFocusLabel : '' } }}
-            InputProps={{ classes: { root: !lightBg ? styles.unFocusLabel : '' } }}
+            InputProps={{ classes: { root: !lightBg ? styles.unFocusLabel : '', input: styles.removedAutofillStyling } }}
             disableFuture
             maxDateMessage="Invalid date"
             minDateMessage="Invalid date"

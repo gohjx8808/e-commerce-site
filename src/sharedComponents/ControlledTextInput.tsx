@@ -47,6 +47,15 @@ const useStyles = makeStyles({
   formControl: {
     width: '100%',
   },
+  removedAutofillStyling: {
+    '&:-webkit-autofill': {
+      transitionDelay: '9999s',
+    },
+    '&:-webkit-autofill::first-line': {
+      fontFamily: 'Sitka Display Semibold',
+      fontSize: '1rem',
+    },
+  },
 });
 
 const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
@@ -103,7 +112,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             onChange={onChange}
             labelWidth={labelWidth}
             color={lightBg ? 'secondary' : 'primary'}
-            classes={{ root: !lightBg ? styles.unFocusStyle : '' }}
+            classes={{ root: !lightBg ? styles.unFocusStyle : '', input: styles.removedAutofillStyling }}
             error={!!error}
             placeholder={placeholder}
             endAdornment={error && (
