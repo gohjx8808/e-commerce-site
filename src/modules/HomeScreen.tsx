@@ -6,7 +6,7 @@ import ImageListItem from '@material-ui/core/ImageListItem';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { ExpandMore } from '@material-ui/icons';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
   graphql, navigate, useStaticQuery, Link as GatsbyLink,
 } from 'gatsby';
@@ -129,7 +129,7 @@ const HomeScreen = () => {
         </ImageList>
       </Box>
       <IconButton aria-label="more product images" onClick={() => navigate(routeNames.imageGallery)}>
-        <ExpandMore />
+        <ExpandMoreIcon />
       </IconButton>
     </Grid>
   );

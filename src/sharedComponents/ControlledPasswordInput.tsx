@@ -5,7 +5,10 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { makeStyles } from '@material-ui/core/styles';
-import { Cancel, Visibility, VisibilityOff } from '@material-ui/icons';
+import CancelIcon from '@material-ui/icons/Cancel';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+
 import React, { useState } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
@@ -83,14 +86,14 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
                   edge="end"
                   className={styles.unFocusLabel}
                 >
-                  {!secure ? <Visibility color={error ? 'error' : 'inherit'} /> : <VisibilityOff color={error ? 'error' : 'inherit'} />}
+                  {!secure ? <VisibilityIcon color={error ? 'error' : 'inherit'} /> : <VisibilityOffIcon color={error ? 'error' : 'inherit'} />}
                 </IconButton>
                 {error
                 && (
                 <IconButton
                   edge="end"
                 >
-                  <Cancel color="error" />
+                  <CancelIcon color="error" />
                 </IconButton>
                 )}
               </InputAdornment>

@@ -5,7 +5,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { makeStyles } from '@material-ui/core/styles';
-import { Cancel } from '@material-ui/icons';
+import CancelIcon from '@material-ui/icons/Cancel';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
@@ -120,7 +120,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
                 <IconButton
                   edge="end"
                 >
-                  <Cancel color="error" />
+                  <CancelIcon color="error" />
                 </IconButton>
               </InputAdornment>
             )}

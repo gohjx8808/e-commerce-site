@@ -3,7 +3,7 @@ import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { KeyboardArrowUp } from '@material-ui/icons';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { RouteComponentProps, Router } from '@reach/router';
 import { navigate } from 'gatsby';
 import React, {
@@ -172,7 +172,7 @@ const MainRoutes = (props: {
         <Footer />
         <ScrollTop>
           <Fab color="secondary" size="medium" aria-label="scroll back to top">
-            <KeyboardArrowUp />
+            <KeyboardArrowUpIcon />
           </Fab>
         </ScrollTop>
       </Grid>

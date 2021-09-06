@@ -7,7 +7,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import { ArrowBack } from '@material-ui/icons';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { graphql, Link as GatsbyLink, useStaticQuery } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useCallback } from 'react';
@@ -48,7 +48,7 @@ const ForgotPassword = () => {
         <Grid item xs={10} sm={9} lg={6}>
           <Link component={GatsbyLink} to={routeNames.login} color="textPrimary">
             <Grid container>
-              <ArrowBack />
+              <ArrowBackIcon />
               <Typography>Back to Login</Typography>
             </Grid>
           </Link>

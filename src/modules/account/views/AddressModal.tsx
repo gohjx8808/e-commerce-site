@@ -6,7 +6,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { Home, Work } from '@material-ui/icons';
+import HomeIcon from '@material-ui/icons/Home';
+import WorkIcon from '@material-ui/icons/Work';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -23,13 +24,13 @@ import accountStyles from '../src/accountStyles';
 
 const addressTag:toggleButtonOptionData[] = [
   {
-    icon: <Home />,
+    icon: <HomeIcon />,
     label: 'Home',
     value: 'Home',
     activeColor: homeColor,
   },
   {
-    icon: <Work />,
+    icon: <WorkIcon />,
     label: 'Work',
     value: 'Work',
     activeColor: workColor,

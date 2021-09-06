@@ -13,7 +13,9 @@ import Link from '@material-ui/core/Link';
 import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Add, AddShoppingCart, Remove } from '@material-ui/icons';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { useParams } from '@reach/router';
@@ -240,7 +242,7 @@ const ProductDescription = () => {
           <Grid item md={2} sm={3} xs={9}>
             <Grid container justifyContent="flex-end">
               <IconButton className={styles.minusIconButton} onClick={reduceItemQuantity}>
-                <Remove />
+                <RemoveIcon />
               </IconButton>
               <Grid item xs={4}>
                 <FormControl hiddenLabel variant="filled" className={styles.quantityInput} size="small">
@@ -253,19 +255,19 @@ const ProductDescription = () => {
                 </FormControl>
               </Grid>
               <IconButton className={styles.plusIconButton} onClick={increaseItemQuantity} size="medium">
-                <Add />
+                <AddIcon />
               </IconButton>
             </Grid>
           </Grid>
           <Grid item md={3} sm={4} xs={3}>
             <Grid container justifyContent={isXsView ? 'center' : 'flex-end'}>
               {isXsView
-                ? <IconButton onClick={onAddToCart} color="secondary"><AddShoppingCart /></IconButton>
+                ? <IconButton onClick={onAddToCart} color="secondary"><AddShoppingCartIcon /></IconButton>
                 : (
                   <Button
                     variant="contained"
                     color="secondary"
-                    endIcon={<AddShoppingCart />}
+                    endIcon={<AddShoppingCartIcon />}
                     size="large"
                     onClick={onAddToCart}
                   >

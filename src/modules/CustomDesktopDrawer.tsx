@@ -7,13 +7,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {
   createStyles, makeStyles, Theme,
 } from '@material-ui/core/styles';
-import {
-  HomeOutlined,
-  ImageSearchOutlined,
-  InsertEmoticon,
-  PhotoLibrary,
-  SpeakerNotes,
-} from '@material-ui/icons';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import ImageSearchOutlinedIcon from '@material-ui/icons/ImageSearchOutlined';
+import SpeakerNotesIcon from '@material-ui/icons/SpeakerNotes';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { useLocation } from '@reach/router';
 import clsx from 'clsx';
@@ -89,7 +87,7 @@ const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
       <List role="menu">
         <StyledMenuItem button selected={currentPathName === '/'} onClick={() => navigate('/')}>
           <ListItemIcon>
-            <HomeOutlined />
+            <HomeOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </StyledMenuItem>
@@ -99,7 +97,7 @@ const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
           onClick={() => navigate(routeNames.learnMore)}
         >
           <ListItemIcon>
-            <InsertEmoticon />
+            <InsertEmoticonIcon />
           </ListItemIcon>
           <ListItemText primary="Introduction" />
         </StyledMenuItem>
@@ -109,7 +107,7 @@ const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
           onClick={() => navigate(routeNames.imageGallery)}
         >
           <ListItemIcon>
-            <PhotoLibrary />
+            <PhotoLibraryIcon />
           </ListItemIcon>
           <ListItemText primary="Image Gallery" />
         </StyledMenuItem>
@@ -119,7 +117,7 @@ const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
           onClick={() => navigate(routeNames.products)}
         >
           <ListItemIcon>
-            <ImageSearchOutlined />
+            <ImageSearchOutlinedIcon />
           </ListItemIcon>
           <ListItemText primary="Products" />
         </StyledMenuItem>
@@ -129,7 +127,7 @@ const CustomDesktopDrawer = (props:CustomDesktopDrawerOwnProps) => {
           onClick={() => navigate(routeNames.feedbackForm)}
         >
           <ListItemIcon>
-            <SpeakerNotes />
+            <SpeakerNotesIcon />
           </ListItemIcon>
           <ListItemText primary="Feedback" />
         </StyledMenuItem>

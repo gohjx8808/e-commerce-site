@@ -3,9 +3,11 @@ import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  HomeOutlined, ImageSearchOutlined, PhotoLibrary, SpeakerNotes,
-} from '@material-ui/icons';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import ImageSearchOutlinedIcon from '@material-ui/icons/ImageSearchOutlined';
+import SpeakerNotesIcon from '@material-ui/icons/SpeakerNotes';
 import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
 import React from 'react';
@@ -50,23 +52,27 @@ const CustomMobileDrawer = (props:CustomMobileDrawerOwnProps) => {
         <List>
           <StyledMenuItem button selected={currentPathName === '/'} onClick={() => navigate('/')}>
             <ListItemIcon>
-              <HomeOutlined />
+              <HomeOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary="Home" />
           </StyledMenuItem>
-          {/* <ListItem button selected={currentPathName === '/introduction'}>
-          <ListItemIcon>
-            <InsertEmoticon />
-          </ListItemIcon>
-          <ListItemText primary="Introduction" />
-        </ListItem> */}
+          <StyledMenuItem
+            button
+            selected={currentPathName === routeNames.learnMore}
+            onClick={() => navigate(routeNames.learnMore)}
+          >
+            <ListItemIcon>
+              <InsertEmoticonIcon />
+            </ListItemIcon>
+            <ListItemText primary="Introduction" />
+          </StyledMenuItem>
           <StyledMenuItem
             button
             selected={currentPathName === routeNames.imageGallery}
             onClick={() => navigate(routeNames.imageGallery)}
           >
             <ListItemIcon>
-              <PhotoLibrary />
+              <PhotoLibraryIcon />
             </ListItemIcon>
             <ListItemText primary="Image Gallery" />
           </StyledMenuItem>
@@ -76,7 +82,7 @@ const CustomMobileDrawer = (props:CustomMobileDrawerOwnProps) => {
             onClick={() => navigate(routeNames.products)}
           >
             <ListItemIcon>
-              <ImageSearchOutlined />
+              <ImageSearchOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary="Products" />
           </StyledMenuItem>
@@ -86,7 +92,7 @@ const CustomMobileDrawer = (props:CustomMobileDrawerOwnProps) => {
             onClick={() => navigate(routeNames.feedbackForm)}
           >
             <ListItemIcon>
-              <SpeakerNotes />
+              <SpeakerNotesIcon />
             </ListItemIcon>
             <ListItemText primary="Feedback" />
           </StyledMenuItem>

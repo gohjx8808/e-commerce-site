@@ -5,7 +5,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
-import { Email, Person, Phone } from '@material-ui/icons';
+import EmailIcon from '@material-ui/icons/Email';
+import PersonIcon from '@material-ui/icons/Person';
+import PhoneIcon from '@material-ui/icons/Phone';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -64,7 +66,7 @@ const EditAccDetailModal = () => {
                 label="Full Name"
                 labelWidth={68}
                 defaultValue={currentUserDetails.fullName}
-                startAdornment={<Person />}
+                startAdornment={<PersonIcon />}
                 error={errors.fullName}
               />
             </Grid>
@@ -77,7 +79,7 @@ const EditAccDetailModal = () => {
                 label="Email"
                 labelWidth={40}
                 defaultValue={currentUserDetails.email}
-                startAdornment={<Email />}
+                startAdornment={<EmailIcon />}
                 error={errors.email}
               />
             </Grid>
@@ -90,7 +92,7 @@ const EditAccDetailModal = () => {
                 label="Phone Number"
                 labelWidth={100}
                 defaultValue={currentUserDetails.phoneNumber}
-                startAdornment={<Phone />}
+                startAdornment={<PhoneIcon />}
                 error={errors.phoneNumber}
               />
             </Grid>

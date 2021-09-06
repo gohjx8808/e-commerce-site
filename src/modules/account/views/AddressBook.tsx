@@ -4,9 +4,14 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import {
-  Add, Delete, Edit, Email, Home, Person, Phone, Work,
-} from '@material-ui/icons';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import EmailIcon from '@material-ui/icons/Email';
+import HomeIcon from '@material-ui/icons/Home';
+import PersonIcon from '@material-ui/icons/Person';
+import PhoneIcon from '@material-ui/icons/Phone';
+import WorkIcon from '@material-ui/icons/Work';
 import clsx from 'clsx';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -48,7 +53,7 @@ const AddressBook = () => {
   return (
     <Grid item xs={12}>
       <Grid container justifyContent="flex-end" alignItems="center" className={styles.bottomSpacing}>
-        <Button variant="contained" startIcon={<Add />} color="secondary" onClick={onAddAddress}>
+        <Button variant="contained" startIcon={<AddIcon />} color="secondary" onClick={onAddAddress}>
           Add New Address
         </Button>
       </Grid>
@@ -66,7 +71,7 @@ const AddressBook = () => {
                           <Grid item className={styles.xsFullWidth}>
                             <Grid container direction="row" spacing={1}>
                               <Grid item>
-                                <Person />
+                                <PersonIcon />
                               </Grid>
                               <Grid item>
                                 <Typography className={styles.boldText}>
@@ -79,7 +84,7 @@ const AddressBook = () => {
                           <Grid item className={styles.xsFullWidth}>
                             <Grid container direction="row" spacing={1}>
                               <Grid item>
-                                <Phone />
+                                <PhoneIcon />
                               </Grid>
                               <Grid item>
                                 <Typography className={styles.boldText}>
@@ -92,7 +97,7 @@ const AddressBook = () => {
                           <Grid item className={styles.xsFullWidth}>
                             <Grid container direction="row" spacing={1}>
                               <Grid item>
-                                <Email />
+                                <EmailIcon />
                               </Grid>
                               <Grid item>
                                 <Typography className={styles.boldText}>
@@ -107,7 +112,7 @@ const AddressBook = () => {
                                 className={address.tag === 'Home' ? styles.homeTagColor : styles.workTagColor}
                                 label={address.tag}
                                 variant="outlined"
-                                icon={address.tag === 'Home' ? <Home className={styles.homeTagColor} /> : <Work className={styles.workTagColor} />}
+                                icon={address.tag === 'Home' ? <HomeIcon className={styles.homeTagColor} /> : <WorkIcon className={styles.workTagColor} />}
                               />
                             </Grid>
                           )}
@@ -124,20 +129,20 @@ const AddressBook = () => {
                       </Grid>
                       <Grid item className={styles.desktopView}>
                         <IconButton color="secondary" onClick={() => onEditAddress(address)}>
-                          <Edit />
+                          <EditIcon />
                         </IconButton>
                         <IconButton
                           className={styles.defaultColor}
                           onClick={() => onDeleteAddress(address)}
                         >
-                          <Delete />
+                          <DeleteIcon />
                         </IconButton>
                       </Grid>
                     </Grid>
                   </Grid>
                   <Grid container direction="row" spacing={1} className={styles.lgBottomSpacing}>
                     <Grid item>
-                      <Home />
+                      <HomeIcon />
                     </Grid>
                     <Grid item>
                       <Typography>
@@ -164,7 +169,7 @@ const AddressBook = () => {
                           className={address.tag === 'Home' ? styles.homeTagColor : styles.workTagColor}
                           label={address.tag}
                           variant="outlined"
-                          icon={address.tag === 'Home' ? <Home className={styles.homeTagColor} /> : <Work className={styles.workTagColor} />}
+                          icon={address.tag === 'Home' ? <HomeIcon className={styles.homeTagColor} /> : <WorkIcon className={styles.workTagColor} />}
                         />
                       </Grid>
                     )}
@@ -180,13 +185,13 @@ const AddressBook = () => {
                     <Grid item xs={address.defaultOption === '1' || (address.defaultOption === '0' && !address.tag) ? 12 : 6}>
                       <Grid container justifyContent="flex-end" alignItems="center" className={styles.mobileView}>
                         <IconButton color="secondary" onClick={() => onEditAddress(address)}>
-                          <Edit />
+                          <EditIcon />
                         </IconButton>
                         <IconButton
                           className={styles.defaultColor}
                           onClick={() => onDeleteAddress(address)}
                         >
-                          <Delete />
+                          <DeleteIcon />
                         </IconButton>
                       </Grid>
                     </Grid>

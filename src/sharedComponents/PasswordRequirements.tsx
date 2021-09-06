@@ -1,7 +1,9 @@
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Close, Done } from '@material-ui/icons';
+import CloseIcon from '@material-ui/icons/Close';
+import DoneIcon from '@material-ui/icons/Done';
+
 import React, { useCallback, useEffect, useState } from 'react';
 
 interface PasswordRequirementsOwnProps{
@@ -104,9 +106,9 @@ const ChecklistItem = (props:ChecklistItemOwnProps) => {
           <Grid container direction="row" alignItems="center">
             <Grid item>
               {meetsReq ? (
-                <Done className={checklistStyle.met} />
+                <DoneIcon className={checklistStyle.met} />
               ) : (
-                <Close className={checklistStyle.whiteTitle} />
+                <CloseIcon className={checklistStyle.whiteTitle} />
               )}
             </Grid>
             <Grid item>

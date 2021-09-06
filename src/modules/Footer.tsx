@@ -6,7 +6,8 @@ import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Facebook, Instagram } from '@material-ui/icons';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
 import { makeStyles } from '@material-ui/styles';
 import React from 'react';
 
@@ -28,10 +29,10 @@ const Footer = () => {
           {isSmView && (
             <>
               <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal.madewithlove/">
-                <Facebook />
+                <FacebookIcon />
               </IconButton>
               <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yj_artjournal/">
-                <Instagram />
+                <InstagramIcon />
               </IconButton>
             </>
           )}
@@ -42,10 +43,10 @@ const Footer = () => {
           {!isSmView && (
             <>
               <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal.madewithlove/">
-                <Facebook />
+                <FacebookIcon />
               </IconButton>
               <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yj_artjournal/">
-                <Instagram />
+                <InstagramIcon />
               </IconButton>
             </>
           )}

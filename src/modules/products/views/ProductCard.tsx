@@ -8,7 +8,7 @@ import Link from '@material-ui/core/Link';
 import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { AddShoppingCart } from '@material-ui/icons';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import clsx from 'clsx';
 import {
   GatsbyImage, getImage, ImageDataLike,
@@ -137,7 +137,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
                           }}
                           className={styles.shoppingCartBtn}
                         >
-                          <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
+                          <AddShoppingCartIcon fontSize="inherit" className={styles.shoppingCartIcon} />
                         </IconButton>
                       )}
                     </Grid>
@@ -157,7 +157,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
                 }}
                 className={styles.shoppingCartBtn}
               >
-                <AddShoppingCart fontSize="inherit" className={styles.shoppingCartIcon} />
+                <AddShoppingCartIcon fontSize="inherit" className={styles.shoppingCartIcon} />
               </IconButton>
             )}
           </Grid>

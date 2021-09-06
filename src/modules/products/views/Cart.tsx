@@ -8,7 +8,8 @@ import Link from '@material-ui/core/Link';
 import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Add, Remove } from '@material-ui/icons';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import clsx from 'clsx';
 import { navigate } from 'gatsby';
 import { GatsbyImage } from 'gatsby-plugin-image';
@@ -244,11 +245,11 @@ const Cart = () => {
                               () => onReduceItemQuantity(cartItem)
                             }
                           >
-                            <Remove />
+                            <RemoveIcon />
                           </IconButton>
                           <Typography>{cartItem.quantity}</Typography>
                           <IconButton onClick={() => onIncreaseItemQuantity(cartItem.id)}>
-                            <Add />
+                            <AddIcon />
                           </IconButton>
                         </Grid>
                       </Grid>
@@ -317,11 +318,11 @@ const Cart = () => {
                                   () => onReduceItemQuantity(cartItem)
                                 }
                               >
-                                <Remove />
+                                <RemoveIcon />
                               </IconButton>
                               <Typography>{cartItem.quantity}</Typography>
                               <IconButton onClick={() => onIncreaseItemQuantity(cartItem.id)}>
-                                <Add />
+                                <AddIcon />
                               </IconButton>
                             </Grid>
                             <Typography>

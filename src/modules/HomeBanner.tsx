@@ -1,4 +1,4 @@
-import { FiberManualRecord } from '@material-ui/icons';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { graphql, useStaticQuery } from 'gatsby';
 import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
 import React from 'react';
@@ -69,7 +69,7 @@ const HomeBanner = () => {
       animation="slide"
       interval={5000}
       timeout={800}
-      IndicatorIcon={<FiberManualRecord className={styles.indicatorIcon} />}
+      IndicatorIcon={<FiberManualRecordIcon className={styles.indicatorIcon} />}
       className={styles.carouselContainerRoot}
     >
       {homeBannerQuery.allFile.edges.map((banner:imageInnerStructure) => {

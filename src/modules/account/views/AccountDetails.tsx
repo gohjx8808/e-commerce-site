@@ -1,9 +1,11 @@
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import {
-  Cake, Email, Person, Phone, Wc,
-} from '@material-ui/icons';
+import CakeIcon from '@material-ui/icons/Cake';
+import EmailIcon from '@material-ui/icons/Email';
+import PersonIcon from '@material-ui/icons/Person';
+import PhoneIcon from '@material-ui/icons/Phone';
+import WcIcon from '@material-ui/icons/Wc';
 import { DateTime } from 'luxon';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -32,12 +34,12 @@ const AccountDetails = () => {
                 <SingleAccData
                   label="Full Name"
                   data={currentUserDetails.fullName}
-                  Icon={<Person />}
+                  Icon={<PersonIcon />}
                 />
                 <SingleAccData
                   label="Gender"
                   data={genderMap[currentUserDetails.gender]}
-                  Icon={<Wc />}
+                  Icon={<WcIcon />}
                 />
               </Grid>
             </Grid>
@@ -46,12 +48,12 @@ const AccountDetails = () => {
                 <SingleAccData
                   label="Email"
                   data={currentUserDetails.email}
-                  Icon={<Email />}
+                  Icon={<EmailIcon />}
                 />
                 <SingleAccData
                   label="Phone No"
                   data={currentUserDetails.phoneNumber}
-                  Icon={<Phone />}
+                  Icon={<PhoneIcon />}
                 />
               </Grid>
             </Grid>
@@ -60,7 +62,7 @@ const AccountDetails = () => {
                 <SingleAccData
                   label="Date of Birth"
                   data={DateTime.fromISO(currentUserDetails.dob).toLocaleString()}
-                  Icon={<Cake />}
+                  Icon={<CakeIcon />}
                 />
                 <Grid item xs={6} />
               </Grid>

@@ -1,6 +1,5 @@
 import Grid from '@material-ui/core/Grid';
-import { responsiveFontSizes } from '@material-ui/core/styles';
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { SnackbarProvider } from 'notistack';
 import * as React from 'react';

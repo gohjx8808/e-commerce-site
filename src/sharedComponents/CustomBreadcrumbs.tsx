@@ -2,7 +2,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { NavigateNext } from '@material-ui/icons';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { useLocation } from '@reach/router';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
@@ -40,7 +40,7 @@ const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
   }, [location]);
 
   return (
-    <Breadcrumbs separator={<NavigateNext fontSize="small" />} aria-label="breadcrumb" className={styles.verticalSpace}>
+    <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb" className={styles.verticalSpace}>
       <Link color="inherit" href="/">
         Home
       </Link>

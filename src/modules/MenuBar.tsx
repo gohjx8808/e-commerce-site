@@ -13,7 +13,8 @@ import {
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { ExitToApp, ShoppingCart } from '@material-ui/icons';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -213,7 +214,7 @@ const MenuBar = () => {
               aria-label="logout"
               color="inherit"
             >
-              <ExitToApp />
+              <ExitToAppIcon />
             </IconButton>
             <Typography>Logout</Typography>
           </StyledMenuItem>
@@ -285,7 +286,7 @@ const MenuBar = () => {
                 )}
               <IconButton aria-label="shopping cart" color="inherit" onClick={() => navigate(routeNames.cart)}>
                 <Badge badgeContent={totalQuantity} color="secondary">
-                  <ShoppingCart />
+                  <ShoppingCartIcon />
                 </Badge>
               </IconButton>
               {currentUserDetail.fullName !== '' && (
@@ -302,7 +303,7 @@ const MenuBar = () => {
                     color="inherit"
                     onClick={promptSignOut}
                   >
-                    <ExitToApp />
+                    <ExitToAppIcon />
                   </IconButton>
                 </>
               )}
@@ -310,7 +311,7 @@ const MenuBar = () => {
             <Box className={classes.sectionMobile}>
               <IconButton aria-label="shopping cart" color="inherit" onClick={() => navigate(routeNames.cart)}>
                 <Badge badgeContent={totalQuantity} color="secondary">
-                  <ShoppingCart />
+                  <ShoppingCartIcon />
                 </Badge>
               </IconButton>
               <IconButton
