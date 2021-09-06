@@ -4,8 +4,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import { SnackbarProvider } from 'notistack';
 import * as React from 'react';
 import App from './App';
-
-const CustomSnackbar = React.lazy(() => import('../sharedComponents/CustomSnackbar'));
+import CustomSnackbar from '../sharedComponents/CustomSnackbar';
 
 const IndexPage = () => {
   const theme = createTheme({

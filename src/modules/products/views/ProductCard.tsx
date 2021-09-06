@@ -4,7 +4,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
 import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -16,7 +15,6 @@ import {
 import { useSnackbar } from 'notistack';
 import React from 'react';
 import Carousel from 'react-material-ui-carousel';
-import { Link as GatsbyLink } from 'gatsby';
 import { useAppDispatch } from '../../../hooks';
 import { formatPrice, getProductVariationSuffix } from '../../../utils/helper';
 import {
@@ -67,22 +65,40 @@ const ProductCard = (props:ProductCardOwnProps) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const triggerEnlargeImage = (imageData:ImageDataLike, carouselImageList:ImageDataLike[]) => {
+  const triggerEnlargeImage = (
+    imageData:ImageDataLike,
+    carouselImageList:ImageDataLike[],
+    event:React.MouseEvent<HTMLElement, MouseEvent>,
+  ) => {
+    event.stopPropagation();
     dispatch(updateSelectedProductImage(imageData));
     dispatch(updateSelectedProductImageList(carouselImageList));
     dispatch(toggleEnlargedProductImageModal(true));
   };
 
+  const onClickAddToCart = (
+    event:React.MouseEvent<HTMLElement, MouseEvent>,
+  ) => {
+    event.stopPropagation();
+    if (product.category === 'Keychain Series') {
+      triggerItemVariationMenu(event);
+    } else {
+      onAddToCart(product);
+    }
+  };
+
+  const openDescription = () => {
+    window.open(`${window.location.origin}/products/${product.contentful_id}`);
+  };
+
   return (
     <Grid item lg={3} md={6} sm={6} xs={6}>
-      <Card variant="outlined" className={styles.productCard}>
-        <Link component={GatsbyLink} to={`/products/${product.contentful_id}`} rel="noreferrer">
-          <CardHeader
-            title={product.name}
-            className={styles.productNameContainer}
-            titleTypographyProps={{ className: styles.productName }}
-          />
-        </Link>
+      <Card variant="outlined" className={styles.productCard} onClick={openDescription}>
+        <CardHeader
+          title={product.name}
+          className={styles.productNameContainer}
+          titleTypographyProps={{ className: styles.productName }}
+        />
         <Carousel
           indicators={false}
           autoPlay={false}
@@ -97,7 +113,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
               <Box
                 className={styles.carouselImageContainer}
                 key={imageData.images.fallback?.src}
-                onClick={() => triggerEnlargeImage(image, product.productImage)}
+                onClick={(event) => triggerEnlargeImage(image, product.productImage, event)}
               >
                 <GatsbyImage
                   image={imageData}
@@ -128,13 +144,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
                       {isXsView && (
                         <IconButton
                           aria-label="addToCart"
-                          onClick={(event) => {
-                            if (product.category === 'Keychain Series') {
-                              triggerItemVariationMenu(event);
-                            } else {
-                              onAddToCart(product);
-                            }
-                          }}
+                          onClick={onClickAddToCart}
                           className={styles.shoppingCartBtn}
                         >
                           <AddShoppingCartIcon fontSize="inherit" className={styles.shoppingCartIcon} />
@@ -148,13 +158,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
             {!(product.discountedPrice && isXsView) && (
               <IconButton
                 aria-label="addToCart"
-                onClick={(event) => {
-                  if (product.category === 'Keychain Series') {
-                    triggerItemVariationMenu(event);
-                  } else {
-                    onAddToCart(product);
-                  }
-                }}
+                onClick={onClickAddToCart}
                 className={styles.shoppingCartBtn}
               >
                 <AddShoppingCartIcon fontSize="inherit" className={styles.shoppingCartIcon} />
