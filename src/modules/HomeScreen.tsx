@@ -102,7 +102,7 @@ const HomeScreen = () => {
           <Typography variant="h6" className={styles.centerText}>Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
           <Typography variant="h6" className={styles.centerText}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
           <Link component={GatsbyLink} to={routeNames.learnMore}>
-            <Typography variant="subtitle1" color="secondary" className={styles.centerText}>LEARN MORE</Typography>
+            <Typography variant="subtitle1" color="secondary" className={styles.centerText}>ABOUT MY SHOP</Typography>
           </Link>
         </Grid>
         <Grid container className={styles.sectionContainer} direction="column">

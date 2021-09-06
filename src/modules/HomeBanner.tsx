@@ -69,7 +69,7 @@ const HomeBanner = () => {
       animation="slide"
       interval={5000}
       timeout={800}
-      IndicatorIcon={<FiberManualRecordIcon className={styles.indicatorIcon} />}
+      IndicatorIcon={<FiberManualRecordIcon className={styles.indicatorIcon} aria-label="indicator" />}
       className={styles.carouselContainerRoot}
     >
       {homeBannerQuery.allFile.edges.map((banner:imageInnerStructure) => {
