@@ -1,4 +1,3 @@
-import loadable from '@loadable/component';
 import Grid from '@material-ui/core/Grid';
 import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -6,7 +5,7 @@ import { SnackbarProvider } from 'notistack';
 import * as React from 'react';
 import App from './App';
 
-const CustomSnackbar = loadable(() => import('../sharedComponents/CustomSnackbar'));
+const CustomSnackbar = React.lazy(() => import('../sharedComponents/CustomSnackbar'));
 
 const IndexPage = () => {
   const theme = createTheme({

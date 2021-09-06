@@ -1,4 +1,3 @@
-import loadable from '@loadable/component';
 import Box from '@material-ui/core/Box';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
@@ -8,29 +7,30 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { RouteComponentProps, Router } from '@reach/router';
 import { navigate } from 'gatsby';
 import React, { Suspense, useEffect, useState } from 'react';
+import { lazy } from 'react';
 import { useAppSelector } from '../hooks';
 import routeNames from '../utils/routeNames';
 
-const ScrollTop = loadable(() => import('../sharedComponents/ScrollTop'));
-const MenuBar = loadable(() => import('../modules/MenuBar'));
-const Products = loadable(() => import('../modules/products/views/Products'));
-const SEO = loadable(() => import('../modules/SEO'));
-const SignupScreen = loadable(() => import('../modules/auth/views/SignupScreen'));
-const LoginScreen = loadable(() => import('../modules/auth/views/LoginScreen'));
-const LoadingOverlay = loadable(() => import('../modules/overlay/views/LoadingOverlay'));
-const StatusModal = loadable(() => import('../modules/status/views/StatusModal'));
-const AccountScreen = loadable(() => import('../modules/account/views/AccountScreen'));
-const ForgotPassword = loadable(() => import('../modules/auth/views/ForgotPassword'));
-const FeedbackForm = loadable(() => import('../modules/feedback/views/FeedbackForm'));
-const Footer = loadable(() => import('../modules/Footer'));
-const HomeBanner = loadable(() => import('../modules/HomeBanner'));
-const HomeScreen = loadable(() => import('../modules/HomeScreen'));
-const ImageGallery = loadable(() => import('../modules/imageGallery/views/ImageGallery'));
-const LearnMore = loadable(() => import('../modules/LearnMore'));
-const Cart = loadable(() => import('../modules/products/views/Cart'));
-const Checkout = loadable(() => import('../modules/products/views/Checkout'));
-const EnlargedProductImageCarouselModal = loadable(() => import('../modules/products/views/EnlargedProductImageCarouselModal'));
-const ProductDescription = loadable(() => import('../modules/products/views/ProductDescription'));
+const ScrollTop = lazy(() => import('../sharedComponents/ScrollTop'));
+const MenuBar = lazy(() => import('../modules/MenuBar'));
+const Products = lazy(() => import('../modules/products/views/Products'));
+const SEO = lazy(() => import('../modules/SEO'));
+const SignupScreen = lazy(() => import('../modules/auth/views/SignupScreen'));
+const LoginScreen = lazy(() => import('../modules/auth/views/LoginScreen'));
+const LoadingOverlay = lazy(() => import('../modules/overlay/views/LoadingOverlay'));
+const StatusModal = lazy(() => import('../modules/status/views/StatusModal'));
+const AccountScreen = lazy(() => import('../modules/account/views/AccountScreen'));
+const ForgotPassword = lazy(() => import('../modules/auth/views/ForgotPassword'));
+const FeedbackForm = lazy(() => import('../modules/feedback/views/FeedbackForm'));
+const Footer = lazy(() => import('../modules/Footer'));
+const HomeBanner = lazy(() => import('../modules/HomeBanner'));
+const HomeScreen = lazy(() => import('../modules/HomeScreen'));
+const ImageGallery = lazy(() => import('../modules/imageGallery/views/ImageGallery'));
+const LearnMore = lazy(() => import('../modules/LearnMore'));
+const Cart = lazy(() => import('../modules/products/views/Cart'));
+const Checkout = lazy(() => import('../modules/products/views/Checkout'));
+const EnlargedProductImageCarouselModal = lazy(() => import('../modules/products/views/EnlargedProductImageCarouselModal'));
+const ProductDescription = lazy(() => import('../modules/products/views/ProductDescription'));
 
 const useStyles = makeStyles((theme) => ({
   content: {
