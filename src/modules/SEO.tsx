@@ -93,8 +93,8 @@ const SEO = (props:SEOOwnProps) => {
 export default SEO;
 
 SEO.defaultProps = {
-  title: null,
-  description: null,
-  image: null,
+  title: '',
+  description: '',
+  image: '',
   article: false,
 };
