@@ -12,13 +12,13 @@ const EnlargedProductImageCarouselModal = () => {
   const selectedProductImageList = useAppSelector(
     (state) => state.product.selectedProductImageList,
   );
-  const isEnlargedProductImageBackdropOpen = useAppSelector(
+  const isEnlargedProductImageModalOpen = useAppSelector(
     (state) => state.product.isEnlargedProductImageModalOpen,
   );
 
   return (
     <Dialog
-      open={isEnlargedProductImageBackdropOpen}
+      open={isEnlargedProductImageModalOpen}
       onClose={() => dispatch(toggleEnlargedProductImageModal(false))}
     >
       <Carousel
