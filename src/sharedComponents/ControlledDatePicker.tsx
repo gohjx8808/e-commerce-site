@@ -1,4 +1,4 @@
-import LuxonUtils from '@date-io/luxon';
+import DayjsUtils from '@date-io/dayjs';
 import { makeStyles } from '@material-ui/core/styles';
 import { KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
 import MuiPickersUtilsProvider from '@material-ui/pickers/MuiPickersUtilsProvider';
@@ -83,9 +83,9 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
           onChange, value,
         },
       }) => (
-        <MuiPickersUtilsProvider utils={LuxonUtils}>
+        <MuiPickersUtilsProvider utils={DayjsUtils}>
           <KeyboardDatePicker
-            format="dd/MM/yyyy"
+            format="DD/MM/YYYY"
             label={label}
             value={value ? new Date(value) : null}
             onChange={(selectedDate:MaterialUiPickersDate) => onChange(selectedDate ? selectedDate.toString() : '')}

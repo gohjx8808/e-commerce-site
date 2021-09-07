@@ -6,7 +6,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
 import WcIcon from '@material-ui/icons/Wc';
-import { DateTime } from 'luxon';
+import dayjs from 'dayjs';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { toggleEditAccDetailModal } from '../src/accountReducer';
@@ -61,7 +61,7 @@ const AccountDetails = () => {
               <Grid container justifyContent="center" alignItems="center" direction="row" spacing={5}>
                 <SingleAccData
                   label="Date of Birth"
-                  data={DateTime.fromISO(currentUserDetails.dob).toLocaleString()}
+                  data={dayjs(currentUserDetails.dob).format('DD MMMM YYYY')}
                   Icon={<CakeIcon />}
                 />
                 <Grid item xs={6} />
