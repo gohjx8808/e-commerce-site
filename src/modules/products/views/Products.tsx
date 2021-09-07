@@ -5,13 +5,16 @@ import { graphql, useStaticQuery } from 'gatsby';
 import {
   GatsbyImage, getImage, IGatsbyImageData,
 } from 'gatsby-plugin-image';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  lazy, useCallback, useEffect, useState,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
 import { useAppSelector } from '../../../hooks';
-import ControlledPicker from '../../../sharedComponents/ControlledPicker';
 import productStyle from '../src/productStyle';
-import ProductCard from './ProductCard';
+
+const ControlledPicker = lazy(() => import('../../../sharedComponents/ControlledPicker'));
+const ProductCard = lazy(() => import('./ProductCard'));
 
 interface categoryAmountData{
   [key:string]:number
