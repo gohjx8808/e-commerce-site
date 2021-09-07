@@ -257,20 +257,22 @@ const MenuBar = () => {
             <Button className={classes.nameBtn} onClick={() => navigate('/')}>
               <Typography className={classes.title} variant="h6">YJ Art Journal</Typography>
             </Button>
-            <Box className={classes.search}>
-              <Box className={classes.searchIcon}>
-                <SearchIcon />
+            {location.pathname === routeNames.products && (
+              <Box className={classes.search}>
+                <Box className={classes.searchIcon}>
+                  <SearchIcon />
+                </Box>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.searchInput,
+                  }}
+                  inputProps={{ 'aria-label': 'search' }}
+                  onChange={onChangeProductFilterKeyword}
+                />
               </Box>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.searchInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-                onChange={onChangeProductFilterKeyword}
-              />
-            </Box>
+            )}
             <Box className={classes.grow} />
             <Box className={classes.sectionDesktop}>
               {currentUserDetail.fullName !== ''
