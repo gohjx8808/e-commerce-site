@@ -66,6 +66,7 @@ module.exports = {
         devMode: true,
       },
     },
+    'gatsby-plugin-csp',
   ],
 };
 
