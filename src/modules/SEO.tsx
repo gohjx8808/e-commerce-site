@@ -79,8 +79,6 @@ const SEO = (props:SEOOwnProps) => {
 
       {seo.image && <meta name="twitter:image" content={seo.image} />}
 
-      <meta name="robots" content="index" />
-
       <style type="text/css">
         {`body {
           margin: 0;
