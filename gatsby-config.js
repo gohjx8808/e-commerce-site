@@ -24,7 +24,14 @@ module.exports = {
     'gatsby-plugin-image',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
-    'gatsby-plugin-robots-txt',
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://yjartjournal.gtsb.io',
+        sitemap: 'https://yjartjournal.gtsb.io/sitemap/sitemap-index.xml',
+        policy: [{ userAgent: '*', allow: '/' }],
+      },
+    },
     'gatsby-plugin-sitemap',
     {
       resolve: 'gatsby-plugin-firebase',
