@@ -13,7 +13,7 @@ import {
   GatsbyImage, getImage, ImageDataLike,
 } from 'gatsby-plugin-image';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { memo } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch } from '../../../hooks';
 import { formatPrice, getProductVariationSuffix } from '../../../utils/helper';
@@ -176,4 +176,4 @@ const ProductCard = (props:ProductCardOwnProps) => {
   );
 };
 
-export default ProductCard;
+export default memo(ProductCard);
