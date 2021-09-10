@@ -48,6 +48,14 @@ module.exports = {
       },
     },
     {
+      resolve: 'gatsby-source-contentful',
+      options: {
+        spaceId: process.env.CONTENTFUL_SPACE_ID,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+        forceFullSync: true,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-manifest',
       options: {
         name: 'YJ Art Journal',
@@ -58,19 +66,25 @@ module.exports = {
         icon: 'src/images/favicon.png',
       },
     },
-    'gatsby-plugin-offline',
     {
-      resolve: 'gatsby-source-contentful',
+      resolve: 'gatsby-plugin-csp',
       options: {
-        spaceId: process.env.CONTENTFUL_SPACE_ID,
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-        forceFullSync: true,
+        mergeStyleHashes: false,
+        mergeScriptHashes: false,
+        directives: {
+          'script-src': "'self' 'unsafe-inline' https://*.firebasedatabase.app",
+          'style-src': "'self' 'unsafe-inline'",
+          'img-src': "'self' data: http://images.ctfassets.net/",
+          'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com",
+          'frame-src': "'self' https://*.firebasedatabase.app",
+        },
       },
     },
+    'gatsby-plugin-offline',
     {
       resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
       options: {
-        devMode: true,
+        devMode: false,
       },
     },
   ],
