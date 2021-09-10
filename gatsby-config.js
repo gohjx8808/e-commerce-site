@@ -75,7 +75,7 @@ module.exports = {
           'script-src': "'self' 'unsafe-inline' https://*.firebasedatabase.app",
           'style-src': "'self' 'unsafe-inline'",
           'img-src': "'self' data: http://images.ctfassets.net/",
-          'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com",
+          'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com",
           'frame-src': "'self' https://*.firebasedatabase.app",
         },
       },
