@@ -14,3 +14,7 @@ export const sendPaymentEmailApi = (emailData:products.sendEmailPayload) => (
     body: JSON.stringify(emailData),
   })
 );
+
+export const getAvailablePromocodes = () => (firebase.database().ref('promoCodes').once('value'));
+
+export const updatePromoCodeUsed = (updatedDetails:auth.currentUserDetails) => firebase.database().ref(`users/${updatedDetails.uid}`).set(updatedDetails);

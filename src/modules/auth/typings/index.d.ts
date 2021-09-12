@@ -35,6 +35,7 @@ declare namespace auth{
     gender:string
     phoneNumber:string
     addressBook:addressData[]
+    usedPromocode:string[]
   }
 
   interface addressData{

@@ -51,7 +51,7 @@ function* submitSignUpSaga() {
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
       navigate(routeNames.login);
-    } catch (error) {
+    } catch (error:any) {
       const errorCode = error.code;
       if (errorCode === 'auth/email-already-in-use') {
         yield put(updateStatusMsg('The provided email is already in use by an existing user. '
@@ -144,7 +144,7 @@ function* submitForgotPasswordSaga() {
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
       navigate(routeNames.login);
-    } catch (error) {
+    } catch (error:any) {
       if (error.code === 'auth/user-not-found') {
         yield put(updateStatusMsg('The email address is not registered. Please insert a registered email address!'));
       } else {

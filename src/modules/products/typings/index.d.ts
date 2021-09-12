@@ -91,5 +91,14 @@ declare namespace products{
     selectedCheckoutItems:shoppingCartItemData[]
     saveShippingInfo:boolean
     note:string
+    promoCode:string
+  }
+
+  interface availablePromocodeData{
+    code:string
+    endDate:string
+    startDate:string
+    discountType:string
+    discountValue:string
   }
 }

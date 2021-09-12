@@ -14,8 +14,12 @@ import {
   DataGrid, GridColDef, GridPageChangeParams,
 } from '@material-ui/data-grid';
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import firebase from 'gatsby-plugin-firebase';
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledCheckbox from '../../../sharedComponents/ControlledCheckbox';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
@@ -26,10 +30,13 @@ import DividerWithText from '../../../sharedComponents/DividerWithText';
 import ExpandedCell from '../../../sharedComponents/ExpandedCell';
 import { stateOptions } from '../../../utils/constants';
 import { formatPrice } from '../../../utils/helper';
+import { getAvailablePromocodes } from '../src/productApi';
 import { sendPaymentEmailAction } from '../src/productReducers';
 import productSchema from '../src/productSchema';
 import productStyle from '../src/productStyle';
 import CheckoutAddressListModal from './CheckoutAddressListModal';
+
+dayjs.extend(isBetween);
 
 const Checkout = () => {
   const theme = useTheme();
@@ -48,11 +55,24 @@ const Checkout = () => {
   const [shippingFee, setShippingFee] = useState<number>(0);
   const [isCheckoutAddressListModalOpen, setIsCheckoutAddressListModalOpen] = useState(false);
   const [displayShippingFee, setDisplayShippingFee] = useState<string>('-');
+  const [availablePromocodes, setAvailablePromocodes] = useState<
+    products.availablePromocodeData[]
+  >([]);
+  const [priceAfterPromo, setPriceAfterPromo] = useState<number>(0);
+  const [promoError, setPromoError] = useState('');
   const {
     control, watch, setValue, handleSubmit, formState: { errors }, reset,
   } = useForm({
     resolver: yupResolver(productSchema.shippingInfoSchema),
   });
+
+  useEffect(() => {
+    const getAvailablePromocodesEffect = async () => {
+      const promocodesResponse:firebase.database.DataSnapshot = await getAvailablePromocodes();
+      setAvailablePromocodes(promocodesResponse.val());
+    };
+    getAvailablePromocodesEffect();
+  }, []);
 
   useEffect(() => {
     const filteredItems = cartItems.filter((item) => {
@@ -148,6 +168,8 @@ const Checkout = () => {
     }
   }, [selectedState, totalAmount]);
 
+  const inputPromoCode = watch('promoCode');
+
   useEffect(() => {
     if (selectedAddress.addressLine1) {
       reset({
@@ -164,9 +186,61 @@ const Checkout = () => {
         country: selectedAddress.country,
         saveShippingInfo: false,
         paymentOptions: '',
+        promoCode: inputPromoCode,
       });
     }
-  }, [reset, selectedAddress]);
+  }, [reset, selectedAddress, inputPromoCode]);
+
+  const validatePromocode = useCallback(() => {
+    const isPromoCodeUsed = (currentUserDetails.usedPromocode
+      && currentUserDetails.usedPromocode.includes(
+        inputPromoCode,
+      )) && !!currentUserDetails.usedPromocode;
+    let errorMsg = '';
+    let discountedPrice = totalAmount;
+    if (!isPromoCodeUsed) {
+      const today = dayjs();
+      const targetPromoCode = availablePromocodes.find(
+        (promoCode) => promoCode.code === inputPromoCode,
+      );
+      if (targetPromoCode) {
+        const isPromoCodeValid = today.isBetween(targetPromoCode.startDate, targetPromoCode.endDate, null, '[]');
+        if (isPromoCodeValid) {
+          switch (targetPromoCode.discountType) {
+            case 'percentage': {
+              discountedPrice = totalAmount * (
+                1 - parseFloat(targetPromoCode.discountValue) / 100
+              );
+              break;
+            }
+            case 'number': {
+              discountedPrice = totalAmount - +targetPromoCode.discountValue;
+              break;
+            }
+            default:
+          }
+        } else {
+          errorMsg = 'Invalid promo code';
+        }
+      } else if (inputPromoCode) {
+        errorMsg = 'Invalid promo code';
+      }
+    } else {
+      errorMsg = 'You have exceeded the redemption limit!';
+    }
+    setPriceAfterPromo(discountedPrice);
+    return errorMsg;
+  }, [
+    availablePromocodes,
+    currentUserDetails.usedPromocode,
+    inputPromoCode,
+    totalAmount,
+  ]);
+
+  useEffect(() => {
+    const errorMsg = validatePromocode();
+    setPromoError(errorMsg);
+  }, [validatePromocode, inputPromoCode]);
 
   const proceedToPayment = async (hookData:products.rawShippingInfoPayload) => {
     const emailData = {
@@ -176,8 +250,10 @@ const Checkout = () => {
       shippingFee,
       selectedCheckoutItems: extractedCartItem,
     } as products.sendEmailPayload;
-
-    dispatch(sendPaymentEmailAction(emailData));
+    validatePromocode();
+    if (!validatePromocode()) {
+      dispatch(sendPaymentEmailAction(emailData));
+    }
   };
 
   const toggleCheckoutAddressListModal = () => {
@@ -219,29 +295,59 @@ const Checkout = () => {
           <Grid container alignItems="center" className={styles.totalPayTextContainer} spacing={1}>
             <Grid item lg={9} sm={10} xs={6}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={styles.totalPayText}>
-                  Shipping Fee:
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item lg={3} sm={2} xs={6}>
-              <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={styles.totalPayText}>
-                  {displayShippingFee}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item lg={9} sm={10} xs={6}>
-              <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={styles.totalPayText}>
+                <Typography variant="subtitle1" className={styles.rightText}>
                   Total Amount:
                 </Typography>
               </Grid>
             </Grid>
             <Grid item lg={3} sm={2} xs={6}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={styles.totalPayText}>
-                  {formatPrice(totalAmount + shippingFee, 'MYR')}
+                <Typography variant="subtitle1" className={styles.rightText}>
+                  {formatPrice(totalAmount, 'MYR')}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item lg={9} sm={10} xs={6}>
+              <Grid container justifyContent="flex-end">
+                <Typography variant="subtitle1" className={styles.rightText}>
+                  {`Total Discount ${totalAmount !== priceAfterPromo ? `(${inputPromoCode})` : ''}:`}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item lg={3} sm={2} xs={6}>
+              <Grid container justifyContent="flex-end">
+                <Typography variant="subtitle1" className={styles.rightText}>
+                  -
+                  {' '}
+                  {totalAmount !== priceAfterPromo ? formatPrice(totalAmount - priceAfterPromo, 'MYR') : ''}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item lg={9} sm={10} xs={6}>
+              <Grid container justifyContent="flex-end">
+                <Typography variant="subtitle1" className={styles.rightText}>
+                  Shipping Fee:
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item lg={3} sm={2} xs={6}>
+              <Grid container justifyContent="flex-end">
+                <Typography variant="subtitle1" className={styles.rightText}>
+                  {displayShippingFee}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item lg={9} sm={10} xs={6}>
+              <Grid container justifyContent="flex-end">
+                <Typography variant="subtitle1" className={clsx(styles.rightText, styles.boldText)}>
+                  Total Amount After Discount:
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item lg={3} sm={2} xs={6}>
+              <Grid container justifyContent="flex-end">
+                <Typography variant="subtitle1" className={clsx(styles.rightText, styles.boldText)}>
+                  {formatPrice(priceAfterPromo + shippingFee, 'MYR')}
                 </Typography>
               </Grid>
             </Grid>
@@ -397,6 +503,20 @@ const Checkout = () => {
                       defaultValue={prevShippingInfo.country}
                       readOnly={!!selectedAddress.country}
                     />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <ControlledTextInput
+                      control={control}
+                      name="promoCode"
+                      variant="outlined"
+                      label="Promo Code"
+                      labelWidth={80}
+                      error={errors.promoCode}
+                      lightBg
+                    />
+                    <FormHelperText error className={styles.rmbPadding}>
+                      {promoError}
+                    </FormHelperText>
                   </Grid>
                   <Grid item xs={12}>
                     <ControlledTextInput

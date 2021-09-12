@@ -14,6 +14,7 @@ const INITIAL_STATE:authState = {
     email: '',
     phoneNumber: '',
     addressBook: [],
+    usedPromocode: [],
   },
   isSignOutConfirmationModalOpen: false,
 };

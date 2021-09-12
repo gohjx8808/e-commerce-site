@@ -8,11 +8,14 @@ import { RootState } from '../../../store';
 import {
   submitAddEditAddressAction, toggleIsDirectAction, updateAddressActionType,
 } from '../../account/src/accountReducer';
+import { getCurrentUserDetailsAction } from '../../auth/src/authReducer';
 import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
 import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
 } from '../../status/src/statusReducer';
-import { getPrevOrderCount, sendPaymentEmailApi, updateOrderCount } from './productApi';
+import {
+  getPrevOrderCount, sendPaymentEmailApi, updateOrderCount, updatePromoCodeUsed,
+} from './productApi';
 import {
   removeItemFromCart,
   saveShippingInfo,
@@ -44,6 +47,19 @@ function* sendPaymentEmailSaga() {
       );
       yield call(sendPaymentEmailApi, payload);
       yield call(updateOrderCount, payload.currentOrderCount);
+      if (payload.promoCode) {
+        let updatedUserDetails = { ...currentUserDetails };
+        if (currentUserDetails.usedPromocode) {
+          updatedUserDetails = {
+            ...updatedUserDetails,
+            usedPromocode: [...updatedUserDetails.usedPromocode, payload.promoCode],
+          };
+        } else {
+          updatedUserDetails = { ...updatedUserDetails, usedPromocode: [payload.promoCode] };
+        }
+        yield call(updatePromoCodeUsed, updatedUserDetails);
+        yield put(getCurrentUserDetailsAction(currentUserDetails.uid));
+      }
       const toBeRemovedItems = payload.selectedCheckoutItems;
       yield all(toBeRemovedItems.map((item) => put(removeItemFromCart(item.id))));
       if (payload.saveShippingInfo) {
