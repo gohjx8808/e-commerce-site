@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { useTheme } from '@material-ui/core/styles';
@@ -14,12 +15,11 @@ import {
   DataGrid, GridColDef, GridPageChangeParams,
 } from '@material-ui/data-grid';
 import clsx from 'clsx';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import firebase from 'gatsby-plugin-firebase';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import firebase from 'gatsby-plugin-firebase';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledCheckbox from '../../../sharedComponents/ControlledCheckbox';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
@@ -220,10 +220,10 @@ const Checkout = () => {
             default:
           }
         } else {
-          errorMsg = 'Invalid promo code';
+          errorMsg = 'Promo code is expired!';
         }
       } else if (inputPromoCode) {
-        errorMsg = 'Invalid promo code';
+        errorMsg = 'Invalid promo code!';
       }
     } else {
       errorMsg = 'You have exceeded the redemption limit!';
@@ -513,10 +513,16 @@ const Checkout = () => {
                       labelWidth={80}
                       error={errors.promoCode}
                       lightBg
+                      disabled={currentUserDetails.uid === ''}
                     />
-                    <FormHelperText error className={styles.rmbPadding}>
+                    <FormHelperText error className={styles.errorPadding}>
                       {promoError}
                     </FormHelperText>
+                    {currentUserDetails.uid === '' && (
+                      <FormHelperText className={styles.errorPadding}>
+                        Please login to enjoy the discounts!
+                      </FormHelperText>
+                    )}
                   </Grid>
                   <Grid item xs={12}>
                     <ControlledTextInput

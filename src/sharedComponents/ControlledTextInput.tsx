@@ -29,6 +29,7 @@ interface ControlledTextInputOwnProps{
   readOnly?:boolean
   infoText?:string
   placeholder?:string
+  disabled?:boolean
 }
 
 const useStyles = makeStyles({
@@ -77,6 +78,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
     readOnly,
     infoText,
     placeholder,
+    disabled,
   } = props;
 
   const styles = useStyles();
@@ -96,6 +98,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
           style={{
             display: type === 'hidden' ? 'none' : 'flex',
           }}
+          disabled={disabled}
         >
           <InputLabel
             htmlFor={name}
@@ -157,6 +160,7 @@ ControlledTextInput.defaultProps = {
   readOnly: false,
   infoText: '',
   placeholder: '',
+  disabled: false,
 };
 
 export default ControlledTextInput;

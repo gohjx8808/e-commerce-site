@@ -222,6 +222,9 @@ const productStyle = makeStyles((theme) => ({
   unboldText: {
     fontWeight: 'normal',
   },
+  errorPadding: {
+    paddingLeft: 15,
+  },
 }));
 
 export default productStyle;
