@@ -225,6 +225,9 @@ const productStyle = makeStyles((theme) => ({
   errorPadding: {
     paddingLeft: 15,
   },
+  successText: {
+    color: 'green',
+  },
 }));
 
 export default productStyle;

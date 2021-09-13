@@ -38,6 +38,14 @@ import CheckoutAddressListModal from './CheckoutAddressListModal';
 
 dayjs.extend(isBetween);
 
+interface promoCodeObject{
+  code:string
+  discountType:string
+  discountValue:string
+  error:string
+  success:string
+}
+
 const Checkout = () => {
   const theme = useTheme();
   const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
@@ -59,7 +67,13 @@ const Checkout = () => {
     products.availablePromocodeData[]
   >([]);
   const [priceAfterPromo, setPriceAfterPromo] = useState<number>(0);
-  const [promoError, setPromoError] = useState('');
+  const [appliedPromo, setAppliedPromo] = useState<promoCodeObject>({
+    code: '',
+    error: '',
+    success: '',
+    discountValue: '',
+    discountType: '',
+  });
   const {
     control, watch, setValue, handleSubmit, formState: { errors }, reset,
   } = useForm({
@@ -196,7 +210,13 @@ const Checkout = () => {
       && currentUserDetails.usedPromocode.includes(
         inputPromoCode,
       )) && !!currentUserDetails.usedPromocode;
-    let errorMsg = '';
+    let rawPromoObject:promoCodeObject = {
+      code: '',
+      error: '',
+      success: '',
+      discountValue: '',
+      discountType: '',
+    };
     let discountedPrice = totalAmount;
     if (!isPromoCodeUsed) {
       const today = dayjs();
@@ -219,17 +239,25 @@ const Checkout = () => {
             }
             default:
           }
+          rawPromoObject = {
+            ...rawPromoObject,
+            code: targetPromoCode.code,
+            discountType: targetPromoCode.discountType,
+            discountValue: targetPromoCode.discountValue,
+            success: 'Promo code applied!',
+          };
         } else {
-          errorMsg = 'Promo code is expired!';
+          rawPromoObject = { ...rawPromoObject, error: 'Promo code is expired!' };
         }
       } else if (inputPromoCode) {
-        errorMsg = 'Invalid promo code!';
+        rawPromoObject = { ...rawPromoObject, error: 'Invalid promo code!' };
       }
     } else {
-      errorMsg = 'You have exceeded the redemption limit!';
+      rawPromoObject = { ...rawPromoObject, error: 'You have exceeded the redemption limit!' };
     }
     setPriceAfterPromo(discountedPrice);
-    return errorMsg;
+    setAppliedPromo(rawPromoObject);
+    return rawPromoObject.error;
   }, [
     availablePromocodes,
     currentUserDetails.usedPromocode,
@@ -238,9 +266,8 @@ const Checkout = () => {
   ]);
 
   useEffect(() => {
-    const errorMsg = validatePromocode();
-    setPromoError(errorMsg);
-  }, [validatePromocode, inputPromoCode]);
+    validatePromocode();
+  }, [inputPromoCode, validatePromocode]);
 
   const proceedToPayment = async (hookData:products.rawShippingInfoPayload) => {
     const emailData = {
@@ -250,7 +277,7 @@ const Checkout = () => {
       shippingFee,
       selectedCheckoutItems: extractedCartItem,
     } as products.sendEmailPayload;
-    validatePromocode();
+
     if (!validatePromocode()) {
       dispatch(sendPaymentEmailAction(emailData));
     }
@@ -309,17 +336,17 @@ const Checkout = () => {
             </Grid>
             <Grid item lg={9} sm={10} xs={6}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={styles.rightText}>
-                  {`Total Discount ${totalAmount !== priceAfterPromo ? `(${inputPromoCode})` : ''}:`}
+                <Typography variant="subtitle1" className={clsx(styles.rightText, { [styles.successText]: appliedPromo.code })}>
+                  {`Total Discount ${appliedPromo.code ? `(${appliedPromo.discountType === 'value' ? 'RM ' : ''}${appliedPromo.discountValue}${appliedPromo.discountType === 'percentage' ? '%' : ''})` : ''}:`}
                 </Typography>
               </Grid>
             </Grid>
             <Grid item lg={3} sm={2} xs={6}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={styles.rightText}>
+                <Typography variant="subtitle1" className={clsx(styles.rightText, { [styles.successText]: appliedPromo.code })}>
                   -
                   {' '}
-                  {totalAmount !== priceAfterPromo ? formatPrice(totalAmount - priceAfterPromo, 'MYR') : ''}
+                  {appliedPromo.code ? formatPrice(totalAmount - priceAfterPromo, 'MYR') : ''}
                 </Typography>
               </Grid>
             </Grid>
@@ -516,8 +543,13 @@ const Checkout = () => {
                       disabled={currentUserDetails.uid === ''}
                     />
                     <FormHelperText error className={styles.errorPadding}>
-                      {promoError}
+                      {appliedPromo.error}
                     </FormHelperText>
+                    {appliedPromo.success && (
+                      <FormHelperText className={clsx(styles.errorPadding, styles.successText)}>
+                        {appliedPromo.success}
+                      </FormHelperText>
+                    )}
                     {currentUserDetails.uid === '' && (
                       <FormHelperText className={styles.errorPadding}>
                         Please login to enjoy the discounts!
