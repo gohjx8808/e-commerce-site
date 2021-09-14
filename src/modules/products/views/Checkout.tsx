@@ -18,7 +18,9 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import firebase from 'gatsby-plugin-firebase';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledCheckbox from '../../../sharedComponents/ControlledCheckbox';
@@ -44,6 +46,12 @@ interface promoCodeObject{
   discountValue:string
   error:string
   success:string
+  discountedPrice:number
+}
+
+interface shippingFeeData{
+  realShipping:number
+  displayShipping:string
 }
 
 const Checkout = () => {
@@ -60,20 +68,23 @@ const Checkout = () => {
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<products.shoppingCartItemData[]>([]);
   const [pageSize, setPageSize] = useState<number>(5);
-  const [shippingFee, setShippingFee] = useState<number>(0);
+  const [shippingFee, setShippingFee] = useState<shippingFeeData>({
+    realShipping: 0,
+    displayShipping: '-',
+  });
   const [isCheckoutAddressListModalOpen, setIsCheckoutAddressListModalOpen] = useState(false);
-  const [displayShippingFee, setDisplayShippingFee] = useState<string>('-');
   const [availablePromocodes, setAvailablePromocodes] = useState<
     products.availablePromocodeData[]
   >([]);
-  const [priceAfterPromo, setPriceAfterPromo] = useState<number>(0);
-  const [appliedPromo, setAppliedPromo] = useState<promoCodeObject>({
+  const defaultPromoObject:promoCodeObject = useMemo(() => ({
     code: '',
     error: '',
     success: '',
     discountValue: '',
     discountType: '',
-  });
+    discountedPrice: totalAmount,
+  }), [totalAmount]);
+  const [appliedPromo, setAppliedPromo] = useState<promoCodeObject>(defaultPromoObject);
   const {
     control, watch, setValue, handleSubmit, formState: { errors }, reset,
   } = useForm({
@@ -161,25 +172,27 @@ const Checkout = () => {
 
   useEffect(() => {
     const eastMalaysia = selectedState && (selectedState.value === 'Sabah' || selectedState.value === 'Sarawak' || selectedState.value === 'Labuan');
+    let intShipping = 0;
+    let strShipping = '-';
     if (selectedState && selectedState.value !== 'Outside Malaysia') {
       if (eastMalaysia) {
         if (totalAmount >= 150) {
-          setShippingFee(0);
-          setDisplayShippingFee('Free');
+          strShipping = 'Free';
         } else {
-          setShippingFee(14);
-          setDisplayShippingFee(formatPrice(14, 'MYR'));
+          intShipping = 14;
+          strShipping = formatPrice(14, 'MYR');
         }
       } else if (totalAmount >= 80) {
-        setDisplayShippingFee('Free');
+        strShipping = 'Free';
       } else {
-        setShippingFee(7);
-        setDisplayShippingFee(formatPrice(7, 'MYR'));
+        intShipping = 7;
+        strShipping = formatPrice(7, 'MYR');
       }
-    } else {
-      setShippingFee(0);
-      setDisplayShippingFee('-');
     }
+    setShippingFee({
+      realShipping: intShipping,
+      displayShipping: strShipping,
+    });
   }, [selectedState, totalAmount]);
 
   const inputPromoCode = watch('promoCode');
@@ -210,13 +223,7 @@ const Checkout = () => {
       && currentUserDetails.usedPromocode.includes(
         inputPromoCode,
       )) && !!currentUserDetails.usedPromocode;
-    let rawPromoObject:promoCodeObject = {
-      code: '',
-      error: '',
-      success: '',
-      discountValue: '',
-      discountType: '',
-    };
+    let rawPromoObject:promoCodeObject = defaultPromoObject;
     let discountedPrice = totalAmount;
     if (!isPromoCodeUsed) {
       const today = dayjs();
@@ -245,6 +252,7 @@ const Checkout = () => {
             discountType: targetPromoCode.discountType,
             discountValue: targetPromoCode.discountValue,
             success: 'Promo code applied!',
+            discountedPrice,
           };
         } else {
           rawPromoObject = { ...rawPromoObject, error: 'Promo code is expired!' };
@@ -255,7 +263,6 @@ const Checkout = () => {
     } else {
       rawPromoObject = { ...rawPromoObject, error: 'You have exceeded the redemption limit!' };
     }
-    setPriceAfterPromo(discountedPrice);
     setAppliedPromo(rawPromoObject);
     return rawPromoObject.error;
   }, [
@@ -263,6 +270,7 @@ const Checkout = () => {
     currentUserDetails.usedPromocode,
     inputPromoCode,
     totalAmount,
+    defaultPromoObject,
   ]);
 
   useEffect(() => {
@@ -273,8 +281,8 @@ const Checkout = () => {
     const emailData = {
       ...hookData,
       currentOrderCount: prevOrderCount + 1,
-      totalAmount: totalAmount + shippingFee,
-      shippingFee,
+      totalAmount: totalAmount + shippingFee.realShipping,
+      shippingFee: shippingFee.realShipping,
       selectedCheckoutItems: extractedCartItem,
     } as products.sendEmailPayload;
 
@@ -346,7 +354,7 @@ const Checkout = () => {
                 <Typography variant="subtitle1" className={clsx(styles.rightText, { [styles.successText]: appliedPromo.code })}>
                   -
                   {' '}
-                  {appliedPromo.code ? formatPrice(totalAmount - priceAfterPromo, 'MYR') : ''}
+                  {appliedPromo.code ? formatPrice(totalAmount - appliedPromo.discountedPrice, 'MYR') : ''}
                 </Typography>
               </Grid>
             </Grid>
@@ -360,7 +368,7 @@ const Checkout = () => {
             <Grid item lg={3} sm={2} xs={6}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={styles.rightText}>
-                  {displayShippingFee}
+                  {shippingFee.displayShipping}
                 </Typography>
               </Grid>
             </Grid>
@@ -374,7 +382,7 @@ const Checkout = () => {
             <Grid item lg={3} sm={2} xs={6}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={clsx(styles.rightText, styles.boldText)}>
-                  {formatPrice(priceAfterPromo + shippingFee, 'MYR')}
+                  {formatPrice(appliedPromo.discountedPrice + shippingFee.realShipping, 'MYR')}
                 </Typography>
               </Grid>
             </Grid>

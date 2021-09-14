@@ -226,7 +226,7 @@ const productStyle = makeStyles((theme) => ({
     paddingLeft: 15,
   },
   successText: {
-    color: 'green',
+    color: 'green!important',
   },
 }));
 
