@@ -1,6 +1,5 @@
 import sgMail from '@sendgrid/mail';
 import { GatsbyFunctionRequest, GatsbyFunctionResponse } from 'gatsby';
-import { formatPrice } from '../../utils/helper';
 
 sgMail.setApiKey(process.env.GATSBY_SENDGRID_API_KEY!);
 
@@ -24,9 +23,12 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
     dynamic_template_data: {
       customer_name: postData.fullName,
       checkoutItems: postData.selectedCheckoutItems,
-      shippingFee: formatPrice(postData.shippingFee, 'MYR'),
-      totalAmount: formatPrice(postData.totalAmount, 'MYR'),
+      shippingFee: postData.shippingFee.toFixed(2),
+      totalAmount: postData.totalAmount.toFixed(2),
       note: postData.note,
+      discountMargin: postData.discountMargin,
+      discount: postData.discount.toFixed(2),
+      discountedAmount: postData.discountedAmount.toFixed(2),
     },
   }, {
     to: 'yijie.lnl@gmail.com',
@@ -43,16 +45,19 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
       state: postData.state,
       country: postData.country,
       checkoutItems: postData.selectedCheckoutItems,
-      shippingFee: formatPrice(postData.shippingFee, 'MYR'),
-      totalAmount: formatPrice(postData.totalAmount, 'MYR'),
+      shippingFee: postData.shippingFee.toFixed(2),
+      totalAmount: postData.totalAmount.toFixed(2),
       note: postData.note,
+      discountMargin: postData.discountMargin,
+      discount: postData.discount.toFixed(2),
+      discountedAmount: postData.discountedAmount.toFixed(2),
     },
   }];
 
   try {
     await sgMail.send(emails);
     return res.status(200).json({ msg: 'Message sent successfully' });
-  } catch (e) {
+  } catch (e:any) {
     return res.status(e.code).json({ msg: e.message });
   }
 };

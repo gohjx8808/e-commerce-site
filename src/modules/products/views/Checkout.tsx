@@ -278,13 +278,16 @@ const Checkout = () => {
   }, [inputPromoCode, validatePromocode]);
 
   const proceedToPayment = async (hookData:products.rawShippingInfoPayload) => {
-    const emailData = {
+    const emailData:products.sendEmailPayload = {
       ...hookData,
       currentOrderCount: prevOrderCount + 1,
-      totalAmount: totalAmount + shippingFee.realShipping,
+      totalAmount,
+      discountMargin: `${appliedPromo.code ? `${appliedPromo.discountType === 'value' ? 'RM ' : ''}${appliedPromo.discountValue}${appliedPromo.discountType === 'percentage' ? '%' : ''}` : ''}`,
+      discount: totalAmount - appliedPromo.discountedPrice,
+      discountedAmount: appliedPromo.discountedPrice + shippingFee.realShipping,
       shippingFee: shippingFee.realShipping,
       selectedCheckoutItems: extractedCartItem,
-    } as products.sendEmailPayload;
+    };
 
     if (!validatePromocode()) {
       dispatch(sendPaymentEmailAction(emailData));

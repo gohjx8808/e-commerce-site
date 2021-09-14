@@ -71,6 +71,8 @@ declare namespace products{
     country: string
     saveShippingInfo:boolean
     paymentOptions:string
+    note:string
+    promoCode:string
   }
 
   interface sendEmailPayload{
@@ -92,6 +94,9 @@ declare namespace products{
     saveShippingInfo:boolean
     note:string
     promoCode:string
+    discountMargin:string
+    discount:number
+    discountedAmount:number
   }
 
   interface availablePromocodeData{
