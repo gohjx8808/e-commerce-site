@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import React from 'react';
+import useGlobalStyles from '../utils/useGlobalStyles';
 
 const useStyles = makeStyles((theme) => ({
   underlinedText: {
@@ -25,11 +26,12 @@ const useStyles = makeStyles((theme) => ({
 
 const LearnMore = () => {
   const styles = useStyles();
+  const globalStyles = useGlobalStyles();
 
   return (
-    <Grid container justifyContent="center" alignItems="center" spacing={2}>
+    <Grid container justifyContent="center" alignItems="center" spacing={2} className={clsx(globalStyles.componentTopSpacing, globalStyles.componentBottomSpacing)}>
       <Grid item xs={11}>
-        <Typography variant="h5" className={styles.boldText}>Welcome!</Typography>
+        <Typography variant="h5" className={clsx(styles.boldText, globalStyles.componentQuarterBottomSpacing)}>Welcome!</Typography>
         <Typography variant="h6" className={styles.justifyText}>
           Thank you for visiting my site! Here are some notes for you to know before placing
           the order 😊
@@ -37,7 +39,9 @@ const LearnMore = () => {
         </Typography>
         <Typography variant="h6" className={styles.justifyText}>
           Please kindly be noted that all the handmade products are
-          <span className={styles.boldText}> &quot;made to order&quot;</span>
+          <span className={clsx(styles.boldText, globalStyles.italicText)}>
+            &quot;made to order&quot;
+          </span>
           . Thus, please allow 1 to 2 weeks processing days before the shipment being made. Large
           products like hats or bags might required longer period (about 1-2 months) if yarn
           restocking is needed. Please kindly confirm with the seller before placing the order if
@@ -50,8 +54,8 @@ const LearnMore = () => {
           image shown due to lighting and different screen projection.
         </Typography>
       </Grid>
-      <Grid item xs={11}>
-        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText)}>About Custom Order</Typography>
+      <Grid item xs={11} className={globalStyles.componentTopSpacing}>
+        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText, globalStyles.componentQuarterBottomSpacing)}>About Custom Order</Typography>
         <Typography variant="h6" className={styles.justifyText}>
           Every custom order is welcomed! Please kindly drop me a DMs in Instagram
           {' '}
@@ -68,11 +72,11 @@ const LearnMore = () => {
           for further discussion on your ideas!
         </Typography>
       </Grid>
-      <Grid item xs={11}>
-        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText)}>About the Shipping (Malaysian only)</Typography>
+      <Grid item xs={11} className={globalStyles.componentTopSpacing}>
+        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText, globalStyles.componentQuarterBottomSpacing)}>About the Shipping (Malaysian only)</Typography>
         <Typography variant="h6" className={styles.justifyText}>
           All the parcels will be shipped via
-          <span className={styles.boldText}> Pgeon Delivery</span>
+          <span className={clsx(styles.boldText, globalStyles.italicText)}> Pgeon Delivery</span>
           . Tracking number will be sent to you
           through the email upon completing the order. You may track your parcel through
           {' '}
@@ -82,20 +86,20 @@ const LearnMore = () => {
           .
         </Typography>
       </Grid>
-      <Grid item xs={11}>
-        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText)}>About the Payment</Typography>
+      <Grid item xs={11} className={globalStyles.componentTopSpacing}>
+        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText, globalStyles.componentQuarterBottomSpacing)}>About the Payment</Typography>
         <Typography variant="h6" className={styles.justifyText}>
           The payment options provided are
-          <span className={styles.boldText}> TNG E-wallet </span>
+          <span className={clsx(styles.boldText, globalStyles.italicText)}> TNG E-wallet </span>
           and
-          <span className={styles.boldText}> Bank Transfer</span>
+          <span className={clsx(styles.boldText, globalStyles.italicText)}> Bank Transfer</span>
           . A payment instruction will be sent through email after checking out.
           Please make the payment within 24-hours, or the order will be cancelled.
           The crocheting process will only be started upon confirming the payment.
         </Typography>
       </Grid>
-      <Grid item xs={11}>
-        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText)}>About Yarn Care</Typography>
+      <Grid item xs={11} className={globalStyles.componentTopSpacing}>
+        <Typography variant="h6" className={clsx(styles.boldText, styles.underlinedText, globalStyles.componentQuarterBottomSpacing)}>About Yarn Care</Typography>
         <Typography variant="h6" className={styles.justifyText}>
           Wash it by hand gently to avoid deformation.
           {'\n\n'}

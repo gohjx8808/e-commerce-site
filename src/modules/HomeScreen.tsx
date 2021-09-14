@@ -7,6 +7,7 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import clsx from 'clsx';
 import {
   graphql, navigate, useStaticQuery, Link as GatsbyLink,
 } from 'gatsby';
@@ -15,6 +16,7 @@ import {
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../hooks';
+import useGlobalStyles from '../utils/useGlobalStyles';
 import routeNames from '../utils/routeNames';
 import { storeAllProducts } from './products/src/productReducers';
 
@@ -52,6 +54,7 @@ const HomeScreen = () => {
   const [productImages, setProductImages] = useState<imageListImages[]>([]);
   const dispatch = useAppDispatch();
   const styles = useStyle();
+  const globalStyles = useGlobalStyles();
   const homeQuery = useStaticQuery(graphql`
     query {
       products: allContentfulProducts(filter: {node_locale: {eq: "en-US"}}) {
@@ -95,19 +98,19 @@ const HomeScreen = () => {
   }, [dispatch, homeQuery.products.edges]);
 
   return (
-    <Grid container justifyContent="center" alignItems="center">
+    <Grid container justifyContent="center" alignItems="center" className={globalStyles.componentTopSpacing}>
       <Grid item xs={12}>
         <Grid container justifyContent="center" alignItems="center" direction="column">
-          <Typography variant="h4" color="secondary">Welcome!</Typography>
+          <Typography variant="h4" color="secondary" className={globalStyles.componentQuarterBottomSpacing}>Welcome!</Typography>
           <Typography variant="h6" className={styles.centerText}>Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
-          <Typography variant="h6" className={styles.centerText}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
+          <Typography variant="h6" className={clsx(styles.centerText, globalStyles.componentQuarterBottomSpacing)}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
           <Link component={GatsbyLink} to={routeNames.learnMore}>
             <Typography variant="subtitle1" color="secondary" className={styles.centerText}>ABOUT MY SHOP</Typography>
           </Link>
         </Grid>
-        <Grid container className={styles.sectionContainer} direction="column">
-          <Typography variant="h5" color="secondary">Product Gallery</Typography>
-        </Grid>
+      </Grid>
+      <Grid container className={clsx(styles.sectionContainer, globalStyles.componentTopSpacing, globalStyles.componentQuarterBottomSpacing)} direction="column">
+        <Typography variant="h5" color="secondary">Product Gallery</Typography>
       </Grid>
       <Box className={styles.imageListRoot}>
         <ImageList rowHeight="auto" cols={5} className={styles.imageList}>

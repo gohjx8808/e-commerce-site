@@ -3,16 +3,19 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
+import useGlobalStyles from '../../../utils/useGlobalStyles';
 import { submitFeedback } from '../src/feedbackReducer';
 import { feedbackFormSchema } from '../src/feedbackSchema';
 import feedbackStyles from '../src/feedbackStyles';
 
 const FeedbackForm = () => {
   const styles = feedbackStyles();
+  const globalStyles = useGlobalStyles();
   const dispatch = useAppDispatch();
   const { control, formState: { errors }, handleSubmit } = useForm({
     resolver: yupResolver(feedbackFormSchema),
@@ -23,7 +26,7 @@ const FeedbackForm = () => {
   };
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center">
+    <Grid container spacing={2} justifyContent="center" alignItems="center" className={clsx(globalStyles.componentHalfTopSpacing, globalStyles.componentHalfBottomSpacing)}>
       <Grid item xs={12} sm={10} lg={6}>
         <Card>
           <CardContent className={styles.overallPadding}>

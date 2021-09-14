@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
 import { useAppSelector } from '../../../hooks';
 import { compareString } from '../../../utils/helper';
+import useGlobalStyles from '../../../utils/useGlobalStyles';
 import productStyle from '../src/productStyle';
 
 const ControlledPicker = lazy(() => import('../../../sharedComponents/ControlledPicker'));
@@ -32,6 +33,7 @@ interface imageInnerData{
 
 const Products = () => {
   const styles = productStyle();
+  const globalStyles = useGlobalStyles();
   const productFilterKeyword = useAppSelector((state) => state.product.productFilterKeyword);
   const allProducts = useAppSelector((state) => state.product.allProducts);
   const [categories, setCategories] = useState<string[]>([]);
@@ -158,7 +160,7 @@ const Products = () => {
 
   return (
     <>
-      <Grid container direction="row" justifyContent="center">
+      <Grid container direction="row" justifyContent="center" className={globalStyles.componentQuarterTopSpacing}>
         {categories.map((category) => {
         // eslint-disable-next-line max-len
           const currentCategoryImageData:imageInnerData = productQuery.productCategoriesImages.edges.find(
@@ -202,10 +204,10 @@ const Products = () => {
         </Grid>
       </Grid>
       {categories.map((category) => (
-        <Grid container justifyContent="center" alignItems="center" direction="column" key={category}>
+        <Grid container justifyContent="center" alignItems="center" direction="column" key={category} className={globalStyles.componentTopSpacing}>
           {categoryProductAmount[category] && (
-            <Grid container justifyContent="flex-start" alignItems="center">
-              <Typography variant="h6" id={category} className={styles.categorySpacing}>{category}</Typography>
+            <Grid container justifyContent="flex-start" alignItems="center" className={globalStyles.componentQuarterBottomSpacing}>
+              <Typography variant="h5" id={category} className={styles.categorySpacing}>{category}</Typography>
             </Grid>
           )}
           <Grid container justifyContent="center" alignItems="center" direction="row" spacing={2} key={category}>
