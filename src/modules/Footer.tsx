@@ -6,6 +6,7 @@ import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Email from '@material-ui/icons/Email';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import { makeStyles } from '@material-ui/styles';
@@ -47,6 +48,9 @@ const Footer = () => {
               </IconButton>
               <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yj_artjournal/">
                 <InstagramIcon />
+              </IconButton>
+              <IconButton aria-label="email" color="inherit" target="_blank" rel="noreferrer" href="mailto:yj.artjournal@gmail.com">
+                <Email />
               </IconButton>
             </>
           )}

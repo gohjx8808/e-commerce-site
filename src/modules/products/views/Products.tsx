@@ -1,3 +1,4 @@
+import { Divider } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +12,7 @@ import React, {
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
 import { useAppSelector } from '../../../hooks';
+import { compareString } from '../../../utils/helper';
 import productStyle from '../src/productStyle';
 
 const ControlledPicker = lazy(() => import('../../../sharedComponents/ControlledPicker'));
@@ -87,6 +89,7 @@ const Products = () => {
       return null;
     });
     setCategoryProductAmount(categoryAmount);
+    categoryList.sort((a, b) => compareString(a, b));
     setCategories(categoryList);
   }, [allProducts, filterProductKeyword]);
 
@@ -214,6 +217,15 @@ const Products = () => {
           </Grid>
         </Grid>
       ))}
+      <Divider className={styles.topSpacing} />
+      <Grid container justifyContent="center" alignItems="center" direction="column" className={styles.topSpacing} spacing={5}>
+        <Typography variant="h5">Custom Order?</Typography>
+        <Grid item xs={12}>
+          <Button href="https://www.instagram.com/yj_artjournal/" variant="contained" color="secondary">
+            Chat With Me
+          </Button>
+        </Grid>
+      </Grid>
     </>
   );
 };

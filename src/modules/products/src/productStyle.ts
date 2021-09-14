@@ -125,7 +125,7 @@ const productStyle = makeStyles((theme) => ({
     paddingTop: 20,
   },
   topSpacing: {
-    paddingTop: 40,
+    marginTop: 40,
   },
   productCategoryImg: {
     borderRadius: 10,
