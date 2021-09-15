@@ -45,8 +45,8 @@ function* sendPaymentEmailSaga() {
       const currentUserDetails:auth.currentUserDetails = yield select(
         (state:RootState) => state.auth.currentUser,
       );
-      yield call(sendPaymentEmailApi, payload);
-      yield call(updateOrderCount, payload.currentOrderCount);
+      // yield call(sendPaymentEmailApi, payload);
+      // yield call(updateOrderCount, payload.currentOrderCount);
       if (payload.promoCode) {
         let updatedUserDetails = { ...currentUserDetails };
         if (currentUserDetails.usedPromocode) {
@@ -61,7 +61,7 @@ function* sendPaymentEmailSaga() {
         yield put(getCurrentUserDetailsAction(currentUserDetails.uid));
       }
       const toBeRemovedItems = payload.selectedCheckoutItems;
-      yield all(toBeRemovedItems.map((item) => put(removeItemFromCart(item.id))));
+      // yield all(toBeRemovedItems.map((item) => put(removeItemFromCart(item.id))));
       if (payload.saveShippingInfo) {
         const saveAddressData:account.finalSubmitAddEditAddressPayload = {
           fullName: payload.fullName,
@@ -121,7 +121,7 @@ function* sendPaymentEmailSaga() {
       yield put(updateStatusMsg('An email regarding payment details will be sent to your email shortly. Please kindly proceed your payment within 24 hours.'));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
-      navigate('/');
+      // navigate('/');
     } catch (e) {
       yield put(toggleSuccess(false));
       yield put(updateStatusTitle(''));

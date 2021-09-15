@@ -1,14 +1,14 @@
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
-interface ControlledCheckboxOwnProps{
+interface ControlledCheckboxOwnProps extends CheckboxProps{
   control:Control,
   label?:string,
   name:string,
-  defaultValue?:boolean
+  defaultChecked?:boolean
   error?:FieldError
 }
 
@@ -17,7 +17,7 @@ const ControlledCheckbox = (props:ControlledCheckboxOwnProps) => {
     control,
     label,
     name,
-    defaultValue,
+    defaultChecked,
     error,
   } = props;
 
@@ -27,16 +27,15 @@ const ControlledCheckbox = (props:ControlledCheckboxOwnProps) => {
       name={name}
       render={({
         field: {
-          onChange, value,
+          onChange,
         },
       }) => (
         <>
           <FormControlLabel
             control={(
               <Checkbox
-                checked={value}
                 onChange={(event) => onChange(event.target.checked)}
-                name={name}
+                {...props}
               />
             )}
             label={label}
@@ -44,13 +43,13 @@ const ControlledCheckbox = (props:ControlledCheckboxOwnProps) => {
           <FormHelperText error>{error?.message}</FormHelperText>
         </>
       )}
-      defaultValue={defaultValue}
+      defaultValue={defaultChecked}
     />
   );
 };
 
 ControlledCheckbox.defaultProps = {
-  defaultValue: false,
+  defaultChecked: false,
   label: '',
   error: null,
 };
