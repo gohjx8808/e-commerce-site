@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     display: 'none',
     [theme.breakpoints.up('md')]: {
       display: 'flex',
+      alignItems: 'center',
     },
   },
   sectionMobile: {
@@ -128,6 +129,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   menuIconShift: {
     paddingLeft: 5,
     paddingRight: 5,
+  },
+  rightSpacing: {
+    marginRight: 15,
   },
 }));
 
@@ -275,44 +279,40 @@ const MenuBar = () => {
             )}
             <Box className={classes.grow} />
             <Box className={classes.sectionDesktop}>
-              <Grid container spacing={2} alignItems="center">
-                {currentUserDetail.fullName !== ''
-                  ? (
-                    <Grid item>
-                      <Typography>{`Welcome, ${currentUserDetail.fullName.split(' ')[0]}`}</Typography>
-                    </Grid>
-                  ) : (
-                    <>
-                      <Button color="inherit" onClick={() => navigate(routeNames.login)}>Login</Button>
-                      <Button color="inherit" onClick={() => navigate(routeNames.signUp)}>Sign Up</Button>
-                    </>
-                  )}
-                <Grid item>
-                  <IconButton aria-label="shopping cart" color="inherit" onClick={() => navigate(routeNames.cart)}>
-                    <Badge badgeContent={totalQuantity} color="secondary">
-                      <ShoppingCartIcon />
-                    </Badge>
+              {currentUserDetail.fullName !== ''
+                ? (
+                  <Box className={classes.rightSpacing}>
+                    <Typography>{`Welcome, ${currentUserDetail.fullName.split(' ')[0]}`}</Typography>
+                  </Box>
+                ) : (
+                  <>
+                    <Button color="inherit" onClick={() => navigate(routeNames.login)}>Login</Button>
+                    <Button color="inherit" onClick={() => navigate(routeNames.signUp)}>Sign Up</Button>
+                  </>
+                )}
+              <IconButton aria-label="shopping cart" color="inherit" onClick={() => navigate(routeNames.cart)}>
+                <Badge badgeContent={totalQuantity} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+              {currentUserDetail.fullName !== '' && (
+                <>
+                  <IconButton
+                    aria-label="account"
+                    color="inherit"
+                    onClick={() => navigate(routeNames.account)}
+                  >
+                    <AccountCircle />
                   </IconButton>
-                  {currentUserDetail.fullName !== '' && (
-                    <>
-                      <IconButton
-                        aria-label="account"
-                        color="inherit"
-                        onClick={() => navigate(routeNames.account)}
-                      >
-                        <AccountCircle />
-                      </IconButton>
-                      <IconButton
-                        aria-label="logout"
-                        color="inherit"
-                        onClick={promptSignOut}
-                      >
-                        <ExitToAppIcon />
-                      </IconButton>
-                    </>
-                  )}
-                </Grid>
-              </Grid>
+                  <IconButton
+                    aria-label="logout"
+                    color="inherit"
+                    onClick={promptSignOut}
+                  >
+                    <ExitToAppIcon />
+                  </IconButton>
+                </>
+              )}
             </Box>
             <Box className={classes.sectionMobile}>
               <IconButton aria-label="shopping cart" color="inherit" onClick={() => navigate(routeNames.cart)}>
