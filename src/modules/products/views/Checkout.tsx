@@ -202,7 +202,7 @@ const Checkout = () => {
       reset({
         fullName: selectedAddress.fullName,
         email: selectedAddress.email,
-        phoneNumber: selectedAddress.phoneNumber,
+        phoneNumber: selectedAddress.phoneNumber ? selectedAddress.phoneNumber : '60',
         addressLine1: selectedAddress.addressLine1,
         addressLine2: selectedAddress.addressLine2,
         postcode: selectedAddress.postcode,

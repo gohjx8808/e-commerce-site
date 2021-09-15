@@ -1,4 +1,5 @@
 import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,8 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { RouteComponentProps, Router } from '@reach/router';
 import { navigate } from 'gatsby';
-import React, { Suspense, useEffect, useState } from 'react';
-import { lazy } from 'react';
+import React, {
+  lazy, Suspense, useEffect, useState,
+} from 'react';
 import { useAppSelector } from '../hooks';
 import routeNames from '../utils/routeNames';
 
@@ -67,11 +69,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const App = () => {
+  const styles = useStyles();
   const isSSR = typeof window === 'undefined';
   return (
     <>
       {!isSSR && (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={(
+          <Grid container className={styles.root} justifyContent="center" alignItems="center">
+            <CircularProgress color="primary" size={60} />
+          </Grid>
+          )}
+        >
           <SEO />
           <Router>
             <MainRoutes path="/" pageComponent={<HomeScreen />} homeCarouselBanner />
