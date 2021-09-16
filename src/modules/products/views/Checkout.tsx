@@ -298,8 +298,6 @@ const Checkout = () => {
     setIsCheckoutAddressListModalOpen(!isCheckoutAddressListModalOpen);
   };
 
-  console.log(watch('saveShippingInfo'));
-
   return (
     <Grid container justifyContent="center" spacing={3}>
       <Grid item xs={11} lg={12}>
