@@ -11,10 +11,10 @@ import WorkIcon from '@material-ui/icons/Work';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import ControlledPicker from '../../../sharedComponents/ControlledPicker';
-import ControlledRadioButton from '../../../sharedComponents/ControlledRadioButton';
-import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
-import ControlledToggleButton from '../../../sharedComponents/ControlledToggleButton';
+import ControlledPicker from '../../../sharedComponents/inputs/ControlledPicker';
+import ControlledRadioButton from '../../../sharedComponents/inputs/ControlledRadioButton';
+import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
+import ControlledToggleButton from '../../../sharedComponents/inputs/ControlledToggleButton';
 import {
   booleanOptions, defaultAddressData, homeColor, stateOptions, workColor,
 } from '../../../utils/constants';

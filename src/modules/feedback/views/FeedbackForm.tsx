@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks';
-import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
+import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
 import useGlobalStyles from '../../../utils/useGlobalStyles';
 import { submitFeedback } from '../src/feedbackReducer';
 import { feedbackFormSchema } from '../src/feedbackSchema';

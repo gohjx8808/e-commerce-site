@@ -3,17 +3,17 @@ import FormLabel from '@material-ui/core/FormLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import ToggleButtonGroup, { ToggleButtonGroupProps } from '@material-ui/lab/ToggleButtonGroup';
 import clsx from 'clsx';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
-interface ControlledToggleButtonOwnProps{
+interface ControlledToggleButtonOwnProps extends ToggleButtonGroupProps{
   control:Control
   error?:FieldError
   options:toggleButtonOptionData[]
   name:string
-  defaultValue?:string
+  defaulttoggle?:string
   label:string
 }
 
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 const ControlledToggleButton = (props:ControlledToggleButtonOwnProps) => {
   const styles = useStyles();
   const {
-    control, error, options, name, defaultValue, label,
+    control, error, options, name, defaulttoggle, label,
   } = props;
 
   return (
@@ -50,6 +50,7 @@ const ControlledToggleButton = (props:ControlledToggleButtonOwnProps) => {
               onChange(newValue);
             }}
             aria-label={name}
+            {...props}
           >
             {options.map((option) => (
               <ToggleButton
@@ -71,14 +72,14 @@ const ControlledToggleButton = (props:ControlledToggleButtonOwnProps) => {
           <FormHelperText error>{error?.message}</FormHelperText>
         </>
       )}
-      defaultValue={defaultValue}
+      defaultValue={defaulttoggle}
     />
   );
 };
 
 ControlledToggleButton.defaultProps = {
   error: null,
-  defaultValue: '',
+  defaulttoggle: '',
 };
 
 export default ControlledToggleButton;
