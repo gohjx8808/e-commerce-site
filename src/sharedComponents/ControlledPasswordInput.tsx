@@ -3,25 +3,21 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import OutlinedInput, { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
 import { makeStyles } from '@material-ui/core/styles';
 import CancelIcon from '@material-ui/icons/Cancel';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-
 import React, { useState } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
 type variantData='standard' | 'filled' | 'outlined'
 
-interface ControlledPasswordInputOwnProps{
+interface ControlledPasswordInputOwnProps extends OutlinedInputProps{
   control:Control,
   label?:string,
   variant?:variantData,
-  name:string,
-  defaultValue?:string
-  error?:FieldError
-  labelWidth?:number
+  formerror?:FieldError
 }
 
 const useStyles = makeStyles({
@@ -53,7 +49,7 @@ const useStyles = makeStyles({
 
 const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
   const {
-    control, label, variant, name, defaultValue, error, labelWidth,
+    control, label, variant, name, defaultValue, formerror,
   } = props;
 
   const [secure, setSecure] = useState(true);
@@ -63,20 +59,19 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
   return (
     <Controller
       control={control}
-      name={name}
+      name={name!}
       render={({
         field: {
-          onChange, value,
+          onChange,
         },
       }) => (
         <FormControl variant={variant} className={styles.container}>
-          <InputLabel htmlFor={name} classes={{ root: styles.unFocusLabel }} error={!!error}>
+          <InputLabel htmlFor={name} classes={{ root: styles.unFocusLabel }} error={!!formerror}>
             {label}
           </InputLabel>
           <OutlinedInput
             id={name}
             type={!secure ? 'text' : 'password'}
-            value={value}
             onChange={onChange}
             endAdornment={(
               <InputAdornment position="end">
@@ -86,23 +81,23 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
                   edge="end"
                   className={styles.unFocusLabel}
                 >
-                  {!secure ? <VisibilityIcon color={error ? 'error' : 'inherit'} /> : <VisibilityOffIcon color={error ? 'error' : 'inherit'} />}
+                  {!secure ? <VisibilityIcon color={formerror ? 'error' : 'inherit'} /> : <VisibilityOffIcon color={formerror ? 'error' : 'inherit'} />}
                 </IconButton>
-                {error
+                {formerror
                 && (
-                <IconButton
-                  edge="end"
-                >
-                  <CancelIcon color="error" />
-                </IconButton>
+                  <IconButton
+                    edge="end"
+                  >
+                    <CancelIcon color="error" />
+                  </IconButton>
                 )}
               </InputAdornment>
             )}
-            labelWidth={labelWidth}
             classes={{ root: styles.unFocusStyle, input: styles.removedAutofillStyling }}
-            error={!!error}
+            error={!!formerror}
+            {...props}
           />
-          <FormHelperText error>{error?.message}</FormHelperText>
+          <FormHelperText error>{formerror?.message}</FormHelperText>
         </FormControl>
       )}
       defaultValue={defaultValue}
@@ -111,11 +106,9 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
 };
 
 ControlledPasswordInput.defaultProps = {
-  defaultValue: '',
   variant: undefined,
   label: '',
-  error: null,
-  labelWidth: 70,
+  formerror: null,
 };
 
 export default ControlledPasswordInput;

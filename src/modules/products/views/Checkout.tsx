@@ -413,7 +413,7 @@ const Checkout = () => {
                       name="fullName"
                       variant="outlined"
                       label="Full Name"
-                      lightBg
+                      lightbg
                       error={errors.fullName}
                       defaultValue={prevShippingInfo.fullName}
                       readOnly={!!selectedAddress.fullName}
@@ -426,7 +426,7 @@ const Checkout = () => {
                       variant="outlined"
                       label="Email Address"
                       labelWidth={105}
-                      lightBg
+                      lightbg
                       error={errors.email}
                       defaultValue={prevShippingInfo.email}
                       readOnly={!!selectedAddress.email}
@@ -439,7 +439,7 @@ const Checkout = () => {
                       variant="outlined"
                       label="Phone Number"
                       labelWidth={105}
-                      lightBg
+                      lightbg
                       startAdornment={(
                         <InputAdornment position="start">
                           +
@@ -457,7 +457,7 @@ const Checkout = () => {
                       variant="outlined"
                       label="Address Line 1"
                       labelWidth={105}
-                      lightBg
+                      lightbg
                       error={errors.addressLine1}
                       defaultValue={prevShippingInfo.addressLine1}
                       readOnly={!!selectedAddress.addressLine1}
@@ -470,7 +470,7 @@ const Checkout = () => {
                       variant="outlined"
                       label="Address Line 2"
                       labelWidth={110}
-                      lightBg
+                      lightbg
                       defaultValue={prevShippingInfo.addressLine2}
                       readOnly={!!selectedAddress.addressLine1}
                     />
@@ -481,7 +481,7 @@ const Checkout = () => {
                       name="postcode"
                       variant="outlined"
                       label="Postcode"
-                      lightBg
+                      lightbg
                       maxLength={10}
                       error={errors.postcode}
                       defaultValue={prevShippingInfo.postcode}
@@ -494,7 +494,7 @@ const Checkout = () => {
                       name="city"
                       variant="outlined"
                       label="City"
-                      lightBg
+                      lightbg
                       labelWidth={25}
                       error={errors.city}
                       defaultValue={prevShippingInfo.city}
@@ -507,11 +507,13 @@ const Checkout = () => {
                       options={stateOptions}
                       name="state"
                       variant="outlined"
-                      lightBg
+                      lightbg={1}
                       label="State"
                       error={errors.state}
-                      defaultValue={prevShippingInfo.state ? prevShippingInfo.state : null}
-                      readOnly={!!selectedAddress.state}
+                      defaultValue={stateOptions.find(
+                        (state) => state.value === prevShippingInfo.state,
+                      )}
+                      disabled={!!selectedAddress.state}
                     />
                   </Grid>
                   {outsideMalaysiaState && (
@@ -522,7 +524,7 @@ const Checkout = () => {
                         variant="outlined"
                         label="Foreign Country State"
                         labelWidth={155}
-                        lightBg
+                        lightbg
                         error={errors.outsideMalaysiaState}
                         defaultValue={prevShippingInfo.outsideMalaysiaState}
                         readOnly={!!selectedAddress.outsideMalaysiaState}
@@ -536,7 +538,7 @@ const Checkout = () => {
                       variant="outlined"
                       label="Country"
                       labelWidth={55}
-                      lightBg
+                      lightbg
                       error={errors.country}
                       defaultValue={prevShippingInfo.country}
                       readOnly={!!selectedAddress.country}
@@ -550,7 +552,7 @@ const Checkout = () => {
                       label="Promo Code"
                       labelWidth={80}
                       error={errors.promoCode}
-                      lightBg
+                      lightbg
                       disabled={currentUserDetails.uid === ''}
                     />
                     <FormHelperText error className={styles.errorPadding}>
@@ -574,7 +576,7 @@ const Checkout = () => {
                       variant="outlined"
                       label="Notes to seller (optional)"
                       labelWidth={160}
-                      lightBg
+                      lightbg
                       multiline
                       rows={4}
                     />

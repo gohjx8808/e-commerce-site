@@ -62,7 +62,7 @@ const EditAccDetailModal = () => {
                 control={control}
                 name="fullName"
                 variant="outlined"
-                lightBg
+                lightbg
                 label="Full Name"
                 labelWidth={68}
                 defaultValue={currentUserDetails.fullName}
@@ -75,7 +75,7 @@ const EditAccDetailModal = () => {
                 control={control}
                 name="email"
                 variant="outlined"
-                lightBg
+                lightbg
                 label="Email"
                 labelWidth={40}
                 defaultValue={currentUserDetails.email}
@@ -88,7 +88,7 @@ const EditAccDetailModal = () => {
                 control={control}
                 name="phoneNumber"
                 variant="outlined"
-                lightBg
+                lightbg
                 label="Phone Number"
                 labelWidth={100}
                 defaultValue={currentUserDetails.phoneNumber}
@@ -101,10 +101,12 @@ const EditAccDetailModal = () => {
                 control={control}
                 name="gender"
                 variant="outlined"
-                lightBg
+                lightbg={1}
                 label="Gender"
                 options={genderOptions}
-                defaultValue={currentUserDetails.gender}
+                defaultValue={genderOptions.find(
+                  (gender) => gender.value === currentUserDetails.gender,
+                )}
                 error={errors.gender}
               />
             </Grid>
@@ -113,10 +115,10 @@ const EditAccDetailModal = () => {
                 control={control}
                 name="dob"
                 inputVariant="outlined"
-                lightBg
+                lightbg={1}
                 label="Date of Birth"
-                defaultValue={currentUserDetails.dob}
-                formError={errors.dob}
+                defaultdate={currentUserDetails.dob}
+                formerror={errors.dob}
               />
             </Grid>
           </Grid>

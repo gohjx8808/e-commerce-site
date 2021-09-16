@@ -13,3 +13,5 @@ interface toggleButtonOptionData{
 interface customObject{
   [key:string]:any
 }
+
+type booleanInteger=1|0

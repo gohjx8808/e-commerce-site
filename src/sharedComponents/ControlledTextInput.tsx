@@ -20,8 +20,8 @@ interface ControlledTextInputOwnProps{
   defaultValue?:string
   error?:FieldError
   labelWidth?:number
-  customClassName?:string
-  lightBg?:boolean
+  customclassname?:string
+  lightbg?:boolean
   maxLength?:number
   startAdornment?:React.ReactNode
   multiline?:boolean
@@ -69,8 +69,8 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
     defaultValue,
     error,
     labelWidth,
-    customClassName,
-    lightBg,
+    customclassname,
+    lightbg,
     maxLength,
     startAdornment,
     multiline,
@@ -94,7 +94,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
       }) => (
         <FormControl
           variant={variant}
-          className={`${styles.formControl} ${customClassName}`}
+          className={`${styles.formControl} ${customclassname}`}
           style={{
             display: type === 'hidden' ? 'none' : 'flex',
           }}
@@ -102,8 +102,8 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
         >
           <InputLabel
             htmlFor={name}
-            color={lightBg ? 'secondary' : 'primary'}
-            classes={{ root: !lightBg ? styles.unFocusLabel : '' }}
+            color={lightbg ? 'secondary' : 'primary'}
+            classes={{ root: !lightbg ? styles.unFocusLabel : '' }}
             error={!!error}
           >
             {label}
@@ -114,8 +114,8 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             value={value}
             onChange={onChange}
             labelWidth={labelWidth}
-            color={lightBg ? 'secondary' : 'primary'}
-            classes={{ root: !lightBg ? styles.unFocusStyle : '', input: styles.removedAutofillStyling }}
+            color={lightbg ? 'secondary' : 'primary'}
+            classes={{ root: !lightbg ? styles.unFocusStyle : '', input: styles.removedAutofillStyling }}
             error={!!error}
             placeholder={placeholder}
             endAdornment={error && (
@@ -151,8 +151,8 @@ ControlledTextInput.defaultProps = {
   label: '',
   error: null,
   labelWidth: 70,
-  customClassName: '',
-  lightBg: false,
+  customclassname: '',
+  lightbg: false,
   maxLength: null,
   startAdornment: null,
   multiline: false,

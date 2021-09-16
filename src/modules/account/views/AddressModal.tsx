@@ -111,7 +111,7 @@ const AddressModal = () => {
                 control={control}
                 name="fullName"
                 variant="outlined"
-                lightBg
+                lightbg
                 label="Full Name"
                 labelWidth={68}
                 error={errors.fullName}
@@ -122,7 +122,7 @@ const AddressModal = () => {
                 control={control}
                 name="phoneNumber"
                 variant="outlined"
-                lightBg
+                lightbg
                 label="Phone Number"
                 labelWidth={100}
                 error={errors.phoneNumber}
@@ -140,7 +140,7 @@ const AddressModal = () => {
                 variant="outlined"
                 label="Email Address"
                 labelWidth={95}
-                lightBg
+                lightbg
                 error={errors.email}
               />
             </Grid>
@@ -151,7 +151,7 @@ const AddressModal = () => {
                 variant="outlined"
                 label="Address Line 1"
                 labelWidth={100}
-                lightBg
+                lightbg
                 error={errors.addressLine1}
               />
             </Grid>
@@ -162,7 +162,7 @@ const AddressModal = () => {
                 variant="outlined"
                 label="Address Line 2"
                 labelWidth={100}
-                lightBg
+                lightbg
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -171,7 +171,7 @@ const AddressModal = () => {
                 name="postcode"
                 variant="outlined"
                 label="Postcode"
-                lightBg
+                lightbg
                 labelWidth={60}
                 maxLength={10}
                 error={errors.postcode}
@@ -183,7 +183,7 @@ const AddressModal = () => {
                 name="city"
                 variant="outlined"
                 label="City"
-                lightBg
+                lightbg
                 labelWidth={25}
                 error={errors.city}
               />
@@ -193,7 +193,7 @@ const AddressModal = () => {
                 control={control}
                 name="state"
                 variant="outlined"
-                lightBg
+                lightbg={1}
                 label="State"
                 options={stateOptions}
                 error={errors.state}
@@ -207,7 +207,7 @@ const AddressModal = () => {
                   variant="outlined"
                   label="Foreign Country State"
                   labelWidth={145}
-                  lightBg
+                  lightbg
                   error={errors.outsideMalaysiaState}
                 />
               </Grid>
@@ -219,7 +219,7 @@ const AddressModal = () => {
                 variant="outlined"
                 label="Country"
                 labelWidth={55}
-                lightBg
+                lightbg
                 error={errors.country}
               />
             </Grid>

@@ -11,10 +11,10 @@ import { Control, Controller, FieldError } from 'react-hook-form';
 interface ControlledDatePickerOwnProps extends Omit<DatePickerProps, 'value'|'onChange'>{
   control:Control,
   name:string,
-  defaultValue?:string
-  formError?:FieldError
-  lightBg?:boolean
-  customClassName?:string
+  defaultdate?:string
+  formerror?:FieldError
+  lightbg?:booleanInteger
+  customclassname?:string
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -55,20 +55,20 @@ const useStyles = makeStyles((theme) => ({
 
 const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
   const {
-    control, name, defaultValue, formError, lightBg, customClassName,
+    control, name, defaultdate, formerror, lightbg, customclassname,
   } = props;
   const [inputColorClass, setInputColorClass] = useState('');
   const styles = useStyles();
 
   useEffect(() => {
-    if (formError) {
+    if (formerror) {
       setInputColorClass(styles.errorColor);
-    } else if (lightBg) {
+    } else if (lightbg) {
       setInputColorClass(styles.black);
     } else {
       setInputColorClass(styles.unFocusLabel);
     }
-  }, [formError, lightBg, styles]);
+  }, [formerror, lightbg, styles]);
 
   return (
     <Controller
@@ -88,30 +88,30 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
               'aria-label': 'change date',
               className: inputColorClass,
             }}
-            color={lightBg ? 'secondary' : 'primary'}
-            className={clsx(styles.container, customClassName, !lightBg && styles.unFocusStyle)}
-            InputLabelProps={{ classes: { root: !lightBg ? styles.unFocusLabel : '' } }}
-            InputProps={{ classes: { root: !lightBg ? styles.unFocusLabel : '', input: styles.removedAutofillStyling } }}
+            color={lightbg ? 'secondary' : 'primary'}
+            className={clsx(styles.container, customclassname, !lightbg && styles.unFocusStyle)}
+            InputLabelProps={{ classes: { root: !lightbg ? styles.unFocusLabel : '' } }}
+            InputProps={{ classes: { root: !lightbg ? styles.unFocusLabel : '', input: styles.removedAutofillStyling } }}
             disableFuture
             maxDateMessage="Invalid date"
             minDateMessage="Invalid date"
             autoOk
-            error={!!formError}
-            helperText={formError?.message}
+            error={!!formerror}
+            helperText={formerror?.message}
             {...props}
           />
         </MuiPickersUtilsProvider>
       )}
-      defaultValue={defaultValue}
+      defaultValue={defaultdate}
     />
   );
 };
 
 ControlledDatePicker.defaultProps = {
-  defaultValue: '',
-  formError: null,
-  lightBg: false,
-  customClassName: '',
+  defaultdate: '',
+  formerror: null,
+  lightbg: undefined,
+  customclassname: '',
 };
 
 export default ControlledDatePicker;

@@ -90,7 +90,7 @@ const LoginScreen = () => {
                       name="password"
                       label="Password"
                       variant="outlined"
-                      error={errors.password}
+                      formerror={errors.password}
                     />
                   </Grid>
                   <Grid item xs={12} sm={10} className={styles.noTopPadding}>

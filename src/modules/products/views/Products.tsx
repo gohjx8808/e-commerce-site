@@ -196,9 +196,9 @@ const Products = () => {
               options={sortByOptions}
               variant="outlined"
               label="Sort By"
-              lightBg
-              clearable={false}
-              defaultValue="a2z"
+              lightbg={1}
+              disableClearable
+              defaultValue={sortByOptions.find((option) => option.value === 'a2z')}
             />
           </Grid>
         </Grid>

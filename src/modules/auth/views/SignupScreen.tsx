@@ -119,7 +119,7 @@ const SignupScreen = () => {
                           name="password"
                           label="Password"
                           variant="outlined"
-                          error={errors.password}
+                          formerror={errors.password}
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -128,7 +128,7 @@ const SignupScreen = () => {
                           name="confirmPassword"
                           label="Confirm Password"
                           variant="outlined"
-                          error={errors.confirmPassword}
+                          formerror={errors.confirmPassword}
                           labelWidth={135}
                         />
                       </Grid>
@@ -143,7 +143,7 @@ const SignupScreen = () => {
                           name="dob"
                           label="Date of Birth"
                           inputVariant="outlined"
-                          formError={errors.dob}
+                          formerror={errors.dob}
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -154,6 +154,7 @@ const SignupScreen = () => {
                           variant="outlined"
                           error={errors.gender}
                           options={genderOptions}
+                          defaultValue={null}
                         />
                       </Grid>
                     </Grid>

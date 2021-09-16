@@ -2,24 +2,20 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete, { AutocompleteProps } from '@material-ui/lab/Autocomplete';
 import React, { useEffect, useState } from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, FieldError } from 'react-hook-form';
 
 type variantData='standard' | 'filled' | 'outlined'
 
-interface ControlledPickerOwnProps{
+interface ControlledPickerOwnProps extends Omit<AutocompleteProps<optionsData, boolean, boolean, boolean>, 'renderInput'>{
   control:Control,
   label?:string,
   variant?:variantData,
   name:string,
-  defaultValue?:string|null
-  error?:any
-  options:optionsData[]
-  lightBg?:boolean
-  customClassName?:string
-  clearable?:boolean
-  readOnly?:boolean
+  error?:FieldError
+  lightbg?:booleanInteger
+  customclassname?:string
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -59,11 +55,8 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
     name,
     defaultValue,
     error,
-    options,
-    lightBg,
-    customClassName,
-    clearable,
-    readOnly,
+    lightbg,
+    customclassname,
   } = props;
 
   const [popupIndicatorClass, setPopupIndicatorClass] = useState('');
@@ -73,12 +66,12 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
   useEffect(() => {
     if (error) {
       setPopupIndicatorClass(styles.errorColor);
-    } else if (lightBg) {
+    } else if (lightbg) {
       setPopupIndicatorClass('');
     } else {
       setPopupIndicatorClass(styles.unFocusLabel);
     }
-  }, [error, lightBg, styles]);
+  }, [error, lightbg, styles]);
 
   return (
     <Controller
@@ -89,9 +82,9 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
           onChange, value,
         },
       }) => (
-        <FormControl variant={variant} className={`${styles.container} ${customClassName}`}>
+        <FormControl variant={variant} className={`${styles.container} ${customclassname}`}>
           <Autocomplete
-            options={options}
+            value={value}
             getOptionLabel={(option) => option.label}
             getOptionSelected={
               (option, selectedValue) => selectedValue && option.value === selectedValue.value
@@ -103,47 +96,42 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
                 label={label}
                 variant={variant}
                 InputLabelProps={{
-                  classes: { root: lightBg ? '' : styles.unFocusLabel },
+                  classes: { root: lightbg ? '' : styles.unFocusLabel },
                 }}
                 error={!!error}
-                color={lightBg ? 'secondary' : 'primary'}
+                color={lightbg ? 'secondary' : 'primary'}
               />
             )}
-            value={value}
             blurOnSelect
-            onChange={(_event: any, newValue:optionsData) => {
+            onChange={(_event, newValue) => {
               onChange(newValue);
             }}
-            disabled={readOnly}
             autoComplete
             classes={{
-              root: !lightBg ? styles.unFocusStyle : '',
-              inputRoot: !lightBg ? styles.unFocusLabel : '',
+              root: !lightbg ? styles.unFocusStyle : '',
+              inputRoot: !lightbg ? styles.unFocusLabel : '',
               input: styles.removedAutofillStyling,
               popupIndicator: popupIndicatorClass,
-              clearIndicator: lightBg ? '' : styles.unFocusLabel,
+              clearIndicator: lightbg ? '' : styles.unFocusLabel,
             }}
-            disableClearable={!clearable}
+            {...props}
           />
           <FormHelperText error>
-            {error?.value ? error?.value.message : error?.message}
+            {error?.message}
           </FormHelperText>
         </FormControl>
       )}
-      defaultValue={options.find((option) => option.value === defaultValue) || null}
+      defaultValue={defaultValue}
     />
   );
 };
 
 ControlledPicker.defaultProps = {
-  defaultValue: null,
   variant: undefined,
   label: '',
   error: null,
-  lightBg: false,
-  customClassName: '',
-  clearable: true,
-  readOnly: false,
+  lightbg: 0,
+  customclassname: '',
 };
 
 export default ControlledPicker;
