@@ -230,7 +230,7 @@ const AddressModal = () => {
                 name="defaultOption"
                 label="Default"
                 error={errors.defaultOption}
-                flexDirection="column"
+                row
               />
             </Grid>
             <Grid item sm={6} xs={12}>

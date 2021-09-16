@@ -607,8 +607,8 @@ const Checkout = () => {
                     label="Payment Options:"
                     options={paymentOptions}
                     error={errors.paymentOptions}
-                    defaultValue={prevShippingInfo.paymentOptions}
-                    flexDirection={isXsView ? 'column' : 'row'}
+                    defaultselect={prevShippingInfo.paymentOptions}
+                    row={!isXsView}
                   />
                 </Grid>
               </Grid>

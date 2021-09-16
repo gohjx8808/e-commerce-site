@@ -3,20 +3,17 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
+import RadioGroup, { RadioGroupProps } from '@material-ui/core/RadioGroup';
 import { makeStyles } from '@material-ui/styles';
-import clsx from 'clsx';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
-interface ControlledRadioButtonOwnProps{
+interface ControlledRadioButtonOwnProps extends RadioGroupProps{
   control:Control,
   label?:string,
-  name:string,
-  defaultValue?:string
+  defaultselect?:string
   error?:FieldError
   options:optionsData[],
-  flexDirection?:string
 }
 
 const useStyles = makeStyles({
@@ -28,13 +25,6 @@ const useStyles = makeStyles({
   spaceBetweenRadio: {
     paddingRight: 20,
   },
-  rowFlex: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  colFlex: {
-    flexDirection: 'column',
-  },
 });
 
 const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
@@ -42,10 +32,9 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
     control,
     label,
     name,
-    defaultValue,
+    defaultselect,
     error,
     options,
-    flexDirection,
   } = props;
 
   const styles = useStyles();
@@ -53,7 +42,7 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
   return (
     <Controller
       control={control}
-      name={name}
+      name={name!}
       render={({
         field: {
           onChange, value,
@@ -61,7 +50,6 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
       }) => (
         <>
           <FormControl
-            className={clsx({ [styles.rowFlex]: flexDirection === 'row', [styles.colFlex]: flexDirection === 'column' })}
             error={!!error}
           >
             <FormLabel component="legend" className={styles.labelColor} focused={false}>{label}</FormLabel>
@@ -69,7 +57,7 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
               aria-label={label}
               value={value}
               onChange={(_event, radioValue) => onChange(radioValue)}
-              row
+              {...props}
             >
               {options.map((option) => (
                 <FormControlLabel
@@ -85,16 +73,15 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
           <FormHelperText error>{error?.message}</FormHelperText>
         </>
       )}
-      defaultValue={defaultValue}
+      defaultValue={defaultselect}
     />
   );
 };
 
 ControlledRadioButton.defaultProps = {
-  defaultValue: '',
+  defaultselect: '',
   label: '',
   error: null,
-  flexDirection: 'row',
 };
 
 export default ControlledRadioButton;

@@ -8,7 +8,6 @@ interface ControlledCheckboxOwnProps extends CheckboxProps{
   control:Control,
   label?:string,
   name:string,
-  defaultChecked?:boolean
   error?:FieldError
 }
 
@@ -49,7 +48,6 @@ const ControlledCheckbox = (props:ControlledCheckboxOwnProps) => {
 };
 
 ControlledCheckbox.defaultProps = {
-  defaultChecked: false,
   label: '',
   error: null,
 };
