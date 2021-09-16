@@ -4,12 +4,12 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput, { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
-import { makeStyles } from '@material-ui/core/styles';
 import CancelIcon from '@material-ui/icons/Cancel';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import React, { useState } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
+import useInputsStyles from '../src/useInputsStyles';
 
 type variantData='standard' | 'filled' | 'outlined'
 
@@ -20,41 +20,12 @@ interface ControlledPasswordInputOwnProps extends OutlinedInputProps{
   formerror?:FieldError
 }
 
-const useStyles = makeStyles({
-  unFocusStyle: {
-    color: 'white',
-    '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'white',
-    },
-    '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'lightgrey',
-    },
-  },
-  unFocusLabel: {
-    color: 'white',
-  },
-  container: {
-    width: '100%',
-  },
-  removedAutofillStyling: {
-    '&:-webkit-autofill': {
-      transitionDelay: '9999s',
-    },
-    '&:-webkit-autofill::first-line': {
-      fontFamily: 'Sitka Display Semibold',
-      fontSize: '1rem',
-    },
-  },
-});
-
 const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
   const {
     control, label, variant, name, defaultValue, formerror,
   } = props;
-
   const [secure, setSecure] = useState(true);
-
-  const styles = useStyles();
+  const inputStyles = useInputsStyles();
 
   return (
     <Controller
@@ -65,8 +36,12 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
           onChange,
         },
       }) => (
-        <FormControl variant={variant} className={styles.container}>
-          <InputLabel htmlFor={name} classes={{ root: styles.unFocusLabel }} error={!!formerror}>
+        <FormControl variant={variant} className={inputStyles.container}>
+          <InputLabel
+            htmlFor={name}
+            classes={{ root: inputStyles.unFocusLabel }}
+            error={!!formerror}
+          >
             {label}
           </InputLabel>
           <OutlinedInput
@@ -79,7 +54,7 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
                   aria-label="toggle password visibility"
                   onClick={() => setSecure(!secure)}
                   edge="end"
-                  className={styles.unFocusLabel}
+                  className={inputStyles.unFocusLabel}
                 >
                   {!secure ? <VisibilityIcon color={formerror ? 'error' : 'inherit'} /> : <VisibilityOffIcon color={formerror ? 'error' : 'inherit'} />}
                 </IconButton>
@@ -93,7 +68,7 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
                 )}
               </InputAdornment>
             )}
-            classes={{ root: styles.unFocusStyle, input: styles.removedAutofillStyling }}
+            classes={{ root: inputStyles.unFocusStyle, input: inputStyles.removedAutofillStyling }}
             error={!!formerror}
             {...props}
           />

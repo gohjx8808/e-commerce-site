@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
+import useInputsStyles from '../src/useInputsStyles';
 
 interface ControlledDatePickerOwnProps extends Omit<DatePickerProps, 'value'|'onChange'>{
   control:Control,
@@ -18,38 +19,11 @@ interface ControlledDatePickerOwnProps extends Omit<DatePickerProps, 'value'|'on
 }
 
 const useStyles = makeStyles((theme) => ({
-  unFocusStyle: {
-    color: 'white',
-    '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'white',
-    },
-    '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'lightgrey',
-    },
-  },
-  unFocusLabel: {
-    color: 'white',
-  },
-  container: {
-    width: '100%',
-  },
   errorColor: {
     color: theme.palette.error.main,
   },
-  secondary: {
-    color: theme.palette.secondary.main,
-  },
   black: {
     color: 'black',
-  },
-  removedAutofillStyling: {
-    '&:-webkit-autofill': {
-      transitionDelay: '9999s',
-    },
-    '&:-webkit-autofill::first-line': {
-      fontFamily: 'Sitka Display Semibold',
-      fontSize: '1rem',
-    },
   },
 }));
 
@@ -59,6 +33,7 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
   } = props;
   const [inputColorClass, setInputColorClass] = useState('');
   const styles = useStyles();
+  const inputStyles = useInputsStyles();
 
   useEffect(() => {
     if (formerror) {
@@ -66,9 +41,9 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
     } else if (lightbg) {
       setInputColorClass(styles.black);
     } else {
-      setInputColorClass(styles.unFocusLabel);
+      setInputColorClass(inputStyles.unFocusLabel);
     }
-  }, [formerror, lightbg, styles]);
+  }, [formerror, lightbg, styles, inputStyles]);
 
   return (
     <Controller
@@ -89,9 +64,11 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
               className: inputColorClass,
             }}
             color={lightbg ? 'secondary' : 'primary'}
-            className={clsx(styles.container, customclassname, !lightbg && styles.unFocusStyle)}
-            InputLabelProps={{ classes: { root: !lightbg ? styles.unFocusLabel : '' } }}
-            InputProps={{ classes: { root: !lightbg ? styles.unFocusLabel : '', input: styles.removedAutofillStyling } }}
+            className={clsx(
+              inputStyles.container, customclassname, !lightbg && inputStyles.unFocusStyle,
+            )}
+            InputLabelProps={{ classes: { root: !lightbg ? inputStyles.unFocusLabel : '' } }}
+            InputProps={{ classes: { root: !lightbg ? inputStyles.unFocusLabel : '', input: inputStyles.removedAutofillStyling } }}
             disableFuture
             maxDateMessage="Invalid date"
             minDateMessage="Invalid date"

@@ -4,10 +4,10 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput, { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
-import { makeStyles } from '@material-ui/core/styles';
 import CancelIcon from '@material-ui/icons/Cancel';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
+import useInputsStyles from '../src/useInputsStyles';
 
 type variantData='standard' | 'filled' | 'outlined'
 
@@ -26,33 +26,6 @@ interface ControlledTextInputOwnProps extends OutlinedInputProps{
   disabled?:boolean
 }
 
-const useStyles = makeStyles({
-  unFocusStyle: {
-    color: 'white',
-    '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'white',
-    },
-    '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'lightgrey',
-    },
-  },
-  unFocusLabel: {
-    color: 'white',
-  },
-  formControl: {
-    width: '100%',
-  },
-  removedAutofillStyling: {
-    '&:-webkit-autofill': {
-      transitionDelay: '9999s',
-    },
-    '&:-webkit-autofill::first-line': {
-      fontFamily: 'Sitka Display Semibold',
-      fontSize: '1rem',
-    },
-  },
-});
-
 const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
   const {
     control,
@@ -70,7 +43,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
     disabled,
   } = props;
 
-  const styles = useStyles();
+  const inputStyles = useInputsStyles();
 
   return (
     <Controller
@@ -83,7 +56,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
       }) => (
         <FormControl
           variant={variant}
-          className={`${styles.formControl} ${customclassname}`}
+          className={`${inputStyles.container} ${customclassname}`}
           style={{
             display: type === 'hidden' ? 'none' : 'flex',
           }}
@@ -92,7 +65,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
           <InputLabel
             htmlFor={name}
             color={lightbg ? 'secondary' : 'primary'}
-            classes={{ root: !lightbg ? styles.unFocusLabel : '' }}
+            classes={{ root: !lightbg ? inputStyles.unFocusLabel : '' }}
             error={!!formerror}
           >
             {label}
@@ -102,7 +75,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             value={value}
             onChange={onChange}
             color={lightbg ? 'secondary' : 'primary'}
-            classes={{ root: !lightbg ? styles.unFocusStyle : '', input: styles.removedAutofillStyling }}
+            classes={{ root: !lightbg ? inputStyles.unFocusStyle : '', input: inputStyles.removedAutofillStyling }}
             error={!!formerror}
             endAdornment={formerror && (
               <InputAdornment position="end">

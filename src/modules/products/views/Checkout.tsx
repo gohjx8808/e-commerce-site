@@ -24,10 +24,10 @@ import React, {
 import { useForm } from 'react-hook-form';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import ControlledCheckbox from '../../../sharedComponents/inputs/ControlledCheckbox';
-import ControlledPicker from '../../../sharedComponents/inputs/ControlledPicker';
-import ControlledRadioButton from '../../../sharedComponents/inputs/ControlledRadioButton';
-import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
+import ControlledCheckbox from '../../../sharedComponents/inputs/views/ControlledCheckbox';
+import ControlledPicker from '../../../sharedComponents/inputs/views/ControlledPicker';
+import ControlledRadioButton from '../../../sharedComponents/inputs/views/ControlledRadioButton';
+import ControlledTextInput from '../../../sharedComponents/inputs/views/ControlledTextInput';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import DividerWithText from '../../../sharedComponents/DividerWithText';
 import ExpandedCell from '../../../sharedComponents/ExpandedCell';

@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete, { AutocompleteProps } from '@material-ui/lab/Autocomplete';
 import React, { useEffect, useState } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
+import useInputsStyles from '../src/useInputsStyles';
 
 type variantData='standard' | 'filled' | 'outlined'
 
@@ -19,31 +20,8 @@ interface ControlledPickerOwnProps extends Omit<AutocompleteProps<optionsData, b
 }
 
 const useStyles = makeStyles((theme) => ({
-  unFocusStyle: {
-    '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'white',
-    },
-    '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'lightgrey',
-    },
-  },
-  unFocusLabel: {
-    color: 'white',
-  },
-  container: {
-    width: '100%',
-  },
   errorColor: {
     color: theme.palette.error.main,
-  },
-  removedAutofillStyling: {
-    '&:-webkit-autofill': {
-      transitionDelay: '9999s',
-    },
-    '&:-webkit-autofill::first-line': {
-      fontFamily: 'Sitka Display Semibold',
-      fontSize: '1rem',
-    },
   },
 }));
 
@@ -62,6 +40,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
   const [popupIndicatorClass, setPopupIndicatorClass] = useState('');
 
   const styles = useStyles();
+  const inputStyles = useInputsStyles();
 
   useEffect(() => {
     if (error) {
@@ -69,9 +48,9 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
     } else if (lightbg) {
       setPopupIndicatorClass('');
     } else {
-      setPopupIndicatorClass(styles.unFocusLabel);
+      setPopupIndicatorClass(inputStyles.unFocusLabel);
     }
-  }, [error, lightbg, styles]);
+  }, [error, lightbg, styles, inputStyles]);
 
   return (
     <Controller
@@ -82,7 +61,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
           onChange, value,
         },
       }) => (
-        <FormControl variant={variant} className={`${styles.container} ${customclassname}`}>
+        <FormControl variant={variant} className={`${inputStyles.container} ${customclassname}`}>
           <Autocomplete
             value={value}
             getOptionLabel={(option) => option.label}
@@ -96,7 +75,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
                 label={label}
                 variant={variant}
                 InputLabelProps={{
-                  classes: { root: lightbg ? '' : styles.unFocusLabel },
+                  classes: { root: lightbg ? '' : inputStyles.unFocusLabel },
                 }}
                 error={!!error}
                 color={lightbg ? 'secondary' : 'primary'}
@@ -108,11 +87,11 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
             }}
             autoComplete
             classes={{
-              root: !lightbg ? styles.unFocusStyle : '',
-              inputRoot: !lightbg ? styles.unFocusLabel : '',
-              input: styles.removedAutofillStyling,
+              root: !lightbg ? inputStyles.unFocusStyle : '',
+              inputRoot: !lightbg ? inputStyles.unFocusLabel : '',
+              input: inputStyles.removedAutofillStyling,
               popupIndicator: popupIndicatorClass,
-              clearIndicator: lightbg ? '' : styles.unFocusLabel,
+              clearIndicator: lightbg ? '' : inputStyles.unFocusLabel,
             }}
             {...props}
           />

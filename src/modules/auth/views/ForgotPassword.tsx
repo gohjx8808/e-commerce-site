@@ -13,7 +13,7 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks';
-import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
+import ControlledTextInput from '../../../sharedComponents/inputs/views/ControlledTextInput';
 import routeNames from '../../../utils/routeNames';
 import { submitForgotPassword } from '../src/authReducer';
 import { forgotPasswordSchema } from '../src/authSchema';
