@@ -3,7 +3,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import OutlinedInput, { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
 import { makeStyles } from '@material-ui/core/styles';
 import CancelIcon from '@material-ui/icons/Cancel';
 import React from 'react';
@@ -11,24 +11,18 @@ import { Control, Controller, FieldError } from 'react-hook-form';
 
 type variantData='standard' | 'filled' | 'outlined'
 
-interface ControlledTextInputOwnProps{
+interface ControlledTextInputOwnProps extends OutlinedInputProps{
   control:Control,
   label?:string,
-  type?:string,
   variant?:variantData,
   name:string,
-  defaultValue?:string
-  error?:FieldError
-  labelWidth?:number
+  defaultinput?:string
+  formerror?:FieldError
   customclassname?:string
-  lightbg?:boolean
+  lightbg?:booleanInteger
   maxLength?:number
-  startAdornment?:React.ReactNode
-  multiline?:boolean
-  rows?:number
   readOnly?:boolean
-  infoText?:string
-  placeholder?:string
+  infotext?:string
   disabled?:boolean
 }
 
@@ -66,18 +60,13 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
     type,
     variant,
     name,
-    defaultValue,
-    error,
-    labelWidth,
+    defaultinput,
+    formerror,
     customclassname,
     lightbg,
     maxLength,
-    startAdornment,
-    multiline,
-    rows,
     readOnly,
-    infoText,
-    placeholder,
+    infotext,
     disabled,
   } = props;
 
@@ -104,21 +93,18 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             htmlFor={name}
             color={lightbg ? 'secondary' : 'primary'}
             classes={{ root: !lightbg ? styles.unFocusLabel : '' }}
-            error={!!error}
+            error={!!formerror}
           >
             {label}
           </InputLabel>
           <OutlinedInput
             id={name}
-            type={type}
             value={value}
             onChange={onChange}
-            labelWidth={labelWidth}
             color={lightbg ? 'secondary' : 'primary'}
             classes={{ root: !lightbg ? styles.unFocusStyle : '', input: styles.removedAutofillStyling }}
-            error={!!error}
-            placeholder={placeholder}
-            endAdornment={error && (
+            error={!!formerror}
+            endAdornment={formerror && (
               <InputAdornment position="end">
                 <IconButton
                   edge="end"
@@ -127,39 +113,31 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
                 </IconButton>
               </InputAdornment>
             )}
-            startAdornment={startAdornment && <InputAdornment position="start">{startAdornment}</InputAdornment>}
             inputProps={{
               maxLength,
               readOnly,
             }}
-            multiline={multiline}
-            rows={rows}
+            {...props}
           />
-          <FormHelperText error>{error?.message}</FormHelperText>
-          <FormHelperText>{infoText}</FormHelperText>
+          <FormHelperText error>{formerror?.message}</FormHelperText>
+          <FormHelperText>{infotext}</FormHelperText>
         </FormControl>
       )}
-      defaultValue={defaultValue}
+      defaultValue={defaultinput}
     />
   );
 };
 
 ControlledTextInput.defaultProps = {
-  defaultValue: '',
+  defaultinput: '',
   variant: undefined,
-  type: 'text',
   label: '',
-  error: null,
-  labelWidth: 70,
+  formerror: null,
   customclassname: '',
-  lightbg: false,
+  lightbg: 0,
   maxLength: null,
-  startAdornment: null,
-  multiline: false,
-  rows: 1,
   readOnly: false,
-  infoText: '',
-  placeholder: '',
+  infotext: '',
   disabled: false,
 };
 

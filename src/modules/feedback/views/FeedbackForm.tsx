@@ -35,36 +35,36 @@ const FeedbackForm = () => {
                 <ControlledTextInput
                   control={control}
                   name="nickname"
-                  lightbg
+                  lightbg={1}
                   label="Nickname"
-                  error={errors.nickname}
+                  formerror={errors.nickname}
                   variant="outlined"
                   labelWidth={65}
-                  infoText="How should we address you."
+                  infotext="How should we address you."
                 />
               </Grid>
               <Grid item xs={12}>
                 <ControlledTextInput
                   control={control}
                   name="email"
-                  lightbg
+                  lightbg={1}
                   label="Email"
-                  error={errors.email}
+                  formerror={errors.email}
                   variant="outlined"
                   labelWidth={40}
-                  infoText="Email is solely for the purpose of replying your feedback."
+                  infotext="Email is solely for the purpose of replying your feedback."
                 />
               </Grid>
               <Grid item xs={12}>
                 <ControlledTextInput
                   control={control}
                   name="feedback"
-                  lightbg
+                  lightbg={1}
                   label="Feedback"
                   placeholder="Tell me what do you think..."
                   multiline
                   rows={10}
-                  error={errors.feedback}
+                  formerror={errors.feedback}
                   variant="outlined"
                   labelWidth={60}
                 />

@@ -5,6 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import EmailIcon from '@material-ui/icons/Email';
 import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
@@ -62,12 +63,12 @@ const EditAccDetailModal = () => {
                 control={control}
                 name="fullName"
                 variant="outlined"
-                lightbg
+                lightbg={1}
                 label="Full Name"
                 labelWidth={68}
-                defaultValue={currentUserDetails.fullName}
-                startAdornment={<PersonIcon />}
-                error={errors.fullName}
+                defaultinput={currentUserDetails.fullName}
+                startAdornment={<InputAdornment position="start"><PersonIcon /></InputAdornment>}
+                formerror={errors.fullName}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -75,12 +76,12 @@ const EditAccDetailModal = () => {
                 control={control}
                 name="email"
                 variant="outlined"
-                lightbg
+                lightbg={1}
                 label="Email"
                 labelWidth={40}
-                defaultValue={currentUserDetails.email}
-                startAdornment={<EmailIcon />}
-                error={errors.email}
+                defaultinput={currentUserDetails.email}
+                startAdornment={<InputAdornment position="start"><EmailIcon /></InputAdornment>}
+                formerror={errors.email}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -88,12 +89,12 @@ const EditAccDetailModal = () => {
                 control={control}
                 name="phoneNumber"
                 variant="outlined"
-                lightbg
+                lightbg={1}
                 label="Phone Number"
                 labelWidth={100}
-                defaultValue={currentUserDetails.phoneNumber}
-                startAdornment={<PhoneIcon />}
-                error={errors.phoneNumber}
+                defaultinput={currentUserDetails.phoneNumber}
+                startAdornment={<InputAdornment position="start"><PhoneIcon /></InputAdornment>}
+                formerror={errors.phoneNumber}
               />
             </Grid>
             <Grid item sm={6} xs={12}>

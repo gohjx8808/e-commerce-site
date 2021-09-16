@@ -415,9 +415,9 @@ const Checkout = () => {
                       name="fullName"
                       variant="outlined"
                       label="Full Name"
-                      lightbg
-                      error={errors.fullName}
-                      defaultValue={prevShippingInfo.fullName}
+                      lightbg={1}
+                      formerror={errors.fullName}
+                      defaultinput={prevShippingInfo.fullName}
                       readOnly={!!selectedAddress.fullName}
                     />
                   </Grid>
@@ -428,9 +428,9 @@ const Checkout = () => {
                       variant="outlined"
                       label="Email Address"
                       labelWidth={105}
-                      lightbg
-                      error={errors.email}
-                      defaultValue={prevShippingInfo.email}
+                      lightbg={1}
+                      formerror={errors.email}
+                      defaultinput={prevShippingInfo.email}
                       readOnly={!!selectedAddress.email}
                     />
                   </Grid>
@@ -441,14 +441,14 @@ const Checkout = () => {
                       variant="outlined"
                       label="Phone Number"
                       labelWidth={105}
-                      lightbg
+                      lightbg={1}
                       startAdornment={(
                         <InputAdornment position="start">
                           +
                         </InputAdornment>
                         )}
-                      error={errors.phoneNumber}
-                      defaultValue={prevShippingInfo.phoneNumber}
+                      formerror={errors.phoneNumber}
+                      defaultinput={prevShippingInfo.phoneNumber}
                       readOnly={!!selectedAddress.email}
                     />
                   </Grid>
@@ -459,9 +459,9 @@ const Checkout = () => {
                       variant="outlined"
                       label="Address Line 1"
                       labelWidth={105}
-                      lightbg
-                      error={errors.addressLine1}
-                      defaultValue={prevShippingInfo.addressLine1}
+                      lightbg={1}
+                      formerror={errors.addressLine1}
+                      defaultinput={prevShippingInfo.addressLine1}
                       readOnly={!!selectedAddress.addressLine1}
                     />
                   </Grid>
@@ -472,8 +472,8 @@ const Checkout = () => {
                       variant="outlined"
                       label="Address Line 2"
                       labelWidth={110}
-                      lightbg
-                      defaultValue={prevShippingInfo.addressLine2}
+                      lightbg={1}
+                      defaultinput={prevShippingInfo.addressLine2}
                       readOnly={!!selectedAddress.addressLine1}
                     />
                   </Grid>
@@ -483,10 +483,10 @@ const Checkout = () => {
                       name="postcode"
                       variant="outlined"
                       label="Postcode"
-                      lightbg
+                      lightbg={1}
                       maxLength={10}
-                      error={errors.postcode}
-                      defaultValue={prevShippingInfo.postcode}
+                      formerror={errors.postcode}
+                      defaultinput={prevShippingInfo.postcode}
                       readOnly={!!selectedAddress.postcode}
                     />
                   </Grid>
@@ -496,10 +496,10 @@ const Checkout = () => {
                       name="city"
                       variant="outlined"
                       label="City"
-                      lightbg
+                      lightbg={1}
                       labelWidth={25}
-                      error={errors.city}
-                      defaultValue={prevShippingInfo.city}
+                      formerror={errors.city}
+                      defaultinput={prevShippingInfo.city}
                       readOnly={!!selectedAddress.city}
                     />
                   </Grid>
@@ -526,9 +526,9 @@ const Checkout = () => {
                         variant="outlined"
                         label="Foreign Country State"
                         labelWidth={155}
-                        lightbg
-                        error={errors.outsideMalaysiaState}
-                        defaultValue={prevShippingInfo.outsideMalaysiaState}
+                        lightbg={1}
+                        formerror={errors.outsideMalaysiaState}
+                        defaultinput={prevShippingInfo.outsideMalaysiaState}
                         readOnly={!!selectedAddress.outsideMalaysiaState}
                       />
                     </Grid>
@@ -540,9 +540,9 @@ const Checkout = () => {
                       variant="outlined"
                       label="Country"
                       labelWidth={55}
-                      lightbg
-                      error={errors.country}
-                      defaultValue={prevShippingInfo.country}
+                      lightbg={1}
+                      formerror={errors.country}
+                      defaultinput={prevShippingInfo.country}
                       readOnly={!!selectedAddress.country}
                     />
                   </Grid>
@@ -553,8 +553,8 @@ const Checkout = () => {
                       variant="outlined"
                       label="Promo Code"
                       labelWidth={80}
-                      error={errors.promoCode}
-                      lightbg
+                      formerror={errors.promoCode}
+                      lightbg={1}
                       disabled={currentUserDetails.uid === ''}
                     />
                     <FormHelperText error className={styles.errorPadding}>
@@ -578,7 +578,7 @@ const Checkout = () => {
                       variant="outlined"
                       label="Notes to seller (optional)"
                       labelWidth={160}
-                      lightbg
+                      lightbg={1}
                       multiline
                       rows={4}
                     />

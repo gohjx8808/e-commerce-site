@@ -111,10 +111,10 @@ const AddressModal = () => {
                 control={control}
                 name="fullName"
                 variant="outlined"
-                lightbg
+                lightbg={1}
                 label="Full Name"
                 labelWidth={68}
-                error={errors.fullName}
+                formerror={errors.fullName}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -122,10 +122,10 @@ const AddressModal = () => {
                 control={control}
                 name="phoneNumber"
                 variant="outlined"
-                lightbg
+                lightbg={1}
                 label="Phone Number"
                 labelWidth={100}
-                error={errors.phoneNumber}
+                formerror={errors.phoneNumber}
                 startAdornment={(
                   <InputAdornment position="start">
                     +
@@ -140,8 +140,8 @@ const AddressModal = () => {
                 variant="outlined"
                 label="Email Address"
                 labelWidth={95}
-                lightbg
-                error={errors.email}
+                lightbg={1}
+                formerror={errors.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -151,8 +151,8 @@ const AddressModal = () => {
                 variant="outlined"
                 label="Address Line 1"
                 labelWidth={100}
-                lightbg
-                error={errors.addressLine1}
+                lightbg={1}
+                formerror={errors.addressLine1}
               />
             </Grid>
             <Grid item xs={12}>
@@ -162,7 +162,7 @@ const AddressModal = () => {
                 variant="outlined"
                 label="Address Line 2"
                 labelWidth={100}
-                lightbg
+                lightbg={1}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -171,10 +171,10 @@ const AddressModal = () => {
                 name="postcode"
                 variant="outlined"
                 label="Postcode"
-                lightbg
+                lightbg={1}
                 labelWidth={60}
                 maxLength={10}
-                error={errors.postcode}
+                formerror={errors.postcode}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -183,9 +183,9 @@ const AddressModal = () => {
                 name="city"
                 variant="outlined"
                 label="City"
-                lightbg
+                lightbg={1}
                 labelWidth={25}
-                error={errors.city}
+                formerror={errors.city}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -207,8 +207,8 @@ const AddressModal = () => {
                   variant="outlined"
                   label="Foreign Country State"
                   labelWidth={145}
-                  lightbg
-                  error={errors.outsideMalaysiaState}
+                  lightbg={1}
+                  formerror={errors.outsideMalaysiaState}
                 />
               </Grid>
             )}
@@ -219,8 +219,8 @@ const AddressModal = () => {
                 variant="outlined"
                 label="Country"
                 labelWidth={55}
-                lightbg
-                error={errors.country}
+                lightbg={1}
+                formerror={errors.country}
               />
             </Grid>
             <Grid item sm={6} xs={12}>

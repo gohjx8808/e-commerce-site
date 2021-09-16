@@ -76,7 +76,7 @@ const ForgotPassword = () => {
                       name="email"
                       label="Email"
                       variant="outlined"
-                      error={errors.email}
+                      formerror={errors.email}
                       labelWidth={40}
                       type="email"
                     />

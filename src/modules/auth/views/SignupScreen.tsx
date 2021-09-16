@@ -86,7 +86,7 @@ const SignupScreen = () => {
                           name="fullName"
                           label="Full Name"
                           variant="outlined"
-                          error={errors.fullName}
+                          formerror={errors.fullName}
                           labelWidth={70}
                           type="text"
                         />
@@ -97,7 +97,7 @@ const SignupScreen = () => {
                           name="phoneNumber"
                           label="Phone Number"
                           variant="outlined"
-                          error={errors.phoneNumber}
+                          formerror={errors.phoneNumber}
                           labelWidth={110}
                           type="tel"
                         />
@@ -108,7 +108,7 @@ const SignupScreen = () => {
                           name="email"
                           label="Email"
                           variant="outlined"
-                          error={errors.email}
+                          formerror={errors.email}
                           labelWidth={40}
                           type="email"
                         />
