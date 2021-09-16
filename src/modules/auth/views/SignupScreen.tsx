@@ -142,8 +142,8 @@ const SignupScreen = () => {
                           control={control}
                           name="dob"
                           label="Date of Birth"
-                          variant="outlined"
-                          error={errors.dob}
+                          inputVariant="outlined"
+                          formError={errors.dob}
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>

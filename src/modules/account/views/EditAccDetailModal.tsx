@@ -112,11 +112,11 @@ const EditAccDetailModal = () => {
               <ControlledDatePicker
                 control={control}
                 name="dob"
-                variant="outlined"
+                inputVariant="outlined"
                 lightBg
                 label="Date of Birth"
                 defaultValue={currentUserDetails.dob}
-                error={errors.dob}
+                formError={errors.dob}
               />
             </Grid>
           </Grid>
