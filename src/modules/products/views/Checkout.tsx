@@ -22,6 +22,7 @@ import React, {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledCheckbox from '../../../sharedComponents/ControlledCheckbox';
 import ControlledPicker from '../../../sharedComponents/ControlledPicker';
@@ -39,6 +40,7 @@ import productStyle from '../src/productStyle';
 import CheckoutAddressListModal from './CheckoutAddressListModal';
 
 dayjs.extend(isBetween);
+dayjs.extend(customParseFormat);
 
 interface promoCodeObject{
   code:string
@@ -231,7 +233,7 @@ const Checkout = () => {
         (promoCode) => promoCode.code === inputPromoCode,
       );
       if (targetPromoCode) {
-        const isPromoCodeValid = today.isBetween(targetPromoCode.startDate, targetPromoCode.endDate, null, '[]');
+        const isPromoCodeValid = today.isBetween(dayjs(targetPromoCode.startDate, 'DD/MM/YYYY'), dayjs(targetPromoCode.endDate, 'DD/MM/YYYY'), null, '[]');
         if (isPromoCodeValid) {
           switch (targetPromoCode.discountType) {
             case 'percentage': {
