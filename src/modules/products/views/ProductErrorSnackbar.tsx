@@ -2,7 +2,7 @@ import { Typography } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
-import productStyle from '../src/productStyle';
+import useGlobalStyles from '../../../utils/useGlobalStyles';
 
 interface ProductErrorSnackbarOwnProps{
   isSnackbarOpen:boolean
@@ -12,12 +12,12 @@ interface ProductErrorSnackbarOwnProps{
 
 const ProductErrorSnackbar = (props:ProductErrorSnackbarOwnProps) => {
   const { isSnackbarOpen, toggleSnackbar, msg } = props;
-  const styles = productStyle();
+  const globalStyles = useGlobalStyles();
 
   return (
     <Snackbar open={isSnackbarOpen} autoHideDuration={3000} onClose={toggleSnackbar}>
       <Alert onClose={toggleSnackbar} severity="warning">
-        <Typography className={styles.boldText}>
+        <Typography className={globalStyles.boldText}>
           {msg}
         </Typography>
       </Alert>

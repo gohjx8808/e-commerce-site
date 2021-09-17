@@ -24,6 +24,7 @@ import {
 import productStyle from '../src/productStyle';
 import ProductErrorSnackbar from './ProductErrorSnackbar';
 import ItemRemoveConfirmationDialog from './ItemRemoveConfirmationDialog';
+import useGlobalStyles from '../../../utils/useGlobalStyles';
 
 type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
   [key: string]: string | undefined | number
@@ -31,6 +32,7 @@ type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
 
 const Cart = () => {
   const styles = productStyle();
+  const globalStyles = useGlobalStyles();
   const cartTitle = ['Item', 'Price (RM)', 'Quantity', 'Total (RM)'];
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
   const selectedCheckoutItemsID = useAppSelector((state) => state.product.selectedCheckoutItemsID);
@@ -167,7 +169,7 @@ const Cart = () => {
                         justifyContent="center"
                         alignItems="center"
                       >
-                        <Typography className={styles.boldText}>{title}</Typography>
+                        <Typography className={globalStyles.boldText}>{title}</Typography>
                       </Grid>
                     </Grid>
                   ))}

@@ -10,6 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { defaultAddressData } from '../../../utils/constants';
+import useGlobalStyles from '../../../utils/useGlobalStyles';
 import { updateSelectedAddress } from '../../account/src/accountReducer';
 import productStyle from '../src/productStyle';
 
@@ -20,6 +21,7 @@ interface CheckoutAddressListModalOwnProps{
 
 const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
   const dispatch = useAppDispatch();
+  const globalStyles = useGlobalStyles();
   const styles = productStyle();
   const { isVisible, toggleModal } = props;
   const addressList = useAppSelector((state) => state.auth.currentUser.addressBook);
@@ -58,14 +60,18 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
                   <>
                     <Grid container>
                       <Grid item xs={5}>
-                        <Typography className={styles.boldText}>{address.fullName}</Typography>
+                        <Typography className={globalStyles.boldText}>
+                          {address.fullName}
+                        </Typography>
                       </Grid>
                       <Divider orientation="vertical" flexItem variant="middle" />
                       <Grid item xs={5}>
-                        <Typography className={styles.boldText}>{address.phoneNumber}</Typography>
+                        <Typography className={globalStyles.boldText}>
+                          {address.phoneNumber}
+                        </Typography>
                       </Grid>
                     </Grid>
-                    <Typography className={styles.boldText}>{address.email}</Typography>
+                    <Typography className={globalStyles.boldText}>{address.email}</Typography>
                     <Typography>
                       {address.addressLine1}
                       {' '}

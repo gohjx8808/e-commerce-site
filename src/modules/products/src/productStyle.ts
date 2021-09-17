@@ -59,9 +59,6 @@ const productStyle = makeStyles((theme) => ({
     borderRadius: 10,
     width: '100%',
   },
-  boldText: {
-    fontWeight: 'bold',
-  },
   cartItemImage: {
     borderRadius: 5,
   },

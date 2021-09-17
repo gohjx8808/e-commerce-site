@@ -2,9 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { homeColor, workColor } from '../../../utils/constants';
 
 const accountStyles = makeStyles((theme) => ({
-  boldText: {
-    fontWeight: 'bold',
-  },
   verticalSpacing: {
     paddingTop: 10,
     paddingBottom: 10,

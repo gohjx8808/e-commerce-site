@@ -16,6 +16,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { internationalPhoneNumberFormatter } from '../../../utils/helper';
+import useGlobalStyles from '../../../utils/useGlobalStyles';
 import {
   toggleAddressModal,
   toggleDeleteAddressConfirmationModal,
@@ -29,6 +30,7 @@ import DeleteAddressConfirmationModal from './DeleteAddressConfirmationModal';
 
 const AddressBook = () => {
   const styles = accountStyles();
+  const globalStyles = useGlobalStyles();
   const dispatch = useAppDispatch();
   const addressList = useAppSelector((state) => state.auth.currentUser.addressBook);
 
@@ -74,7 +76,7 @@ const AddressBook = () => {
                                 <PersonIcon />
                               </Grid>
                               <Grid item>
-                                <Typography className={styles.boldText}>
+                                <Typography className={globalStyles.boldText}>
                                   {address.fullName}
                                 </Typography>
                               </Grid>
@@ -87,7 +89,7 @@ const AddressBook = () => {
                                 <PhoneIcon />
                               </Grid>
                               <Grid item>
-                                <Typography className={styles.boldText}>
+                                <Typography className={globalStyles.boldText}>
                                   {internationalPhoneNumberFormatter(address.phoneNumber)}
                                 </Typography>
                               </Grid>
@@ -100,7 +102,7 @@ const AddressBook = () => {
                                 <EmailIcon />
                               </Grid>
                               <Grid item>
-                                <Typography className={styles.boldText}>
+                                <Typography className={globalStyles.boldText}>
                                   {address.email}
                                 </Typography>
                               </Grid>

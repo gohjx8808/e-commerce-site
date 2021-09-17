@@ -37,6 +37,7 @@ import {
 } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 import ProductErrorSnackbar from './ProductErrorSnackbar';
+import useGlobalStyles from '../../../utils/useGlobalStyles';
 
 interface ProductDescriptionParams{
   id:string
@@ -44,6 +45,7 @@ interface ProductDescriptionParams{
 
 const ProductDescription = () => {
   const styles = productStyle();
+  const globalStyles = useGlobalStyles();
   const dispatch = useAppDispatch();
   const params:ProductDescriptionParams = useParams();
   const theme = useTheme();
@@ -138,7 +140,7 @@ const ProductDescription = () => {
   const options = {
     renderMark: {
       [MARKS.BOLD]: (text:React.ReactNode) => (
-        <span className={styles.boldText}>{text}</span>
+        <span className={globalStyles.boldText}>{text}</span>
       ),
     },
     renderNode: {
@@ -187,12 +189,12 @@ const ProductDescription = () => {
       </Grid>
       <Grid item lg={8} xs={12}>
         <Grid container direction="column">
-          <Typography variant="h5" className={clsx(styles.boldText, styles.bottomSpacing)}>Description</Typography>
+          <Typography variant="h5" className={clsx(globalStyles.boldText, styles.bottomSpacing)}>Description</Typography>
           {documentToReactComponents(jsonContentDescription, options)}
         </Grid>
         {isKeyChainSeries && (
           <>
-            <Typography variant="h6" className={clsx(styles.boldText, styles.minorSpacingTop)}>Variations</Typography>
+            <Typography variant="h6" className={clsx(globalStyles.boldText, styles.minorSpacingTop)}>Variations</Typography>
             <ToggleButtonGroup
               value={selectedItemVariation}
               exclusive
@@ -223,7 +225,7 @@ const ProductDescription = () => {
               <Grid item>
                 <Typography
                   variant="h5"
-                  className={clsx(styles.boldText, {
+                  className={clsx(globalStyles.boldText, {
                     [styles.dicountedPriceOriText]: selectedProduct.discountedPrice,
                   })}
                 >

@@ -5,6 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import React from 'react';
+import useGlobalStyles from '../../../utils/useGlobalStyles';
 import productStyle from '../src/productStyle';
 
 interface ItemRemoveConfirmationDialogOwnProps{
@@ -20,6 +21,7 @@ const ItemRemoveConfirmationDialog = (props:ItemRemoveConfirmationDialogOwnProps
   } = props;
 
   const styles = productStyle();
+  const globalStyles = useGlobalStyles();
 
   return (
     <Dialog
@@ -33,7 +35,7 @@ const ItemRemoveConfirmationDialog = (props:ItemRemoveConfirmationDialogOwnProps
         <DialogContentText id="item-remove-description">
           Are you sure you wish to remove
           {' '}
-          <span className={styles.boldText}>
+          <span className={globalStyles.boldText}>
             {itemName}
           </span>
           {' '}

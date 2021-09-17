@@ -38,6 +38,7 @@ import { sendPaymentEmailAction } from '../src/productReducers';
 import productSchema from '../src/productSchema';
 import productStyle from '../src/productStyle';
 import CheckoutAddressListModal from './CheckoutAddressListModal';
+import useGlobalStyles from '../../../utils/useGlobalStyles';
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
@@ -60,6 +61,7 @@ const Checkout = () => {
   const theme = useTheme();
   const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
   const styles = productStyle();
+  const globalStyles = useGlobalStyles();
   const dispatch = useAppDispatch();
   const currentUserDetails = useAppSelector((state) => state.auth.currentUser);
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
@@ -379,14 +381,14 @@ const Checkout = () => {
             </Grid>
             <Grid item lg={9} sm={10} xs={6}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={clsx(styles.rightText, styles.boldText)}>
+                <Typography variant="subtitle1" className={clsx(styles.rightText, globalStyles.boldText)}>
                   Total Amount After Discount:
                 </Typography>
               </Grid>
             </Grid>
             <Grid item lg={3} sm={2} xs={6}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={clsx(styles.rightText, styles.boldText)}>
+                <Typography variant="subtitle1" className={clsx(styles.rightText, globalStyles.boldText)}>
                   {formatPrice(appliedPromo.discountedPrice + shippingFee.realShipping, 'MYR')}
                 </Typography>
               </Grid>

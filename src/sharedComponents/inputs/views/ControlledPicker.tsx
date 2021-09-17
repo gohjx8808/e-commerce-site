@@ -70,7 +70,6 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
             }
             renderInput={(params) => (
               <TextField
-                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...params}
                 label={label}
                 variant={variant}
