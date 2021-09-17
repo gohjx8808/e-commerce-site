@@ -39,7 +39,7 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
         <FormControl variant={variant} className={inputStyles.container}>
           <InputLabel
             htmlFor={name}
-            classes={{ root: inputStyles.unFocusLabel }}
+            className={inputStyles.unFocusLabel}
             error={!!formerror}
           >
             {label}
