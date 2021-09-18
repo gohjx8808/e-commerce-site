@@ -8,7 +8,7 @@ interface paymentMap{
 }
 
 const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionResponse) => {
-  const postData:products.sendEmailPayload = req.body;
+  const postData:products.sendEmailPayloadProcessed = req.body;
 
   const paymentTemplate = {
     bankTransfer: 'd-ce30ae1412f546d592d214d4fc8efa90',
@@ -21,7 +21,7 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
     from: 'yj.artjournal@gmail.com',
     templateId: paymentTemplate[postData.paymentOptions],
     dynamic_template_data: {
-      customer_name: postData.fullName,
+      customer_name: postData.accUserName,
       checkoutItems: postData.selectedCheckoutItems,
       shippingFee: postData.shippingFee.toFixed(2),
       totalAmount: postData.totalAmount.toFixed(2),
@@ -29,6 +29,10 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
       discountMargin: postData.discountMargin,
       discount: postData.discount.toFixed(2),
       discountedAmount: postData.discountedAmount.toFixed(2),
+      receivername: postData.fullName,
+      email: postData.email,
+      contact: postData.phoneNumber,
+      address: `${postData.addressLine1} ${postData.addressLine2} ${postData.postcode} ${postData.city} ${postData.state} ${postData.country}`,
     },
   }, {
     to: 'yijie.lnl@gmail.com',
@@ -36,14 +40,7 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
     templateId: 'd-178070cfd5484d9298f0c21efde0c44b',
     dynamic_template_data: {
       order_code: `YJ${String(postData.currentOrderCount).padStart(4, '0')}`,
-      customer_name: postData.fullName,
-      phoneNo: postData.phoneNumber,
-      address_line_1: postData.addressLine1,
-      address_line_2: postData.addressLine2,
-      postcode: postData.postcode,
-      city: postData.city,
-      state: postData.state,
-      country: postData.country,
+      customer_name: postData.accUserName,
       checkoutItems: postData.selectedCheckoutItems,
       shippingFee: postData.shippingFee.toFixed(2),
       totalAmount: postData.totalAmount.toFixed(2),
@@ -51,6 +48,10 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
       discountMargin: postData.discountMargin,
       discount: postData.discount.toFixed(2),
       discountedAmount: postData.discountedAmount.toFixed(2),
+      receivername: postData.fullName,
+      email: postData.email,
+      contact: postData.phoneNumber,
+      address: `${postData.addressLine1} ${postData.addressLine2} ${postData.postcode} ${postData.city} ${postData.state} ${postData.country}`,
     },
   }];
 

@@ -45,7 +45,11 @@ function* sendPaymentEmailSaga() {
       const currentUserDetails:auth.currentUserDetails = yield select(
         (state:RootState) => state.auth.currentUser,
       );
-      yield call(sendPaymentEmailApi, payload);
+      yield call(sendPaymentEmailApi, {
+        ...payload,
+        accUserName: currentUserDetails.fullName ? currentUserDetails.fullName : payload.fullName,
+        state: payload.state.value,
+      });
       yield call(updateOrderCount, payload.currentOrderCount);
       if (payload.promoCode) {
         let updatedUserDetails = { ...currentUserDetails };

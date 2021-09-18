@@ -99,6 +99,11 @@ declare namespace products{
     discountedAmount:number
   }
 
+  interface sendEmailPayloadProcessed extends sendEmailPayload{
+    state: string
+    accUserName:string
+  }
+
   interface availablePromocodeData{
     code:string
     endDate:string
