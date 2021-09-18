@@ -192,7 +192,6 @@ const AddressModal = () => {
               <ControlledPicker
                 control={control}
                 name="state"
-                variant="outlined"
                 lightbg={1}
                 label="State"
                 options={stateOptions}

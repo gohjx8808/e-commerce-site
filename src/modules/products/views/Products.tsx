@@ -194,7 +194,6 @@ const Products = () => {
               control={control}
               name="sortBy"
               options={sortByOptions}
-              variant="outlined"
               label="Sort By"
               lightbg={1}
               disableClearable

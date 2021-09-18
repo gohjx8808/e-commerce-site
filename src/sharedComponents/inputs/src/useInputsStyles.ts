@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   unFocusStyle: {
     color: 'white',
     '& .MuiOutlinedInput-notchedOutline': {
@@ -25,4 +25,7 @@ export default makeStyles({
   container: {
     width: '100%',
   },
-});
+  errorColor: {
+    color: `${theme.palette.error.main}!important`,
+  },
+}));

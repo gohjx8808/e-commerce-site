@@ -89,7 +89,6 @@ const LoginScreen = () => {
                       control={control}
                       name="password"
                       label="Password"
-                      variant="outlined"
                       formerror={errors.password}
                     />
                   </Grid>

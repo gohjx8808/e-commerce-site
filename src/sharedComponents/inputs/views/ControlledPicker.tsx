@@ -1,56 +1,31 @@
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { AutocompleteProps } from '@material-ui/lab/Autocomplete';
-import React, { useEffect, useState } from 'react';
+import clsx from 'clsx';
+import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 import useInputsStyles from '../src/useInputsStyles';
 
-type variantData='standard' | 'filled' | 'outlined'
-
 interface ControlledPickerOwnProps extends Omit<AutocompleteProps<optionsData, boolean, boolean, boolean>, 'renderInput'>{
   control:Control,
-  label?:string,
-  variant?:variantData,
+  label:string,
   name:string,
   error?:FieldError
   lightbg?:booleanInteger
-  customclassname?:string
 }
-
-const useStyles = makeStyles((theme) => ({
-  errorColor: {
-    color: theme.palette.error.main,
-  },
-}));
 
 const ControlledPicker = (props:ControlledPickerOwnProps) => {
   const {
     control,
     label,
-    variant,
     name,
     defaultValue,
     error,
     lightbg,
-    customclassname,
   } = props;
 
-  const [popupIndicatorClass, setPopupIndicatorClass] = useState('');
-
-  const styles = useStyles();
   const inputStyles = useInputsStyles();
-
-  useEffect(() => {
-    if (error) {
-      setPopupIndicatorClass(styles.errorColor);
-    } else if (lightbg) {
-      setPopupIndicatorClass('');
-    } else {
-      setPopupIndicatorClass(inputStyles.unFocusLabel);
-    }
-  }, [error, lightbg, styles, inputStyles]);
 
   return (
     <Controller
@@ -61,7 +36,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
           onChange, value,
         },
       }) => (
-        <FormControl variant={variant} className={`${inputStyles.container} ${customclassname}`}>
+        <FormControl variant="outlined" className={inputStyles.container}>
           <Autocomplete
             value={value}
             getOptionLabel={(option) => option.label}
@@ -72,9 +47,9 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
               <TextField
                 {...params}
                 label={label}
-                variant={variant}
+                variant="outlined"
                 InputLabelProps={{
-                  classes: { root: lightbg ? '' : inputStyles.unFocusLabel },
+                  className: clsx(!lightbg && inputStyles.unFocusLabel),
                 }}
                 error={!!error}
                 color={lightbg ? 'secondary' : 'primary'}
@@ -86,11 +61,13 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
             }}
             autoComplete
             classes={{
-              root: !lightbg ? inputStyles.unFocusStyle : '',
-              inputRoot: !lightbg ? inputStyles.unFocusLabel : '',
+              root: clsx(!lightbg && inputStyles.unFocusStyle),
+              inputRoot: clsx(!lightbg && inputStyles.unFocusLabel),
               input: inputStyles.removedAutofillStyling,
-              popupIndicator: popupIndicatorClass,
-              clearIndicator: lightbg ? '' : inputStyles.unFocusLabel,
+              popupIndicator: clsx(
+                !lightbg && inputStyles.unFocusLabel, error && inputStyles.errorColor,
+              ),
+              clearIndicator: clsx(!lightbg && inputStyles.unFocusLabel),
             }}
             {...props}
           />
@@ -105,11 +82,8 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
 };
 
 ControlledPicker.defaultProps = {
-  variant: undefined,
-  label: '',
   error: null,
   lightbg: 0,
-  customclassname: '',
 };
 
 export default ControlledPicker;

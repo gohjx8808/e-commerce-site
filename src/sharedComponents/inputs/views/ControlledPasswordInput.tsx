@@ -11,18 +11,15 @@ import { Control, Controller, FieldError } from 'react-hook-form';
 import useInputsStyles from '../src/useInputsStyles';
 import CustomInputErrorIcon from './CustomInputErrorIcon';
 
-type variantData='standard' | 'filled' | 'outlined'
-
 interface ControlledPasswordInputOwnProps extends OutlinedInputProps{
   control:Control,
   label?:string,
-  variant?:variantData,
   formerror?:FieldError
 }
 
 const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
   const {
-    control, label, variant, name, formerror,
+    control, label, name, formerror,
   } = props;
   const [secure, setSecure] = useState(true);
   const inputStyles = useInputsStyles();
@@ -36,7 +33,7 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
           onChange, value,
         },
       }) => (
-        <FormControl variant={variant} className={inputStyles.container}>
+        <FormControl variant="outlined" className={inputStyles.container}>
           <InputLabel
             htmlFor={name}
             className={inputStyles.unFocusLabel}
@@ -81,7 +78,6 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
 };
 
 ControlledPasswordInput.defaultProps = {
-  variant: undefined,
   label: '',
   formerror: null,
 };

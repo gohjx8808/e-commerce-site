@@ -101,7 +101,6 @@ const EditAccDetailModal = () => {
               <ControlledPicker
                 control={control}
                 name="gender"
-                variant="outlined"
                 lightbg={1}
                 label="Gender"
                 options={genderOptions}

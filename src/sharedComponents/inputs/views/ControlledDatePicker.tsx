@@ -1,5 +1,4 @@
 import DayjsUtils from '@date-io/dayjs';
-import { makeStyles } from '@material-ui/core/styles';
 import { DatePickerProps, KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
 import MuiPickersUtilsProvider from '@material-ui/pickers/MuiPickersUtilsProvider';
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
@@ -10,29 +9,21 @@ import useInputsStyles from '../src/useInputsStyles';
 
 interface ControlledDatePickerOwnProps extends Omit<DatePickerProps, 'value'|'onChange'>{
   control:Control,
-  name:string,
   defaultdate?:string
   formerror?:FieldError
   lightbg?:booleanInteger
 }
 
-const useStyles = makeStyles((theme) => ({
-  errorColor: {
-    color: `${theme.palette.error.main}!important`,
-  },
-}));
-
 const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
   const {
     control, name, defaultdate, formerror, lightbg,
   } = props;
-  const styles = useStyles();
   const inputStyles = useInputsStyles();
 
   return (
     <Controller
       control={control}
-      name={name}
+      name={name!}
       render={({
         field: {
           onChange, value,
@@ -46,7 +37,7 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
             KeyboardButtonProps={{
               'aria-label': 'change date',
               color: 'inherit',
-              className: clsx(formerror && styles.errorColor),
+              className: clsx(formerror && inputStyles.errorColor),
             }}
             color={lightbg ? 'secondary' : 'primary'}
             className={inputStyles.container}

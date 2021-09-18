@@ -510,13 +510,12 @@ const Checkout = () => {
                       control={control}
                       options={stateOptions}
                       name="state"
-                      variant="outlined"
                       lightbg={1}
                       label="State"
                       error={errors.state}
                       defaultValue={stateOptions.find(
                         (state) => state.value === prevShippingInfo.state,
-                      )}
+                      ) || null}
                       disabled={!!selectedAddress.state}
                     />
                   </Grid>

@@ -7,7 +7,6 @@ import { Control, Controller, FieldError } from 'react-hook-form';
 interface ControlledCheckboxOwnProps extends CheckboxProps{
   control:Control,
   label?:string,
-  name:string,
   error?:FieldError
 }
 
@@ -15,15 +14,15 @@ const ControlledCheckbox = (props:ControlledCheckboxOwnProps) => {
   const {
     control,
     label,
-    name,
     defaultChecked,
+    name,
     error,
   } = props;
 
   return (
     <Controller
       control={control}
-      name={name}
+      name={name!}
       render={({
         field: {
           onChange,

@@ -118,7 +118,6 @@ const SignupScreen = () => {
                           control={control}
                           name="password"
                           label="Password"
-                          variant="outlined"
                           formerror={errors.password}
                         />
                       </Grid>
@@ -127,7 +126,6 @@ const SignupScreen = () => {
                           control={control}
                           name="confirmPassword"
                           label="Confirm Password"
-                          variant="outlined"
                           formerror={errors.confirmPassword}
                           labelWidth={135}
                         />
@@ -151,7 +149,6 @@ const SignupScreen = () => {
                           control={control}
                           name="gender"
                           label="Gender"
-                          variant="outlined"
                           error={errors.gender}
                           options={genderOptions}
                           defaultValue={null}
