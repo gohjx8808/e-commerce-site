@@ -4,12 +4,12 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput, { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
-import CancelIcon from '@material-ui/icons/Cancel';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import React, { useState } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 import useInputsStyles from '../src/useInputsStyles';
+import CustomInputErrorIcon from './CustomInputErrorIcon';
 
 type variantData='standard' | 'filled' | 'outlined'
 
@@ -22,7 +22,7 @@ interface ControlledPasswordInputOwnProps extends OutlinedInputProps{
 
 const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
   const {
-    control, label, variant, name, defaultValue, formerror,
+    control, label, variant, name, formerror,
   } = props;
   const [secure, setSecure] = useState(true);
   const inputStyles = useInputsStyles();
@@ -33,7 +33,7 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
       name={name!}
       render={({
         field: {
-          onChange,
+          onChange, value,
         },
       }) => (
         <FormControl variant={variant} className={inputStyles.container}>
@@ -45,6 +45,7 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
             {label}
           </InputLabel>
           <OutlinedInput
+            value={value}
             id={name}
             type={!secure ? 'text' : 'password'}
             onChange={onChange}
@@ -56,26 +57,25 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
                   edge="end"
                   className={inputStyles.unFocusLabel}
                 >
-                  {!secure ? <VisibilityIcon color={formerror ? 'error' : 'inherit'} /> : <VisibilityOffIcon color={formerror ? 'error' : 'inherit'} />}
+                  {!secure
+                    ? <VisibilityIcon color={formerror ? 'error' : 'inherit'} />
+                    : <VisibilityOffIcon color={formerror ? 'error' : 'inherit'} />}
                 </IconButton>
                 {formerror
                 && (
-                  <IconButton
-                    edge="end"
-                  >
-                    <CancelIcon color="error" />
-                  </IconButton>
+                  <CustomInputErrorIcon />
                 )}
               </InputAdornment>
             )}
-            classes={{ root: inputStyles.unFocusStyle, input: inputStyles.removedAutofillStyling }}
+            inputProps={{ className: inputStyles.removedAutofillStyling }}
+            className={inputStyles.unFocusStyle}
             error={!!formerror}
             {...props}
           />
           <FormHelperText error>{formerror?.message}</FormHelperText>
         </FormControl>
       )}
-      defaultValue={defaultValue}
+      defaultValue=""
     />
   );
 };

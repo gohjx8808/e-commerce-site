@@ -1,13 +1,12 @@
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput, { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
-import CancelIcon from '@material-ui/icons/Cancel';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 import useInputsStyles from '../src/useInputsStyles';
+import CustomInputErrorIcon from './CustomInputErrorIcon';
 
 type variantData='standard' | 'filled' | 'outlined'
 
@@ -79,11 +78,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             error={!!formerror}
             endAdornment={formerror && (
               <InputAdornment position="end">
-                <IconButton
-                  edge="end"
-                >
-                  <CancelIcon color="error" />
-                </IconButton>
+                <CustomInputErrorIcon />
               </InputAdornment>
             )}
             inputProps={{
