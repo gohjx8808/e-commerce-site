@@ -3,38 +3,29 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput, { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
+import clsx from 'clsx';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 import useInputsStyles from '../src/useInputsStyles';
 import CustomInputErrorIcon from './CustomInputErrorIcon';
 
-type variantData='standard' | 'filled' | 'outlined'
-
-interface ControlledTextInputOwnProps extends OutlinedInputProps{
+interface ControlledTextInputOwnProps extends Omit<OutlinedInputProps, 'defaultValue'>{
   control:Control,
-  label?:string,
-  variant?:variantData,
-  name:string,
   defaultinput?:string
   formerror?:FieldError
-  customclassname?:string
   lightbg?:booleanInteger
   maxLength?:number
   readOnly?:boolean
   infotext?:string
-  disabled?:boolean
 }
 
 const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
   const {
     control,
     label,
-    type,
-    variant,
     name,
     defaultinput,
     formerror,
-    customclassname,
     lightbg,
     maxLength,
     readOnly,
@@ -47,24 +38,21 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
   return (
     <Controller
       control={control}
-      name={name}
+      name={name!}
       render={({
         field: {
           onChange, value,
         },
       }) => (
         <FormControl
-          variant={variant}
-          className={`${inputStyles.container} ${customclassname}`}
-          style={{
-            display: type === 'hidden' ? 'none' : 'flex',
-          }}
+          variant="outlined"
+          className={inputStyles.container}
           disabled={disabled}
         >
           <InputLabel
             htmlFor={name}
             color={lightbg ? 'secondary' : 'primary'}
-            classes={{ root: !lightbg ? inputStyles.unFocusLabel : '' }}
+            className={clsx(!lightbg && inputStyles.unFocusLabel)}
             error={!!formerror}
           >
             {label}
@@ -74,7 +62,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             value={value}
             onChange={onChange}
             color={lightbg ? 'secondary' : 'primary'}
-            classes={{ root: !lightbg ? inputStyles.unFocusStyle : '', input: inputStyles.removedAutofillStyling }}
+            className={clsx(!lightbg && inputStyles.unFocusStyle)}
             error={!!formerror}
             endAdornment={formerror && (
               <InputAdornment position="end">
@@ -84,6 +72,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             inputProps={{
               maxLength,
               readOnly,
+              className: inputStyles.removedAutofillStyling,
             }}
             {...props}
           />
@@ -98,15 +87,11 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
 
 ControlledTextInput.defaultProps = {
   defaultinput: '',
-  variant: undefined,
-  label: '',
   formerror: null,
-  customclassname: '',
   lightbg: 0,
   maxLength: null,
   readOnly: false,
   infotext: '',
-  disabled: false,
 };
 
 export default ControlledTextInput;

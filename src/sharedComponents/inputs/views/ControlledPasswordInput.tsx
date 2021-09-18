@@ -13,7 +13,6 @@ import CustomInputErrorIcon from './CustomInputErrorIcon';
 
 interface ControlledPasswordInputOwnProps extends OutlinedInputProps{
   control:Control,
-  label?:string,
   formerror?:FieldError
 }
 
@@ -78,7 +77,6 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
 };
 
 ControlledPasswordInput.defaultProps = {
-  label: '',
   formerror: null,
 };
 

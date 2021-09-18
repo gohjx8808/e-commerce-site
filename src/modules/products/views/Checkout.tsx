@@ -415,7 +415,6 @@ const Checkout = () => {
                     <ControlledTextInput
                       control={control}
                       name="fullName"
-                      variant="outlined"
                       label="Full Name"
                       lightbg={1}
                       formerror={errors.fullName}
@@ -427,7 +426,6 @@ const Checkout = () => {
                     <ControlledTextInput
                       control={control}
                       name="email"
-                      variant="outlined"
                       label="Email Address"
                       labelWidth={105}
                       lightbg={1}
@@ -440,7 +438,6 @@ const Checkout = () => {
                     <ControlledTextInput
                       control={control}
                       name="phoneNumber"
-                      variant="outlined"
                       label="Phone Number"
                       labelWidth={105}
                       lightbg={1}
@@ -458,7 +455,6 @@ const Checkout = () => {
                     <ControlledTextInput
                       control={control}
                       name="addressLine1"
-                      variant="outlined"
                       label="Address Line 1"
                       labelWidth={105}
                       lightbg={1}
@@ -471,7 +467,6 @@ const Checkout = () => {
                     <ControlledTextInput
                       control={control}
                       name="addressLine2"
-                      variant="outlined"
                       label="Address Line 2"
                       labelWidth={110}
                       lightbg={1}
@@ -483,7 +478,6 @@ const Checkout = () => {
                     <ControlledTextInput
                       control={control}
                       name="postcode"
-                      variant="outlined"
                       label="Postcode"
                       lightbg={1}
                       maxLength={10}
@@ -496,7 +490,6 @@ const Checkout = () => {
                     <ControlledTextInput
                       control={control}
                       name="city"
-                      variant="outlined"
                       label="City"
                       lightbg={1}
                       labelWidth={25}
@@ -524,7 +517,6 @@ const Checkout = () => {
                       <ControlledTextInput
                         control={control}
                         name="outsideMalaysiaState"
-                        variant="outlined"
                         label="Foreign Country State"
                         labelWidth={155}
                         lightbg={1}
@@ -538,7 +530,6 @@ const Checkout = () => {
                     <ControlledTextInput
                       control={control}
                       name="country"
-                      variant="outlined"
                       label="Country"
                       labelWidth={55}
                       lightbg={1}
@@ -551,7 +542,6 @@ const Checkout = () => {
                     <ControlledTextInput
                       control={control}
                       name="promoCode"
-                      variant="outlined"
                       label="Promo Code"
                       labelWidth={80}
                       formerror={errors.promoCode}
@@ -576,7 +566,6 @@ const Checkout = () => {
                     <ControlledTextInput
                       control={control}
                       name="note"
-                      variant="outlined"
                       label="Notes to seller (optional)"
                       labelWidth={160}
                       lightbg={1}

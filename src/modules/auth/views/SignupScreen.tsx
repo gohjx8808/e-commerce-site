@@ -85,7 +85,6 @@ const SignupScreen = () => {
                           control={control}
                           name="fullName"
                           label="Full Name"
-                          variant="outlined"
                           formerror={errors.fullName}
                           labelWidth={70}
                           type="text"
@@ -96,7 +95,6 @@ const SignupScreen = () => {
                           control={control}
                           name="phoneNumber"
                           label="Phone Number"
-                          variant="outlined"
                           formerror={errors.phoneNumber}
                           labelWidth={110}
                           type="tel"
@@ -107,7 +105,6 @@ const SignupScreen = () => {
                           control={control}
                           name="email"
                           label="Email"
-                          variant="outlined"
                           formerror={errors.email}
                           labelWidth={40}
                           type="email"

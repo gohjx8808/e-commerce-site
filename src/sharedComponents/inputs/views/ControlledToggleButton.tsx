@@ -13,7 +13,6 @@ interface ControlledToggleButtonOwnProps extends ToggleButtonGroupProps{
   error?:FieldError
   options:toggleButtonOptionData[]
   name:string
-  defaulttoggle?:string
   label:string
 }
 
@@ -33,7 +32,7 @@ const useStyles = makeStyles({
 const ControlledToggleButton = (props:ControlledToggleButtonOwnProps) => {
   const styles = useStyles();
   const {
-    control, error, options, name, defaulttoggle, label,
+    control, error, options, name, label,
   } = props;
 
   return (
@@ -72,14 +71,13 @@ const ControlledToggleButton = (props:ControlledToggleButtonOwnProps) => {
           <FormHelperText error>{error?.message}</FormHelperText>
         </>
       )}
-      defaultValue={defaulttoggle}
+      defaultValue=""
     />
   );
 };
 
 ControlledToggleButton.defaultProps = {
   error: null,
-  defaulttoggle: '',
 };
 
 export default ControlledToggleButton;

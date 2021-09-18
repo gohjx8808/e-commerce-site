@@ -62,7 +62,6 @@ const EditAccDetailModal = () => {
               <ControlledTextInput
                 control={control}
                 name="fullName"
-                variant="outlined"
                 lightbg={1}
                 label="Full Name"
                 labelWidth={68}
@@ -75,7 +74,6 @@ const EditAccDetailModal = () => {
               <ControlledTextInput
                 control={control}
                 name="email"
-                variant="outlined"
                 lightbg={1}
                 label="Email"
                 labelWidth={40}
@@ -88,7 +86,6 @@ const EditAccDetailModal = () => {
               <ControlledTextInput
                 control={control}
                 name="phoneNumber"
-                variant="outlined"
                 lightbg={1}
                 label="Phone Number"
                 labelWidth={100}

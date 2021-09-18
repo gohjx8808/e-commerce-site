@@ -7,7 +7,7 @@ import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 import useInputsStyles from '../src/useInputsStyles';
 
-interface ControlledDatePickerOwnProps extends Omit<DatePickerProps, 'value'|'onChange'>{
+interface ControlledDatePickerOwnProps extends Omit<DatePickerProps, 'value'|'onChange'|'defaultValue'>{
   control:Control,
   defaultdate?:string
   formerror?:FieldError

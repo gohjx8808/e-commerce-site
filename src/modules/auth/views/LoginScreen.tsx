@@ -78,7 +78,6 @@ const LoginScreen = () => {
                       control={control}
                       name="email"
                       label="Email"
-                      variant="outlined"
                       formerror={errors.email}
                       labelWidth={40}
                       type="email"

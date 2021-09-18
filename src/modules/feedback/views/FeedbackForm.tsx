@@ -38,7 +38,6 @@ const FeedbackForm = () => {
                   lightbg={1}
                   label="Nickname"
                   formerror={errors.nickname}
-                  variant="outlined"
                   labelWidth={65}
                   infotext="How should we address you."
                 />
@@ -50,7 +49,6 @@ const FeedbackForm = () => {
                   lightbg={1}
                   label="Email"
                   formerror={errors.email}
-                  variant="outlined"
                   labelWidth={40}
                   infotext="Email is solely for the purpose of replying your feedback."
                 />
@@ -65,7 +63,6 @@ const FeedbackForm = () => {
                   multiline
                   rows={10}
                   formerror={errors.feedback}
-                  variant="outlined"
                   labelWidth={60}
                 />
               </Grid>

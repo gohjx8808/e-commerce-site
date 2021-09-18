@@ -110,7 +110,6 @@ const AddressModal = () => {
               <ControlledTextInput
                 control={control}
                 name="fullName"
-                variant="outlined"
                 lightbg={1}
                 label="Full Name"
                 labelWidth={68}
@@ -121,7 +120,6 @@ const AddressModal = () => {
               <ControlledTextInput
                 control={control}
                 name="phoneNumber"
-                variant="outlined"
                 lightbg={1}
                 label="Phone Number"
                 labelWidth={100}
@@ -137,7 +135,6 @@ const AddressModal = () => {
               <ControlledTextInput
                 control={control}
                 name="email"
-                variant="outlined"
                 label="Email Address"
                 labelWidth={95}
                 lightbg={1}
@@ -148,7 +145,6 @@ const AddressModal = () => {
               <ControlledTextInput
                 control={control}
                 name="addressLine1"
-                variant="outlined"
                 label="Address Line 1"
                 labelWidth={100}
                 lightbg={1}
@@ -159,7 +155,6 @@ const AddressModal = () => {
               <ControlledTextInput
                 control={control}
                 name="addressLine2"
-                variant="outlined"
                 label="Address Line 2"
                 labelWidth={100}
                 lightbg={1}
@@ -169,7 +164,6 @@ const AddressModal = () => {
               <ControlledTextInput
                 control={control}
                 name="postcode"
-                variant="outlined"
                 label="Postcode"
                 lightbg={1}
                 labelWidth={60}
@@ -181,7 +175,6 @@ const AddressModal = () => {
               <ControlledTextInput
                 control={control}
                 name="city"
-                variant="outlined"
                 label="City"
                 lightbg={1}
                 labelWidth={25}
@@ -203,7 +196,6 @@ const AddressModal = () => {
                 <ControlledTextInput
                   control={control}
                   name="outsideMalaysiaState"
-                  variant="outlined"
                   label="Foreign Country State"
                   labelWidth={145}
                   lightbg={1}
@@ -215,7 +207,6 @@ const AddressModal = () => {
               <ControlledTextInput
                 control={control}
                 name="country"
-                variant="outlined"
                 label="Country"
                 labelWidth={55}
                 lightbg={1}

@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/styles';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
-interface ControlledRadioButtonOwnProps extends RadioGroupProps{
+interface ControlledRadioButtonOwnProps extends Omit<RadioGroupProps, 'defaultValue'>{
   control:Control,
   label?:string,
   defaultselect?:string
@@ -17,7 +17,7 @@ interface ControlledRadioButtonOwnProps extends RadioGroupProps{
 }
 
 const useStyles = makeStyles({
-  labelColor: {
+  labelRoot: {
     paddingRight: 20,
     paddingBottom: 10,
     paddingTop: 5,
@@ -52,7 +52,7 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
           <FormControl
             error={!!error}
           >
-            <FormLabel component="legend" className={styles.labelColor} focused={false}>{label}</FormLabel>
+            <FormLabel component="legend" className={styles.labelRoot} focused={false}>{label}</FormLabel>
             <RadioGroup
               aria-label={label}
               value={value}
