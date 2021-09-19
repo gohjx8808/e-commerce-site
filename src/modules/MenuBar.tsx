@@ -42,12 +42,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
-  },
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -71,9 +65,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  inputRoot: {
-    color: 'inherit',
   },
   searchInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -100,14 +91,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   nameBtn: {
     textTransform: 'none',
-    [theme.breakpoints.down('xs')]: {
-      display: 'none',
-    },
   },
   hide: {
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
+    display: 'none',
   },
   appBarShift: {
     [theme.breakpoints.up('sm')]: {
@@ -258,9 +244,11 @@ const MenuBar = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Button className={classes.nameBtn} onClick={() => navigate('/')}>
-              <Typography className={classes.title} variant="h6">YJ Art Journal</Typography>
-            </Button>
+            {!(isXsView && location.pathname === routeNames.products) && (
+              <Button className={classes.nameBtn} onClick={() => navigate('/')}>
+                <Typography variant="h6">YJ Art Journal</Typography>
+              </Button>
+            )}
             {location.pathname === routeNames.products && (
               <Box className={classes.search}>
                 <Box className={classes.searchIcon}>
@@ -268,7 +256,6 @@ const MenuBar = () => {
                 </Box>
                 <InputBase
                   placeholder="Search…"
-                  className={classes.inputRoot}
                   inputProps={{ 'aria-label': 'search', className: classes.searchInput }}
                   onChange={onChangeProductFilterKeyword}
                 />
