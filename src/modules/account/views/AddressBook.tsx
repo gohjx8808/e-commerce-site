@@ -40,14 +40,14 @@ const AddressBook = () => {
     dispatch(toggleAddressModal(true));
   };
 
-  const onEditAddress = (selectedAddress:account.finalSubmitAddEditAddressPayload) => {
+  const onEditAddress = (selectedAddress:account.submitAddEditAddressPayload) => {
     dispatch(updateSelectedAddress(selectedAddress));
     dispatch(updateAddressActionType('Edit'));
     dispatch(toggleIsDirectAction(true));
     dispatch(toggleAddressModal(true));
   };
 
-  const onDeleteAddress = (selectedAddress:account.finalSubmitAddEditAddressPayload) => {
+  const onDeleteAddress = (selectedAddress:account.submitAddEditAddressPayload) => {
     dispatch(updateSelectedAddress(selectedAddress));
     dispatch(toggleDeleteAddressConfirmationModal(true));
   };

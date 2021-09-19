@@ -54,7 +54,7 @@ const AddressModal = () => {
     dispatch(toggleAddressModal(false));
   };
 
-  const onSubmitForm = (hookData:account.submitAddEditAddressPayload) => {
+  const onSubmitForm = (hookData:account.rawSubmitAddEditAddressPayload) => {
     dispatch(submitAddEditAddressAction({ ...hookData, state: hookData.state.value }));
   };
 

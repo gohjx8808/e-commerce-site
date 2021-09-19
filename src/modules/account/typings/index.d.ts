@@ -1,11 +1,8 @@
 declare namespace account{
-  interface rawSubmitEditAccDetailPayload{
-    fullName:string
+  interface rawSubmitEditAccDetailPayload extends submitEditAccDetailPayload{
     gender:optionsData
-    email:string
-    phoneNumber:string
-    dob:string
   }
+
   interface submitEditAccDetailPayload{
     fullName:string
     gender:string
@@ -14,22 +11,11 @@ declare namespace account{
     dob:string
   }
 
-  interface submitAddEditAddressPayload{
-    fullName:string
-    phoneNumber:string
-    email:string
-    addressLine1: string
-    addressLine2:string
-    postcode: string
-    city: string
+  interface rawSubmitAddEditAddressPayload extends submitAddEditAddressPayload{
     state: optionsData
-    outsideMalaysiaState: string
-    country: string
-    defaultOption:string
-    tag:string
   }
 
-  interface finalSubmitAddEditAddressPayload{
+  interface submitAddEditAddressPayload{
     fullName:string
     phoneNumber:string
     email:string

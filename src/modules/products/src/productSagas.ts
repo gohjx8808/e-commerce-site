@@ -67,7 +67,7 @@ function* sendPaymentEmailSaga() {
       const toBeRemovedItems = payload.selectedCheckoutItems;
       yield all(toBeRemovedItems.map((item) => put(removeItemFromCart(item.id))));
       if (payload.saveShippingInfo) {
-        const saveAddressData:account.finalSubmitAddEditAddressPayload = {
+        const saveAddressData:account.submitAddEditAddressPayload = {
           fullName: payload.fullName,
           email: payload.email,
           phoneNumber: payload.phoneNumber,

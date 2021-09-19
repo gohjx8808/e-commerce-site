@@ -5,7 +5,7 @@ interface accState{
   isEditAccDetailModalDisplay:boolean
   isAddressModalOpen:boolean
   addressActionType:string
-  selectedAddress:account.finalSubmitAddEditAddressPayload
+  selectedAddress:account.submitAddEditAddressPayload
   isDeleteAddressConfirmationModalOpen:boolean
   isDirectAction:boolean
 }
@@ -33,13 +33,13 @@ export const accountSlice = createSlice({
       state.isAddressModalOpen = action.payload;
     },
     submitAddEditAddressAction: (
-      _state, _action:PayloadAction<account.finalSubmitAddEditAddressPayload>,
+      _state, _action:PayloadAction<account.submitAddEditAddressPayload>,
     ) => {},
     updateAddressActionType: (state, action:PayloadAction<string>) => {
       state.addressActionType = action.payload;
     },
     updateSelectedAddress: (
-      state, action:PayloadAction<account.finalSubmitAddEditAddressPayload>,
+      state, action:PayloadAction<account.submitAddEditAddressPayload>,
     ) => {
       state.selectedAddress = action.payload;
     },

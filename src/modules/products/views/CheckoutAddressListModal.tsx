@@ -27,7 +27,7 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
   const addressList = useAppSelector((state) => state.auth.currentUser.addressBook);
   const selectedAddress = useAppSelector((state) => state.account.selectedAddress);
 
-  const onSelectAddress = (address:account.finalSubmitAddEditAddressPayload) => {
+  const onSelectAddress = (address:account.submitAddEditAddressPayload) => {
     dispatch(updateSelectedAddress(address));
     toggleModal();
   };

@@ -96,7 +96,7 @@ function* submitAddEditAddressSaga() {
           currentAddresses.push(payload);
         }
       } else if (addressActionType === 'Edit') {
-        const selectedAddress:account.finalSubmitAddEditAddressPayload = yield select(
+        const selectedAddress:account.submitAddEditAddressPayload = yield select(
           (state:RootState) => state.account.selectedAddress,
         );
         const editIndex = currentAddresses.findIndex((address) => address === selectedAddress);
@@ -134,7 +134,7 @@ function* submitAddEditAddressSaga() {
   }
 }
 
-function removeDefaultAddressFunc(addressList:account.finalSubmitAddEditAddressPayload[]) {
+function removeDefaultAddressFunc(addressList:account.submitAddEditAddressPayload[]) {
   const removedDefault = addressList.map((address) => {
     if (address.defaultOption === '1') {
       // eslint-disable-next-line no-param-reassign
@@ -149,7 +149,7 @@ function* deleteAddressSaga() {
   while (true) {
     yield take(deleteAddressAction);
     yield put(toggleLoadingOverlay(true));
-    const selectedAddress:account.finalSubmitAddEditAddressPayload = yield select(
+    const selectedAddress:account.submitAddEditAddressPayload = yield select(
       (state:RootState) => state.account.selectedAddress,
     );
     const currentUserDetails:auth.currentUserDetails = yield select(
@@ -178,8 +178,8 @@ function* deleteAddressSaga() {
 }
 
 function sameAddressDetector(
-  currentAddressList:account.finalSubmitAddEditAddressPayload[],
-  insertAddress:account.finalSubmitAddEditAddressPayload,
+  currentAddressList:account.submitAddEditAddressPayload[],
+  insertAddress:account.submitAddEditAddressPayload,
 ) {
   const foundAddress = currentAddressList.findIndex((address) => {
     const sameAddressLine1 = address.addressLine1 === insertAddress.addressLine1;
