@@ -8,22 +8,21 @@ import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import Menu from '@material-ui/core/Menu';
 import {
-  alpha, createStyles, makeStyles, Theme, useTheme,
+  alpha, createStyles, makeStyles, Theme,
 } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useLocation } from '@reach/router';
 import clsx from 'clsx';
 import { navigate } from 'gatsby';
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../hooks';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
 import StyledMenuItem from '../sharedComponents/StyledMenuItem';
 import routeNames from '../utils/routeNames';
@@ -130,8 +129,7 @@ const MenuBar = () => {
   const shoppingCartItem = useAppSelector((state) => state.product.shoppingCartItem);
   const [totalQuantity, setTotalQuantity] = useState(0);
   const dispatch = useAppDispatch();
-  const theme = useTheme();
-  const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
+  const isXsView = useXsDownMediaQuery();
 
   useEffect(() => {
     let total = 0;

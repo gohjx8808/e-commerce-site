@@ -2,15 +2,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
-import { useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Email from '@material-ui/icons/Email';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import { makeStyles } from '@material-ui/styles';
 import React from 'react';
+import { useXsDownMediaQuery } from '../hooks';
 
 const useStyle = makeStyles({
   grow: {
@@ -20,8 +19,7 @@ const useStyle = makeStyles({
 
 const Footer = () => {
   const styles = useStyle();
-  const theme = useTheme();
-  const isSmView = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmView = useXsDownMediaQuery();
 
   return (
     <AppBar position="static" color="primary" elevation={0}>

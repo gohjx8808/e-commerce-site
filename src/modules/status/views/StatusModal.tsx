@@ -2,15 +2,13 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { graphql, useStaticQuery } from 'gatsby';
 import {
   GatsbyImage, getImage, IGatsbyImageData, ImageDataLike,
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../../../hooks';
 import { toggleStatusModal } from '../src/statusReducer';
 import statusStyle from '../src/statusStyle';
 
@@ -29,8 +27,7 @@ const defaultIGatsbyData:IGatsbyImageData = {
 };
 
 const StatusModal = () => {
-  const theme = useTheme();
-  const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
+  const isXsView = useXsDownMediaQuery();
   const dispatch = useAppDispatch();
   const isStatusModalOpen = useAppSelector((state) => state.status.isStatusModalOpen);
   const statusTitle = useAppSelector((state) => state.status.statusTitle);

@@ -7,30 +7,29 @@ import Divider from '@material-ui/core/Divider';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { useTheme } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   DataGrid, GridColDef, GridPageChangeParams,
 } from '@material-ui/data-grid';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import isBetween from 'dayjs/plugin/isBetween';
 import firebase from 'gatsby-plugin-firebase';
 import React, {
   useCallback, useEffect, useMemo, useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../../../hooks';
+import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
+import DividerWithText from '../../../sharedComponents/DividerWithText';
+import ExpandedCell from '../../../sharedComponents/ExpandedCell';
 import ControlledCheckbox from '../../../sharedComponents/inputs/views/ControlledCheckbox';
 import ControlledPicker from '../../../sharedComponents/inputs/views/ControlledPicker';
 import ControlledRadioButton from '../../../sharedComponents/inputs/views/ControlledRadioButton';
 import ControlledTextInput from '../../../sharedComponents/inputs/views/ControlledTextInput';
-import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
-import DividerWithText from '../../../sharedComponents/DividerWithText';
-import ExpandedCell from '../../../sharedComponents/ExpandedCell';
+import useGlobalStyles from '../../../useGlobalStyles';
 import { stateOptions } from '../../../utils/constants';
 import { formatPrice } from '../../../utils/helper';
 import { getAvailablePromocodes } from '../src/productApi';
@@ -38,7 +37,6 @@ import { sendPaymentEmailAction } from '../src/productReducers';
 import productSchema from '../src/productSchema';
 import productStyle from '../src/productStyle';
 import CheckoutAddressListModal from './CheckoutAddressListModal';
-import useGlobalStyles from '../../../useGlobalStyles';
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
@@ -58,8 +56,7 @@ interface shippingFeeData{
 }
 
 const Checkout = () => {
-  const theme = useTheme();
-  const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
+  const isXsView = useXsDownMediaQuery();
   const styles = productStyle();
   const globalStyles = useGlobalStyles();
   const dispatch = useAppDispatch();

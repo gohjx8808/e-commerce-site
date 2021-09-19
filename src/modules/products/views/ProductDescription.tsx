@@ -10,11 +10,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
-import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import AddIcon from '@material-ui/icons/Add';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import RemoveIcon from '@material-ui/icons/Remove';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
@@ -24,8 +22,9 @@ import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
+import useGlobalStyles from '../../../useGlobalStyles';
 import { itemVariationOptions } from '../../../utils/constants';
 import { formatPrice, getProductVariationSuffix } from '../../../utils/helper';
 import routeNames from '../../../utils/routeNames';
@@ -37,7 +36,6 @@ import {
 } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 import ProductErrorSnackbar from './ProductErrorSnackbar';
-import useGlobalStyles from '../../../useGlobalStyles';
 
 interface ProductDescriptionParams{
   id:string
@@ -48,8 +46,7 @@ const ProductDescription = () => {
   const globalStyles = useGlobalStyles();
   const dispatch = useAppDispatch();
   const params:ProductDescriptionParams = useParams();
-  const theme = useTheme();
-  const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
+  const isXsView = useXsDownMediaQuery();
   const allProducts = useAppSelector((state) => state.product.allProducts);
   const selectedProduct = allProducts.find(
     (product) => product.node.contentful_id === params.id,

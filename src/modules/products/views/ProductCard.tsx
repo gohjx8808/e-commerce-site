@@ -4,9 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import clsx from 'clsx';
 import {
@@ -15,7 +13,7 @@ import {
 import { useSnackbar } from 'notistack';
 import React, { memo } from 'react';
 import Carousel from 'react-material-ui-carousel';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useXsDownMediaQuery } from '../../../hooks';
 import { formatPrice, getProductVariationSuffix } from '../../../utils/helper';
 import {
   addToShoppingCart,
@@ -34,8 +32,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
   const { product } = props;
   const styles = productStyle();
   const dispatch = useAppDispatch();
-  const theme = useTheme();
-  const isXsView = useMediaQuery(theme.breakpoints.down('xs'));
+  const isXsView = useXsDownMediaQuery();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClose = () => {

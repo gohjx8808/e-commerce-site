@@ -9,7 +9,7 @@ const LearnMore = () => {
   const globalStyles = useGlobalStyles();
 
   return (
-    <Grid container justifyContent="center" alignItems="center" spacing={2} className={clsx(globalStyles.componentTopSpacing, globalStyles.componentBottomSpacing)}>
+    <Grid container justifyContent="center" alignItems="center" className={clsx(globalStyles.componentTopSpacing, globalStyles.componentBottomSpacing)}>
       <Grid item xs={11}>
         <Typography variant="h5" className={clsx(globalStyles.boldText, globalStyles.componentQuarterBottomSpacing)}>Welcome!</Typography>
         <Typography variant="h6" className={globalStyles.justifyText}>

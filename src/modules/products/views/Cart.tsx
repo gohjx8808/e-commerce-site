@@ -5,26 +5,24 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
-import { useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import clsx from 'clsx';
 import { navigate } from 'gatsby';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector, useSmUpMediaQuery } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
+import useGlobalStyles from '../../../useGlobalStyles';
 import { formatPrice } from '../../../utils/helper';
 import routeNames from '../../../utils/routeNames';
 import {
   increaseQuantity, reduceQuantity, removeItemFromCart, updateSelectedCheckoutItemsID,
 } from '../src/productReducers';
 import productStyle from '../src/productStyle';
-import ProductErrorSnackbar from './ProductErrorSnackbar';
 import ItemRemoveConfirmationDialog from './ItemRemoveConfirmationDialog';
-import useGlobalStyles from '../../../useGlobalStyles';
+import ProductErrorSnackbar from './ProductErrorSnackbar';
 
 type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
   [key: string]: string | undefined | number
@@ -117,8 +115,7 @@ const Cart = () => {
     }
   };
 
-  const theme = useTheme();
-  const smUpView = useMediaQuery(theme.breakpoints.up('sm'));
+  const smUpView = useSmUpMediaQuery();
 
   const determineSmWidth = (title:string) => {
     switch (title) {

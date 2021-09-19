@@ -1,4 +1,3 @@
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import ImageList from '@material-ui/core/ImageList';
@@ -9,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 import {
-  graphql, navigate, useStaticQuery, Link as GatsbyLink,
+  graphql, Link as GatsbyLink, navigate, useStaticQuery,
 } from 'gatsby';
 import {
   GatsbyImage, getImage, ImageDataLike,
@@ -20,29 +19,11 @@ import useGlobalStyles from '../useGlobalStyles';
 import routeNames from '../utils/routeNames';
 import { storeAllProducts } from './products/src/productReducers';
 
-const useStyle = makeStyles((theme) => ({
-  sectionContainer: {
-    paddingTop: 20,
-  },
-  hyperlink: {
-    textDecorationLine: 'underline',
-    color: theme.palette.secondary.main,
-    fontWeight: 'bold',
-  },
-  imageListRoot: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    paddingTop: 10,
-  },
+const useStyle = makeStyles({
   imageList: {
     maxHeight: 450,
   },
-  centerText: {
-    textAlign: 'center',
-  },
-}));
+});
 
 interface imageListImages{
   productImage:ImageDataLike
@@ -102,35 +83,33 @@ const HomeScreen = () => {
       <Grid item xs={12}>
         <Grid container justifyContent="center" alignItems="center" direction="column">
           <Typography variant="h4" color="secondary" className={globalStyles.componentQuarterBottomSpacing}>Welcome!</Typography>
-          <Typography variant="h6" className={styles.centerText}>Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
-          <Typography variant="h6" className={clsx(styles.centerText, globalStyles.componentQuarterBottomSpacing)}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
+          <Typography variant="h6" className={globalStyles.centerText}>Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
+          <Typography variant="h6" className={clsx(globalStyles.centerText, globalStyles.componentQuarterBottomSpacing)}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
           <Link component={GatsbyLink} to={routeNames.learnMore}>
-            <Typography variant="subtitle1" color="secondary" className={styles.centerText}>ABOUT MY SHOP</Typography>
+            <Typography variant="subtitle1" color="secondary" className={globalStyles.centerText}>ABOUT MY SHOP</Typography>
           </Link>
         </Grid>
       </Grid>
-      <Grid container className={clsx(styles.sectionContainer, globalStyles.componentTopSpacing, globalStyles.componentQuarterBottomSpacing)} direction="column">
+      <Grid container className={clsx(globalStyles.componentTopSpacing, globalStyles.componentQuarterBottomSpacing)} direction="column">
         <Typography variant="h5" color="secondary">Product Gallery</Typography>
       </Grid>
-      <Box className={styles.imageListRoot}>
-        <ImageList rowHeight="auto" cols={5} className={styles.imageList}>
-          {productImages.map((image) => {
-            const productImagesData = getImage(image.productImage)!;
-            return (
-              <ImageListItem
-                key={productImagesData.images.fallback?.src}
-                cols={image.cols}
-                rows={image.rows}
-              >
-                <GatsbyImage
-                  image={productImagesData}
-                  alt={productImagesData.images.fallback?.src!}
-                />
-              </ImageListItem>
-            );
-          })}
-        </ImageList>
-      </Box>
+      <ImageList rowHeight="auto" cols={5} className={styles.imageList}>
+        {productImages.map((image) => {
+          const productImagesData = getImage(image.productImage)!;
+          return (
+            <ImageListItem
+              key={productImagesData.images.fallback?.src}
+              cols={image.cols}
+              rows={image.rows}
+            >
+              <GatsbyImage
+                image={productImagesData}
+                alt={productImagesData.images.fallback?.src!}
+              />
+            </ImageListItem>
+          );
+        })}
+      </ImageList>
       <IconButton aria-label="more product images" onClick={() => navigate(routeNames.imageGallery)}>
         <ExpandMoreIcon />
       </IconButton>

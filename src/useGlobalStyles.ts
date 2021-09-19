@@ -28,6 +28,9 @@ export default makeStyles((theme) => ({
   underlinedText: {
     textDecorationLine: 'underline',
   },
+  centerText: {
+    textAlign: 'center',
+  },
   justifyText: {
     textAlign: 'justify',
     [theme.breakpoints.down('xs')]: {
