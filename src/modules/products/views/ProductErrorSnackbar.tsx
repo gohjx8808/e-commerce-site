@@ -2,7 +2,7 @@ import { Typography } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import React from 'react';
-import useGlobalStyles from '../../../utils/useGlobalStyles';
+import useGlobalStyles from '../../../useGlobalStyles';
 
 interface ProductErrorSnackbarOwnProps{
   isSnackbarOpen:boolean

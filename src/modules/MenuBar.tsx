@@ -268,11 +268,8 @@ const MenuBar = () => {
                 </Box>
                 <InputBase
                   placeholder="Search…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.searchInput,
-                  }}
-                  inputProps={{ 'aria-label': 'search' }}
+                  className={classes.inputRoot}
+                  inputProps={{ 'aria-label': 'search', className: classes.searchInput }}
                   onChange={onChangeProductFilterKeyword}
                 />
               </Box>

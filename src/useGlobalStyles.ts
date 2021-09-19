@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   componentTopSpacing: {
     marginTop: '80px!important',
   },
@@ -28,4 +28,10 @@ export default makeStyles({
   underlinedText: {
     textDecorationLine: 'underline',
   },
-});
+  justifyText: {
+    textAlign: 'justify',
+    [theme.breakpoints.down('xs')]: {
+      whiteSpace: 'pre-wrap',
+    },
+  },
+}));

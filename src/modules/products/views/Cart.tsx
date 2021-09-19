@@ -24,7 +24,7 @@ import {
 import productStyle from '../src/productStyle';
 import ProductErrorSnackbar from './ProductErrorSnackbar';
 import ItemRemoveConfirmationDialog from './ItemRemoveConfirmationDialog';
-import useGlobalStyles from '../../../utils/useGlobalStyles';
+import useGlobalStyles from '../../../useGlobalStyles';
 
 type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
   [key: string]: string | undefined | number

@@ -37,7 +37,7 @@ import {
 } from '../src/productReducers';
 import productStyle from '../src/productStyle';
 import ProductErrorSnackbar from './ProductErrorSnackbar';
-import useGlobalStyles from '../../../utils/useGlobalStyles';
+import useGlobalStyles from '../../../useGlobalStyles';
 
 interface ProductDescriptionParams{
   id:string

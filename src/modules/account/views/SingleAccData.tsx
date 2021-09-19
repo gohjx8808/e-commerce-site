@@ -1,7 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import useGlobalStyles from '../../../utils/useGlobalStyles';
+import useGlobalStyles from '../../../useGlobalStyles';
 
 interface SingleAccDataOwnProps{
   label:string

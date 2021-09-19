@@ -5,7 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import React from 'react';
-import useGlobalStyles from '../../../utils/useGlobalStyles';
+import useGlobalStyles from '../../../useGlobalStyles';
 import productStyle from '../src/productStyle';
 
 interface ItemRemoveConfirmationDialogOwnProps{

@@ -38,7 +38,7 @@ import { sendPaymentEmailAction } from '../src/productReducers';
 import productSchema from '../src/productSchema';
 import productStyle from '../src/productStyle';
 import CheckoutAddressListModal from './CheckoutAddressListModal';
-import useGlobalStyles from '../../../utils/useGlobalStyles';
+import useGlobalStyles from '../../../useGlobalStyles';
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);

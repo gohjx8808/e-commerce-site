@@ -11,9 +11,10 @@ import React, {
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
+import clsx from 'clsx';
 import { useAppSelector } from '../../../hooks';
 import { compareString } from '../../../utils/helper';
-import useGlobalStyles from '../../../utils/useGlobalStyles';
+import useGlobalStyles from '../../../useGlobalStyles';
 import productStyle from '../src/productStyle';
 
 const ControlledPicker = lazy(() => import('../../../sharedComponents/inputs/views/ControlledPicker'));
@@ -203,9 +204,9 @@ const Products = () => {
         </Grid>
       </Grid>
       {categories.map((category) => (
-        <Grid container justifyContent="center" alignItems="center" direction="column" key={category} className={globalStyles.componentTopSpacing}>
+        <Grid container justifyContent="center" alignItems="center" direction="column" key={category}>
           {categoryProductAmount[category] && (
-            <Grid container justifyContent="flex-start" alignItems="center" className={globalStyles.componentQuarterBottomSpacing}>
+            <Grid container justifyContent="flex-start" alignItems="center" className={clsx(globalStyles.componentQuarterBottomSpacing, globalStyles.componentTopSpacing)}>
               <Typography variant="h5" id={category} className={styles.categorySpacing}>{category}</Typography>
             </Grid>
           )}

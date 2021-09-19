@@ -8,7 +8,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks';
 import ControlledTextInput from '../../../sharedComponents/inputs/views/ControlledTextInput';
-import useGlobalStyles from '../../../utils/useGlobalStyles';
+import useGlobalStyles from '../../../useGlobalStyles';
 import { submitFeedback } from '../src/feedbackReducer';
 import { feedbackFormSchema } from '../src/feedbackSchema';
 import feedbackStyles from '../src/feedbackStyles';

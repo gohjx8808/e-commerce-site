@@ -16,7 +16,7 @@ import {
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../hooks';
-import useGlobalStyles from '../utils/useGlobalStyles';
+import useGlobalStyles from '../useGlobalStyles';
 import routeNames from '../utils/routeNames';
 import { storeAllProducts } from './products/src/productReducers';
 

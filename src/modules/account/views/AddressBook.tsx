@@ -16,7 +16,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { internationalPhoneNumberFormatter } from '../../../utils/helper';
-import useGlobalStyles from '../../../utils/useGlobalStyles';
+import useGlobalStyles from '../../../useGlobalStyles';
 import {
   toggleAddressModal,
   toggleDeleteAddressConfirmationModal,

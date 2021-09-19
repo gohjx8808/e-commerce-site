@@ -10,7 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { defaultAddressData } from '../../../utils/constants';
-import useGlobalStyles from '../../../utils/useGlobalStyles';
+import useGlobalStyles from '../../../useGlobalStyles';
 import { updateSelectedAddress } from '../../account/src/accountReducer';
 import productStyle from '../src/productStyle';
 

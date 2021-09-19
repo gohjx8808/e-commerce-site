@@ -1,4 +1,3 @@
-import Grid from '@material-ui/core/Grid';
 import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { SnackbarProvider } from 'notistack';
@@ -39,11 +38,7 @@ const IndexPage = () => {
           <CustomSnackbar id={key} message={message} />
         )}
       >
-        <Grid container>
-          <Grid item xs={12}>
-            <App />
-          </Grid>
-        </Grid>
+        <App />
       </SnackbarProvider>
     </ThemeProvider>
   );
