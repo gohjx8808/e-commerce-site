@@ -45,3 +45,5 @@ export const itemVariationOptions = [
   { label: 'With Keychain', value: 'With Keychain' },
   { label: 'Without Keychain', value: 'Without Keychain' },
 ];
+
+export const drawerWidth = 210;

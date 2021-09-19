@@ -28,8 +28,8 @@ import StyledMenuItem from '../sharedComponents/StyledMenuItem';
 import routeNames from '../utils/routeNames';
 import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
 import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
-import CustomDesktopDrawer from './CustomDesktopDrawer';
-import CustomMobileDrawer from './CustomMobileDrawer';
+import CustomDesktopDrawer from './drawer/CustomDesktopDrawer';
+import CustomMobileDrawer from './drawer/CustomMobileDrawer';
 import { updateProductFilterKeyword } from './products/src/productReducers';
 
 const drawerWidth = 210;
