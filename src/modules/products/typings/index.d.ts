@@ -64,25 +64,11 @@ declare namespace products{
     state: optionsData
   }
 
-  interface sendPaymentEmailPayload{
-    fullName:string
-    email: string
-    phoneNumber: string
-    addressLine1: string
-    addressLine2:string
-    postcode: string
-    city: string
-    state: string
-    outsideMalaysiaState: string
-    country: string
+  interface sendPaymentEmailPayload extends submitShippingInfoPayload{
     currentOrderCount:number
-    paymentOptions:string
     totalAmount:number
     shippingFee:number
     selectedCheckoutItems:shoppingCartItemData[]
-    saveShippingInfo:boolean
-    note:string
-    promoCode:string
     discountMargin:string
     discount:number
     discountedAmount:number
