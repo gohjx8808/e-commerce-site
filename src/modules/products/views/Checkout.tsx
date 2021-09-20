@@ -199,7 +199,7 @@ const Checkout = () => {
   const inputPromoCode = watch('promoCode');
 
   useEffect(() => {
-    if (selectedAddress.addressLine1) {
+    if (currentUserDetails.uid !== '') {
       reset({
         fullName: selectedAddress.fullName,
         email: selectedAddress.email,
@@ -214,10 +214,10 @@ const Checkout = () => {
         country: selectedAddress.country,
         saveShippingInfo: false,
         paymentOptions: '',
-        promoCode: inputPromoCode,
+        promoCode: inputPromoCode || '',
       });
     }
-  }, [reset, selectedAddress, inputPromoCode]);
+  }, [reset, selectedAddress, inputPromoCode, currentUserDetails.uid]);
 
   const validatePromocode = useCallback(() => {
     const isPromoCodeUsed = (currentUserDetails.usedPromocode
