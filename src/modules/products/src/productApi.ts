@@ -5,7 +5,7 @@ export const getPrevOrderCount = () => (firebase.database().ref('orderCount').on
 
 export const updateOrderCount = (currentOrderCount:number) => firebase.database().ref('orderCount').set(currentOrderCount);
 
-export const sendPaymentEmailApi = (emailData:products.sendEmailPayloadProcessed) => (
+export const sendPaymentEmailApi = (emailData:products.sendPaymentEmailPayload) => (
   window.fetch('/api/sendGrid/sendPaymentEmail', {
     method: 'POST',
     headers: {

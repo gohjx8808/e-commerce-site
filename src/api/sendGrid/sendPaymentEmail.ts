@@ -8,7 +8,7 @@ interface paymentMap{
 }
 
 const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionResponse) => {
-  const postData:products.sendEmailPayloadProcessed = req.body;
+  const postData:products.sendPaymentEmailPayload = req.body;
 
   const paymentTemplate = {
     bankTransfer: 'd-ce30ae1412f546d592d214d4fc8efa90',

@@ -47,3 +47,20 @@ export const itemVariationOptions = [
 ];
 
 export const drawerWidth = 210;
+
+export const emptyShippingInfo:products.submitShippingInfoPayload = {
+  fullName: '',
+  email: '',
+  phoneNumber: '60',
+  addressLine1: '',
+  addressLine2: '',
+  postcode: '',
+  city: '',
+  state: '',
+  outsideMalaysiaState: '',
+  country: '',
+  promoCode: '',
+  note: '',
+  saveShippingInfo: false,
+  paymentOptions: '',
+};

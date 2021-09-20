@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ImageDataLike } from 'gatsby-plugin-image';
+import { emptyShippingInfo } from '../../../utils/constants';
 
 interface productState{
   shoppingCartItem:products.shoppingCartItemData[]
@@ -18,20 +19,7 @@ const INITIAL_STATE:productState = {
   productFilterKeyword: '',
   selectedCheckoutItemsID: [],
   prevOrderCount: 0,
-  prevShippingInfo: {
-    fullName: '',
-    email: '',
-    phoneNumber: '60',
-    addressLine1: '',
-    addressLine2: '',
-    postcode: '',
-    city: '',
-    state: '',
-    outsideMalaysiaState: '',
-    country: '',
-    saveShippingInfo: false,
-    paymentOptions: '',
-  },
+  prevShippingInfo: emptyShippingInfo,
   selectedProductImage: null,
   selectedProductImageList: [],
   isEnlargedProductImageModalOpen: false,
@@ -79,7 +67,7 @@ export const productSlice = createSlice({
     updatePrevOrderCount: (state, action:PayloadAction<number>) => {
       state.prevOrderCount = action.payload;
     },
-    sendPaymentEmailAction: (_state, _action:PayloadAction<products.sendEmailPayload>) => {},
+    sendPaymentEmailAction: (_state, _action:PayloadAction<products.sendPaymentEmailPayload>) => {},
     saveShippingInfo: (state, action:PayloadAction<products.submitShippingInfoPayload>) => {
       state.prevShippingInfo = action.payload;
     },

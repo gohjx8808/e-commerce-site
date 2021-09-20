@@ -54,28 +54,17 @@ declare namespace products{
     state: string
     outsideMalaysiaState: string
     country: string
-    saveShippingInfo:boolean
-    paymentOptions:string
-  }
-
-  interface rawShippingInfoPayload{
-    fullName:string
-    email: string
-    phoneNumber: string
-    addressLine1: string
-    addressLine2:string
-    postcode: string
-    city: string
-    state: optionsData
-    outsideMalaysiaState: string
-    country: string
-    saveShippingInfo:boolean
-    paymentOptions:string
-    note:string
     promoCode:string
+    note:string
+    saveShippingInfo:boolean
+    paymentOptions:string
   }
 
-  interface sendEmailPayload{
+  interface checkoutFormPayload extends submitShippingInfoPayload{
+    state: optionsData
+  }
+
+  interface sendPaymentEmailPayload{
     fullName:string
     email: string
     phoneNumber: string
@@ -83,7 +72,7 @@ declare namespace products{
     addressLine2:string
     postcode: string
     city: string
-    state: optionsData
+    state: string
     outsideMalaysiaState: string
     country: string
     currentOrderCount:number
@@ -97,10 +86,6 @@ declare namespace products{
     discountMargin:string
     discount:number
     discountedAmount:number
-  }
-
-  interface sendEmailPayloadProcessed extends sendEmailPayload{
-    state: string
     accUserName:string
   }
 

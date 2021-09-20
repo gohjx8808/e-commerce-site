@@ -5,6 +5,7 @@ import {
   call, fork, put, select, take,
 } from 'redux-saga/effects';
 import { RootState } from '../../../store';
+import { emptyShippingInfo } from '../../../utils/constants';
 import {
   submitAddEditAddressAction, toggleIsDirectAction, updateAddressActionType,
 } from '../../account/src/accountReducer';
@@ -45,11 +46,7 @@ function* sendPaymentEmailSaga() {
       const currentUserDetails:auth.currentUserDetails = yield select(
         (state:RootState) => state.auth.currentUser,
       );
-      yield call(sendPaymentEmailApi, {
-        ...payload,
-        accUserName: currentUserDetails.fullName ? currentUserDetails.fullName : payload.fullName,
-        state: payload.state.value,
-      });
+      yield call(sendPaymentEmailApi, payload);
       yield call(updateOrderCount, payload.currentOrderCount);
       if (payload.promoCode) {
         let updatedUserDetails = { ...currentUserDetails };
@@ -75,7 +72,7 @@ function* sendPaymentEmailSaga() {
           addressLine2: payload.addressLine2,
           postcode: payload.postcode,
           city: payload.city,
-          state: payload.state.value,
+          state: payload.state,
           outsideMalaysiaState: payload.outsideMalaysiaState || '',
           country: payload.country,
           defaultOption: '0',
@@ -89,9 +86,11 @@ function* sendPaymentEmailSaga() {
           addressLine2: payload.addressLine2,
           postcode: payload.postcode,
           city: payload.city,
-          state: payload.state.value,
+          state: payload.state,
           outsideMalaysiaState: payload.outsideMalaysiaState,
           country: payload.country,
+          promoCode: '',
+          note: '',
           saveShippingInfo: payload.saveShippingInfo,
           paymentOptions: payload.paymentOptions,
         };
@@ -103,20 +102,6 @@ function* sendPaymentEmailSaga() {
           yield put(saveShippingInfo(shippingInfo));
         }
       } else {
-        const emptyShippingInfo:products.submitShippingInfoPayload = {
-          fullName: '',
-          email: '',
-          phoneNumber: '60',
-          addressLine1: '',
-          addressLine2: '',
-          postcode: '',
-          city: '',
-          state: '',
-          outsideMalaysiaState: '',
-          country: '',
-          saveShippingInfo: false,
-          paymentOptions: '',
-        };
         yield put(saveShippingInfo(emptyShippingInfo));
       }
       yield put(updateSelectedCheckoutItemsID([]));
