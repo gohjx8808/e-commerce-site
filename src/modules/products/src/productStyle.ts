@@ -79,13 +79,13 @@ const productStyle = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       height: 855,
     },
-    height: 480,
+    height: 510,
   },
   outsideMalaysiaCheckoutOrderCard: {
     [theme.breakpoints.up('lg')]: {
       height: 930,
     },
-    height: 480,
+    height: 510,
   },
   checkoutItemContainer: {
     [theme.breakpoints.up('lg')]: {

@@ -8,12 +8,14 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import clsx from 'clsx';
 import { graphql, Link as GatsbyLink, useStaticQuery } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks';
 import ControlledTextInput from '../../../sharedComponents/inputs/views/ControlledTextInput';
+import useGlobalStyles from '../../../useGlobalStyles';
 import routeNames from '../../../utils/routeNames';
 import { submitForgotPassword } from '../src/authReducer';
 import { forgotPasswordSchema } from '../src/authSchema';
@@ -21,6 +23,7 @@ import authenticationStyles from '../src/authStyles';
 
 const ForgotPassword = () => {
   const styles = authenticationStyles();
+  const globalStyles = useGlobalStyles();
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "icon.jpeg" }) {
@@ -69,7 +72,7 @@ const ForgotPassword = () => {
             <CardContent>
               <form onSubmit={handleSubmit(submitLogin)}>
                 <Grid container justifyContent="center" alignItems="center" spacing={2} className={styles.minorTopSpacing}>
-                  <Typography variant="subtitle1" className={styles.whiteText}>Please enter your registered email address below.</Typography>
+                  <Typography variant="subtitle1" className={clsx(styles.whiteText, globalStyles.centerText)}>Please enter your registered email address below.</Typography>
                   <Grid item xs={12} sm={10}>
                     <ControlledTextInput
                       control={control}

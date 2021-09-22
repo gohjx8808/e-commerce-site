@@ -334,28 +334,28 @@ const Checkout = () => {
           </Box>
           <Divider />
           <Grid container alignItems="center" className={styles.totalPayTextContainer} spacing={1}>
-            <Grid item lg={9} sm={10} xs={6}>
+            <Grid item lg={9} sm={10} xs={7}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={styles.rightText}>
                   Total Amount:
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item lg={3} sm={2} xs={6}>
+            <Grid item lg={3} sm={2} xs={5}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={styles.rightText}>
                   {formatPrice(totalAmount, 'MYR')}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item lg={9} sm={10} xs={6}>
+            <Grid item lg={9} sm={10} xs={7}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={clsx(styles.rightText, { [styles.successText]: appliedPromo.code })}>
                   {`Total Discount ${appliedPromo.code ? `(${appliedPromo.discountType === 'value' ? 'RM ' : ''}${appliedPromo.discountValue}${appliedPromo.discountType === 'percentage' ? '%' : ''})` : ''}:`}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item lg={3} sm={2} xs={6}>
+            <Grid item lg={3} sm={2} xs={5}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={clsx(styles.rightText, { [styles.successText]: appliedPromo.code })}>
                   -
@@ -364,28 +364,28 @@ const Checkout = () => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item lg={9} sm={10} xs={6}>
+            <Grid item lg={9} sm={10} xs={7}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={styles.rightText}>
                   Shipping Fee:
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item lg={3} sm={2} xs={6}>
+            <Grid item lg={3} sm={2} xs={5}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={styles.rightText}>
                   {shippingFee.displayShipping}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item lg={9} sm={10} xs={6}>
+            <Grid item lg={9} sm={10} xs={7}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={clsx(styles.rightText, globalStyles.boldText)}>
                   Total Amount After Discount:
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item lg={3} sm={2} xs={6}>
+            <Grid item lg={3} sm={2} xs={5}>
               <Grid container justifyContent="flex-end">
                 <Typography variant="subtitle1" className={clsx(styles.rightText, globalStyles.boldText)}>
                   {formatPrice(appliedPromo.discountedPrice + shippingFee.realShipping, 'MYR')}
