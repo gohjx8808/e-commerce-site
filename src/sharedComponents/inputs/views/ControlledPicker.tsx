@@ -1,7 +1,7 @@
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import TextField from '@material-ui/core/TextField';
-import Autocomplete, { AutocompleteProps } from '@material-ui/lab/Autocomplete';
+import Autocomplete, { AutocompleteProps } from '@mui/material/Autocomplete';
 import clsx from 'clsx';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
@@ -40,9 +40,9 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
           <Autocomplete
             value={value}
             getOptionLabel={(option) => option.label}
-            getOptionSelected={
-              (option, selectedValue) => selectedValue && option.value === selectedValue.value
-            }
+            // getOptionSelected={
+            //   (option, selectedValue) => selectedValue && option.value === selectedValue.value
+            // }
             renderInput={(params) => (
               <TextField
                 {...params}

@@ -1,6 +1,7 @@
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import { alpha, Theme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 
-const productStyle = makeStyles((theme) => ({
+const productStyle = makeStyles((theme:Theme) => ({
   productCard: {
     boxShadow: '5px 5px 25px 0 rgba(46,61,73,.2)',
     backgroundColor: '#fff',

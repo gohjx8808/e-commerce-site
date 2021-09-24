@@ -1,11 +1,12 @@
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { graphql, useStaticQuery } from 'gatsby';
 import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
 import React from 'react';
 import Carousel from 'react-material-ui-carousel';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
+import { Theme } from '@mui/material/styles';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles((theme:Theme) => ({
   carouselImages: {
     [theme.breakpoints.up('sm')]: {
       borderRadius: 10,

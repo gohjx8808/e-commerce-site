@@ -1,15 +1,15 @@
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Zoom from '@material-ui/core/Zoom';
-import { createStyles } from '@material-ui/styles';
 import React from 'react';
+import { Theme } from '@mui/material/styles';
 
 interface Props {
   children: React.ReactElement;
 }
 
-const useStyles = makeStyles((theme) => createStyles({
+const useStyles = makeStyles((theme:Theme) => ({
   root: {
     position: 'fixed',
     bottom: theme.spacing(2),

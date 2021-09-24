@@ -1,11 +1,11 @@
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import CakeIcon from '@material-ui/icons/Cake';
-import EmailIcon from '@material-ui/icons/Email';
-import PersonIcon from '@material-ui/icons/Person';
-import PhoneIcon from '@material-ui/icons/Phone';
-import WcIcon from '@material-ui/icons/Wc';
+import CakeIcon from '@mui/icons-material/Cake';
+import EmailIcon from '@mui/icons-material/Email';
+import PersonIcon from '@mui/icons-material/Person';
+import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import WcIcon from '@mui/icons-material/Wc';
 import dayjs from 'dayjs';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -53,7 +53,7 @@ const AccountDetails = () => {
                 <SingleAccData
                   label="Phone No"
                   data={currentUserDetails.phoneNumber}
-                  Icon={<PhoneIcon />}
+                  Icon={<PhoneIphoneIcon />}
                 />
               </Grid>
             </Grid>

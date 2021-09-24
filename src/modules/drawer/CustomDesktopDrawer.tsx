@@ -1,16 +1,17 @@
 import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import IconButton from '@material-ui/core/IconButton';
 import {
-  createStyles, makeStyles,
-} from '@material-ui/core/styles';
+  makeStyles,
+} from '@mui/styles';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import clsx from 'clsx';
 import React from 'react';
+import { Theme } from '@mui/material/styles';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
 import { drawerWidth } from '../../utils/constants';
 import CustomDrawerItems from './CustomDrawerItems';
 
-const useStyles = makeStyles((theme) => createStyles({
+const useStyles = makeStyles((theme:Theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,

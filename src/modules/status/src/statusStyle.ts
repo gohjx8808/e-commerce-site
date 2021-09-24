@@ -1,6 +1,7 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 
-export default makeStyles((theme) => ({
+export default makeStyles((theme:Theme) => ({
   backdropRoot: {
     zIndex: theme.zIndex.modal + 1,
   },

@@ -1,6 +1,7 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
-export default makeStyles((theme) => ({
+export default makeStyles((theme:Theme) => ({
   componentTopSpacing: {
     marginTop: '80px!important',
   },

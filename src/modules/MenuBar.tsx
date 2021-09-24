@@ -8,23 +8,24 @@ import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import Menu from '@material-ui/core/Menu';
 import {
-  alpha, createStyles, makeStyles, Theme,
-} from '@material-ui/core/styles';
+  makeStyles,
+} from '@mui/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import MenuIcon from '@material-ui/icons/Menu';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import SearchIcon from '@material-ui/icons/Search';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import MenuIcon from '@mui/icons-material/Menu';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useLocation } from '@reach/router';
 import clsx from 'clsx';
 import { navigate } from 'gatsby';
 import React, { useEffect, useState } from 'react';
+import { alpha, Theme } from '@mui/material/styles';
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../hooks';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
-import StyledMenuItem from '../sharedComponents/StyledMenuItem';
+import StyledMenuItem from '../sharedComponents/StyledListItem';
 import routeNames from '../utils/routeNames';
 import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
 import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
@@ -34,7 +35,7 @@ import { updateProductFilterKeyword } from './products/src/productReducers';
 
 const drawerWidth = 210;
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles((theme:Theme) => ({
   grow: {
     flexGrow: 1,
   },
@@ -193,7 +194,7 @@ const MenuBar = () => {
               aria-label="account"
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircleIcon />
             </IconButton>
             <Typography>Profile</Typography>
           </StyledMenuItem>
@@ -284,7 +285,7 @@ const MenuBar = () => {
                     color="inherit"
                     onClick={() => navigate(routeNames.account)}
                   >
-                    <AccountCircle />
+                    <AccountCircleIcon />
                   </IconButton>
                   <IconButton
                     aria-label="logout"
@@ -309,16 +310,17 @@ const MenuBar = () => {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon />
+                <MoreVertIcon />
               </IconButton>
             </Box>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
       {renderMobileMenu}
-      {!isXsView
+      {/* {!isXsView
         ? <CustomDesktopDrawer drawerOpen={drawerOpen} handleDrawerClose={toggleDrawer} />
-        : <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />}
+        : <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />} */}
+      <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />
       <SignOutConfirmationModal />
     </>
   );

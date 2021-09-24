@@ -2,7 +2,7 @@ import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import Typography from '@material-ui/core/Typography';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { RouteComponentProps, Router } from '@reach/router';
@@ -10,6 +10,7 @@ import { navigate } from 'gatsby';
 import React, {
   lazy, Suspense, useEffect, useState,
 } from 'react';
+import { Theme } from '@mui/material/styles';
 import { useAppSelector } from '../hooks';
 import routeNames from '../utils/routeNames';
 
@@ -34,7 +35,7 @@ const Checkout = lazy(() => import('../modules/products/views/Checkout'));
 const EnlargedProductImageCarouselModal = lazy(() => import('../modules/products/views/EnlargedProductImageCarouselModal'));
 const ProductDescription = lazy(() => import('../modules/products/views/ProductDescription'));
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme:Theme) => ({
   content: {
     flexGrow: 1,
   },

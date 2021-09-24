@@ -4,7 +4,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import React from 'react';
 import { useState } from 'react';
 import StyledMenu from '../../../sharedComponents/StyledMenu';
-import StyledMenuItem from '../../../sharedComponents/StyledMenuItem';
+import StyledMenuItem from '../../../sharedComponents/StyledListItem';
 import productStyle from '../src/productStyle';
 
 interface ItemVariationMenuOwnProps{

@@ -4,10 +4,10 @@ import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Email from '@material-ui/icons/Email';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import { makeStyles } from '@material-ui/styles';
+import EmailIcon from '@mui/icons-material/Email';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { useXsDownMediaQuery } from '../hooks';
 
@@ -48,7 +48,7 @@ const Footer = () => {
                 <InstagramIcon />
               </IconButton>
               <IconButton aria-label="email" color="inherit" target="_blank" rel="noreferrer" href="mailto:yj.artjournal@gmail.com">
-                <Email />
+                <EmailIcon />
               </IconButton>
             </>
           )}

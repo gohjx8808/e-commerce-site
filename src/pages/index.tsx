@@ -1,7 +1,8 @@
-import { createTheme, responsiveFontSizes } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import { SnackbarProvider } from 'notistack';
 import * as React from 'react';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDayjs from '@mui/lab/AdapterDayjs';
+import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
 import App from './App';
 import CustomSnackbar from '../sharedComponents/CustomSnackbar';
 
@@ -21,9 +22,9 @@ const IndexPage = () => {
         primary: '#6b3e2e',
       },
     },
-    typography: {
-      fontFamily: 'Sitka Display Semibold',
-    },
+    // typography: {
+    //   fontFamily: 'Sitka Display Semibold',
+    // },
   });
 
   return (
@@ -38,7 +39,9 @@ const IndexPage = () => {
           <CustomSnackbar id={key} message={message} />
         )}
       >
-        <App />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <App />
+        </LocalizationProvider>
       </SnackbarProvider>
     </ThemeProvider>
   );

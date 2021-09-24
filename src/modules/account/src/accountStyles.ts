@@ -1,7 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import { homeColor, workColor } from '../../../utils/constants';
 
-const accountStyles = makeStyles((theme) => ({
+const accountStyles = makeStyles((theme:Theme) => ({
   verticalSpacing: {
     paddingTop: 10,
     paddingBottom: 10,
