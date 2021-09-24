@@ -1,17 +1,3 @@
-import AppBar from '@material-ui/core/AppBar';
-import Badge from '@material-ui/core/Badge';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-import Menu from '@material-ui/core/Menu';
-import {
-  makeStyles,
-} from '@mui/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -23,15 +9,27 @@ import clsx from 'clsx';
 import { navigate } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import { alpha, Theme } from '@mui/material/styles';
-import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../hooks';
-import ElevationScroll from '../sharedComponents/ElevationScroll';
-import StyledMenuItem from '../sharedComponents/StyledListItem';
-import routeNames from '../utils/routeNames';
-import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
-import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
-import CustomDesktopDrawer from './drawer/CustomDesktopDrawer';
-import CustomMobileDrawer from './drawer/CustomMobileDrawer';
+import Menu from '@mui/material/Menu';
+import { makeStyles } from '@mui/styles';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import CssBaseline from '@mui/material/CssBaseline';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
 import { updateProductFilterKeyword } from './products/src/productReducers';
+import CustomMobileDrawer from './drawer/CustomMobileDrawer';
+import CustomDesktopDrawer from './drawer/CustomDesktopDrawer';
+import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
+import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
+import routeNames from '../utils/routeNames';
+import StyledMenuItem from '../sharedComponents/StyledListItem';
+import ElevationScroll from '../sharedComponents/ElevationScroll';
+import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../hooks';
 
 const drawerWidth = 210;
 
@@ -160,7 +158,7 @@ const MenuBar = () => {
     <Menu
       anchorEl={mobileMoreAnchor}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      getContentAnchorEl={null}
+      // getContentAnchorEl={null}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -244,8 +242,8 @@ const MenuBar = () => {
               <MenuIcon />
             </IconButton>
             {!(isXsView && location.pathname === routeNames.products) && (
-              <Button className={classes.nameBtn} onClick={() => navigate('/')}>
-                <Typography variant="h6">YJ Art Journal</Typography>
+              <Button color="inherit" onClick={() => navigate('/')}>
+                <Typography variant="h6" className={classes.nameBtn}>YJ Art Journal</Typography>
               </Button>
             )}
             {location.pathname === routeNames.products && (

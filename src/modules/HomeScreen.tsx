@@ -1,10 +1,4 @@
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import ImageList from '@material-ui/core/ImageList';
-import ImageListItem from '@material-ui/core/ImageListItem';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@mui/styles';
-import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import clsx from 'clsx';
 import {
@@ -14,10 +8,16 @@ import {
   GatsbyImage, getImage, ImageDataLike,
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch } from '../hooks';
-import useGlobalStyles from '../useGlobalStyles';
-import routeNames from '../utils/routeNames';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import IconButton from '@mui/material/IconButton';
 import { storeAllProducts } from './products/src/productReducers';
+import routeNames from '../utils/routeNames';
+import useGlobalStyles from '../useGlobalStyles';
+import { useAppDispatch } from '../hooks';
 
 const useStyle = makeStyles({
   imageList: {
