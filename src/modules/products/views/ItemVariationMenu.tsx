@@ -1,8 +1,8 @@
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import ListItemText from '@material-ui/core/ListItemText';
 import React from 'react';
 import { useState } from 'react';
+import ListItemText from '@mui/material/ListItemText';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import StyledMenu from '../../../sharedComponents/StyledMenu';
 import StyledMenuItem from '../../../sharedComponents/StyledListItem';
 import productStyle from '../src/productStyle';

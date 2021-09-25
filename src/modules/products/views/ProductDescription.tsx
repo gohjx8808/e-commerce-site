@@ -2,26 +2,26 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import {
   Block, BLOCKS, Document, Inline, MARKS,
 } from '@contentful/rich-text-types';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import FilledInput from '@material-ui/core/FilledInput';
-import FormControl from '@material-ui/core/FormControl';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
-import AddIcon from '@material-ui/icons/Add';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import RemoveIcon from '@material-ui/icons/Remove';
+import Box from '@mui/material/Box';
+import FilledInput from '@mui/material/FilledInput';
+import FormControl from '@mui/material/FormControl';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Typography from '@mui/material/Typography';
 import { useParams } from '@reach/router';
 import clsx from 'clsx';
 import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import useGlobalStyles from '../../../useGlobalStyles';

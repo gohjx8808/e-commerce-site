@@ -34,7 +34,7 @@ const IndexPage = () => {
           vertical: 'bottom',
           horizontal: 'left',
         }}
-        autoHideDuration={300000000}
+        autoHideDuration={3000}
         content={(key, message) => (
           <CustomSnackbar id={key} message={message} />
         )}

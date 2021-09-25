@@ -1,5 +1,5 @@
-import Box from '@material-ui/core/Box';
-import Dialog from '@material-ui/core/Dialog';
+import Box from '@mui/material/Box';
+import Dialog from '@mui/material/Dialog';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React from 'react';
 import Carousel from 'react-material-ui-carousel';
