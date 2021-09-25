@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import clsx from 'clsx';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
+import useGlobalStyles from '../../../useGlobalStyles';
 import useInputsStyles from '../src/useInputsStyles';
 
 interface ControlledDatePickerOwnProps extends Omit<DatePickerProps<Date>, 'renderInput'|'onChange'|'value'>{
@@ -18,6 +19,7 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
     control, name, defaultdate, formerror, lightbg,
   } = props;
   const inputStyles = useInputsStyles();
+  const globalStyles = useGlobalStyles();
 
   return (
     <Controller
@@ -38,40 +40,18 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
               className={clsx(
                 inputStyles.container,
                 !lightbg && inputStyles.unFocusStyle,
-                inputStyles.removedAutofillStyling,
+                !lightbg && inputStyles.calendarWhite,
               )}
+              InputLabelProps={{ className: inputStyles.unFocusLabel }}
               error={!!formerror}
               color={lightbg ? 'secondary' : 'primary'}
+              helperText={formerror?.message}
             />
           )}
+          InputProps={{ className: globalStyles.white }}
           disableFuture
           {...props}
         />
-        // <KeyboardDatePicker
-        //   format="DD/MM/YYYY"
-        //   value={value ? new Date(value) : null}
-        //   onChange={(selectedDate:MaterialUiPickersDate) => onChange(selectedDate ? selectedDate.toString() : '')}
-        //   KeyboardButtonProps={{
-        //     'aria-label': 'change date',
-        //     color: 'inherit',
-        //     className: clsx(formerror && inputStyles.errorColor),
-        //   }}
-        //   color={lightbg ? 'secondary' : 'primary'}
-        //   className={inputStyles.container}
-        //   InputLabelProps={{ className: clsx(!lightbg && inputStyles.unFocusLabel) }}
-        //   InputProps={{
-        //     className: clsx(
-        //       !lightbg && inputStyles.unFocusStyle, inputStyles.removedAutofillStyling,
-        //     ),
-        //   }}
-        //   disableFuture
-        //   maxDateMessage="Invalid date"
-        //   minDateMessage="Invalid date"
-        //   autoOk
-        //   error={!!formerror}
-        //   helperText={formerror?.message}
-        //   {...props}
-        // />
       )}
       defaultValue={defaultdate}
     />

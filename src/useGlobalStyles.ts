@@ -38,4 +38,7 @@ export default makeStyles((theme:Theme) => ({
       whiteSpace: 'pre-wrap',
     },
   },
+  white: {
+    color: 'white!important',
+  },
 }));
