@@ -1,18 +1,18 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Grid from '@mui/material/Grid';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import clsx from 'clsx';
 import { graphql, Link as GatsbyLink, useStaticQuery } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import Box from '@mui/material/Box';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
 import { useAppDispatch } from '../../../hooks';
 import ControlledTextInput from '../../../sharedComponents/inputs/views/ControlledTextInput';
 import useGlobalStyles from '../../../useGlobalStyles';
@@ -79,7 +79,6 @@ const ForgotPassword = () => {
                       name="email"
                       label="Email"
                       formerror={errors.email}
-                      labelWidth={40}
                       type="email"
                     />
                   </Grid>
