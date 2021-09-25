@@ -1,17 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Divider from '@material-ui/core/Divider';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Grid from '@material-ui/core/Grid';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import {
-  DataGrid, GridColDef, GridPageChangeParams,
-} from '@material-ui/data-grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Divider from '@mui/material/Divider';
+import FormHelperText from '@mui/material/FormHelperText';
+import Grid from '@mui/material/Grid';
+import InputAdornment from '@mui/material/InputAdornment';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -156,8 +154,8 @@ const Checkout = () => {
     { value: 'bankTransfer', label: 'Bank Transfer' },
   ];
 
-  const handlePageSizeChange = (params: GridPageChangeParams) => {
-    setPageSize(params.pageSize);
+  const handlePageSizeChange = (tablePageSize:number) => {
+    setPageSize(tablePageSize);
   };
 
   const selectedState = watch('state');
@@ -426,7 +424,6 @@ const Checkout = () => {
                       control={control}
                       name="email"
                       label="Email Address"
-                      labelWidth={105}
                       lightbg={1}
                       formerror={errors.email}
                       defaultinput={prevShippingInfo.email}
@@ -438,7 +435,6 @@ const Checkout = () => {
                       control={control}
                       name="phoneNumber"
                       label="Phone Number"
-                      labelWidth={105}
                       lightbg={1}
                       startAdornment={(
                         <InputAdornment position="start">
@@ -455,7 +451,6 @@ const Checkout = () => {
                       control={control}
                       name="addressLine1"
                       label="Address Line 1"
-                      labelWidth={105}
                       lightbg={1}
                       formerror={errors.addressLine1}
                       defaultinput={prevShippingInfo.addressLine1}
@@ -467,7 +462,6 @@ const Checkout = () => {
                       control={control}
                       name="addressLine2"
                       label="Address Line 2"
-                      labelWidth={110}
                       lightbg={1}
                       defaultinput={prevShippingInfo.addressLine2}
                       readOnly={!!selectedAddress.addressLine1}
@@ -491,7 +485,6 @@ const Checkout = () => {
                       name="city"
                       label="City"
                       lightbg={1}
-                      labelWidth={25}
                       formerror={errors.city}
                       defaultinput={prevShippingInfo.city}
                       readOnly={!!selectedAddress.city}
@@ -517,7 +510,6 @@ const Checkout = () => {
                         control={control}
                         name="outsideMalaysiaState"
                         label="Foreign Country State"
-                        labelWidth={155}
                         lightbg={1}
                         formerror={errors.outsideMalaysiaState}
                         defaultinput={prevShippingInfo.outsideMalaysiaState}
@@ -530,7 +522,6 @@ const Checkout = () => {
                       control={control}
                       name="country"
                       label="Country"
-                      labelWidth={55}
                       lightbg={1}
                       formerror={errors.country}
                       defaultinput={prevShippingInfo.country}
@@ -542,7 +533,6 @@ const Checkout = () => {
                       control={control}
                       name="promoCode"
                       label="Promo Code"
-                      labelWidth={80}
                       formerror={errors.promoCode}
                       lightbg={1}
                       disabled={currentUserDetails.uid === ''}
@@ -566,7 +556,6 @@ const Checkout = () => {
                       control={control}
                       name="note"
                       label="Notes to seller (optional)"
-                      labelWidth={160}
                       lightbg={1}
                       multiline
                       rows={4}
@@ -577,6 +566,7 @@ const Checkout = () => {
                       <ControlledCheckbox
                         name="saveShippingInfo"
                         control={control}
+                        color="secondary"
                         label={currentUserDetails.uid === '' ? 'Use this shipping information for the next time' : 'Save to address book'}
                         defaultChecked={prevShippingInfo.saveShippingInfo}
                       />

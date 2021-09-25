@@ -72,7 +72,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             inputProps={{
               maxLength,
               readOnly,
-              className: inputStyles.removedAutofillStyling,
+              className: clsx(!lightbg && inputStyles.removedAutofillStyling),
             }}
             {...props}
           />

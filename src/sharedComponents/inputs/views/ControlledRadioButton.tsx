@@ -1,9 +1,9 @@
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup, { RadioGroupProps } from '@material-ui/core/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormLabel from '@mui/material/FormLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup, { RadioGroupProps } from '@mui/material/RadioGroup';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
@@ -62,7 +62,7 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
               {options.map((option) => (
                 <FormControlLabel
                   value={option.value}
-                  control={<Radio />}
+                  control={<Radio color="secondary" />}
                   label={option.label}
                   className={styles.spaceBetweenRadio}
                   key={option.value}

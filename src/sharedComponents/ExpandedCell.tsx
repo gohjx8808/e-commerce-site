@@ -1,11 +1,11 @@
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
 import { makeStyles } from '@mui/styles';
-import Typography from '@material-ui/core/Typography';
-import { GridCellParams, isOverflown } from '@material-ui/data-grid';
 import React, {
   memo, useRef, useState,
 } from 'react';
+import { GridCellParams } from '@mui/x-data-grid';
+import Popper from '@mui/material/Popper';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 interface CellExpandProps {
   value: string;
@@ -39,7 +39,7 @@ const CellExpand = memo((props: CellExpandProps) => {
   const [showPopper, setShowPopper] = useState(false);
 
   const handleMouseEnter = () => {
-    const isCurrentlyOverflown = isOverflown(cellValue.current!);
+    const isCurrentlyOverflown = Boolean(cellValue.current!);
     setShowPopper(isCurrentlyOverflown);
     setAnchorEl(cellDiv.current);
     setShowFullCell(true);
@@ -95,7 +95,7 @@ const ExpandedCell = (params: GridCellParams) => {
   return (
     <CellExpand
       value={value ? value.toString() : ''}
-      width={colDef.width}
+      width={colDef.width!}
     />
   );
 };
