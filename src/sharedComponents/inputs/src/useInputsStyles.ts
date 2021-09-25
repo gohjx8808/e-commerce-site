@@ -38,7 +38,14 @@ export default makeStyles((theme:Theme) => ({
   calendarWhite: {
     '& .MuiInputAdornment-root': {
       '& button': {
-        color: 'white!important',
+        color: 'white',
+      },
+    },
+  },
+  calendarError: {
+    '& .MuiInputAdornment-root': {
+      '& button': {
+        color: theme.palette.error.main,
       },
     },
   },

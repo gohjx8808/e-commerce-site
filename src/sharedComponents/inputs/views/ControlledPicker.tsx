@@ -1,10 +1,11 @@
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import TextField from '@material-ui/core/TextField';
 import Autocomplete, { AutocompleteProps } from '@mui/material/Autocomplete';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import TextField from '@mui/material/TextField';
 import clsx from 'clsx';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
+import useGlobalStyles from '../../../useGlobalStyles';
 import useInputsStyles from '../src/useInputsStyles';
 
 interface ControlledPickerOwnProps extends Omit<AutocompleteProps<optionsData, boolean, boolean, boolean>, 'renderInput'>{
@@ -26,6 +27,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
   } = props;
 
   const inputStyles = useInputsStyles();
+  const globalStyles = useGlobalStyles();
 
   return (
     <Controller
@@ -65,9 +67,9 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
               inputRoot: clsx(!lightbg && inputStyles.unFocusLabel),
               input: inputStyles.removedAutofillStyling,
               popupIndicator: clsx(
-                !lightbg && inputStyles.unFocusLabel, error && inputStyles.errorColor,
+                !lightbg && globalStyles.white, error && inputStyles.errorColor,
               ),
-              clearIndicator: clsx(!lightbg && inputStyles.unFocusLabel),
+              clearIndicator: clsx(!lightbg && globalStyles.white),
             }}
             {...props}
           />

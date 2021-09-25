@@ -41,6 +41,7 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
                 inputStyles.container,
                 !lightbg && inputStyles.unFocusStyle,
                 !lightbg && inputStyles.calendarWhite,
+                formerror && inputStyles.calendarError,
               )}
               InputLabelProps={{ className: inputStyles.unFocusLabel }}
               error={!!formerror}
