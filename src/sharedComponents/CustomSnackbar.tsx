@@ -1,12 +1,12 @@
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@mui/styles';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
 import { SnackbarContent, useSnackbar } from 'notistack';
 import React, { forwardRef, useCallback } from 'react';
 import { Theme } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import CardActions from '@mui/material/CardActions';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 const useStyles = makeStyles((theme:Theme) => ({
   root: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme:Theme) => ({
     },
   },
   card: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: `${theme.palette.secondary.main}!important`,
     width: '100%',
   },
   snackbarMsg: {
@@ -33,8 +33,8 @@ const useStyles = makeStyles((theme:Theme) => ({
     marginLeft: 'auto',
   },
   expand: {
-    color: 'white',
-    padding: '8px 8px',
+    color: 'white!important',
+    padding: '8px 8px!important',
     transform: 'rotate(0deg)',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
