@@ -1,14 +1,16 @@
-import Backdrop from '@material-ui/core/Backdrop';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { graphql, useStaticQuery } from 'gatsby';
 import {
   GatsbyImage, getImage, IGatsbyImageData, ImageDataLike,
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../../../hooks';
+import {
+  useAppDispatch, useAppSelector, useSmUDownMediaQuery, useXsDownMediaQuery,
+} from '../../../hooks';
 import { toggleStatusModal } from '../src/statusReducer';
 import statusStyle from '../src/statusStyle';
 
@@ -68,6 +70,8 @@ const StatusModal = () => {
     });
   }, [statusQuery.allFile.edges, isXsView]);
 
+  const isSmView = useSmUDownMediaQuery();
+
   return (
     <Backdrop
       open={isStatusModalOpen}
@@ -81,6 +85,9 @@ const StatusModal = () => {
           <Typography
             className={styles.statusTitle}
             color="secondary"
+            fontWeight="bold"
+            fontSize={isSmView ? 20 : 30}
+            textAlign="center"
           >
             {statusTitle}
           </Typography>

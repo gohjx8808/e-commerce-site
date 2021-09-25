@@ -10,3 +10,4 @@ const theme = useTheme;
 export const useXsDownMediaQuery = () => useMediaQuery(theme().breakpoints.down('xs'));
 export const useMdDownMediaQuery = () => useMediaQuery(theme().breakpoints.down('md'));
 export const useSmUpMediaQuery = () => useMediaQuery(theme().breakpoints.up('sm'));
+export const useSmUDownMediaQuery = () => useMediaQuery(theme().breakpoints.down('sm'));
