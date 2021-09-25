@@ -56,7 +56,7 @@ const productStyle = makeStyles((theme:Theme) => ({
     },
   },
   cartCard: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: `${theme.palette.primary.main}!important`,
     borderRadius: 10,
     width: '100%',
   },
@@ -143,18 +143,6 @@ const productStyle = makeStyles((theme:Theme) => ({
       marginRight: '2px!important',
       marginLeft: '2px!important',
     },
-  },
-  dekstopView: {
-    [theme.breakpoints.up('sm')]: {
-      display: 'flex',
-    },
-    display: 'none',
-  },
-  mobileView: {
-    [theme.breakpoints.down('xs')]: {
-      display: 'flex',
-    },
-    display: 'none',
   },
   productDescriptionBg: {
     backgroundColor: theme.palette.background.paper,
