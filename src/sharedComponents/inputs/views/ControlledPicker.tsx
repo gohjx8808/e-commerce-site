@@ -65,7 +65,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
             classes={{
               root: clsx(!lightbg && inputStyles.unFocusStyle),
               inputRoot: clsx(!lightbg && inputStyles.unFocusLabel),
-              input: inputStyles.removedAutofillStyling,
+              input: clsx(!lightbg && inputStyles.removedAutofillStyling),
               popupIndicator: clsx(
                 !lightbg && globalStyles.white, error && inputStyles.errorColor,
               ),

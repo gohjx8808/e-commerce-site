@@ -99,8 +99,8 @@ const HomeScreen = () => {
           return (
             <ImageListItem
               key={productImagesData.images.fallback?.src}
-              cols={image.cols}
-              rows={image.rows}
+              cols={image.cols || 1}
+              rows={image.rows || 1}
             >
               <GatsbyImage
                 image={productImagesData}

@@ -19,8 +19,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
-import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
+import Input from '@mui/material/Input';
+import InputAdornment from '@mui/material/InputAdornment';
 import { updateProductFilterKeyword } from './products/src/productReducers';
 import CustomMobileDrawer from './drawer/CustomMobileDrawer';
 import CustomDesktopDrawer from './drawer/CustomDesktopDrawer';
@@ -248,13 +249,19 @@ const MenuBar = () => {
             )}
             {location.pathname === routeNames.products && (
               <Box className={classes.search}>
-                <Box className={classes.searchIcon}>
-                  <SearchIcon />
-                </Box>
-                <InputBase
+                <Input
                   placeholder="Search…"
                   inputProps={{ 'aria-label': 'search', className: classes.searchInput }}
                   onChange={onChangeProductFilterKeyword}
+                  endAdornment={(
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="searchProduct"
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  )}
                 />
               </Box>
             )}
