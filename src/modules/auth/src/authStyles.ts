@@ -33,7 +33,9 @@ export default makeStyles((theme:Theme) => ({
     width: '10%',
   },
   cardBg: {
-    backgroundColor: theme.palette.secondary.main,
+    '&.MuiCard-root': {
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
   signoutModalActionContainer: {
     padding: '20px!important',

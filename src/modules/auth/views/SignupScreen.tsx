@@ -86,7 +86,6 @@ const SignupScreen = () => {
                           name="fullName"
                           label="Full Name"
                           formerror={errors.fullName}
-                          labelWidth={70}
                           type="text"
                         />
                       </Grid>
@@ -96,7 +95,6 @@ const SignupScreen = () => {
                           name="phoneNumber"
                           label="Phone Number"
                           formerror={errors.phoneNumber}
-                          labelWidth={110}
                           type="tel"
                         />
                       </Grid>
@@ -106,7 +104,6 @@ const SignupScreen = () => {
                           name="email"
                           label="Email"
                           formerror={errors.email}
-                          labelWidth={40}
                           type="email"
                         />
                       </Grid>
@@ -124,7 +121,6 @@ const SignupScreen = () => {
                           name="confirmPassword"
                           label="Confirm Password"
                           formerror={errors.confirmPassword}
-                          labelWidth={135}
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -137,7 +133,6 @@ const SignupScreen = () => {
                           control={control}
                           name="dob"
                           label="Date of Birth"
-                          inputVariant="outlined"
                           formerror={errors.dob}
                         />
                       </Grid>

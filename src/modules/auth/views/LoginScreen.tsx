@@ -1,17 +1,17 @@
-import Card from '@material-ui/core/Card';
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import CardHeader from '@material-ui/core/CardHeader';
 import { graphql, useStaticQuery, Link as GatsbyLink } from 'gatsby';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import Box from '@material-ui/core/Box';
-import CardContent from '@material-ui/core/CardContent';
 import { useForm } from 'react-hook-form';
-import Button from '@material-ui/core/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback } from 'react';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import Link from '@mui/material/Link';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import authenticationStyles from '../src/authStyles';
 import ControlledTextInput from '../../../sharedComponents/inputs/views/ControlledTextInput';
 import ControlledPasswordInput from '../../../sharedComponents/inputs/views/ControlledPasswordInput';
@@ -79,7 +79,6 @@ const LoginScreen = () => {
                       name="email"
                       label="Email"
                       formerror={errors.email}
-                      labelWidth={40}
                       type="email"
                     />
                   </Grid>

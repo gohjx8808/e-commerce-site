@@ -1,13 +1,13 @@
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput, { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput';
 import React, { useState } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import useInputsStyles from '../src/useInputsStyles';
 import CustomInputErrorIcon from './CustomInputErrorIcon';
 
@@ -50,8 +50,8 @@ const ControlledPasswordInput = (props:ControlledPasswordInputOwnProps) => {
                 <IconButton
                   aria-label="toggle password visibility"
                   onClick={() => setSecure(!secure)}
-                  edge="end"
-                  className={inputStyles.unFocusLabel}
+                  edge="start"
+                  className={inputStyles.whiteIcon}
                 >
                   {!secure
                     ? <VisibilityIcon color={formerror ? 'error' : 'inherit'} />

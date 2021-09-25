@@ -1,6 +1,6 @@
-import IconButton from '@material-ui/core/IconButton';
 import React from 'react';
-import CancelIcon from '@material-ui/icons/Cancel';
+import CancelIcon from '@mui/icons-material/Cancel';
+import IconButton from '@mui/material/IconButton';
 
 const CustomInputErrorIcon = () => (
   <IconButton
