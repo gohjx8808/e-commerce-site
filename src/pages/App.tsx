@@ -1,16 +1,16 @@
-import Box from '@material-ui/core/Box';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@mui/styles';
-import Typography from '@material-ui/core/Typography';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { RouteComponentProps, Router } from '@reach/router';
 import { navigate } from 'gatsby';
 import React, {
   lazy, Suspense, useEffect, useState,
 } from 'react';
 import { Theme } from '@mui/material/styles';
+import Fab from '@mui/material/Fab';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
 import { useAppSelector } from '../hooks';
 import routeNames from '../utils/routeNames';
 

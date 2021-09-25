@@ -253,6 +253,7 @@ const MenuBar = () => {
                   placeholder="Search…"
                   inputProps={{ 'aria-label': 'search', className: classes.searchInput }}
                   onChange={onChangeProductFilterKeyword}
+                  disableUnderline
                   endAdornment={(
                     <InputAdornment position="end">
                       <IconButton

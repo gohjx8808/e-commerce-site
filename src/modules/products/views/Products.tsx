@@ -1,7 +1,3 @@
-import { Divider } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { graphql, useStaticQuery } from 'gatsby';
 import {
   GatsbyImage, getImage, IGatsbyImageData,
@@ -12,6 +8,10 @@ import React, {
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
 import clsx from 'clsx';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 import { useAppSelector } from '../../../hooks';
 import { compareString } from '../../../utils/helper';
 import useGlobalStyles from '../../../useGlobalStyles';
@@ -219,8 +219,8 @@ const Products = () => {
           </Grid>
         </Grid>
       ))}
-      <Divider className={styles.topSpacing} />
-      <Grid container justifyContent="center" alignItems="center" direction="column" className={styles.topSpacing} spacing={5}>
+      <Divider sx={{ mt: 5 }} />
+      <Grid container justifyContent="center" alignItems="center" direction="column" mt={5} spacing={5}>
         <Typography variant="h5">Custom Order?</Typography>
         <Grid item xs={12}>
           <Button href="https://www.instagram.com/yj_artjournal/" variant="contained" color="secondary">

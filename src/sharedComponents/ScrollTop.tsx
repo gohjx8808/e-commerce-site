@@ -1,9 +1,9 @@
-import Box from '@material-ui/core/Box';
 import { makeStyles } from '@mui/styles';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import Zoom from '@material-ui/core/Zoom';
 import React from 'react';
 import { Theme } from '@mui/material/styles';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import Zoom from '@mui/material/Zoom';
+import Box from '@mui/material/Box';
 
 interface Props {
   children: React.ReactElement;
