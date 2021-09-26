@@ -1,8 +1,9 @@
-import { TabsActions } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import Grid from '@mui/material/Grid';
 import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
+import { TabsActions } from '@mui/material/Tabs';
 import React, { useEffect, useRef } from 'react';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import accountStyles from '../src/accountStyles';
@@ -33,16 +34,18 @@ export default function AccountScreen() {
         </Grid>
       </Grid>
       <div className={styles.accDetailsRoot}>
-        <Tabs value={value} action={mobileTabRef} onChange={handleChange} aria-label="account tabs" variant="scrollable">
-          <Tab label="Account Details" value="accDetails" />
-          <Tab label="Address Book" value="addressBook" />
-        </Tabs>
-        <TabPanel value="accDetails" className={styles.noPaddingLeft}>
-          <AccountDetails />
-        </TabPanel>
-        <TabPanel value="addressBook" className={styles.fullWidth}>
-          <AddressBook />
-        </TabPanel>
+        <TabContext value={value}>
+          <TabList textColor="secondary" indicatorColor="secondary" action={mobileTabRef} onChange={handleChange} aria-label="account tabs" variant="scrollable">
+            <Tab label="Account Details" value="accDetails" />
+            <Tab label="Address Book" value="addressBook" />
+          </TabList>
+          <TabPanel value="accDetails" className={styles.noPaddingLeft}>
+            <AccountDetails />
+          </TabPanel>
+          <TabPanel value="addressBook" className={styles.fullWidth}>
+            <AddressBook />
+          </TabPanel>
+        </TabContext>
       </div>
     </Grid>
   );

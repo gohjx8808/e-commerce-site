@@ -21,12 +21,6 @@ const useStyle = makeStyles((theme:Theme) => ({
     backgroundColor: 'transparent!important',
     color: 'black!important',
   },
-  indicatorIcon: {
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '0.7rem',
-    },
-    fontSize: '1rem',
-  },
   carouselContainerRoot: {
     paddingTop: 15,
     [theme.breakpoints.up('sm')]: {
@@ -70,7 +64,7 @@ const HomeBanner = () => {
       animation="slide"
       interval={5000}
       timeout={800}
-      IndicatorIcon={<FiberManualRecordIcon className={styles.indicatorIcon} aria-label="indicator" />}
+      IndicatorIcon={<FiberManualRecordIcon fontSize="small" aria-label="indicator" />}
       className={styles.carouselContainerRoot}
     >
       {homeBannerQuery.allFile.edges.map((banner:imageInnerStructure) => {

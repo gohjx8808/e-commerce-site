@@ -1,7 +1,6 @@
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import React from 'react';
-import useGlobalStyles from '../../../useGlobalStyles';
 
 interface SingleAccDataOwnProps{
   label:string
@@ -10,7 +9,6 @@ interface SingleAccDataOwnProps{
 }
 
 const SingleAccData = (props:SingleAccDataOwnProps) => {
-  const globalStyles = useGlobalStyles();
   const { label, data, Icon } = props;
 
   return (
@@ -22,7 +20,7 @@ const SingleAccData = (props:SingleAccDataOwnProps) => {
               {Icon}
             </Grid>
             <Grid item>
-              <Typography className={globalStyles.boldText}>{label}</Typography>
+              <Typography fontWeight="500">{label}</Typography>
             </Grid>
           </Grid>
         </Grid>

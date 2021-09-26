@@ -43,13 +43,13 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
                 !lightbg && inputStyles.calendarWhite,
                 formerror && inputStyles.calendarError,
               )}
-              InputLabelProps={{ className: inputStyles.unFocusLabel }}
+              InputLabelProps={{ className: clsx(!lightbg && inputStyles.unFocusLabel) }}
               error={!!formerror}
               color={lightbg ? 'secondary' : 'primary'}
               helperText={formerror?.message}
             />
           )}
-          InputProps={{ className: globalStyles.white }}
+          InputProps={{ className: clsx(!lightbg && globalStyles.white) }}
           disableFuture
           {...props}
         />

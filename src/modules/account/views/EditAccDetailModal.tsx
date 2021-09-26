@@ -64,7 +64,6 @@ const EditAccDetailModal = () => {
                 name="fullName"
                 lightbg={1}
                 label="Full Name"
-                labelWidth={68}
                 defaultinput={currentUserDetails.fullName}
                 startAdornment={<InputAdornment position="start"><PersonIcon /></InputAdornment>}
                 formerror={errors.fullName}
@@ -76,7 +75,6 @@ const EditAccDetailModal = () => {
                 name="email"
                 lightbg={1}
                 label="Email"
-                labelWidth={40}
                 defaultinput={currentUserDetails.email}
                 startAdornment={<InputAdornment position="start"><EmailIcon /></InputAdornment>}
                 formerror={errors.email}
@@ -88,9 +86,8 @@ const EditAccDetailModal = () => {
                 name="phoneNumber"
                 lightbg={1}
                 label="Phone Number"
-                labelWidth={100}
                 defaultinput={currentUserDetails.phoneNumber}
-                startAdornment={<InputAdornment position="start"><PhoneIcon /></InputAdornment>}
+                startAdornment={<InputAdornment position="start"><PhoneIphoneIcon /></InputAdornment>}
                 formerror={errors.phoneNumber}
               />
             </Grid>
@@ -111,7 +108,6 @@ const EditAccDetailModal = () => {
               <ControlledDatePicker
                 control={control}
                 name="dob"
-                inputVariant="outlined"
                 lightbg={1}
                 label="Date of Birth"
                 defaultdate={currentUserDetails.dob}

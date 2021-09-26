@@ -1,18 +1,18 @@
-import { Typography } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { defaultAddressData } from '../../../utils/constants';
-import useGlobalStyles from '../../../useGlobalStyles';
-import { updateSelectedAddress } from '../../account/src/accountReducer';
+import Dialog from '@mui/material/Dialog';
+import Typography from '@mui/material/Typography';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
 import productStyle from '../src/productStyle';
+import { updateSelectedAddress } from '../../account/src/accountReducer';
+import useGlobalStyles from '../../../useGlobalStyles';
+import { defaultAddressData } from '../../../utils/constants';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 
 interface CheckoutAddressListModalOwnProps{
   isVisible:boolean
@@ -45,7 +45,6 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
           {selectedAddress.addressLine1 && <Button variant="outlined" onClick={clearSelection}>Clear selection</Button>}
         </Grid>
       </DialogTitle>
-
       {addressList ? (
         <List>
           {addressList.map((address) => (
