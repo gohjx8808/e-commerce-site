@@ -1,19 +1,19 @@
-import Button from '@material-ui/core/Button';
-import Chip from '@material-ui/core/Chip';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import EmailIcon from '@mui/icons-material/Email';
-import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
-import WorkIcon from '@material-ui/icons/Work';
 import clsx from 'clsx';
 import React from 'react';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
+import HomeIcon from '@mui/icons-material/Home';
+import EditIcon from '@mui/icons-material/Edit';
+import WorkIcon from '@mui/icons-material/Work';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { internationalPhoneNumberFormatter } from '../../../utils/helper';
 import useGlobalStyles from '../../../useGlobalStyles';
@@ -86,7 +86,7 @@ const AddressBook = () => {
                           <Grid item className={styles.xsFullWidth}>
                             <Grid container direction="row" spacing={1}>
                               <Grid item>
-                                <PhoneIcon />
+                                <PhoneIphoneIcon />
                               </Grid>
                               <Grid item>
                                 <Typography className={globalStyles.boldText}>
