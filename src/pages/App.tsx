@@ -1,4 +1,3 @@
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@mui/styles';
 import { RouteComponentProps, Router } from '@reach/router';
 import { navigate } from 'gatsby';
@@ -11,6 +10,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 import { useAppSelector } from '../hooks';
 import routeNames from '../utils/routeNames';
 

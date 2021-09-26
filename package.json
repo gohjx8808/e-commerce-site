@@ -59,7 +59,7 @@
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.8.1",
-    "react-material-ui-carousel": "^2.2.6",
+    "react-material-ui-carousel": "^2.3.7-mui5",
     "react-redux": "^7.2.4",
     "react-scroll": "^1.8.3",
     "redux": "^4.1.0",
