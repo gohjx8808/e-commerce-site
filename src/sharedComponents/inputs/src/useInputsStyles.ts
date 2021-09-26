@@ -8,9 +8,7 @@ export default makeStyles((theme:Theme) => ({
     },
   },
   unFocusLabel: {
-    '&.MuiInputLabel-root': {
-      color: 'white',
-    },
+    color: 'white',
   },
   removedAutofillStyling: {
     '&.MuiOutlinedInput-input': {

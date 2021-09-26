@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Toolbar from '@mui/material/Toolbar';
 import { useAppSelector } from '../hooks';
 import routeNames from '../utils/routeNames';
 
@@ -40,38 +41,28 @@ const useStyles = makeStyles((theme:Theme) => ({
     flexGrow: 1,
   },
   pageBannerBg: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: !isSSR ? theme.palette.secondary.main : '',
     padding: 10,
   },
   pageBannerText: {
     color: 'white',
   },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  },
   root: {
     display: 'flex',
     minHeight: '100vh',
-  },
-  pageComponentContainer: {
-    padding: theme.spacing(3),
   },
   authContent: {
     flexGrow: 1,
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: !isSSR ? theme.palette.primary.main : '',
   },
 }));
 
+const isSSR = typeof window === 'undefined';
+
 const App = () => {
   const styles = useStyles();
-  const isSSR = typeof window === 'undefined';
   return (
     <>
       {!isSSR && (
@@ -164,7 +155,7 @@ const MainRoutes = (props: {
       <Grid container direction="column">
         <main className={styles.content}>
           <div id="back-to-top-anchor" />
-          <div className={styles.toolbar} />
+          <Toolbar />
           {homeCarouselBanner && <HomeBanner />}
           {pageBannerTitle && (
           <Grid item xs={12} className={styles.pageBannerBg}>
@@ -173,7 +164,7 @@ const MainRoutes = (props: {
             </Grid>
           </Grid>
           )}
-          <Box className={styles.pageComponentContainer}>
+          <Box sx={{ m: 3 }}>
             {pageComponent}
           </Box>
         </main>
