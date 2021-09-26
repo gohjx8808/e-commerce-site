@@ -1,11 +1,11 @@
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@mui/styles';
-import Typography from '@material-ui/core/Typography';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useLocation } from '@reach/router';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
 import routeNames from '../utils/routeNames';
 
 const useStyle = makeStyles({

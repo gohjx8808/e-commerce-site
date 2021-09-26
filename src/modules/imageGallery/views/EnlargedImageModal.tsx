@@ -1,4 +1,4 @@
-import Dialog from '@material-ui/core/Dialog';
+import Dialog from '@mui/material/Dialog';
 import { GatsbyImage } from 'gatsby-plugin-image';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';

@@ -1,10 +1,10 @@
 import { navigate } from 'gatsby';
 import React from 'react';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import ImageSearchOutlinedIcon from '@material-ui/icons/ImageSearchOutlined';
-import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
-import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import SpeakerNotesIcon from '@material-ui/icons/SpeakerNotes';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import ImageSearchOutlinedIcon from '@mui/icons-material/ImageSearchOutlined';
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
+import SpeakerNotesIcon from '@mui/icons-material/SpeakerNotes';
 import { useLocation } from '@reach/router';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';

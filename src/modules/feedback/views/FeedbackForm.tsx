@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Grid from '@mui/material/Grid';
 import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -38,7 +38,6 @@ const FeedbackForm = () => {
                   lightbg={1}
                   label="Nickname"
                   formerror={errors.nickname}
-                  labelWidth={65}
                   infotext="How should we address you."
                 />
               </Grid>
@@ -49,7 +48,6 @@ const FeedbackForm = () => {
                   lightbg={1}
                   label="Email"
                   formerror={errors.email}
-                  labelWidth={40}
                   infotext="Email is solely for the purpose of replying your feedback."
                 />
               </Grid>
@@ -63,7 +61,6 @@ const FeedbackForm = () => {
                   multiline
                   rows={10}
                   formerror={errors.feedback}
-                  labelWidth={60}
                 />
               </Grid>
               <Grid item xs={12}>

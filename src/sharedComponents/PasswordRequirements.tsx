@@ -1,10 +1,9 @@
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@mui/styles';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
-import DoneIcon from '@material-ui/icons/Done';
-
+import CloseIcon from '@mui/icons-material/Close';
+import DoneIcon from '@mui/icons-material/Done';
 import React, { useCallback, useEffect, useState } from 'react';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 interface PasswordRequirementsOwnProps{
   password:string

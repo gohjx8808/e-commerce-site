@@ -1,15 +1,10 @@
-import Menu, { MenuProps } from '@material-ui/core/Menu';
-import { withStyles } from '@material-ui/core/styles';
+import Menu, { MenuProps } from '@mui/material/Menu';
+import styled from '@mui/styles/styled';
 import React from 'react';
 
-const StyledMenu = withStyles({
-  paper: {
-    border: '1px solid #d3d4d5',
-  },
-})((props: MenuProps) => (
+const StyledMenu = styled((props:MenuProps) => (
   <Menu
     elevation={0}
-    getContentAnchorEl={null}
     anchorOrigin={{
       vertical: 'bottom',
       horizontal: 'center',
@@ -20,6 +15,10 @@ const StyledMenu = withStyles({
     }}
     {...props}
   />
-));
+))({
+  '& .MuiPaper-root': {
+    border: '1px solid #d3d4d5',
+  },
+});
 
 export default StyledMenu;

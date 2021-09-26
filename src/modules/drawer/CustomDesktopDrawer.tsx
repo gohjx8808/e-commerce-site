@@ -1,13 +1,13 @@
-import Divider from '@material-ui/core/Divider';
 import {
   makeStyles,
 } from '@mui/styles';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import clsx from 'clsx';
 import React from 'react';
 import { Theme } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { drawerWidth } from '../../utils/constants';
 import CustomDrawerItems from './CustomDrawerItems';
 

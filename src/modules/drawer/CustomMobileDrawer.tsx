@@ -1,4 +1,4 @@
-import Drawer from '@material-ui/core/Drawer';
+import Drawer from '@mui/material/Drawer';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { drawerWidth } from '../../utils/constants';
