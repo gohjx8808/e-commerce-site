@@ -14,7 +14,9 @@ import HomeIcon from '@mui/icons-material/Home';
 import EditIcon from '@mui/icons-material/Edit';
 import WorkIcon from '@mui/icons-material/Work';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import {
+  useAppDispatch, useAppSelector, useMdUpMediaQuery, useSmUDownMediaQuery,
+} from '../../../hooks';
 import { internationalPhoneNumberFormatter } from '../../../utils/helper';
 import useGlobalStyles from '../../../useGlobalStyles';
 import {
@@ -52,6 +54,9 @@ const AddressBook = () => {
     dispatch(toggleDeleteAddressConfirmationModal(true));
   };
 
+  const mdView = useMdUpMediaQuery();
+  const smView = useSmUDownMediaQuery();
+
   return (
     <Grid item xs={12}>
       <Grid container justifyContent="flex-end" alignItems="center" className={styles.bottomSpacing}>
@@ -68,9 +73,9 @@ const AddressBook = () => {
                   <Divider />
                   <Grid item xs={12} className={styles.topSpacing}>
                     <Grid container justifyContent="space-between" alignItems="center" direction="row">
-                      <Grid item>
+                      <Grid item lg={7} md={10} xs={12}>
                         <Grid container alignItems="center" direction="row">
-                          <Grid item className={styles.xsFullWidth}>
+                          <Grid item md={3} sm={4} xs={12} className={styles.xsFullWidth}>
                             <Grid container direction="row" spacing={1}>
                               <Grid item>
                                 <PersonIcon />
@@ -83,7 +88,7 @@ const AddressBook = () => {
                             </Grid>
                           </Grid>
                           <Divider orientation="vertical" flexItem variant="middle" className={styles.smUpView} />
-                          <Grid item className={styles.xsFullWidth}>
+                          <Grid item md={3} sm={3} xs={12} className={styles.xsFullWidth}>
                             <Grid container direction="row" spacing={1}>
                               <Grid item>
                                 <PhoneIphoneIcon />
@@ -96,7 +101,7 @@ const AddressBook = () => {
                             </Grid>
                           </Grid>
                           <Divider orientation="vertical" flexItem variant="middle" className={styles.smUpView} />
-                          <Grid item className={styles.xsFullWidth}>
+                          <Grid item md={3} sm={4} xs={12} className={styles.xsFullWidth}>
                             <Grid container direction="row" spacing={1}>
                               <Grid item>
                                 <EmailIcon />
@@ -129,17 +134,19 @@ const AddressBook = () => {
                           )}
                         </Grid>
                       </Grid>
-                      <Grid item className={styles.desktopView}>
-                        <IconButton color="secondary" onClick={() => onEditAddress(address)}>
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          className={styles.defaultColor}
-                          onClick={() => onDeleteAddress(address)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Grid>
+                      {mdView && (
+                        <Grid item>
+                          <IconButton color="secondary" onClick={() => onEditAddress(address)}>
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton
+                            className={styles.defaultColor}
+                            onClick={() => onDeleteAddress(address)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Grid>
+                      )}
                     </Grid>
                   </Grid>
                   <Grid container direction="row" spacing={1} className={styles.lgBottomSpacing}>
@@ -164,8 +171,9 @@ const AddressBook = () => {
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Grid container justifyContent={address.defaultOption === '1' ? 'flex-start' : 'space-between'} alignItems="center" className={clsx(styles.mobileView, styles.mdDownBottomSpacing)}>
-                    {address.tag && (
+                  {smView && (
+                    <Grid container justifyContent={address.defaultOption === '1' ? 'flex-start' : 'space-between'} alignItems="center" className={styles.mdDownBottomSpacing}>
+                      {address.tag && (
                       <Grid item>
                         <Chip
                           className={address.tag === 'Home' ? styles.homeTagColor : styles.workTagColor}
@@ -174,8 +182,8 @@ const AddressBook = () => {
                           icon={address.tag === 'Home' ? <HomeIcon className={styles.homeTagColor} /> : <WorkIcon className={styles.workTagColor} />}
                         />
                       </Grid>
-                    )}
-                    {address.defaultOption === '1' && (
+                      )}
+                      {address.defaultOption === '1' && (
                       <Grid item className={styles.tagChipPadding}>
                         <Chip
                           className={styles.defaultColor}
@@ -183,21 +191,24 @@ const AddressBook = () => {
                           variant="outlined"
                         />
                       </Grid>
-                    )}
-                    <Grid item xs={address.defaultOption === '1' || (address.defaultOption === '0' && !address.tag) ? 12 : 6}>
-                      <Grid container justifyContent="flex-end" alignItems="center" className={styles.mobileView}>
-                        <IconButton color="secondary" onClick={() => onEditAddress(address)}>
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          className={styles.defaultColor}
-                          onClick={() => onDeleteAddress(address)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
+                      )}
+                      <Grid item xs={address.defaultOption === '1' || (address.defaultOption === '0' && !address.tag) ? 12 : 6}>
+                        {smView && (
+                        <Grid container justifyContent="flex-end" alignItems="center">
+                          <IconButton color="secondary" onClick={() => onEditAddress(address)}>
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton
+                            className={styles.defaultColor}
+                            onClick={() => onDeleteAddress(address)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Grid>
+                        )}
                       </Grid>
                     </Grid>
-                  </Grid>
+                  )}
                 </Grid>
               ))}
             </Grid>

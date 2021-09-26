@@ -5,7 +5,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import productStyle from '../src/productStyle';
@@ -13,6 +12,7 @@ import { updateSelectedAddress } from '../../account/src/accountReducer';
 import useGlobalStyles from '../../../useGlobalStyles';
 import { defaultAddressData } from '../../../utils/constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import StyledListItem from '../../../sharedComponents/StyledListItem';
 
 interface CheckoutAddressListModalOwnProps{
   isVisible:boolean
@@ -42,14 +42,13 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
       <DialogTitle id="addressBook">
         <Grid container justifyContent="space-between">
           <Typography variant="h4">Address Book</Typography>
-          {selectedAddress.addressLine1 && <Button variant="outlined" onClick={clearSelection}>Clear selection</Button>}
+          {selectedAddress.addressLine1 && <Button variant="outlined" color="secondary" onClick={clearSelection}>Clear selection</Button>}
         </Grid>
       </DialogTitle>
       {addressList ? (
         <List>
           {addressList.map((address) => (
-            <ListItem
-              button
+            <StyledListItem
               selected={address === selectedAddress}
               onClick={() => onSelectAddress(address)}
               key={address.addressLine1}
@@ -89,7 +88,7 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
                   </>
                 )}
               />
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       ) : (

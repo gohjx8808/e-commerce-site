@@ -1,15 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Grid from '@material-ui/core/Grid';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import HomeIcon from '@material-ui/icons/Home';
-import WorkIcon from '@material-ui/icons/Work';
+import WorkIcon from '@mui/icons-material/Work';
+import HomeIcon from '@mui/icons-material/Home';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import InputAdornment from '@mui/material/InputAdornment';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledPicker from '../../../sharedComponents/inputs/views/ControlledPicker';
 import ControlledRadioButton from '../../../sharedComponents/inputs/views/ControlledRadioButton';
@@ -112,7 +112,6 @@ const AddressModal = () => {
                 name="fullName"
                 lightbg={1}
                 label="Full Name"
-                labelWidth={68}
                 formerror={errors.fullName}
               />
             </Grid>
@@ -122,7 +121,6 @@ const AddressModal = () => {
                 name="phoneNumber"
                 lightbg={1}
                 label="Phone Number"
-                labelWidth={100}
                 formerror={errors.phoneNumber}
                 startAdornment={(
                   <InputAdornment position="start">
@@ -136,7 +134,6 @@ const AddressModal = () => {
                 control={control}
                 name="email"
                 label="Email Address"
-                labelWidth={95}
                 lightbg={1}
                 formerror={errors.email}
               />
@@ -146,7 +143,6 @@ const AddressModal = () => {
                 control={control}
                 name="addressLine1"
                 label="Address Line 1"
-                labelWidth={100}
                 lightbg={1}
                 formerror={errors.addressLine1}
               />
@@ -156,7 +152,6 @@ const AddressModal = () => {
                 control={control}
                 name="addressLine2"
                 label="Address Line 2"
-                labelWidth={100}
                 lightbg={1}
               />
             </Grid>
@@ -166,7 +161,6 @@ const AddressModal = () => {
                 name="postcode"
                 label="Postcode"
                 lightbg={1}
-                labelWidth={60}
                 maxLength={10}
                 formerror={errors.postcode}
               />
@@ -177,7 +171,6 @@ const AddressModal = () => {
                 name="city"
                 label="City"
                 lightbg={1}
-                labelWidth={25}
                 formerror={errors.city}
               />
             </Grid>
@@ -197,7 +190,6 @@ const AddressModal = () => {
                   control={control}
                   name="outsideMalaysiaState"
                   label="Foreign Country State"
-                  labelWidth={145}
                   lightbg={1}
                   formerror={errors.outsideMalaysiaState}
                 />
@@ -208,7 +200,6 @@ const AddressModal = () => {
                 control={control}
                 name="country"
                 label="Country"
-                labelWidth={55}
                 lightbg={1}
                 formerror={errors.country}
               />

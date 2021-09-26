@@ -37,18 +37,6 @@ const accountStyles = makeStyles((theme:Theme) => ({
     color: 'red!important',
     borderColor: 'red!important',
   },
-  desktopView: {
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
-    display: 'none',
-  },
-  mobileView: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-    },
-    display: 'none',
-  },
   noPaddingLeft: {
     [theme.breakpoints.down('xs')]: {
       paddingLeft: 0,
