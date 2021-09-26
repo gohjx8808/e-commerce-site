@@ -105,7 +105,7 @@ const useStyles = makeStyles((theme:Theme) => ({
     },
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: theme.zIndex.drawer - 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -227,9 +227,9 @@ const MenuBar = () => {
       <ElevationScroll>
         <AppBar
           position="fixed"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: drawerOpen,
-          })}
+          // className={clsx(classes.appBar, {
+          //   [classes.appBarShift]: drawerOpen,
+          // })}
         >
           <Toolbar className={classes.menuIconShift}>
             <IconButton
