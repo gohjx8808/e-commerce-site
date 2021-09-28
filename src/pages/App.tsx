@@ -27,8 +27,8 @@ const AccountScreen = lazy(() => import('../modules/account/views/AccountScreen'
 const ForgotPassword = lazy(() => import('../modules/auth/views/ForgotPassword'));
 const FeedbackForm = lazy(() => import('../modules/feedback/views/FeedbackForm'));
 const Footer = lazy(() => import('../modules/Footer'));
-const HomeBanner = lazy(() => import('../modules/HomeBanner'));
-const HomeScreen = lazy(() => import('../modules/HomeScreen'));
+const HomeBanner = lazy(() => import('../modules/home/HomeBanner'));
+const HomeScreen = lazy(() => import('../modules/home/HomeScreen'));
 const ImageGallery = lazy(() => import('../modules/imageGallery/views/ImageGallery'));
 const LearnMore = lazy(() => import('../modules/LearnMore'));
 const Cart = lazy(() => import('../modules/products/views/Cart'));

@@ -1,6 +1,9 @@
-import { makeStyles } from '@mui/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import clsx from 'clsx';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import ImageListItem from '@mui/material/ImageListItem';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
 import {
   graphql, Link as GatsbyLink, navigate, useStaticQuery,
 } from 'gatsby';
@@ -8,22 +11,10 @@ import {
   GatsbyImage, getImage, ImageDataLike,
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import IconButton from '@mui/material/IconButton';
-import { storeAllProducts } from './products/src/productReducers';
-import routeNames from '../utils/routeNames';
-import useGlobalStyles from '../useGlobalStyles';
-import { useAppDispatch } from '../hooks';
-
-const useStyle = makeStyles({
-  imageList: {
-    maxHeight: 450,
-  },
-});
+import { useAppDispatch } from '../../hooks';
+import routeNames from '../../utils/routeNames';
+import { storeAllProducts } from '../products/src/productReducers';
+import HomeImageList from './HomeImageList';
 
 interface imageListImages{
   productImage:ImageDataLike
@@ -34,8 +25,6 @@ interface imageListImages{
 const HomeScreen = () => {
   const [productImages, setProductImages] = useState<imageListImages[]>([]);
   const dispatch = useAppDispatch();
-  const styles = useStyle();
-  const globalStyles = useGlobalStyles();
   const homeQuery = useStaticQuery(graphql`
     query {
       products: allContentfulProducts(filter: {node_locale: {eq: "en-US"}}) {
@@ -79,21 +68,21 @@ const HomeScreen = () => {
   }, [dispatch, homeQuery.products.edges]);
 
   return (
-    <Grid container justifyContent="center" alignItems="center" className={globalStyles.componentTopSpacing}>
+    <Grid container justifyContent="center" alignItems="center" marginTop={10}>
       <Grid item xs={12}>
         <Grid container justifyContent="center" alignItems="center" direction="column">
-          <Typography variant="h4" color="secondary" className={globalStyles.componentQuarterBottomSpacing}>Welcome!</Typography>
-          <Typography variant="h6" className={globalStyles.centerText}>Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
-          <Typography variant="h6" className={clsx(globalStyles.centerText, globalStyles.componentQuarterBottomSpacing)}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
-          <Link component={GatsbyLink} to={routeNames.learnMore}>
-            <Typography variant="subtitle1" color="secondary" className={globalStyles.centerText}>ABOUT MY SHOP</Typography>
+          <Typography variant="h4" color="secondary" marginBottom={3}>Welcome!</Typography>
+          <Typography variant="h6" textAlign="center">Hello! Welcome to the path towards my Dream! YJ Art Journal!</Typography>
+          <Typography variant="h6" textAlign="center" marginBottom={3}>You are very welcome to browse along and hope it will lighten up your day! Enjoy!</Typography>
+          <Link component={GatsbyLink} to={routeNames.learnMore} underline="hover">
+            <Typography variant="subtitle1" color="secondary" textAlign="center">ABOUT MY SHOP</Typography>
           </Link>
         </Grid>
       </Grid>
-      <Grid container className={clsx(globalStyles.componentTopSpacing, globalStyles.componentQuarterBottomSpacing)} direction="column">
+      <Grid container marginTop={10} marginBottom={3} direction="column">
         <Typography variant="h5" color="secondary">Product Gallery</Typography>
       </Grid>
-      <ImageList rowHeight="auto" cols={5} className={styles.imageList}>
+      <HomeImageList rowHeight="auto" cols={5}>
         {productImages.map((image) => {
           const productImagesData = getImage(image.productImage)!;
           return (
@@ -109,7 +98,7 @@ const HomeScreen = () => {
             </ImageListItem>
           );
         })}
-      </ImageList>
+      </HomeImageList>
       <IconButton aria-label="more product images" onClick={() => navigate(routeNames.imageGallery)}>
         <ExpandMoreIcon />
       </IconButton>
