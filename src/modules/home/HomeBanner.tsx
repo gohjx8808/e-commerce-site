@@ -1,17 +1,13 @@
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { graphql, useStaticQuery } from 'gatsby';
-import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
+import { getImage, ImageDataLike } from 'gatsby-plugin-image';
 import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { makeStyles } from '@mui/styles';
 import { Theme } from '@mui/material/styles';
+import HomeCarouselImage from './styledComponents/HomeCarouselImage';
 
 const useStyle = makeStyles((theme:Theme) => ({
-  carouselImages: {
-    [theme.breakpoints.up('sm')]: {
-      borderRadius: 10,
-    },
-  },
   carouselNavWrapper: {
     '&:hover': {
       backgroundColor: '#FFFFFF60',
@@ -56,11 +52,8 @@ const HomeBanner = () => {
 
   return (
     <Carousel
-      navButtonsWrapperProps={{ className: styles.carouselNavWrapper, style: {} }}
-      navButtonsProps={{
-        className: styles.productCarouselNavButton,
-        style: {},
-      }}
+      navButtonsWrapperProps={{ className: styles.carouselNavWrapper }}
+      navButtonsProps={{ className: styles.productCarouselNavButton }}
       animation="slide"
       interval={5000}
       timeout={800}
@@ -71,11 +64,10 @@ const HomeBanner = () => {
         const bannerNode = banner.node;
         const bannerRealImageData = getImage(bannerNode.childImageSharp)!;
         return (
-          <GatsbyImage
+          <HomeCarouselImage
             image={bannerRealImageData}
             alt={bannerNode.id}
             key={bannerNode.id}
-            imgClassName={styles.carouselImages}
           />
         );
       })}

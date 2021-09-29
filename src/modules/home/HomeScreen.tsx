@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import routeNames from '../../utils/routeNames';
 import { storeAllProducts } from '../products/src/productReducers';
-import HomeImageList from './HomeImageList';
+import HomeImageList from './styledComponents/HomeImageList';
 
 interface imageListImages{
   productImage:ImageDataLike
