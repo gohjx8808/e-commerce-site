@@ -30,7 +30,7 @@ const Footer = lazy(() => import('../modules/Footer'));
 const HomeBanner = lazy(() => import('../modules/home/HomeBanner'));
 const HomeScreen = lazy(() => import('../modules/home/HomeScreen'));
 const ImageGallery = lazy(() => import('../modules/imageGallery/views/ImageGallery'));
-const LearnMore = lazy(() => import('../modules/LearnMore'));
+const LearnMore = lazy(() => import('../modules/learnMore/LearnMore'));
 const Cart = lazy(() => import('../modules/products/views/Cart'));
 const Checkout = lazy(() => import('../modules/products/views/Checkout'));
 const EnlargedProductImageCarouselModal = lazy(() => import('../modules/products/views/EnlargedProductImageCarouselModal'));

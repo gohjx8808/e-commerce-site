@@ -7,18 +7,10 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { useXsDownMediaQuery } from '../hooks';
 
-const useStyle = makeStyles({
-  grow: {
-    flexGrow: 1,
-  },
-});
-
 const Footer = () => {
-  const styles = useStyle();
   const isSmView = useXsDownMediaQuery();
 
   return (
@@ -38,7 +30,7 @@ const Footer = () => {
           <Typography variant="body1" color="inherit">
             © 2021 yjartjournal
           </Typography>
-          <Box className={styles.grow} />
+          <Box sx={{ flexGrow: 1 }} />
           {!isSmView && (
             <>
               <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal.madewithlove/">
