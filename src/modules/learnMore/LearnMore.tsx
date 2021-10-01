@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import BoldItalicFont from '../../sharedComponents/styledComponents/BoldItalicFont';
+import BoldItalicFont from '../../styledComponents/BoldItalicFont';
 import StyledTitle from './StyledTitle';
 
 const LearnMore = () => (
