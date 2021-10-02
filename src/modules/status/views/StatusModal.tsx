@@ -92,7 +92,7 @@ const StatusModal = () => {
             {statusTitle}
           </Typography>
         </Grid>
-        <Grid item lg={4} sm={7} xs={9}>
+        <Grid item lg={4} sm={7} xs={9} className={styles.statusMsgContainer}>
           <Typography color="secondary" className={styles.statusMsg}>{statusMsg}</Typography>
         </Grid>
         <Grid container justifyContent="center">

@@ -9,10 +9,10 @@ export default makeStyles((theme:Theme) => ({
     [theme.breakpoints.up('lg')]: {
       width: '50%',
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.only('xs')]: {
       width: '100%',
     },
-    width: '80%',
+    width: '90%',
   },
   statusTitle: {
     [theme.breakpoints.down('sm')]: {
@@ -28,7 +28,7 @@ export default makeStyles((theme:Theme) => ({
       fontSize: 20,
       paddingBottom: 5,
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.only('xs')]: {
       fontSize: 15,
       paddingBottom: 5,
     },
@@ -48,5 +48,14 @@ export default makeStyles((theme:Theme) => ({
       padding: '5px 5px 5px 5px',
     },
     padding: '10px 20px 10px 20px',
+  },
+  statusMsgContainer: {
+    [theme.breakpoints.up('lg')]: {
+      width: '40%',
+    },
+    [theme.breakpoints.only('xs')]: {
+      width: '80%',
+    },
+    width: '70%',
   },
 }));
