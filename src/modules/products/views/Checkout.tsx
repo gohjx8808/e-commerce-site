@@ -407,7 +407,7 @@ const Checkout = () => {
                       </Button>
                     </span>
                   </Tooltip>
-                  <DividerWithText text="Or" />
+                  <DividerWithText>Or</DividerWithText>
                   <Grid item xs={12}>
                     <ControlledTextInput
                       control={control}

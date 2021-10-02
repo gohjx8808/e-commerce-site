@@ -1,45 +1,29 @@
-import { makeStyles } from '@mui/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import { GridCellParams } from '@mui/x-data-grid';
 import React, {
   memo, useRef, useState,
 } from 'react';
-import { GridCellParams } from '@mui/x-data-grid';
-import Popper from '@mui/material/Popper';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+import ExpandedCellPopper from '../styledComponents/ExpandedCellPopper';
 
 interface CellExpandProps {
   value: string;
   width: number;
 }
 
-const useStyles = makeStyles({
-  root: {
-    alignItems: 'center',
-    lineHeight: '24px',
-    width: '100%',
-    height: '100%',
-    position: 'relative',
-    display: 'flex',
-    '& .cellValue': {
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-    },
-  },
-});
-
 const CellExpand = memo((props: CellExpandProps) => {
   const { width, value } = props;
   const wrapper = useRef<HTMLDivElement | null>(null);
   const cellDiv = useRef(null);
-  const cellValue = useRef(null);
+  const cellValue = useRef<null | HTMLElement>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const classes = useStyles();
   const [showFullCell, setShowFullCell] = useState(false);
   const [showPopper, setShowPopper] = useState(false);
 
   const handleMouseEnter = () => {
-    const isCurrentlyOverflown = Boolean(cellValue.current!);
+    const currentCellValue = cellValue.current!;
+    const isCurrentlyOverflown = currentCellValue.clientWidth < currentCellValue.scrollWidth;
     setShowPopper(isCurrentlyOverflown);
     setAnchorEl(cellDiv.current);
     setShowFullCell(true);
@@ -50,42 +34,38 @@ const CellExpand = memo((props: CellExpandProps) => {
   };
 
   return (
-    <div
+    <Box
       ref={wrapper}
-      className={classes.root}
+      width="100%"
+      position="relative"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div
+      <Box
         ref={cellDiv}
-        style={{
-          height: 1,
-          width,
-          display: 'block',
-          position: 'absolute',
-          top: 0,
-        }}
+        width={width}
+        position="absolute"
+        top={0}
       />
-      <div ref={cellValue} className="cellValue">
+      <Box ref={cellValue} overflow="hidden" textOverflow="ellipsis">
         {value}
-      </div>
+      </Box>
       {showPopper && (
-        <Popper
+        <ExpandedCellPopper
           open={showFullCell && anchorEl != null}
           anchorEl={anchorEl}
-          style={{ width, marginLeft: -17 }}
+          width={width}
         >
           <Paper
             elevation={1}
-            style={{ minHeight: wrapper.current!.offsetHeight - 3 }}
           >
-            <Typography variant="body2" style={{ padding: 8 }}>
+            <Typography variant="body2" padding={1}>
               {value}
             </Typography>
           </Paper>
-        </Popper>
+        </ExpandedCellPopper>
       )}
-    </div>
+    </Box>
   );
 });
 

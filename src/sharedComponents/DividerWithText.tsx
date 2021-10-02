@@ -1,36 +1,14 @@
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
+import Box from '@mui/material/Box';
+import Divider, { DividerProps } from '@mui/material/Divider';
 import React from 'react';
 
-interface DividerWithTextProps{
-  text:string
-}
-
-const useStyles = makeStyles({
-  verticalSpacing: {
-    paddingTop: 20,
-    paddingBottom: 20,
-  },
-});
-
-const DividerWithText = (props:DividerWithTextProps) => {
-  const { text } = props;
-  const styles = useStyles();
+const DividerWithText = (props:DividerProps) => {
+  const { children } = props;
 
   return (
-    <Grid container alignItems="center" spacing={2} className={styles.verticalSpacing}>
-      <Grid item xs>
-        <Divider />
-      </Grid>
-      <Grid item>
-        <Typography>{text}</Typography>
-      </Grid>
-      <Grid item xs>
-        <Divider />
-      </Grid>
-    </Grid>
+    <Box marginY={3} width="100%">
+      <Divider>{children}</Divider>
+    </Box>
   );
 };
 
