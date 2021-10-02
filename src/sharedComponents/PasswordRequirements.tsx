@@ -1,36 +1,16 @@
-import { makeStyles } from '@mui/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
-import React, { useCallback, useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import React, { useCallback, useEffect, useState } from 'react';
 
 interface PasswordRequirementsOwnProps{
   password:string
   rePassword:string
 }
 
-const useStyles = makeStyles({
-  met: {
-    color: '#32cd32',
-  },
-  passwordRequirementContainer: {
-    borderColor: 'white',
-    borderWidth: 1,
-    border: 'dashed',
-    borderRadius: 2,
-    padding: 5,
-    margin: 10,
-  },
-  whiteTitle: {
-    color: 'white',
-    textAlign: 'center',
-  },
-});
-
 const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
   const { password, rePassword } = props;
-  const styles = useStyles();
 
   const [passwordRequirements, setPasswordRequirements] = useState([
     {
@@ -73,9 +53,18 @@ const PasswordRequirements = (props:PasswordRequirementsOwnProps) => {
   }, [password, rePassword, validatePassword]);
 
   return (
-    <Grid item xs={12} sm={9} className={styles.passwordRequirementContainer}>
+    <Grid
+      item
+      xs={12}
+      sm={9}
+      color="white"
+      border="1px dashed"
+      borderRadius={1}
+      padding={2}
+      margin={1}
+    >
       <Grid container justifyContent="center" alignItems="center">
-        <Typography variant="h6" className={styles.whiteTitle}>Password Requirements:</Typography>
+        <Typography variant="h6">Password Requirements:</Typography>
         {passwordRequirements.map((item) => <ChecklistItem data={item} key={item.key} />)}
       </Grid>
     </Grid>
@@ -96,22 +85,20 @@ const ChecklistItem = (props:ChecklistItemOwnProps) => {
   const { data } = props;
   const meetsReq = data.met;
 
-  const checklistStyle = useStyles();
-
   return (
     <Grid item xs={12}>
       <Grid container justifyContent="center">
-        <Grid item xs={12} sm={8} lg={5}>
+        <Grid item xs={12} sm={9} md={7} lg={5}>
           <Grid container direction="row" alignItems="center">
             <Grid item>
               {meetsReq ? (
-                <DoneIcon className={checklistStyle.met} />
+                <DoneIcon htmlColor="#32cd32" />
               ) : (
-                <CloseIcon className={checklistStyle.whiteTitle} />
+                <CloseIcon />
               )}
             </Grid>
             <Grid item>
-              <Typography className={meetsReq ? checklistStyle.met : checklistStyle.whiteTitle}>
+              <Typography color={meetsReq ? '#32cd32' : 'white'}>
                 {data.label}
               </Typography>
             </Grid>

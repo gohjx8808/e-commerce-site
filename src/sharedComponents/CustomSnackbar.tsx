@@ -1,11 +1,11 @@
 import CloseIcon from '@mui/icons-material/Close';
 import CardActions from '@mui/material/CardActions';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useSnackbar } from 'notistack';
 import React, { forwardRef, useCallback } from 'react';
 import SnackbarCard from '../styledComponents/snackbar/SnackbarCard';
 import StyledSnackbarContent from '../styledComponents/snackbar/StyledSnackbarContent';
-import WhiteButton from '../styledComponents/WhiteButton';
 
 interface CustomSnackbarOwnProps{
   id: string | number
@@ -28,9 +28,9 @@ const CustomSnackbar = forwardRef<
         <SnackbarCard>
           <CardActions>
             <Typography variant="subtitle1" color="white">{message}</Typography>
-            <WhiteButton onClick={handleDismiss}>
-              <CloseIcon />
-            </WhiteButton>
+            <IconButton onClick={handleDismiss}>
+              <CloseIcon htmlColor="white" />
+            </IconButton>
           </CardActions>
         </SnackbarCard>
       </StyledSnackbarContent>
