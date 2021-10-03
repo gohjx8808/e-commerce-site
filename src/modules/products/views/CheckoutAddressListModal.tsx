@@ -12,7 +12,7 @@ import { updateSelectedAddress } from '../../account/src/accountReducer';
 import useGlobalStyles from '../../../useGlobalStyles';
 import { defaultAddressData } from '../../../utils/constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import StyledListItem from '../../../sharedComponents/StyledListItem';
+import StyledListItem from '../../../styledComponents/StyledListItem';
 
 interface CheckoutAddressListModalOwnProps{
   isVisible:boolean

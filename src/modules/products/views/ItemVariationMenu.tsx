@@ -3,9 +3,9 @@ import { useState } from 'react';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import StyledMenu from '../../../sharedComponents/StyledMenu';
-import StyledMenuItem from '../../../sharedComponents/StyledListItem';
+import StyledMenuItem from '../../../styledComponents/StyledListItem';
 import productStyle from '../src/productStyle';
+import StyledMenu from '../../../styledComponents/StyledMenu';
 
 interface ItemVariationMenuOwnProps{
   anchorEl:null | HTMLElement

@@ -9,7 +9,7 @@ import { useLocation } from '@reach/router';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import StyledListItem from '../../sharedComponents/StyledListItem';
+import StyledListItem from '../../styledComponents/StyledListItem';
 import routeNames from '../../utils/routeNames';
 
 const CustomDrawerItems = () => {

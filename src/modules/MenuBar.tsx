@@ -28,7 +28,7 @@ import CustomDesktopDrawer from './drawer/CustomDesktopDrawer';
 import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
 import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
 import routeNames from '../utils/routeNames';
-import StyledMenuItem from '../sharedComponents/StyledListItem';
+import StyledMenuItem from '../styledComponents/StyledListItem';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../hooks';
 
