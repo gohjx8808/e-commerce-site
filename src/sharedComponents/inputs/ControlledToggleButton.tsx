@@ -1,12 +1,10 @@
-import { makeStyles } from '@mui/styles';
-import ToggleButton from '@mui/material/ToggleButton';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormLabel from '@mui/material/FormLabel';
 import ToggleButtonGroup, { ToggleButtonGroupProps } from '@mui/material/ToggleButtonGroup';
-import clsx from 'clsx';
+import Typography from '@mui/material/Typography';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
-import FormLabel from '@mui/material/FormLabel';
-import Typography from '@mui/material/Typography';
-import FormHelperText from '@mui/material/FormHelperText';
+import StyledToggleButton from '../../styledComponents/inputs/StyledToggleButton';
 
 interface ControlledToggleButtonOwnProps extends ToggleButtonGroupProps{
   control:Control
@@ -16,21 +14,7 @@ interface ControlledToggleButtonOwnProps extends ToggleButtonGroupProps{
   label:string
 }
 
-const useStyles = makeStyles({
-  orangeBg: {
-    backgroundColor: 'orange!important',
-  },
-  blueBg: {
-    backgroundColor: 'lightblue!important',
-  },
-  label: {
-    paddingBottom: 10,
-    paddingTop: 5,
-  },
-});
-
 const ControlledToggleButton = (props:ControlledToggleButtonOwnProps) => {
-  const styles = useStyles();
   const {
     control, error, options, name, label,
   } = props;
@@ -41,7 +25,7 @@ const ControlledToggleButton = (props:ControlledToggleButtonOwnProps) => {
       name={name}
       render={({ field: { onChange, value } }) => (
         <>
-          <FormLabel component="legend" focused={false} className={styles.label}>{label}</FormLabel>
+          <FormLabel component="legend" focused={false} sx={{ marginY: 1 }}>{label}</FormLabel>
           <ToggleButtonGroup
             value={value}
             exclusive
@@ -52,20 +36,15 @@ const ControlledToggleButton = (props:ControlledToggleButtonOwnProps) => {
             {...props}
           >
             {options.map((option) => (
-              <ToggleButton
+              <StyledToggleButton
+                bgcolor={option.activeColor}
                 key={option.value}
-                classes={{
-                  selected: clsx({
-                    [styles.blueBg]: option.activeColor === 'blue',
-                    [styles.orangeBg]: option.activeColor === 'orange',
-                  }),
-                }}
                 value={option.value}
                 aria-label={option.label}
               >
                 {option.icon}
                 <Typography>{option.label}</Typography>
-              </ToggleButton>
+              </StyledToggleButton>
             ))}
           </ToggleButtonGroup>
           <FormHelperText error>{error?.message}</FormHelperText>

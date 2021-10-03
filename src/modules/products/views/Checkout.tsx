@@ -23,10 +23,10 @@ import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../../../ho
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import DividerWithText from '../../../sharedComponents/DividerWithText';
 import ExpandedCell from '../../../sharedComponents/ExpandedCell';
-import ControlledCheckbox from '../../../sharedComponents/inputs/views/ControlledCheckbox';
-import ControlledPicker from '../../../sharedComponents/inputs/views/ControlledPicker';
-import ControlledRadioButton from '../../../sharedComponents/inputs/views/ControlledRadioButton';
-import ControlledTextInput from '../../../sharedComponents/inputs/views/ControlledTextInput';
+import ControlledCheckbox from '../../../sharedComponents/inputs/ControlledCheckbox';
+import ControlledPicker from '../../../sharedComponents/inputs/ControlledPicker';
+import ControlledRadioButton from '../../../sharedComponents/inputs/ControlledRadioButton';
+import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
 import useGlobalStyles from '../../../useGlobalStyles';
 import { stateOptions } from '../../../utils/constants';
 import { formatPrice } from '../../../utils/helper';

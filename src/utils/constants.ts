@@ -24,7 +24,7 @@ export const booleanOptions = [
 ];
 
 export const homeColor = 'orange';
-export const workColor = 'blue';
+export const workColor = 'lightblue';
 
 export const defaultAddressData = {
   fullName: '',

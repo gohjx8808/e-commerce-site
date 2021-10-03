@@ -17,7 +17,7 @@ import { compareString } from '../../../utils/helper';
 import useGlobalStyles from '../../../useGlobalStyles';
 import productStyle from '../src/productStyle';
 
-const ControlledPicker = lazy(() => import('../../../sharedComponents/inputs/views/ControlledPicker'));
+const ControlledPicker = lazy(() => import('../../../sharedComponents/inputs/ControlledPicker'));
 const ProductCard = lazy(() => import('./ProductCard'));
 
 interface categoryAmountData{

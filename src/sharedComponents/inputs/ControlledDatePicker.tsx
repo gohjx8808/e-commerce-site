@@ -1,7 +1,7 @@
 import DatePicker, { DatePickerProps } from '@mui/lab/DatePicker';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
-import StyledTextField from '../../../styledComponents/inputs/StyledTextField';
+import StyledTextField from '../../styledComponents/inputs/StyledTextField';
 
 interface ControlledDatePickerOwnProps extends Omit<DatePickerProps<Date>, 'renderInput'|'onChange'|'value'>{
   control:Control,

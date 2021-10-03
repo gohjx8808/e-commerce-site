@@ -11,10 +11,10 @@ import InputAdornment from '@mui/material/InputAdornment';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import ControlledPicker from '../../../sharedComponents/inputs/views/ControlledPicker';
-import ControlledRadioButton from '../../../sharedComponents/inputs/views/ControlledRadioButton';
-import ControlledTextInput from '../../../sharedComponents/inputs/views/ControlledTextInput';
-import ControlledToggleButton from '../../../sharedComponents/inputs/views/ControlledToggleButton';
+import ControlledPicker from '../../../sharedComponents/inputs/ControlledPicker';
+import ControlledRadioButton from '../../../sharedComponents/inputs/ControlledRadioButton';
+import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
+import ControlledToggleButton from '../../../sharedComponents/inputs/ControlledToggleButton';
 import {
   booleanOptions, defaultAddressData, homeColor, stateOptions, workColor,
 } from '../../../utils/constants';

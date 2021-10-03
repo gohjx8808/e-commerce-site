@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import { useAppDispatch } from '../../../hooks';
-import ControlledTextInput from '../../../sharedComponents/inputs/views/ControlledTextInput';
+import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
 import useGlobalStyles from '../../../useGlobalStyles';
 import routeNames from '../../../utils/routeNames';
 import { submitForgotPassword } from '../src/authReducer';

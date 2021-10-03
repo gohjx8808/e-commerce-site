@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput';
 import React, { useState } from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
-import StyledFormControl from '../../../styledComponents/inputs/StyledFormControl';
+import StyledFormControl from '../../styledComponents/inputs/StyledFormControl';
 import CustomInputErrorIcon from './CustomInputErrorIcon';
 
 interface ControlledPasswordInputOwnProps extends OutlinedInputProps{

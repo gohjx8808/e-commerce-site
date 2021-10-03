@@ -3,7 +3,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '@mui/material/TextField';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
-import StyledAutocompleteFormControl from '../../../styledComponents/inputs/StyledAutocompleteFormControl';
+import StyledAutocompleteFormControl from '../../styledComponents/inputs/StyledAutocompleteFormControl';
 
 interface ControlledPickerOwnProps extends Omit<AutocompleteProps<optionsData, boolean, boolean, boolean>, 'renderInput'>{
   control:Control,
