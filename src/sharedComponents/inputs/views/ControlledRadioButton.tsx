@@ -4,7 +4,6 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup, { RadioGroupProps } from '@mui/material/RadioGroup';
-import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
 
@@ -16,17 +15,6 @@ interface ControlledRadioButtonOwnProps extends Omit<RadioGroupProps, 'defaultVa
   options:optionsData[],
 }
 
-const useStyles = makeStyles({
-  labelRoot: {
-    paddingRight: 20,
-    paddingBottom: 10,
-    paddingTop: 5,
-  },
-  spaceBetweenRadio: {
-    paddingRight: 20,
-  },
-});
-
 const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
   const {
     control,
@@ -36,8 +24,6 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
     error,
     options,
   } = props;
-
-  const styles = useStyles();
 
   return (
     <Controller
@@ -52,7 +38,17 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
           <FormControl
             error={!!error}
           >
-            <FormLabel component="legend" className={styles.labelRoot} focused={false}>{label}</FormLabel>
+            <FormLabel
+              sx={{
+                marginRight: 3,
+                paddingBottom: 1,
+                paddingTop: 1,
+              }}
+              component="legend"
+              focused={false}
+            >
+              {label}
+            </FormLabel>
             <RadioGroup
               aria-label={label}
               value={value}
@@ -64,7 +60,7 @@ const ControlledRadioButton = (props:ControlledRadioButtonOwnProps) => {
                   value={option.value}
                   control={<Radio color="secondary" />}
                   label={option.label}
-                  className={styles.spaceBetweenRadio}
+                  sx={{ paddingRight: 3 }}
                   key={option.value}
                 />
               ))}
