@@ -1,12 +1,9 @@
 import Autocomplete, { AutocompleteProps } from '@mui/material/Autocomplete';
-import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import TextField from '@mui/material/TextField';
-import clsx from 'clsx';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
-import useGlobalStyles from '../../../useGlobalStyles';
-import useInputsStyles from '../src/useInputsStyles';
+import StyledAutocompleteFormControl from '../../../styledComponents/inputs/StyledAutocompleteFormControl';
 
 interface ControlledPickerOwnProps extends Omit<AutocompleteProps<optionsData, boolean, boolean, boolean>, 'renderInput'>{
   control:Control,
@@ -26,9 +23,6 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
     lightbg,
   } = props;
 
-  const inputStyles = useInputsStyles();
-  const globalStyles = useGlobalStyles();
-
   return (
     <Controller
       control={control}
@@ -38,23 +32,16 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
           onChange, value,
         },
       }) => (
-        <FormControl variant="outlined" className={inputStyles.container}>
+        <StyledAutocompleteFormControl lightbg={lightbg}>
           <Autocomplete
             value={value}
             getOptionLabel={(option) => option.label}
-            // getOptionSelected={
-            //   (option, selectedValue) => selectedValue && option.value === selectedValue.value
-            // }
             renderInput={(params) => (
               <TextField
                 {...params}
                 label={label}
                 variant="outlined"
-                InputLabelProps={{
-                  className: clsx(!lightbg && inputStyles.unFocusLabel),
-                }}
                 error={!!error}
-                color={lightbg ? 'secondary' : 'primary'}
               />
             )}
             blurOnSelect
@@ -62,21 +49,12 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
               onChange(newValue);
             }}
             autoComplete
-            classes={{
-              root: clsx(!lightbg && inputStyles.unFocusStyle),
-              inputRoot: clsx(!lightbg && inputStyles.unFocusLabel),
-              input: clsx(!lightbg && inputStyles.removedAutofillStyling),
-              popupIndicator: clsx(
-                !lightbg && globalStyles.white, error && inputStyles.errorColor,
-              ),
-              clearIndicator: clsx(!lightbg && globalStyles.white),
-            }}
             {...props}
           />
           <FormHelperText error>
             {error?.message}
           </FormHelperText>
-        </FormControl>
+        </StyledAutocompleteFormControl>
       )}
       defaultValue={defaultValue}
     />
