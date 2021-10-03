@@ -1,10 +1,7 @@
 import DatePicker, { DatePickerProps } from '@mui/lab/DatePicker';
-import TextField from '@mui/material/TextField';
-import clsx from 'clsx';
 import React from 'react';
 import { Control, Controller, FieldError } from 'react-hook-form';
-import useGlobalStyles from '../../../useGlobalStyles';
-import useInputsStyles from '../src/useInputsStyles';
+import StyledTextField from '../../../styledComponents/inputs/StyledTextField';
 
 interface ControlledDatePickerOwnProps extends Omit<DatePickerProps<Date>, 'renderInput'|'onChange'|'value'>{
   control:Control,
@@ -18,8 +15,6 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
   const {
     control, name, defaultdate, formerror, lightbg,
   } = props;
-  const inputStyles = useInputsStyles();
-  const globalStyles = useGlobalStyles();
 
   return (
     <Controller
@@ -35,21 +30,13 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
           value={value ? new Date(value) : null}
           onChange={(selectedDate) => onChange(selectedDate ? selectedDate.toString() : '')}
           renderInput={(params) => (
-            <TextField
+            <StyledTextField
               {...params}
-              className={clsx(
-                inputStyles.container,
-                !lightbg && inputStyles.unFocusStyle,
-                !lightbg && inputStyles.calendarWhite,
-                formerror && inputStyles.calendarError,
-              )}
-              InputLabelProps={{ className: clsx(!lightbg && inputStyles.unFocusLabel) }}
               error={!!formerror}
-              color={lightbg ? 'secondary' : 'primary'}
+              lightbg={lightbg}
               helperText={formerror?.message}
             />
           )}
-          InputProps={{ className: clsx(!lightbg && globalStyles.white) }}
           disableFuture
           {...props}
         />
@@ -62,7 +49,7 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
 ControlledDatePicker.defaultProps = {
   defaultdate: '',
   formerror: null,
-  lightbg: undefined,
+  lightbg: 0,
 };
 
 export default ControlledDatePicker;
