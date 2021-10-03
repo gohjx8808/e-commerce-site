@@ -15,7 +15,7 @@ const Footer = () => {
 
   return (
     <AppBar position="static" color="primary" elevation={0}>
-      <Container>
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
           {isSmView && (
             <>
@@ -30,7 +30,7 @@ const Footer = () => {
           <Typography variant="body1" color="inherit">
             © 2021 yjartjournal
           </Typography>
-          <Box sx={{ flexGrow: 1 }} />
+          <Box flexGrow={1} />
           {!isSmView && (
             <>
               <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal.madewithlove/">

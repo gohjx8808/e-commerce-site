@@ -1,26 +1,14 @@
-import { makeStyles } from '@mui/styles';
-import React from 'react';
-import { Theme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Zoom from '@mui/material/Zoom';
-import Box from '@mui/material/Box';
+import React from 'react';
 
 interface Props {
   children: React.ReactElement;
 }
 
-const useStyles = makeStyles((theme:Theme) => ({
-  root: {
-    position: 'fixed',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-    zIndex: theme.zIndex.appBar + 1,
-  },
-}));
-
 const ScrollTop = (props: Props) => {
   const { children } = props;
-  const classes = useStyles();
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,
@@ -42,7 +30,9 @@ const ScrollTop = (props: Props) => {
       <Box
         onClick={handleClick}
         role="presentation"
-        className={classes.root}
+        position="fixed"
+        bottom={16}
+        right={16}
       >
         {children}
       </Box>
