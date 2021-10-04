@@ -9,10 +9,9 @@ import {
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
 import {
-  useAppDispatch, useAppSelector, useSmUDownMediaQuery, useXsDownMediaQuery,
+  useAppDispatch, useAppSelector, useXsDownMediaQuery,
 } from '../../../hooks';
 import { toggleStatusModal } from '../src/statusReducer';
-import statusStyle from '../src/statusStyle';
 
 interface statusQueryInnerData{
   node:{
@@ -35,7 +34,6 @@ const StatusModal = () => {
   const statusTitle = useAppSelector((state) => state.status.statusTitle);
   const statusMsg = useAppSelector((state) => state.status.statusMsg);
   const isSuccess = useAppSelector((state) => state.status.isSuccess);
-  const styles = statusStyle();
   const [successImg, setSuccessImg] = useState<IGatsbyImageData>(defaultIGatsbyData);
   const [failImg, setFailImg] = useState<IGatsbyImageData>(defaultIGatsbyData);
 
@@ -70,33 +68,33 @@ const StatusModal = () => {
     });
   }, [statusQuery.allFile.edges, isXsView]);
 
-  const isSmView = useSmUDownMediaQuery();
-
   return (
     <Backdrop
       open={isStatusModalOpen}
-      className={styles.backdropRoot}
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
-      <Box className={styles.statusBgImgContainer}>
+      <Box width={{ xs: '100%', sm: '90%', lg: '50%' }}>
         <GatsbyImage image={isSuccess ? successImg! : failImg!} alt="fail" />
       </Box>
-      <Grid container direction="column" justifyContent="center" alignItems="center" className={styles.absolutePos}>
-        <Grid item lg={4} sm={7} xs={9}>
+      <Grid container direction="column" justifyContent="center" alignItems="center" position="absolute" marginTop={{ sm: 3 }}>
+        <Grid item>
           <Typography
-            className={styles.statusTitle}
             color="secondary"
             fontWeight="bold"
-            fontSize={isSmView ? 20 : 30}
+            variant={isXsView ? 'h5' : 'h4'}
             textAlign="center"
+            sx={{ textShadow: '0px 1px grey' }}
           >
             {statusTitle}
           </Typography>
         </Grid>
-        <Grid item lg={4} sm={7} xs={9} className={styles.statusMsgContainer}>
-          <Typography color="secondary" className={styles.statusMsg}>{statusMsg}</Typography>
+        <Grid item width={{ xs: '80%', sm: '70%', lg: '40%' }}>
+          <Typography color="secondary" textAlign="center" sx={{ textShadow: '0px 1px grey' }} variant="h6" marginBottom={2}>
+            {statusMsg}
+          </Typography>
         </Grid>
         <Grid container justifyContent="center">
-          <Button onClick={() => dispatch(toggleStatusModal(false))} color="secondary" variant="contained" className={styles.statusBtn}>
+          <Button size="large" onClick={() => dispatch(toggleStatusModal(false))} color="secondary" variant="contained">
             Close
           </Button>
         </Grid>
