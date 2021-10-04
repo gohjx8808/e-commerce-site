@@ -15,7 +15,7 @@ const Footer = () => {
 
   return (
     <AppBar position="static" color="primary" elevation={0}>
-      <Container maxWidth="xl">
+      <Container>
         <Toolbar disableGutters>
           {isSmView && (
             <>

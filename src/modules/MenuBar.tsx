@@ -4,33 +4,32 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useLocation } from '@reach/router';
-import clsx from 'clsx';
-import { navigate } from 'gatsby';
-import React, { useEffect, useState } from 'react';
-import { alpha, Theme } from '@mui/material/styles';
-import Menu from '@mui/material/Menu';
-import { makeStyles } from '@mui/styles';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
-import { updateProductFilterKeyword } from './products/src/productReducers';
-import CustomMobileDrawer from './drawer/CustomMobileDrawer';
-import CustomDesktopDrawer from './drawer/CustomDesktopDrawer';
-import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
-import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
-import routeNames from '../utils/routeNames';
-import StyledMenuItem from '../styledComponents/StyledListItem';
-import ElevationScroll from '../sharedComponents/ElevationScroll';
+import Menu from '@mui/material/Menu';
+import { alpha, Theme } from '@mui/material/styles';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/styles';
+import { useLocation } from '@reach/router';
+import { navigate } from 'gatsby';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../hooks';
+import ElevationScroll from '../sharedComponents/ElevationScroll';
+import StyledAppbar from '../styledComponents/drawer/StyledAppbar';
+import StyledMenuItem from '../styledComponents/StyledListItem';
+import routeNames from '../utils/routeNames';
+import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
+import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
+import CustomDesktopDrawer from './drawer/CustomDesktopDrawer';
+import CustomMobileDrawer from './drawer/CustomMobileDrawer';
+import { updateProductFilterKeyword } from './products/src/productReducers';
 
 const drawerWidth = 210;
 
@@ -225,17 +224,13 @@ const MenuBar = () => {
     <>
       <CssBaseline />
       <ElevationScroll>
-        <AppBar
-          position="fixed"
-          // className={clsx(classes.appBar, {
-          //   [classes.appBarShift]: drawerOpen,
-          // })}
-        >
+        <StyledAppbar position="fixed" open={drawerOpen}>
           <Toolbar className={classes.menuIconShift}>
             <IconButton
-              className={clsx(classes.menuButton, {
-                [classes.hide]: drawerOpen,
-              })}
+              sx={{
+                marginRight: '36px',
+                ...(drawerOpen && { display: 'none' }),
+              }}
               color="inherit"
               aria-label="open drawer"
               onClick={toggleDrawer}
@@ -320,13 +315,13 @@ const MenuBar = () => {
               </IconButton>
             </Box>
           </Toolbar>
-        </AppBar>
+        </StyledAppbar>
       </ElevationScroll>
       {renderMobileMenu}
-      {/* {!isXsView
+      {!isXsView
         ? <CustomDesktopDrawer drawerOpen={drawerOpen} handleDrawerClose={toggleDrawer} />
-        : <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />} */}
-      <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />
+        : <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />}
+      {/* <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} /> */}
       <SignOutConfirmationModal />
     </>
   );
