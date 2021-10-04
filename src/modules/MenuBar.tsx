@@ -10,19 +10,16 @@ import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
-import InputAdornment from '@mui/material/InputAdornment';
 import Menu from '@mui/material/Menu';
-import { alpha, Theme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
 import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../hooks';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
 import StyledAppbar from '../styledComponents/drawer/StyledAppbar';
+import { SearchContainer, SearchIconWrapper, SearchInputBase } from '../styledComponents/search';
 import StyledMenuItem from '../styledComponents/StyledListItem';
 import routeNames from '../utils/routeNames';
 import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
@@ -31,96 +28,7 @@ import CustomDesktopDrawer from './drawer/CustomDesktopDrawer';
 import CustomMobileDrawer from './drawer/CustomMobileDrawer';
 import { updateProductFilterKeyword } from './products/src/productReducers';
 
-const drawerWidth = 210;
-
-const useStyles = makeStyles((theme:Theme) => ({
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  searchInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-      alignItems: 'center',
-    },
-  },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
-  },
-  nameBtn: {
-    textTransform: 'none',
-  },
-  hide: {
-    display: 'none',
-  },
-  appBarShift: {
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer - 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  menuIconShift: {
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
-  rightSpacing: {
-    marginRight: 15,
-  },
-}));
-
 const MenuBar = () => {
-  const classes = useStyles();
   const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mobileMoreAnchor, setMobileMoreAnchor] = useState<null | HTMLElement>(null);
@@ -158,7 +66,6 @@ const MenuBar = () => {
     <Menu
       anchorEl={mobileMoreAnchor}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      // getContentAnchorEl={null}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -225,7 +132,7 @@ const MenuBar = () => {
       <CssBaseline />
       <ElevationScroll>
         <StyledAppbar position="fixed" open={drawerOpen}>
-          <Toolbar className={classes.menuIconShift}>
+          <Toolbar>
             <IconButton
               sx={{
                 marginRight: '36px',
@@ -239,33 +146,26 @@ const MenuBar = () => {
             </IconButton>
             {!(isXsView && location.pathname === routeNames.products) && (
               <Button color="inherit" onClick={() => navigate('/')}>
-                <Typography variant="h6" className={classes.nameBtn}>YJ Art Journal</Typography>
+                <Typography variant="h6" sx={{ textTransform: 'none' }}>YJ Art Journal</Typography>
               </Button>
             )}
             {location.pathname === routeNames.products && (
-              <Box className={classes.search}>
-                <Input
+              <SearchContainer>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <SearchInputBase
                   placeholder="Search…"
-                  inputProps={{ 'aria-label': 'search', className: classes.searchInput }}
+                  inputProps={{ 'aria-label': 'search' }}
                   onChange={onChangeProductFilterKeyword}
-                  disableUnderline
-                  endAdornment={(
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="searchProduct"
-                      >
-                        <SearchIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  )}
                 />
-              </Box>
+              </SearchContainer>
             )}
-            <Box className={classes.grow} />
-            <Box className={classes.sectionDesktop}>
+            <Box flexGrow={1} />
+            <Box display={{ xs: 'none', md: 'flex' }} alignItems="center">
               {currentUserDetail.fullName !== ''
                 ? (
-                  <Box className={classes.rightSpacing}>
+                  <Box marginRight={2}>
                     <Typography>{`Welcome, ${currentUserDetail.fullName.split(' ')[0]}`}</Typography>
                   </Box>
                 ) : (
@@ -298,7 +198,7 @@ const MenuBar = () => {
                 </>
               )}
             </Box>
-            <Box className={classes.sectionMobile}>
+            <Box display={{ xs: 'flex', md: 'none' }}>
               <IconButton aria-label="shopping cart" color="inherit" onClick={() => navigate(routeNames.cart)}>
                 <Badge badgeContent={totalQuantity} color="secondary">
                   <ShoppingCartIcon />
@@ -321,7 +221,6 @@ const MenuBar = () => {
       {!isXsView
         ? <CustomDesktopDrawer drawerOpen={drawerOpen} handleDrawerClose={toggleDrawer} />
         : <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />}
-      {/* <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} /> */}
       <SignOutConfirmationModal />
     </>
   );
