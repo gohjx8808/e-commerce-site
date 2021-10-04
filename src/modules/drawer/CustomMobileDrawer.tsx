@@ -1,14 +1,8 @@
+import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { drawerWidth } from '../../utils/constants';
 import CustomDrawerItems from './CustomDrawerItems';
-
-const useStyles = makeStyles({
-  list: {
-    width: drawerWidth,
-  },
-});
 
 interface CustomMobileDrawerOwnProps{
   drawerOpen:boolean
@@ -17,7 +11,6 @@ interface CustomMobileDrawerOwnProps{
 
 const CustomMobileDrawer = (props:CustomMobileDrawerOwnProps) => {
   const { drawerOpen, toggleDrawer } = props;
-  const classes = useStyles();
 
   return (
     <Drawer
@@ -25,14 +18,14 @@ const CustomMobileDrawer = (props:CustomMobileDrawerOwnProps) => {
       open={drawerOpen}
       onClose={toggleDrawer}
     >
-      <div
-        className={classes.list}
+      <Box
+        width={drawerWidth}
         role="presentation"
         onClick={toggleDrawer}
         onKeyDown={toggleDrawer}
       >
         <CustomDrawerItems />
-      </div>
+      </Box>
     </Drawer>
   );
 };

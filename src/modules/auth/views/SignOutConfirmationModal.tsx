@@ -7,14 +7,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { signOutAction, toggleSignOutConfirmationModal } from '../src/authReducer';
-import authStyles from '../src/authStyles';
 
 const SignOutConfirmationModal = () => {
   const isSignOutConfirmationmodalOpen = useAppSelector(
     (state) => state.auth.isSignOutConfirmationModalOpen,
   );
   const dispatch = useAppDispatch();
-  const styles = authStyles();
 
   const closeModal = () => {
     dispatch(toggleSignOutConfirmationModal(false));
@@ -33,7 +31,7 @@ const SignOutConfirmationModal = () => {
           Are you sure you wish to logout?
         </DialogContentText>
       </DialogContent>
-      <DialogActions className={styles.signoutModalActionContainer}>
+      <DialogActions sx={{ padding: 3 }}>
         <Button onClick={closeModal} color="secondary" variant="contained">
           Cancel
         </Button>
