@@ -22,7 +22,7 @@ const CustomDrawerItems = () => {
         <ListItemIcon>
           <HomeOutlinedIcon />
         </ListItemIcon>
-        <ListItemText primary="Homeeeeeeeee" />
+        <ListItemText primary="Home" />
       </StyledListItem>
       <StyledListItem
         selected={currentPathName === routeNames.learnMore}
