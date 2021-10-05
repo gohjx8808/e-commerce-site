@@ -2,7 +2,6 @@ import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import { graphql, useStaticQuery } from 'gatsby';
 import {
   GatsbyImage, getImage, IGatsbyImageData, ImageDataLike,
@@ -11,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import {
   useAppDispatch, useAppSelector, useXsDownMediaQuery,
 } from '../../../hooks';
+import TextShadowFont from '../../../styledComponents/TextShadowFont';
 import { toggleStatusModal } from '../src/statusReducer';
 
 interface statusQueryInnerData{
@@ -78,20 +78,14 @@ const StatusModal = () => {
       </Box>
       <Grid container direction="column" justifyContent="center" alignItems="center" position="absolute" marginTop={{ sm: 3 }}>
         <Grid item>
-          <Typography
-            color="secondary"
-            fontWeight="bold"
-            variant={isXsView ? 'h5' : 'h4'}
-            textAlign="center"
-            sx={{ textShadow: '0px 1px grey' }}
-          >
+          <TextShadowFont color="secondary" fontWeight="bold" variant={isXsView ? 'h5' : 'h4'} textAlign="center">
             {statusTitle}
-          </Typography>
+          </TextShadowFont>
         </Grid>
         <Grid item width={{ xs: '80%', sm: '70%', lg: '40%' }}>
-          <Typography color="secondary" textAlign="center" sx={{ textShadow: '0px 1px grey' }} variant="h6" marginBottom={2}>
+          <TextShadowFont color="secondary" textAlign="center" variant="h6" marginBottom={2}>
             {statusMsg}
-          </Typography>
+          </TextShadowFont>
         </Grid>
         <Grid container justifyContent="center">
           <Button size="large" onClick={() => dispatch(toggleStatusModal(false))} color="secondary" variant="contained">
