@@ -1,28 +1,26 @@
-import React from 'react';
-import { graphql, useStaticQuery, Link as GatsbyLink } from 'gatsby';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCallback } from 'react';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import Link from '@mui/material/Link';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import authenticationStyles from '../src/authStyles';
-import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
-import ControlledPasswordInput from '../../../sharedComponents/inputs/ControlledPasswordInput';
-import { loginSchema } from '../src/authSchema';
+import Button from '@mui/material/Button';
+import CardContent from '@mui/material/CardContent';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+import { graphql, Link as GatsbyLink, useStaticQuery } from 'gatsby';
+import { getImage } from 'gatsby-plugin-image';
+import React, { useCallback } from 'react';
+import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks';
-import { submitSignIn } from '../src/authReducer';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
+import ControlledPasswordInput from '../../../sharedComponents/inputs/ControlledPasswordInput';
+import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
+import AuthCard from '../../../styledComponents/auth/AuthCard';
+import AuthCardHeader from '../../../styledComponents/auth/AuthCardHeader';
+import AuthIcon from '../../../styledComponents/auth/AuthIcon';
 import routeNames from '../../../utils/routeNames';
+import { submitSignIn } from '../src/authReducer';
+import { loginSchema } from '../src/authSchema';
 
 const LoginScreen = () => {
-  const styles = authenticationStyles();
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "icon.jpeg" }) {
@@ -60,14 +58,13 @@ const LoginScreen = () => {
       </Grid>
       <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={10} sm={9} lg={6}>
-          <Card className={styles.cardBg}>
+          <AuthCard>
             <Grid container justifyContent="center" alignItems="center" direction="column">
-              <CardHeader
+              <AuthCardHeader
                 title="Login"
-                className={styles.whiteText}
               />
-              <Box className={styles.loginIconContainer}>
-                <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
+              <Box width={{ xs: '35%', sm: '20%' }}>
+                <AuthIcon image={image!} alt="icon" />
               </Box>
             </Grid>
             <CardContent>
@@ -82,7 +79,7 @@ const LoginScreen = () => {
                       type="email"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={10} className={styles.noBottomPadding}>
+                  <Grid item xs={12} sm={10}>
                     <ControlledPasswordInput
                       control={control}
                       name="password"
@@ -90,7 +87,7 @@ const LoginScreen = () => {
                       formerror={errors.password}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={10} className={styles.noTopPadding}>
+                  <Grid xs={12} sm={10}>
                     <Grid container justifyContent="flex-end">
                       <Link component={GatsbyLink} to={routeNames.forgotPassword}>
                         <Typography>Forgot Password?</Typography>
@@ -98,14 +95,16 @@ const LoginScreen = () => {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid container justifyContent="center" alignItems="center" className={styles.spacingVertical}>
-                  <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
-                    Log In
-                  </Button>
+                <Grid container justifyContent="center" alignItems="center" marginTop={3} marginBottom={2}>
+                  <Grid xs={6} sm={3}>
+                    <Button variant="contained" color="primary" type="submit" fullWidth>
+                      Log In
+                    </Button>
+                  </Grid>
                 </Grid>
               </form>
             </CardContent>
-          </Card>
+          </AuthCard>
         </Grid>
       </Grid>
     </Grid>
