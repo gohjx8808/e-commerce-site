@@ -1,30 +1,27 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { graphql, useStaticQuery, Link as GatsbyLink } from 'gatsby';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CardContent from '@mui/material/CardContent';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+import { graphql, Link as GatsbyLink, useStaticQuery } from 'gatsby';
+import { getImage } from 'gatsby-plugin-image';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import Link from '@mui/material/Link';
-import CardHeader from '@mui/material/CardHeader';
-import Box from '@mui/material/Box';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import { useAppDispatch } from '../../../hooks';
+import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import ControlledDatePicker from '../../../sharedComponents/inputs/ControlledDatePicker';
 import ControlledPasswordInput from '../../../sharedComponents/inputs/ControlledPasswordInput';
 import ControlledPicker from '../../../sharedComponents/inputs/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
-import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import PasswordRequirements from '../../../sharedComponents/PasswordRequirements';
+import { AuthCard, AuthCardHeader, AuthIcon } from '../../../styledComponents/auth';
 import routeNames from '../../../utils/routeNames';
 import { submitSignUp } from '../src/authReducer';
 import { signupSchema } from '../src/authSchema';
-import authenticationStyles from '../src/authStyles';
 
 const SignupScreen = () => {
-  const styles = authenticationStyles();
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "icon.jpeg" }) {
@@ -55,24 +52,21 @@ const SignupScreen = () => {
     <Grid item xs={12}>
       <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={10} sm={9}>
-          <Grid container justifyContent="space-between" alignItems="center" className={styles.topSpacing}>
+          <Grid container justifyContent="space-between" alignItems="center" marginTop={3}>
             <CustomBreadcrumbs />
             <Typography>
               Existing member?
               {' '}
-              <Link component={GatsbyLink} to={routeNames.login} color="secondary">Login here!</Link>
+              <Link component={GatsbyLink} to={routeNames.login} color="secondary" underline="hover">Login here!</Link>
             </Typography>
           </Grid>
         </Grid>
         <Grid item xs={10} sm={9}>
-          <Card className={styles.cardBg}>
+          <AuthCard>
             <Grid container justifyContent="center" alignItems="center" direction="column">
-              <CardHeader
-                title="Registration"
-                className={styles.whiteText}
-              />
-              <Box className={styles.signupIconContainer}>
-                <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
+              <AuthCardHeader title="Registration" />
+              <Box width={{ xs: '35%', sm: '15%' }}>
+                <AuthIcon image={image!} alt="icon" />
               </Box>
             </Grid>
             <CardContent>
@@ -148,15 +142,17 @@ const SignupScreen = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid container justifyContent="center" alignItems="center" className={styles.spacingVertical}>
-                    <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
-                      Submit
-                    </Button>
+                  <Grid container justifyContent="center" alignItems="center" marginTop={3} marginBottom={2}>
+                    <Grid xs={6} sm={3} lg={2}>
+                      <Button variant="contained" color="primary" type="submit" fullWidth>
+                        Submit
+                      </Button>
+                    </Grid>
                   </Grid>
                 </Grid>
               </form>
             </CardContent>
-          </Card>
+          </AuthCard>
         </Grid>
       </Grid>
     </Grid>

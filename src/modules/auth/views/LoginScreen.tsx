@@ -58,9 +58,7 @@ const LoginScreen = () => {
         <Grid item xs={10} sm={9} lg={6}>
           <AuthCard>
             <Grid container justifyContent="center" alignItems="center" direction="column">
-              <AuthCardHeader
-                title="Login"
-              />
+              <AuthCardHeader title="Login" />
               <Box width={{ xs: '35%', sm: '20%' }}>
                 <AuthIcon image={image!} alt="icon" />
               </Box>
