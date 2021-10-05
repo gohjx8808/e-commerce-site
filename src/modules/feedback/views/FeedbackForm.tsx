@@ -3,19 +3,14 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
-import clsx from 'clsx';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks';
 import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
-import useGlobalStyles from '../../../useGlobalStyles';
 import { submitFeedback } from '../src/feedbackReducer';
 import { feedbackFormSchema } from '../src/feedbackSchema';
-import feedbackStyles from '../src/feedbackStyles';
 
 const FeedbackForm = () => {
-  const styles = feedbackStyles();
-  const globalStyles = useGlobalStyles();
   const dispatch = useAppDispatch();
   const { control, formState: { errors }, handleSubmit } = useForm({
     resolver: yupResolver(feedbackFormSchema),
@@ -26,10 +21,10 @@ const FeedbackForm = () => {
   };
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center" className={clsx(globalStyles.componentHalfTopSpacing, globalStyles.componentHalfBottomSpacing)}>
+    <Grid container justifyContent="center" alignItems="center" marginY={7}>
       <Grid item xs={12} sm={10} lg={6}>
-        <Card>
-          <CardContent className={styles.overallPadding}>
+        <Card variant="outlined">
+          <CardContent sx={{ padding: 4 }}>
             <Grid container spacing={2} justifyContent="center" alignItems="center">
               <Grid item xs={12}>
                 <ControlledTextInput
