@@ -1,29 +1,23 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import Grid from '@mui/material/Grid';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import clsx from 'clsx';
-import { graphql, Link as GatsbyLink, useStaticQuery } from 'gatsby';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import React, { useCallback } from 'react';
-import { useForm } from 'react-hook-form';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CardContent from '@mui/material/CardContent';
+import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import Box from '@mui/material/Box';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
+import { graphql, Link as GatsbyLink, useStaticQuery } from 'gatsby';
+import { getImage } from 'gatsby-plugin-image';
+import React, { useCallback } from 'react';
+import { useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks';
 import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
-import useGlobalStyles from '../../../useGlobalStyles';
+import { AuthCard, AuthCardHeader, AuthIcon } from '../../../styledComponents/auth';
 import routeNames from '../../../utils/routeNames';
 import { submitForgotPassword } from '../src/authReducer';
 import { forgotPasswordSchema } from '../src/authSchema';
-import authenticationStyles from '../src/authStyles';
 
 const ForgotPassword = () => {
-  const styles = authenticationStyles();
-  const globalStyles = useGlobalStyles();
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "icon.jpeg" }) {
@@ -47,9 +41,9 @@ const ForgotPassword = () => {
 
   return (
     <Grid item xs={12}>
-      <Grid container justifyContent="center" alignItems="center" className={styles.spacingVertical}>
+      <Grid container justifyContent="center" alignItems="center" marginY={1}>
         <Grid item xs={10} sm={9} lg={6}>
-          <Link component={GatsbyLink} to={routeNames.login} color="textPrimary">
+          <Link component={GatsbyLink} to={routeNames.login} color="textPrimary" underline="hover">
             <Grid container>
               <ArrowBackIcon />
               <Typography>Back to Login</Typography>
@@ -59,20 +53,17 @@ const ForgotPassword = () => {
       </Grid>
       <Grid container justifyContent="center" alignItems="center">
         <Grid item xs={10} sm={9} lg={6}>
-          <Card className={styles.cardBg}>
+          <AuthCard>
             <Grid container justifyContent="center" alignItems="center" direction="column">
-              <CardHeader
-                title="Forgot Password"
-                className={styles.whiteText}
-              />
-              <Box className={styles.loginIconContainer}>
-                <GatsbyImage image={image!} alt="icon" imgClassName={styles.icon} />
+              <AuthCardHeader title="Forgot Password" />
+              <Box width={{ xs: '35%', sm: '20%' }}>
+                <AuthIcon image={image!} alt="icon" />
               </Box>
             </Grid>
             <CardContent>
               <form onSubmit={handleSubmit(submitLogin)}>
-                <Grid container justifyContent="center" alignItems="center" spacing={2} className={styles.minorTopSpacing}>
-                  <Typography variant="subtitle1" className={clsx(styles.whiteText, globalStyles.centerText)}>Please enter your registered email address below.</Typography>
+                <Grid container justifyContent="center" alignItems="center" spacing={2} marginTop={1}>
+                  <Typography variant="subtitle1" color="white">Please enter your registered email address below.</Typography>
                   <Grid item xs={12} sm={10}>
                     <ControlledTextInput
                       control={control}
@@ -83,14 +74,16 @@ const ForgotPassword = () => {
                     />
                   </Grid>
                 </Grid>
-                <Grid container justifyContent="center" alignItems="center" className={styles.spacingVertical}>
-                  <Button variant="contained" color="primary" type="submit" className={styles.loginBtn} size="medium">
-                    Submit
-                  </Button>
+                <Grid container justifyContent="center" alignItems="center" marginTop={3} marginBottom={2}>
+                  <Grid xs={6} sm={3}>
+                    <Button variant="contained" color="primary" type="submit" fullWidth>
+                      Submit
+                    </Button>
+                  </Grid>
                 </Grid>
               </form>
             </CardContent>
-          </Card>
+          </AuthCard>
         </Grid>
       </Grid>
     </Grid>

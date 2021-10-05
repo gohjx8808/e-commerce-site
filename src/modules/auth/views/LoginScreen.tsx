@@ -13,9 +13,7 @@ import { useAppDispatch } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
 import ControlledPasswordInput from '../../../sharedComponents/inputs/ControlledPasswordInput';
 import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
-import AuthCard from '../../../styledComponents/auth/AuthCard';
-import AuthCardHeader from '../../../styledComponents/auth/AuthCardHeader';
-import AuthIcon from '../../../styledComponents/auth/AuthIcon';
+import { AuthCard, AuthCardHeader, AuthIcon } from '../../../styledComponents/auth';
 import routeNames from '../../../utils/routeNames';
 import { submitSignIn } from '../src/authReducer';
 import { loginSchema } from '../src/authSchema';
@@ -51,7 +49,7 @@ const LoginScreen = () => {
             <Typography>
               New member?
               {' '}
-              <Link component={GatsbyLink} to={routeNames.signUp} color="secondary">Register here!</Link>
+              <Link component={GatsbyLink} to={routeNames.signUp} color="secondary" underline="hover">Register here!</Link>
             </Typography>
           </Grid>
         </Grid>
@@ -89,7 +87,7 @@ const LoginScreen = () => {
                   </Grid>
                   <Grid xs={12} sm={10}>
                     <Grid container justifyContent="flex-end">
-                      <Link component={GatsbyLink} to={routeNames.forgotPassword}>
+                      <Link component={GatsbyLink} to={routeNames.forgotPassword} underline="hover">
                         <Typography>Forgot Password?</Typography>
                       </Link>
                     </Grid>
