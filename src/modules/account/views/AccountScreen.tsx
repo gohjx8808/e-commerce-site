@@ -1,20 +1,21 @@
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Tab from '@mui/material/Tab';
 import { TabsActions } from '@mui/material/Tabs';
-import React, { useEffect, useRef } from 'react';
+import React, {
+  ChangeEvent, useEffect, useRef, useState,
+} from 'react';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
-import accountStyles from '../src/accountStyles';
 import AccountDetails from './AccountDetails';
 import AddressBook from './AddressBook';
 
 export default function AccountScreen() {
-  const styles = accountStyles();
-  const [value, setValue] = React.useState('accDetails');
+  const [value, setValue] = useState('accDetails');
 
-  const handleChange = (_event: React.ChangeEvent<{}>, newValue: string) => {
+  const handleChange = (_event: ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
   };
 
@@ -33,20 +34,20 @@ export default function AccountScreen() {
           <CustomBreadcrumbs />
         </Grid>
       </Grid>
-      <div className={styles.accDetailsRoot}>
+      <Box border="1px solid #d3d4d5" borderRadius={1}>
         <TabContext value={value}>
           <TabList textColor="secondary" indicatorColor="secondary" action={mobileTabRef} onChange={handleChange} aria-label="account tabs" variant="scrollable">
             <Tab label="Account Details" value="accDetails" />
             <Tab label="Address Book" value="addressBook" />
           </TabList>
-          <TabPanel value="accDetails" className={styles.noPaddingLeft}>
+          <TabPanel value="accDetails">
             <AccountDetails />
           </TabPanel>
-          <TabPanel value="addressBook" className={styles.fullWidth}>
+          <TabPanel value="addressBook">
             <AddressBook />
           </TabPanel>
         </TabContext>
-      </div>
+      </Box>
     </Grid>
   );
 }
