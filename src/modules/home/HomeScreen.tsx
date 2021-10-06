@@ -12,9 +12,9 @@ import {
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
+import HomeImageList from '../../styledComponents/home/HomeImageList';
 import routeNames from '../../utils/routeNames';
 import { storeAllProducts } from '../products/src/productReducers';
-import HomeImageList from './styledComponents/HomeImageList';
 
 interface imageListImages{
   productImage:ImageDataLike

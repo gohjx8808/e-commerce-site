@@ -5,7 +5,7 @@ import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { makeStyles } from '@mui/styles';
 import { Theme } from '@mui/material/styles';
-import HomeCarouselImage from './styledComponents/HomeCarouselImage';
+import HomeCarouselImage from '../../styledComponents/home/HomeCarouselImage';
 
 const useStyle = makeStyles((theme:Theme) => ({
   carouselNavWrapper: {
