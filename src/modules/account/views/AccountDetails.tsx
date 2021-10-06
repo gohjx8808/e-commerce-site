@@ -22,7 +22,7 @@ const AccountDetails = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <Grid container justifyContent="center" alignItems="center">
+    <Grid container justifyContent="center" alignItems="center" marginY={3}>
       <Grid item md={10} xs={12}>
         <Grid container justifyContent="center" alignItems="center" spacing={4}>
           <SingleAccData
