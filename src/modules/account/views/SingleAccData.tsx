@@ -14,20 +14,16 @@ const SingleAccData = (props:SingleAccDataOwnProps) => {
   return (
     <Grid item sm={6} xs={12}>
       <Grid container justifyContent="center" alignItems="center">
-        <Grid item sm={6} xs={12}>
-          <Grid container alignItems="center" spacing={1}>
-            <Grid item>
-              {Icon}
-            </Grid>
-            <Grid item>
-              <Typography fontWeight="500">{label}</Typography>
-            </Grid>
+        <Grid item container sm={6} xs={12} spacing={1}>
+          <Grid item>
+            {Icon}
+          </Grid>
+          <Grid item>
+            <Typography fontWeight="500">{label}</Typography>
           </Grid>
         </Grid>
         <Grid item sm={6} xs={12}>
-          <Grid container alignItems="center">
-            <Typography>{data}</Typography>
-          </Grid>
+          <Typography>{data}</Typography>
         </Grid>
       </Grid>
     </Grid>

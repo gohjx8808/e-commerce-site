@@ -23,7 +23,7 @@ const AccountDetails = () => {
 
   return (
     <Grid container justifyContent="center" alignItems="center" marginY={3}>
-      <Grid item md={10} xs={12}>
+      <Grid item md={11} xs={12}>
         <Grid container justifyContent="center" alignItems="center" spacing={4}>
           <SingleAccData
             label="Full Name"
