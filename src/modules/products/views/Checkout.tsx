@@ -178,14 +178,14 @@ const Checkout = () => {
         if (totalAmount >= 150) {
           strShipping = 'Free';
         } else {
-          intShipping = 14;
-          strShipping = formatPrice(14, 'MYR');
+          intShipping = 15;
+          strShipping = formatPrice(15, 'MYR');
         }
       } else if (totalAmount >= 80) {
         strShipping = 'Free';
       } else {
-        intShipping = 7;
-        strShipping = formatPrice(7, 'MYR');
+        intShipping = 8;
+        strShipping = formatPrice(8, 'MYR');
       }
     }
     setShippingFee({
