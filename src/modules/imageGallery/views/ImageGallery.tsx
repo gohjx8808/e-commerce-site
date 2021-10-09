@@ -8,11 +8,9 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { toggleEnlargedImageModal, updateSelectedImage } from '../src/imageGalleryReducer';
-import imageGalleryStyles from '../src/imageGalleryStyles';
 import EnlargedImageModal from './EnlargedImageModal';
 
 const ImageGallery = () => {
-  const styles = imageGalleryStyles();
   const allProducts = useAppSelector((state) => state.product.allProducts);
   const [allProductImages, setAllProductImages] = useState<ImageDataLike[]>([]);
   const dispatch = useAppDispatch();
@@ -37,7 +35,7 @@ const ImageGallery = () => {
 
   return (
     <Grid item xs={12}>
-      <Box className={styles.imageListRoot}>
+      <Box paddingTop={1}>
         <ImageList rowHeight="auto" cols={5}>
           {allProductImages && allProductImages.map((image, index) => {
             const productImagesData = getImage(image)!;
@@ -45,7 +43,7 @@ const ImageGallery = () => {
               <ImageListItem
                 // eslint-disable-next-line react/no-array-index-key
                 key={productImagesData.images.fallback?.src! + index}
-                className={styles.imageListItem}
+                sx={{ cursor: 'zoom-in' }}
               >
                 <GatsbyImage
                   onClick={() => handleImageClick(productImagesData)}
