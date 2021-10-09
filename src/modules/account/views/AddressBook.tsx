@@ -63,7 +63,7 @@ const AddressBook = () => {
           <Grid container justifyContent="center" alignItems="center">
             <Grid item xs={12}>
               {addressList.map((address) => {
-                const tagExist = address.defaultOption === '1' || (address.defaultOption === '0' && !address.tag);
+                const noTag = (address.defaultOption === '0' && !address.tag);
                 return (
                   <Grid key={address.addressLine1}>
                     <Divider />
@@ -167,33 +167,37 @@ const AddressBook = () => {
                     </Grid>
                     <Grid
                       container
-                      justifyContent={address.defaultOption === '1' ? 'flex-start' : 'space-between'}
+                      justifyContent="space-between"
                       alignItems="center"
                       display={{ xs: 'flex', md: 'none' }}
                       marginBottom={{ xs: 3 }}
                       marginTop={{ xs: 1 }}
                     >
-                      {address.tag && (
-                        <Grid item>
-                          <AddressChip
-                            customcolor={address.tag === 'Home' ? homeColor : workColor}
-                            label={address.tag}
-                            variant="outlined"
-                            icon={address.tag === 'Home' ? <HomeIcon /> : <WorkIcon />}
-                          />
+                      <Grid item>
+                        <Grid container>
+                          {address.tag && (
+                          <Grid item>
+                            <AddressChip
+                              customcolor={address.tag === 'Home' ? homeColor : workColor}
+                              label={address.tag}
+                              variant="outlined"
+                              icon={address.tag === 'Home' ? <HomeIcon /> : <WorkIcon />}
+                            />
+                          </Grid>
+                          )}
+                          {address.defaultOption === '1' && (
+                          <Grid item marginLeft={1}>
+                            <AddressChip
+                              customcolor="red"
+                              label="Default"
+                              variant="outlined"
+                            />
+                          </Grid>
+                          )}
                         </Grid>
-                      )}
-                      {address.defaultOption === '1' && (
-                        <Grid item marginLeft={1}>
-                          <AddressChip
-                            customcolor="red"
-                            label="Default"
-                            variant="outlined"
-                          />
-                        </Grid>
-                      )}
-                      <Grid item xs={tagExist ? 12 : 6}>
-                        <Grid container justifyContent="flex-end" alignItems="center" display={{ xs: 'flex', md: 'none' }}>
+                      </Grid>
+                      <Grid item xs={noTag ? 12 : 5} display={{ xs: 'flex', md: 'none' }}>
+                        <Grid container justifyContent="flex-end" alignItems="center">
                           <IconButton color="secondary" onClick={() => onEditAddress(address)}>
                             <EditIcon />
                           </IconButton>
