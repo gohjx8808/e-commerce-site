@@ -1,26 +1,25 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import WorkIcon from '@mui/icons-material/Work';
 import HomeIcon from '@mui/icons-material/Home';
+import WorkIcon from '@mui/icons-material/Work';
+import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
+import InputAdornment from '@mui/material/InputAdornment';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import InputAdornment from '@mui/material/InputAdornment';
-import DialogActions from '@mui/material/DialogActions';
-import Button from '@mui/material/Button';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledPicker from '../../../sharedComponents/inputs/ControlledPicker';
 import ControlledRadioButton from '../../../sharedComponents/inputs/ControlledRadioButton';
 import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
 import ControlledToggleButton from '../../../sharedComponents/inputs/ControlledToggleButton';
+import DialogActionButtonsContainer from '../../../styledComponents/DialogActionButtonsContainer';
 import {
   booleanOptions, defaultAddressData, homeColor, stateOptions, workColor,
 } from '../../../utils/constants';
 import { submitAddEditAddressAction, toggleAddressModal, updateSelectedAddress } from '../src/accountReducer';
 import { addressSchema } from '../src/accountScheme';
-import accountStyles from '../src/accountStyles';
 
 const addressTag:toggleButtonOptionData[] = [
   {
@@ -38,7 +37,6 @@ const addressTag:toggleButtonOptionData[] = [
 ];
 
 const AddressModal = () => {
-  const styles = accountStyles();
   const dispatch = useAppDispatch();
   const isAddressModalOpen = useAppSelector((state) => state.account.isAddressModalOpen);
   const addressActionType = useAppSelector((state) => state.account.addressActionType);
@@ -225,14 +223,14 @@ const AddressModal = () => {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions className={styles.modalSubmitContainer}>
+        <DialogActionButtonsContainer>
           <Button onClick={closeModal} color="secondary">
             Cancel
           </Button>
           <Button color="secondary" variant="contained" type="submit">
             Submit
           </Button>
-        </DialogActions>
+        </DialogActionButtonsContainer>
       </form>
     </Dialog>
   );

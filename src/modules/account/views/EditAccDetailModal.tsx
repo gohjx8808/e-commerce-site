@@ -4,7 +4,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
@@ -15,12 +14,11 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import ControlledDatePicker from '../../../sharedComponents/inputs/ControlledDatePicker';
 import ControlledPicker from '../../../sharedComponents/inputs/ControlledPicker';
 import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
+import DialogActionButtonsContainer from '../../../styledComponents/DialogActionButtonsContainer';
 import { submitEditAccDetailsAction, toggleEditAccDetailModal } from '../src/accountReducer';
 import { editAccountSchema } from '../src/accountScheme';
-import accountStyles from '../src/accountStyles';
 
 const EditAccDetailModal = () => {
-  const styles = accountStyles();
   const dispatch = useAppDispatch();
   const isEditAccDetailModalOpen = useAppSelector(
     (state) => state.account.isEditAccDetailModalDisplay,
@@ -116,14 +114,14 @@ const EditAccDetailModal = () => {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions className={styles.editAccDetailActionBtnContainer}>
+        <DialogActionButtonsContainer>
           <Button onClick={closeModal} color="secondary">
             Cancel
           </Button>
           <Button color="secondary" variant="contained" type="submit">
             Submit
           </Button>
-        </DialogActions>
+        </DialogActionButtonsContainer>
       </form>
     </Dialog>
   );
