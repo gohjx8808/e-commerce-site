@@ -62,149 +62,153 @@ const AddressBook = () => {
         ? (
           <Grid container justifyContent="center" alignItems="center">
             <Grid item xs={12}>
-              {addressList.map((address) => (
-                <Grid key={address.addressLine1}>
-                  <Divider />
-                  <Grid item xs={12} marginTop={3}>
-                    <Grid container justifyContent="space-between" alignItems="center" direction="row">
-                      <Grid item lg={7} md={10} xs={12}>
-                        <Grid container alignItems="center" direction="row">
-                          <Grid item md={3} sm={4} xs={12}>
-                            <Grid container direction="row" spacing={1}>
-                              <Grid item>
-                                <PersonIcon />
-                              </Grid>
-                              <Grid item>
-                                <Typography fontWeight="bold">
-                                  {address.fullName}
-                                </Typography>
+              {addressList.map((address) => {
+                const tagExist = address.defaultOption === '1' || (address.defaultOption === '0' && !address.tag);
+                return (
+                  <Grid key={address.addressLine1}>
+                    <Divider />
+                    <Grid item xs={12} marginTop={3}>
+                      <Grid container justifyContent="space-between" alignItems="center">
+                        <Grid item>
+                          <Grid container alignItems="center">
+                            <Grid item>
+                              <Grid container spacing={1}>
+                                <Grid item>
+                                  <PersonIcon />
+                                </Grid>
+                                <Grid item>
+                                  <Typography fontWeight="bold">
+                                    {address.fullName}
+                                  </Typography>
+                                </Grid>
                               </Grid>
                             </Grid>
+                            <SmUpDivider orientation="vertical" flexItem variant="middle" />
+                            <Grid item>
+                              <Grid container spacing={1}>
+                                <Grid item>
+                                  <PhoneIphoneIcon />
+                                </Grid>
+                                <Grid item>
+                                  <Typography fontWeight="bold">
+                                    {internationalPhoneNumberFormatter(address.phoneNumber)}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+                            </Grid>
+                            <SmUpDivider orientation="vertical" flexItem variant="middle" />
+                            <Grid item>
+                              <Grid container spacing={1}>
+                                <Grid item>
+                                  <EmailIcon />
+                                </Grid>
+                                <Grid item>
+                                  <Typography fontWeight="bold">
+                                    {address.email}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+                            </Grid>
+                            {address.tag && (
+                              <Grid item marginLeft={2} display={{ xs: 'none', md: 'flex' }}>
+                                <AddressChip
+                                  customcolor={address.tag === 'Home' ? homeColor : workColor}
+                                  label={address.tag}
+                                  variant="outlined"
+                                  icon={address.tag === 'Home' ? <HomeIcon /> : <WorkIcon />}
+                                />
+                              </Grid>
+                            )}
+                            {address.defaultOption === '1' && (
+                              <Grid item marginLeft={1} display={{ xs: 'none', md: 'block' }}>
+                                <AddressChip
+                                  customcolor="red"
+                                  label="Default"
+                                  variant="outlined"
+                                />
+                              </Grid>
+                            )}
                           </Grid>
-                          <SmUpDivider orientation="vertical" flexItem variant="middle" />
-                          <Grid item md={3} sm={3} xs={12}>
-                            <Grid container direction="row" spacing={1}>
-                              <Grid item>
-                                <PhoneIphoneIcon />
-                              </Grid>
-                              <Grid item>
-                                <Typography fontWeight="bold">
-                                  {internationalPhoneNumberFormatter(address.phoneNumber)}
-                                </Typography>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                          <SmUpDivider orientation="vertical" flexItem variant="middle" />
-                          <Grid item md={3} sm={4} xs={12}>
-                            <Grid container direction="row" spacing={1}>
-                              <Grid item>
-                                <EmailIcon />
-                              </Grid>
-                              <Grid item>
-                                <Typography fontWeight="bold">
-                                  {address.email}
-                                </Typography>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                          {address.tag && (
-                            <Grid item marginLeft={1} display={{ xs: 'none', md: 'flex' }}>
-                              <AddressChip
-                                customcolor={address.tag === 'Home' ? homeColor : workColor}
-                                label={address.tag}
-                                variant="outlined"
-                                icon={address.tag === 'Home' ? <HomeIcon /> : <WorkIcon />}
-                              />
-                            </Grid>
-                          )}
-                          {address.defaultOption === '1' && (
-                            <Grid item marginLeft={1} display={{ xs: 'none', md: 'block' }}>
-                              <AddressChip
-                                customcolor="red"
-                                label="Default"
-                                variant="outlined"
-                              />
-                            </Grid>
-                          )}
+                        </Grid>
+                        <Grid item display={{ xs: 'none', md: 'flex' }}>
+                          <IconButton color="secondary" onClick={() => onEditAddress(address)}>
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton
+                            sx={{ color: 'red' }}
+                            onClick={() => onDeleteAddress(address)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
                         </Grid>
                       </Grid>
-                      <Grid item display={{ xs: 'none', md: 'flex' }}>
-                        <IconButton color="secondary" onClick={() => onEditAddress(address)}>
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          sx={{ color: 'red' }}
-                          onClick={() => onDeleteAddress(address)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid container direction="row" spacing={1} marginBottom={{ lg: 3 }}>
-                    <Grid item>
-                      <HomeIcon />
-                    </Grid>
-                    <Grid item>
-                      <Typography>
-                        {address.addressLine1}
-                        {' '}
-                        {address.addressLine2}
-                      </Typography>
-                      <Typography>
-                        {address.postcode}
-                        {' '}
-                        {address.city}
-                      </Typography>
-                      <Typography>
-                        {address.state === 'Outside Malaysia' ? address.outsideMalaysiaState : address.state}
-                        {', '}
-                        {address.country}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    container
-                    justifyContent={address.defaultOption === '1' ? 'flex-start' : 'space-between'}
-                    alignItems="center"
-                    display={{ xs: 'flex', md: 'none' }}
-                    marginBottom={{ xs: 3, lg: 0 }}
-                  >
-                    {address.tag && (
+                    <Grid container spacing={1} marginBottom={{ md: 3 }}>
                       <Grid item>
-                        <AddressChip
-                          customcolor={address.tag === 'Home' ? homeColor : workColor}
-                          label={address.tag}
-                          variant="outlined"
-                          icon={address.tag === 'Home' ? <HomeIcon /> : <WorkIcon />}
-                        />
+                        <HomeIcon />
                       </Grid>
-                    )}
-                    {address.defaultOption === '1' && (
-                      <Grid item marginLeft={1}>
-                        <AddressChip
-                          customcolor="red"
-                          label="Default"
-                          variant="outlined"
-                        />
+                      <Grid item>
+                        <Typography>
+                          {address.addressLine1}
+                          {' '}
+                          {address.addressLine2}
+                        </Typography>
+                        <Typography>
+                          {address.postcode}
+                          {' '}
+                          {address.city}
+                        </Typography>
+                        <Typography>
+                          {address.state === 'Outside Malaysia' ? address.outsideMalaysiaState : address.state}
+                          {', '}
+                          {address.country}
+                        </Typography>
                       </Grid>
-                    )}
-                    <Grid item xs={address.defaultOption === '1' || (address.defaultOption === '0' && !address.tag) ? 12 : 6}>
-                      <Grid container justifyContent="flex-end" alignItems="center" display={{ xs: 'flex', md: 'none' }}>
-                        <IconButton color="secondary" onClick={() => onEditAddress(address)}>
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          sx={{ color: 'red' }}
-                          onClick={() => onDeleteAddress(address)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
+                    </Grid>
+                    <Grid
+                      container
+                      justifyContent={address.defaultOption === '1' ? 'flex-start' : 'space-between'}
+                      alignItems="center"
+                      display={{ xs: 'flex', md: 'none' }}
+                      marginBottom={{ xs: 3 }}
+                      marginTop={{ xs: 1 }}
+                    >
+                      {address.tag && (
+                        <Grid item>
+                          <AddressChip
+                            customcolor={address.tag === 'Home' ? homeColor : workColor}
+                            label={address.tag}
+                            variant="outlined"
+                            icon={address.tag === 'Home' ? <HomeIcon /> : <WorkIcon />}
+                          />
+                        </Grid>
+                      )}
+                      {address.defaultOption === '1' && (
+                        <Grid item marginLeft={1}>
+                          <AddressChip
+                            customcolor="red"
+                            label="Default"
+                            variant="outlined"
+                          />
+                        </Grid>
+                      )}
+                      <Grid item xs={tagExist ? 12 : 6}>
+                        <Grid container justifyContent="flex-end" alignItems="center" display={{ xs: 'flex', md: 'none' }}>
+                          <IconButton color="secondary" onClick={() => onEditAddress(address)}>
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton
+                            sx={{ color: 'red' }}
+                            onClick={() => onDeleteAddress(address)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              ))}
+                );
+              })}
             </Grid>
           </Grid>
         ) : (
