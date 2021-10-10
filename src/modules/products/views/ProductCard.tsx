@@ -1,12 +1,10 @@
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import clsx from 'clsx';
 import {
   GatsbyImage, getImage, ImageDataLike,
 } from 'gatsby-plugin-image';
@@ -14,6 +12,8 @@ import { useSnackbar } from 'notistack';
 import React, { memo } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { useAppDispatch, useXsDownMediaQuery } from '../../../hooks';
+import ProductPrice from '../../../styledComponents/products/ProductPrice';
+import StyledProductCard from '../../../styledComponents/products/StyledProductCard';
 import { formatPrice, getProductVariationSuffix } from '../../../utils/helper';
 import {
   addToShoppingCart,
@@ -21,7 +21,6 @@ import {
   updateSelectedProductImage,
   updateSelectedProductImageList,
 } from '../src/productReducers';
-import productStyle from '../src/productStyle';
 import ItemVariationMenu from './ItemVariationMenu';
 
 interface ProductCardOwnProps{
@@ -30,7 +29,6 @@ interface ProductCardOwnProps{
 
 const ProductCard = (props:ProductCardOwnProps) => {
   const { product } = props;
-  const styles = productStyle();
   const dispatch = useAppDispatch();
   const isXsView = useXsDownMediaQuery();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -90,25 +88,14 @@ const ProductCard = (props:ProductCardOwnProps) => {
 
   return (
     <Grid item lg={3} md={6} sm={6} xs={6}>
-      <Card variant="outlined" className={styles.productCard} onClick={openDescription}>
-        <CardHeader
-          title={product.name}
-          className={styles.productNameContainer}
-          titleTypographyProps={{ className: styles.productName }}
-        />
-        <Carousel
-          indicators={false}
-          autoPlay={false}
-          navButtonsProps={{
-            className: styles.productCardCarouselNavButton,
-            style: {},
-          }}
-        >
+      <StyledProductCard variant="outlined" onClick={openDescription}>
+        <CardHeader title={product.name} sx={{ height: 95 }} />
+        <Carousel indicators={false} autoPlay={false}>
           {product.productImage.map((image) => {
             const imageData = getImage(image)!;
             return (
               <Box
-                className={styles.carouselImageContainer}
+                sx={{ cursor: 'zoom-in' }}
                 key={imageData.images.fallback?.src}
                 onClick={(event) => triggerEnlargeImage(image, product.productImage, event)}
               >
@@ -120,31 +107,24 @@ const ProductCard = (props:ProductCardOwnProps) => {
             );
           })}
         </Carousel>
-        <CardContent className={styles.noPaddingBottomContent}>
+        <CardContent sx={{ paddingBottom: '16px!important' }}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
               <Grid container spacing={1} alignItems="center">
                 <Grid item>
-                  <Typography className={clsx(styles.priceText, {
-                    [styles.dicountedPriceOriText]: product.discountedPrice,
-                  })}
-                  >
+                  <ProductPrice discountPrice={product.discountedPrice}>
                     {formatPrice(product.price, 'MYR')}
-                  </Typography>
+                  </ProductPrice>
                 </Grid>
                 {product.discountedPrice && (
                   <Grid item xs={12} sm>
                     <Grid container justifyContent="space-between" alignItems="center">
-                      <Typography className={styles.discountedPriceText}>
+                      <Typography fontWeight="bold">
                         {formatPrice(product.discountedPrice, 'MYR')}
                       </Typography>
                       {isXsView && (
-                        <IconButton
-                          aria-label="addToCart"
-                          onClick={onClickAddToCart}
-                          className={styles.shoppingCartBtn}
-                        >
-                          <AddShoppingCartIcon fontSize="inherit" className={styles.shoppingCartIcon} />
+                        <IconButton aria-label="addToCart" onClick={onClickAddToCart} color="secondary">
+                          <AddShoppingCartIcon />
                         </IconButton>
                       )}
                     </Grid>
@@ -153,17 +133,13 @@ const ProductCard = (props:ProductCardOwnProps) => {
               </Grid>
             </Grid>
             {!(product.discountedPrice && isXsView) && (
-              <IconButton
-                aria-label="addToCart"
-                onClick={onClickAddToCart}
-                className={styles.shoppingCartBtn}
-              >
-                <AddShoppingCartIcon fontSize="inherit" className={styles.shoppingCartIcon} />
+              <IconButton aria-label="addToCart" onClick={onClickAddToCart} color="secondary">
+                <AddShoppingCartIcon />
               </IconButton>
             )}
           </Grid>
         </CardContent>
-      </Card>
+      </StyledProductCard>
       <ItemVariationMenu
         anchorEl={anchorEl}
         handleClose={handleClose}

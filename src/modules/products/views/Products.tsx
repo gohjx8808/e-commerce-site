@@ -10,7 +10,7 @@ import React, {
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
 import { useAppSelector } from '../../../hooks';
-import ProductCategoryImage from '../../../styledComponents/ProductCategoryImage';
+import ProductCategoryImage from '../../../styledComponents/products/ProductCategoryImage';
 import { compareString } from '../../../utils/helper';
 
 const ControlledPicker = lazy(() => import('../../../sharedComponents/inputs/ControlledPicker'));

@@ -20,9 +20,6 @@ const productStyle = makeStyles((theme:Theme) => ({
   priceText: {
     color: theme.palette.secondary.main,
     fontWeight: 'bold',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '0.8rem',
-    },
   },
   dicountedPriceOriText: {
     textDecoration: 'line-through',
@@ -40,12 +37,8 @@ const productStyle = makeStyles((theme:Theme) => ({
     height: 95,
   },
   productName: {
-    color: theme.palette.secondary.main,
-    textAlign: 'center',
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '0.8rem',
-      fontWeight: 'bold',
-    },
+    // color: theme.palette.secondary.main,
+    // textAlign: 'center',
   },
   shoppingCartIcon: {
     color: theme.palette.secondary.main,
