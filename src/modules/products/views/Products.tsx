@@ -1,21 +1,17 @@
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { graphql, useStaticQuery } from 'gatsby';
-import {
-  GatsbyImage, getImage, IGatsbyImageData,
-} from 'gatsby-plugin-image';
+import { getImage, IGatsbyImageData } from 'gatsby-plugin-image';
 import React, {
   lazy, useCallback, useEffect, useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
-import clsx from 'clsx';
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import { useAppSelector } from '../../../hooks';
+import ProductCategoryImage from '../../../styledComponents/ProductCategoryImage';
 import { compareString } from '../../../utils/helper';
-import useGlobalStyles from '../../../useGlobalStyles';
-import productStyle from '../src/productStyle';
 
 const ControlledPicker = lazy(() => import('../../../sharedComponents/inputs/ControlledPicker'));
 const ProductCard = lazy(() => import('./ProductCard'));
@@ -33,8 +29,6 @@ interface imageInnerData{
 }
 
 const Products = () => {
-  const styles = productStyle();
-  const globalStyles = useGlobalStyles();
   const productFilterKeyword = useAppSelector((state) => state.product.productFilterKeyword);
   const allProducts = useAppSelector((state) => state.product.allProducts);
   const [categories, setCategories] = useState<string[]>([]);
@@ -161,7 +155,7 @@ const Products = () => {
 
   return (
     <>
-      <Grid container direction="row" justifyContent="center" className={globalStyles.componentQuarterTopSpacing}>
+      <Grid container direction="row" justifyContent="center" marginTop={3}>
         {categories.map((category) => {
         // eslint-disable-next-line max-len
           const currentCategoryImageData:imageInnerData = productQuery.productCategoriesImages.edges.find(
@@ -177,10 +171,9 @@ const Products = () => {
                   smooth
                   offset={-60}
                 >
-                  <GatsbyImage
+                  <ProductCategoryImage
                     image={categoryImage}
                     alt={currentCategoryImageData.node.name}
-                    imgClassName={styles.productCategoryImg}
                   />
                 </Link>
               </Button>
@@ -188,7 +181,7 @@ const Products = () => {
           );
         })}
       </Grid>
-      <Grid container justifyContent="flex-end" alignItems="center" className={styles.topSpacing}>
+      <Grid container justifyContent="flex-end" alignItems="center" marginTop={5}>
         <Grid item xs={12} sm={5} lg={3}>
           <Grid container justifyContent="flex-end" alignItems="center">
             <ControlledPicker
@@ -206,8 +199,8 @@ const Products = () => {
       {categories.map((category) => (
         <Grid container justifyContent="center" alignItems="center" direction="column" key={category}>
           {categoryProductAmount[category] && (
-            <Grid container justifyContent="flex-start" alignItems="center" className={clsx(globalStyles.componentQuarterBottomSpacing, globalStyles.componentTopSpacing)}>
-              <Typography variant="h5" id={category} className={styles.categorySpacing}>{category}</Typography>
+            <Grid container justifyContent="flex-start" alignItems="center" marginBottom={3} marginTop={5}>
+              <Typography variant="h5" id={category} marginY={3}>{category}</Typography>
             </Grid>
           )}
           <Grid container justifyContent="center" alignItems="center" direction="row" spacing={2} key={category}>

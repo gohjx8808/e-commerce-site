@@ -83,7 +83,7 @@ const LoginScreen = () => {
                       formerror={errors.password}
                     />
                   </Grid>
-                  <Grid xs={12} sm={10}>
+                  <Grid item xs={12} sm={10}>
                     <Grid container justifyContent="flex-end">
                       <Link component={GatsbyLink} to={routeNames.forgotPassword} underline="hover">
                         <Typography>Forgot Password?</Typography>
@@ -92,7 +92,7 @@ const LoginScreen = () => {
                   </Grid>
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" marginTop={3} marginBottom={2}>
-                  <Grid xs={6} sm={3}>
+                  <Grid item xs={6} sm={3}>
                     <Button variant="contained" color="primary" type="submit" fullWidth>
                       Log In
                     </Button>

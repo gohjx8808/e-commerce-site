@@ -88,7 +88,7 @@ const StatusModal = () => {
           </TextShadowFont>
         </Grid>
         <Grid container justifyContent="center" alignItems="center">
-          <Grid xs={4} sm={2} lg={1}>
+          <Grid item xs={4} sm={2} lg={1}>
             <Button fullWidth onClick={() => dispatch(toggleStatusModal(false))} color="secondary" variant="contained">
               Close
             </Button>
