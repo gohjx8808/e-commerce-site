@@ -2,14 +2,14 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 interface ProductPriceProps{
-  discountPrice:number
+  discountprice:number
 }
 
-const ProductPrice = styled(Typography)<ProductPriceProps>(({ theme, discountPrice }) => ({
-  color: !discountPrice ? theme.palette.secondary.main : 'grey',
-  fontWeight: !discountPrice ? 'bold' : 'normal',
-  textDecoration: discountPrice ? 'line-through' : '',
-  textDecorationColor: discountPrice ? 'grey' : '',
+const ProductPrice = styled(Typography)<ProductPriceProps>(({ discountprice }) => ({
+  color: !discountprice ? '' : 'grey',
+  fontWeight: !discountprice ? 'bold' : 'normal',
+  textDecoration: discountprice ? 'line-through' : '',
+  textDecorationColor: discountprice ? 'grey' : '',
 }));
 
 export default ProductPrice;

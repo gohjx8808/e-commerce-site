@@ -2,29 +2,30 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import {
   Block, BLOCKS, Document, Inline, MARKS,
 } from '@contentful/rich-text-types';
-import Box from '@mui/material/Box';
-import FilledInput from '@mui/material/FilledInput';
-import FormControl from '@mui/material/FormControl';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import RemoveIcon from '@mui/icons-material/Remove';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import FilledInput from '@mui/material/FilledInput';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
 import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import { useParams } from '@reach/router';
-import clsx from 'clsx';
-import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image';
+import { getImage, ImageDataLike } from 'gatsby-plugin-image';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import Carousel from 'react-material-ui-carousel';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Link from '@mui/material/Link';
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../../../hooks';
 import CustomBreadcrumbs from '../../../sharedComponents/CustomBreadcrumbs';
-import useGlobalStyles from '../../../useGlobalStyles';
+import ItemQuantityInput from '../../../styledComponents/products/ItemQuantityInput';
+import ItemVariationToggleButton from '../../../styledComponents/products/ItemVariationToggleButton';
+import ModifyQuantityButton from '../../../styledComponents/products/ModifyQuantityButton';
+import ProductImage from '../../../styledComponents/products/ProductImage';
+import ProductPrice from '../../../styledComponents/products/ProductPrice';
 import { itemVariationOptions } from '../../../utils/constants';
 import { formatPrice, getProductVariationSuffix } from '../../../utils/helper';
 import routeNames from '../../../utils/routeNames';
@@ -34,7 +35,6 @@ import {
   updateSelectedProductImage,
   updateSelectedProductImageList,
 } from '../src/productReducers';
-import productStyle from '../src/productStyle';
 import ProductErrorSnackbar from './ProductErrorSnackbar';
 
 interface ProductDescriptionParams{
@@ -42,8 +42,6 @@ interface ProductDescriptionParams{
 }
 
 const ProductDescription = () => {
-  const styles = productStyle();
-  const globalStyles = useGlobalStyles();
   const dispatch = useAppDispatch();
   const params:ProductDescriptionParams = useParams();
   const isXsView = useXsDownMediaQuery();
@@ -137,18 +135,18 @@ const ProductDescription = () => {
   const options = {
     renderMark: {
       [MARKS.BOLD]: (text:React.ReactNode) => (
-        <span className={globalStyles.boldText}>{text}</span>
+        <Typography variant="h6" fontWeight="bold">{text}</Typography>
       ),
     },
     renderNode: {
       [BLOCKS.PARAGRAPH]: (_node:Block | Inline, children:React.ReactNode) => (
-        <div><Typography variant="h6" className={styles.unboldText}>{children}</Typography></div>
+        <Typography variant="h6">{children}</Typography>
       ),
     },
   };
 
   return (
-    <Grid container spacing={4} className={styles.productDescriptionBg}>
+    <Grid container spacing={4}>
       <Grid item xs={12}>
         <CustomBreadcrumbs customActiveName={selectedProduct.name} />
         <Typography variant="h4">{selectedProduct.name}</Typography>
@@ -156,27 +154,16 @@ const ProductDescription = () => {
       <Grid item lg={4} sm={12}>
         <Grid container justifyContent="center">
           <Grid item lg={12} sm={6} xs={12}>
-            <Carousel
-              autoPlay
-              indicators={false}
-              navButtonsProps={{
-                className: styles.productCardCarouselNavButton,
-                style: {},
-              }}
-            >
+            <Carousel autoPlay indicators={false}>
               {selectedProduct.productImage.map((image) => {
                 const imageData = getImage(image)!;
                 return (
                   <Box
-                    className={styles.carouselImageContainer}
+                    sx={{ cursor: 'zoom-in' }}
                     key={imageData.images.fallback?.src}
                     onClick={() => triggerEnlargeImage(image, selectedProduct.productImage)}
                   >
-                    <GatsbyImage
-                      image={imageData}
-                      alt={selectedProduct.name}
-                      className={styles.productDescriptionImg}
-                    />
+                    <ProductImage image={imageData} alt={selectedProduct.name} />
                   </Box>
                 );
               })}
@@ -186,52 +173,44 @@ const ProductDescription = () => {
       </Grid>
       <Grid item lg={8} xs={12}>
         <Grid container direction="column">
-          <Typography variant="h5" className={clsx(globalStyles.boldText, styles.bottomSpacing)}>Description</Typography>
+          <Typography variant="h5" fontWeight="bold" marginBottom={3}>Description</Typography>
           {documentToReactComponents(jsonContentDescription, options)}
         </Grid>
         {isKeyChainSeries && (
           <>
-            <Typography variant="h6" className={clsx(globalStyles.boldText, styles.minorSpacingTop)}>Variations</Typography>
-            <ToggleButtonGroup
+            <Typography variant="h6" fontWeight="bold">Variations</Typography>
+            <ItemVariationToggleButton
               value={selectedItemVariation}
               exclusive
               onChange={(_event: React.MouseEvent<HTMLElement>, newValue: string) => {
                 setSelectedItemVariation(newValue);
               }}
+              color="secondary"
               aria-label="variation"
             >
               {itemVariationOptions.map((option) => (
                 <ToggleButton
                   key={option.value}
-                  className={styles.itemVariation}
-                  classes={{
-                    selected: styles.productVariationActiveColor,
-                  }}
                   value={option.value}
                   aria-label={option.label}
                 >
                   <Typography>{option.label}</Typography>
                 </ToggleButton>
               ))}
-            </ToggleButtonGroup>
+            </ItemVariationToggleButton>
           </>
         )}
-        <Grid container spacing={2} alignItems="center" className={styles.topSpacing}>
+        <Grid container spacing={2} alignItems="center" marginTop={5}>
           <Grid item md={6} sm={5} xs={12}>
             <Grid container spacing={2}>
               <Grid item>
-                <Typography
-                  variant="h5"
-                  className={clsx(globalStyles.boldText, {
-                    [styles.dicountedPriceOriText]: selectedProduct.discountedPrice,
-                  })}
-                >
+                <ProductPrice discountprice={selectedProduct.discountedPrice} variant="h5">
                   {formatPrice(selectedProduct.price, 'MYR')}
-                </Typography>
+                </ProductPrice>
               </Grid>
               <Grid item>
                 {selectedProduct.discountedPrice && (
-                  <Typography variant="h5" className={styles.discountedPriceText}>
+                  <Typography variant="h5" fontWeight="bold">
                     {formatPrice(selectedProduct.discountedPrice, 'MYR')}
                   </Typography>
                 )}
@@ -240,22 +219,21 @@ const ProductDescription = () => {
           </Grid>
           <Grid item md={2} sm={3} xs={9}>
             <Grid container justifyContent="flex-end">
-              <IconButton className={styles.minusIconButton} onClick={reduceItemQuantity}>
+              <ModifyQuantityButton actiontype="minus" onClick={reduceItemQuantity}>
                 <RemoveIcon />
-              </IconButton>
+              </ModifyQuantityButton>
               <Grid item xs={4}>
-                <FormControl hiddenLabel variant="filled" className={styles.quantityInput} size="small">
+                <ItemQuantityInput hiddenLabel variant="filled" size="small">
                   <FilledInput
                     disableUnderline
-                    inputProps={{ className: styles.centerText }}
                     value={itemQuantity}
                     onChange={handleItemQuantityChange}
                   />
-                </FormControl>
+                </ItemQuantityInput>
               </Grid>
-              <IconButton className={styles.plusIconButton} onClick={increaseItemQuantity} size="medium">
+              <ModifyQuantityButton actiontype="add" onClick={increaseItemQuantity}>
                 <AddIcon />
-              </IconButton>
+              </ModifyQuantityButton>
             </Grid>
           </Grid>
           <Grid item md={3} sm={4} xs={3}>
@@ -281,29 +259,19 @@ const ProductDescription = () => {
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h6">You may also like...</Typography>
-        <Carousel
-          className={styles.minorSpacingTop}
-          navButtonsProps={{
-            className: styles.productCardCarouselNavButton,
-            style: {},
-          }}
-        >
+        <Typography variant="h6" marginBottom={1}>You may also like...</Typography>
+        <Carousel>
           {productRecommendation.map((productArray) => (
             <Grid container spacing={2} justifyContent="center" key={productArray.toString()}>
               {productArray.map((product) => {
                 const imageData = getImage(product.productImage[0])!;
                 return (
                   <Grid item xs={6} sm={2} key={product.contentful_id}>
-                    <Link target="_blank" rel="noreferrer" href={`/products/${product.contentful_id}`}>
-                      <Grid container alignItems="center" justifyContent="center" className={styles.productRecommendationNameContainer}>
-                        <Typography variant="h6" color="secondary" className={styles.centerText}>{product.name}</Typography>
+                    <Link underline="hover" target="_blank" rel="noreferrer" href={`/products/${product.contentful_id}`}>
+                      <Grid container alignItems="center" justifyContent="center" height={64}>
+                        <Typography variant="h6" color="secondary" textAlign="center">{product.name}</Typography>
                       </Grid>
-                      <GatsbyImage
-                        image={imageData}
-                        alt={product.name}
-                        className={styles.productDescriptionImg}
-                      />
+                      <ProductImage image={imageData} alt={product.name} />
                     </Link>
                   </Grid>
                 );

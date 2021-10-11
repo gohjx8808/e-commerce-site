@@ -10,7 +10,7 @@ import React, {
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
 import { useAppSelector } from '../../../hooks';
-import ProductCategoryImage from '../../../styledComponents/products/ProductCategoryImage';
+import ProductImage from '../../../styledComponents/products/ProductImage';
 import { compareString } from '../../../utils/helper';
 
 const ControlledPicker = lazy(() => import('../../../sharedComponents/inputs/ControlledPicker'));
@@ -171,7 +171,7 @@ const Products = () => {
                   smooth
                   offset={-60}
                 >
-                  <ProductCategoryImage
+                  <ProductImage
                     image={categoryImage}
                     alt={currentCategoryImageData.node.name}
                   />

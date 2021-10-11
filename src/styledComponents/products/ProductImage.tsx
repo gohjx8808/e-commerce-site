@@ -1,8 +1,8 @@
 import { styled } from '@mui/material/styles';
 import { GatsbyImage } from 'gatsby-plugin-image';
 
-const ProductCategoryImage = styled(GatsbyImage)({
+const ProductImage = styled(GatsbyImage)({
   borderRadius: 5,
 });
 
-export default ProductCategoryImage;
+export default ProductImage;

@@ -112,7 +112,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
             <Grid item>
               <Grid container spacing={1} alignItems="center">
                 <Grid item>
-                  <ProductPrice discountPrice={product.discountedPrice}>
+                  <ProductPrice discountprice={product.discountedPrice}>
                     {formatPrice(product.price, 'MYR')}
                   </ProductPrice>
                 </Grid>
