@@ -1,18 +1,16 @@
-import React from 'react';
-import Dialog from '@mui/material/Dialog';
-import Typography from '@mui/material/Typography';
-import DialogTitle from '@mui/material/DialogTitle';
-import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import productStyle from '../src/productStyle';
-import { updateSelectedAddress } from '../../account/src/accountReducer';
-import useGlobalStyles from '../../../useGlobalStyles';
-import { defaultAddressData } from '../../../utils/constants';
+import Typography from '@mui/material/Typography';
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import StyledListItem from '../../../styledComponents/StyledListItem';
+import { defaultAddressData } from '../../../utils/constants';
+import { updateSelectedAddress } from '../../account/src/accountReducer';
 
 interface CheckoutAddressListModalOwnProps{
   isVisible:boolean
@@ -21,8 +19,6 @@ interface CheckoutAddressListModalOwnProps{
 
 const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
   const dispatch = useAppDispatch();
-  const globalStyles = useGlobalStyles();
-  const styles = productStyle();
   const { isVisible, toggleModal } = props;
   const addressList = useAppSelector((state) => state.auth.currentUser.addressBook);
   const selectedAddress = useAppSelector((state) => state.account.selectedAddress);
@@ -58,18 +54,18 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
                   <>
                     <Grid container>
                       <Grid item xs={5}>
-                        <Typography className={globalStyles.boldText}>
+                        <Typography fontWeight="bold">
                           {address.fullName}
                         </Typography>
                       </Grid>
                       <Divider orientation="vertical" flexItem variant="middle" />
                       <Grid item xs={5}>
-                        <Typography className={globalStyles.boldText}>
+                        <Typography fontWeight="bold">
                           {address.phoneNumber}
                         </Typography>
                       </Grid>
                     </Grid>
-                    <Typography className={globalStyles.boldText}>{address.email}</Typography>
+                    <Typography fontWeight="bold">{address.email}</Typography>
                     <Typography>
                       {address.addressLine1}
                       {' '}
@@ -92,7 +88,7 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
           ))}
         </List>
       ) : (
-        <Grid container justifyContent="center" className={styles.bottomSpacing}>
+        <Grid container justifyContent="center" marginBottom={3}>
           <Typography variant="h6">No address is added yet!</Typography>
         </Grid>
       )}

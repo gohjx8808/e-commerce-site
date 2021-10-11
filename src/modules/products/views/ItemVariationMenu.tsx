@@ -1,10 +1,8 @@
-import React from 'react';
-import { useState } from 'react';
-import ListItemText from '@mui/material/ListItemText';
-import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import ListItemText from '@mui/material/ListItemText';
+import React, { useState } from 'react';
 import StyledMenuItem from '../../../styledComponents/StyledListItem';
-import productStyle from '../src/productStyle';
 import StyledMenu from '../../../styledComponents/StyledMenu';
 
 interface ItemVariationMenuOwnProps{
@@ -16,7 +14,6 @@ interface ItemVariationMenuOwnProps{
 const ItemVariationMenu = (props:ItemVariationMenuOwnProps) => {
   const { anchorEl, handleClose, addToCart } = props;
   const [selectedVariation, setSelectedVariation] = useState('');
-  const styles = productStyle();
 
   const onClickConfirm = () => {
     addToCart(selectedVariation);
@@ -42,7 +39,7 @@ const ItemVariationMenu = (props:ItemVariationMenuOwnProps) => {
       <StyledMenuItem onClick={() => updateSelectedVariation('Without Keychain')} selected={selectedVariation === 'Without Keychain'}>
         <ListItemText primary="Without Keychain" />
       </StyledMenuItem>
-      <Grid container justifyContent="center" alignItems="center" className={styles.verticalMargin}>
+      <Grid container justifyContent="center" alignItems="center" marginTop={1.5} marginBottom={0.5}>
         <Button variant="outlined" color="secondary" onClick={onClickConfirm}>Confirm</Button>
       </Grid>
     </StyledMenu>

@@ -89,7 +89,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
   return (
     <Grid item lg={3} md={6} sm={6} xs={6}>
       <StyledProductCard variant="outlined" onClick={openDescription}>
-        <CardHeader title={product.name} sx={{ height: 95 }} />
+        <CardHeader title={product.name} sx={{ minHeight: { sm: 95, xs: 105 } }} />
         <Carousel indicators={false} autoPlay={false}>
           {product.productImage.map((image) => {
             const imageData = getImage(image)!;

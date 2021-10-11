@@ -1,12 +1,11 @@
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import React from 'react';
-import useGlobalStyles from '../../../useGlobalStyles';
-import productStyle from '../src/productStyle';
+import BoldFont from '../../../styledComponents/BoldFont';
+import DialogActionButtonsContainer from '../../../styledComponents/DialogActionButtonsContainer';
 
 interface ItemRemoveConfirmationDialogOwnProps{
   modalOpen:boolean
@@ -20,9 +19,6 @@ const ItemRemoveConfirmationDialog = (props:ItemRemoveConfirmationDialogOwnProps
     modalOpen, toggleModal, confirmRemove, itemName,
   } = props;
 
-  const styles = productStyle();
-  const globalStyles = useGlobalStyles();
-
   return (
     <Dialog
       open={modalOpen}
@@ -35,21 +31,21 @@ const ItemRemoveConfirmationDialog = (props:ItemRemoveConfirmationDialogOwnProps
         <DialogContentText id="item-remove-description">
           Are you sure you wish to remove
           {' '}
-          <span className={globalStyles.boldText}>
+          <BoldFont>
             {itemName}
-          </span>
+          </BoldFont>
           {' '}
           from your cart?
         </DialogContentText>
       </DialogContent>
-      <DialogActions className={styles.totalPayTextContainer}>
+      <DialogActionButtonsContainer>
         <Button onClick={toggleModal} color="secondary" variant="contained">
           Cancel
         </Button>
         <Button onClick={confirmRemove} color="secondary">
           Confirm
         </Button>
-      </DialogActions>
+      </DialogActionButtonsContainer>
     </Dialog>
   );
 };
