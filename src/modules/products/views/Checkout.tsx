@@ -10,7 +10,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import clsx from 'clsx';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import isBetween from 'dayjs/plugin/isBetween';
@@ -28,13 +27,11 @@ import ControlledPicker from '../../../sharedComponents/inputs/ControlledPicker'
 import ControlledRadioButton from '../../../sharedComponents/inputs/ControlledRadioButton';
 import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
 import CheckoutCard from '../../../styledComponents/products/CheckoutCard';
-import useGlobalStyles from '../../../useGlobalStyles';
 import { stateOptions } from '../../../utils/constants';
 import { formatPrice } from '../../../utils/helper';
 import { getAvailablePromocodes } from '../src/productApi';
 import { sendPaymentEmailAction } from '../src/productReducers';
 import productSchema from '../src/productSchema';
-import productStyle from '../src/productStyle';
 import CheckoutAddressListModal from './CheckoutAddressListModal';
 
 dayjs.extend(isBetween);
@@ -56,8 +53,6 @@ interface shippingFeeData{
 
 const Checkout = () => {
   const isXsView = useXsDownMediaQuery();
-  const styles = productStyle();
-  const globalStyles = useGlobalStyles();
   const dispatch = useAppDispatch();
   const currentUserDetails = useAppSelector((state) => state.auth.currentUser);
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
@@ -388,17 +383,19 @@ const Checkout = () => {
         <form onSubmit={handleSubmit(proceedToPayment)}>
           <Grid item xs={12}>
             <Typography variant="h6">Shipping Information</Typography>
-            <Card className={styles.secondaryBorder} variant="outlined">
-              <CardContent className={styles.cartTitleCardContent}>
-                <Grid container justifyContent="center" alignItems="center" spacing={2}>
-                  <Tooltip title="Please login to use this feature" className={styles.proceedPaymentBtnContainer} disableHoverListener={currentUserDetails.uid !== ''}>
+            <Card sx={{ borderColor: 'secondary.main', borderWidth: 2 }} variant="outlined">
+              <CardContent>
+                <Grid container justifyContent="center" alignItems="center" marginTop={1}>
+                  <Tooltip title="Please login to use this feature" disableHoverListener={currentUserDetails.uid !== ''}>
                     <span>
                       <Button variant="outlined" color="secondary" disabled={currentUserDetails.uid === ''} onClick={toggleCheckoutAddressListModal}>
                         Select address from address book
                       </Button>
                     </span>
                   </Tooltip>
-                  <DividerWithText>Or</DividerWithText>
+                </Grid>
+                <DividerWithText>Or</DividerWithText>
+                <Grid container justifyContent="center" alignItems="center" spacing={2}>
                   <Grid item xs={12}>
                     <ControlledTextInput
                       control={control}
@@ -410,7 +407,7 @@ const Checkout = () => {
                       readOnly={!!selectedAddress.fullName}
                     />
                   </Grid>
-                  <Grid item lg={6} xs={12}>
+                  <Grid item sm={6} xs={12}>
                     <ControlledTextInput
                       control={control}
                       name="email"
@@ -421,7 +418,7 @@ const Checkout = () => {
                       readOnly={!!selectedAddress.email}
                     />
                   </Grid>
-                  <Grid item lg={6} xs={12}>
+                  <Grid item sm={6} xs={12}>
                     <ControlledTextInput
                       control={control}
                       name="phoneNumber"
@@ -458,7 +455,7 @@ const Checkout = () => {
                       readOnly={!!selectedAddress.addressLine1}
                     />
                   </Grid>
-                  <Grid item lg={6} xs={12}>
+                  <Grid item sm={6} xs={12}>
                     <ControlledTextInput
                       control={control}
                       name="postcode"
@@ -470,7 +467,7 @@ const Checkout = () => {
                       readOnly={!!selectedAddress.postcode}
                     />
                   </Grid>
-                  <Grid item lg={6} xs={12}>
+                  <Grid item sm={6} xs={12}>
                     <ControlledTextInput
                       control={control}
                       name="city"
@@ -481,7 +478,7 @@ const Checkout = () => {
                       readOnly={!!selectedAddress.city}
                     />
                   </Grid>
-                  <Grid item lg={6} xs={12}>
+                  <Grid item sm={6} xs={12}>
                     <ControlledPicker
                       control={control}
                       options={stateOptions}
@@ -496,7 +493,7 @@ const Checkout = () => {
                     />
                   </Grid>
                   {outsideMalaysiaState && (
-                    <Grid item lg={6} xs={12}>
+                    <Grid item sm={6} xs={12}>
                       <ControlledTextInput
                         control={control}
                         name="outsideMalaysiaState"
@@ -508,7 +505,7 @@ const Checkout = () => {
                       />
                     </Grid>
                   )}
-                  <Grid item lg={outsideMalaysiaState ? 12 : 6} xs={12}>
+                  <Grid item sm={outsideMalaysiaState ? 12 : 6} xs={12}>
                     <ControlledTextInput
                       control={control}
                       name="country"

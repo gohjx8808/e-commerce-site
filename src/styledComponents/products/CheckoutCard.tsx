@@ -9,7 +9,7 @@ const CheckoutCard = styled(Card)<CheckoutCardProps>(({ theme, outsidemalaysiast
   borderColor: theme.palette.secondary.main,
   borderWidth: 2,
   [theme.breakpoints.up('lg')]: {
-    height: outsidemalaysiastate ? 955 : 875,
+    height: outsidemalaysiastate ? 960 : 880,
   },
   height: 510,
 }));
