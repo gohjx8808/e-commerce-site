@@ -27,6 +27,7 @@ import ControlledCheckbox from '../../../sharedComponents/inputs/ControlledCheck
 import ControlledPicker from '../../../sharedComponents/inputs/ControlledPicker';
 import ControlledRadioButton from '../../../sharedComponents/inputs/ControlledRadioButton';
 import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
+import CheckoutCard from '../../../styledComponents/products/CheckoutCard';
 import useGlobalStyles from '../../../useGlobalStyles';
 import { stateOptions } from '../../../utils/constants';
 import { formatPrice } from '../../../utils/helper';
@@ -306,18 +307,8 @@ const Checkout = () => {
       </Grid>
       <Grid item lg={4} xs={11}>
         <Typography variant="h6">Your Order</Typography>
-        <Card
-          className={clsx(styles.secondaryBorder, {
-            [styles.checkoutOrderCard]: !outsideMalaysiaState,
-            [styles.outsideMalaysiaCheckoutOrderCard]: outsideMalaysiaState,
-          })}
-          variant="outlined"
-        >
-          <Box className={clsx({
-            [styles.checkoutItemContainer]: !outsideMalaysiaState,
-            [styles.outsideMalaysiaCheckoutItemContainer]: outsideMalaysiaState,
-          })}
-          >
+        <CheckoutCard variant="outlined" outsidemalaysiastate={outsideMalaysiaState}>
+          <Box height={{ xs: 300, sm: 330, lg: outsideMalaysiaState ? 770 : 690 }}>
             <DataGrid
               rows={extractedCartItem}
               columns={isXsView ? xsColumns : columns}
@@ -331,31 +322,31 @@ const Checkout = () => {
             />
           </Box>
           <Divider />
-          <Grid container alignItems="center" className={styles.totalPayTextContainer} spacing={1}>
+          <Grid container alignItems="center" padding={2.5} spacing={1}>
             <Grid item lg={9} sm={10} xs={7}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={styles.rightText}>
+                <Typography variant="subtitle1" textAlign="right">
                   Total Amount:
                 </Typography>
               </Grid>
             </Grid>
             <Grid item lg={3} sm={2} xs={5}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={styles.rightText}>
+                <Typography variant="subtitle1" textAlign="right">
                   {formatPrice(totalAmount, 'MYR')}
                 </Typography>
               </Grid>
             </Grid>
             <Grid item lg={9} sm={10} xs={7}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={clsx(styles.rightText, { [styles.successText]: appliedPromo.code })}>
+                <Typography variant="subtitle1" textAlign="right" color={appliedPromo.code && 'green'}>
                   {`Total Discount ${appliedPromo.code ? `(${appliedPromo.discountType === 'value' ? 'RM ' : ''}${appliedPromo.discountValue}${appliedPromo.discountType === 'percentage' ? '%' : ''})` : ''}:`}
                 </Typography>
               </Grid>
             </Grid>
             <Grid item lg={3} sm={2} xs={5}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={clsx(styles.rightText, { [styles.successText]: appliedPromo.code })}>
+                <Typography variant="subtitle1" textAlign="right" color={appliedPromo.code && 'green'}>
                   -
                   {' '}
                   {appliedPromo.code ? formatPrice(totalAmount - appliedPromo.discountedPrice, 'MYR') : ''}
@@ -364,34 +355,34 @@ const Checkout = () => {
             </Grid>
             <Grid item lg={9} sm={10} xs={7}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={styles.rightText}>
+                <Typography variant="subtitle1" textAlign="right">
                   Shipping Fee:
                 </Typography>
               </Grid>
             </Grid>
             <Grid item lg={3} sm={2} xs={5}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={styles.rightText}>
+                <Typography variant="subtitle1" textAlign="right">
                   {shippingFee.displayShipping}
                 </Typography>
               </Grid>
             </Grid>
             <Grid item lg={9} sm={10} xs={7}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={clsx(styles.rightText, globalStyles.boldText)}>
+                <Typography variant="subtitle1" textAlign="right" fontWeight="bold">
                   Total Amount After Discount:
                 </Typography>
               </Grid>
             </Grid>
             <Grid item lg={3} sm={2} xs={5}>
               <Grid container justifyContent="flex-end">
-                <Typography variant="subtitle1" className={clsx(styles.rightText, globalStyles.boldText)}>
+                <Typography variant="subtitle1" textAlign="right" fontWeight="bold">
                   {formatPrice(appliedPromo.discountedPrice + shippingFee.realShipping, 'MYR')}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
-        </Card>
+        </CheckoutCard>
       </Grid>
       <Grid item lg={8} xs={11}>
         <form onSubmit={handleSubmit(proceedToPayment)}>
@@ -537,16 +528,16 @@ const Checkout = () => {
                       lightbg={1}
                       disabled={currentUserDetails.uid === ''}
                     />
-                    <FormHelperText error className={styles.errorPadding}>
+                    <FormHelperText error sx={{ marginLeft: 2 }}>
                       {appliedPromo.error}
                     </FormHelperText>
                     {appliedPromo.success && (
-                      <FormHelperText className={clsx(styles.errorPadding, styles.successText)}>
+                      <FormHelperText sx={{ marginLeft: 2, color: 'green' }}>
                         {appliedPromo.success}
                       </FormHelperText>
                     )}
                     {currentUserDetails.uid === '' && (
-                      <FormHelperText className={styles.errorPadding}>
+                      <FormHelperText sx={{ marginLeft: 2 }}>
                         Please login to enjoy the discounts!
                       </FormHelperText>
                     )}
@@ -562,7 +553,7 @@ const Checkout = () => {
                     />
                   </Grid>
                   {!selectedAddress.addressLine1 && (
-                    <Grid container justifyContent="flex-start" alignItems="center" className={styles.rmbPadding}>
+                    <Grid container justifyContent="flex-start" alignItems="center" marginLeft={2.5}>
                       <ControlledCheckbox
                         name="saveShippingInfo"
                         control={control}
@@ -577,7 +568,7 @@ const Checkout = () => {
             </Card>
           </Grid>
           <Grid item xs={12}>
-            <Grid container justifyContent="center" direction="row" alignItems="center" className={styles.proceedPaymentBtnContainer}>
+            <Grid container justifyContent="center" direction="row" alignItems="center" marginTop={1}>
               <Grid item xs={12} sm={9} md={8}>
                 <Grid container justifyContent="flex-start" alignItems="center">
                   <ControlledRadioButton
@@ -592,7 +583,7 @@ const Checkout = () => {
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={3} md={4}>
-                <Grid container justifyContent="flex-end" alignItems="center">
+                <Grid container justifyContent={{ xs: 'center', sm: 'flex-end' }} alignItems="center" marginTop={1}>
                   <Button variant="contained" color="secondary" size="medium" type="submit">
                     Proceed To Payment
                   </Button>
