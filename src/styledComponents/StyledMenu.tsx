@@ -1,5 +1,5 @@
 import Menu, { MenuProps } from '@mui/material/Menu';
-import styled from '@mui/styles/styled';
+import { styled } from '@mui/material/styles';
 import React from 'react';
 
 const StyledMenu = styled((props:MenuProps) => (
