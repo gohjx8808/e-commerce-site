@@ -11,16 +11,20 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import BrightnessAutoIcon from '@mui/icons-material/BrightnessAuto';
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../hooks';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
 import StyledAppbar from '../styledComponents/drawer/StyledAppbar';
 import { SearchContainer, SearchIconWrapper, SearchInputBase } from '../styledComponents/search';
 import StyledMenuItem from '../styledComponents/StyledListItem';
+import DarkModeContext from '../utils/DarkModeContext';
 import routeNames from '../utils/routeNames';
 import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
 import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
@@ -37,6 +41,7 @@ const MenuBar = () => {
   const [totalQuantity, setTotalQuantity] = useState(0);
   const dispatch = useAppDispatch();
   const isXsView = useXsDownMediaQuery();
+  const { toggleTheme, displayTheme } = useContext(DarkModeContext);
 
   useEffect(() => {
     let total = 0;
@@ -162,6 +167,21 @@ const MenuBar = () => {
               </SearchContainer>
             )}
             <Box flexGrow={1} />
+            {displayTheme === 'system' && (
+              <IconButton sx={{ ml: 1 }} onClick={() => toggleTheme('light')} color="inherit">
+                <BrightnessAutoIcon />
+              </IconButton>
+            )}
+            {displayTheme === 'light' && (
+              <IconButton sx={{ ml: 1 }} onClick={() => toggleTheme('dark')} color="inherit">
+                <Brightness7Icon />
+              </IconButton>
+            )}
+            {displayTheme === 'dark' && (
+              <IconButton sx={{ ml: 1 }} onClick={() => toggleTheme('system')} color="inherit">
+                <Brightness4Icon />
+              </IconButton>
+            )}
             <Box display={{ xs: 'none', md: 'flex' }} alignItems="center">
               {currentUserDetail.fullName !== ''
                 ? (

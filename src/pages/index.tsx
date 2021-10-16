@@ -1,13 +1,16 @@
-import { SnackbarProvider } from 'notistack';
-import * as React from 'react';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDayjs from '@mui/lab/AdapterDayjs';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { PaletteMode } from '@mui/material';
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { PaletteMode } from '@mui/material';
-import { useMemo } from 'react';
-import App from './App';
+import { SnackbarProvider } from 'notistack';
+import * as React from 'react';
+import {
+  useEffect, useMemo, useState,
+} from 'react';
 import CustomSnackbar from '../sharedComponents/CustomSnackbar';
+import DarkModeContext from '../utils/DarkModeContext';
+import App from './App';
 
 declare module '@mui/material/AppBar' {
   interface AppBarPropsColorOverrides {
@@ -35,10 +38,14 @@ declare module '@mui/material/styles' {
   }
 }
 
+type modeType = PaletteMode | 'system';
+
 const IndexPage = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const [mode, setMode] = useState<PaletteMode>('light');
+  const [displayTheme, setDisplayTheme] = useState<modeType>('system');
 
-  const getDesignTokens = (mode:PaletteMode) => ({
+  const theme = useMemo(() => createTheme({
     palette: {
       mode,
       ...(mode === 'light' ? {
@@ -101,27 +108,43 @@ const IndexPage = () => {
         },
       },
     },
-  });
+  }), [mode]);
 
-  const theme = useMemo(() => createTheme(getDesignTokens(prefersDarkMode ? 'dark' : 'light')), [prefersDarkMode]);
+  useEffect(() => {
+    if (displayTheme === 'system') {
+      if (prefersDarkMode) {
+        setMode('dark');
+      } else {
+        setMode('light');
+      }
+    } else {
+      setMode(displayTheme);
+    }
+  }, [prefersDarkMode, displayTheme]);
+
+  const toggleTheme = (selectedMode:modeType) => {
+    setDisplayTheme(selectedMode);
+  };
 
   return (
-    <ThemeProvider theme={responsiveFontSizes(theme)}>
-      <SnackbarProvider
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        autoHideDuration={3000}
-        content={(key, message) => (
-          <CustomSnackbar id={key} message={message} />
-        )}
-      >
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <App />
-        </LocalizationProvider>
-      </SnackbarProvider>
-    </ThemeProvider>
+    <DarkModeContext.Provider value={{ toggleTheme, displayTheme }}>
+      <ThemeProvider theme={responsiveFontSizes(theme)}>
+        <SnackbarProvider
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          autoHideDuration={3000}
+          content={(key, message) => (
+            <CustomSnackbar id={key} message={message} />
+          )}
+        >
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <App />
+          </LocalizationProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </DarkModeContext.Provider>
   );
 };
 
