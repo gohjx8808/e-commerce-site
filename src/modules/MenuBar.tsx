@@ -131,7 +131,7 @@ const MenuBar = () => {
     <>
       <CssBaseline />
       <ElevationScroll>
-        <StyledAppbar position="fixed" open={drawerOpen}>
+        <StyledAppbar position="fixed" open={drawerOpen} color="customPrimary">
           <Toolbar>
             <IconButton
               sx={{

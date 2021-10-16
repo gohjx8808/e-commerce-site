@@ -14,7 +14,7 @@ const Footer = () => {
   const isSmView = useXsDownMediaQuery();
 
   return (
-    <AppBar position="static" color="primary" elevation={0}>
+    <AppBar position="static" color="customPrimary" elevation={0}>
       <Container>
         <Toolbar disableGutters>
           {isSmView && (

@@ -46,7 +46,7 @@ const LoginScreen = () => {
         <Grid item xs={10} sm={9} lg={6}>
           <Grid container justifyContent="space-between" alignItems="center">
             <CustomBreadcrumbs />
-            <Typography>
+            <Typography color="customPrimary.contrastText">
               New member?
               {' '}
               <Link component={GatsbyLink} to={routeNames.signUp} color="secondary" underline="hover">Register here!</Link>
@@ -93,7 +93,7 @@ const LoginScreen = () => {
                 </Grid>
                 <Grid container justifyContent="center" alignItems="center" marginTop={3} marginBottom={2}>
                   <Grid item xs={6} sm={3}>
-                    <Button variant="contained" color="primary" type="submit" fullWidth>
+                    <Button variant="contained" color="primaryButton" type="submit" fullWidth>
                       Log In
                     </Button>
                   </Grid>

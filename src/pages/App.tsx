@@ -84,7 +84,7 @@ const RouterPage = (
 
   return (
     <Grid container minHeight="100vh" direction="column">
-      <Grid alignItems="center" display="flex" flexGrow={1} bgcolor={theme.palette.primary.main}>
+      <Grid alignItems="center" display="flex" flexGrow={1} bgcolor={theme.palette.customPrimary.main}>
         {pageComponent}
       </Grid>
       <Footer />
@@ -130,7 +130,7 @@ const MainRoutes = (props: {
           <Toolbar />
           {homeCarouselBanner && <HomeBanner />}
           {pageBannerTitle && (
-            <Grid item xs={12} padding={1} bgcolor={theme.palette.secondary.main}>
+            <Grid item xs={12} padding={1} bgcolor={theme.palette.customSecondary.main}>
               <Grid container justifyContent="center" alignItems="center">
                 <Typography variant="h4" color="white">{pageBannerTitle}</Typography>
               </Grid>
