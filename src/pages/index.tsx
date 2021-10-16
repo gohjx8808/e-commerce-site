@@ -56,12 +56,14 @@ const IndexPage = () => {
         },
         customPrimary: {
           main: '#f5dbc9',
+          contrastText: 'black',
         },
         customSecondary: {
           main: '#B67B5E',
         },
         primaryButton: {
           main: '#f5dbc9',
+          contrastText: 'black',
         },
       } : {
         primary: {
