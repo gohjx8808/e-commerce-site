@@ -3,7 +3,10 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
+import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,14 +14,12 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
 import React, { useContext, useEffect, useState } from 'react';
-import BrightnessAutoIcon from '@mui/icons-material/BrightnessAuto';
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../hooks';
 import ElevationScroll from '../sharedComponents/ElevationScroll';
 import StyledAppbar from '../styledComponents/drawer/StyledAppbar';
@@ -168,19 +169,25 @@ const MenuBar = () => {
             )}
             <Box flexGrow={1} />
             {displayTheme === 'system' && (
-              <IconButton sx={{ ml: 1 }} onClick={() => toggleTheme('light')} color="inherit">
-                <BrightnessAutoIcon />
-              </IconButton>
+              <Tooltip title="System preference mode">
+                <IconButton onClick={() => toggleTheme('light')} color="inherit">
+                  <SettingsBrightnessIcon />
+                </IconButton>
+              </Tooltip>
             )}
             {displayTheme === 'light' && (
-              <IconButton sx={{ ml: 1 }} onClick={() => toggleTheme('dark')} color="inherit">
-                <Brightness7Icon />
-              </IconButton>
+              <Tooltip title="Light mode">
+                <IconButton onClick={() => toggleTheme('dark')} color="inherit">
+                  <WbSunnyIcon />
+                </IconButton>
+              </Tooltip>
             )}
             {displayTheme === 'dark' && (
-              <IconButton sx={{ ml: 1 }} onClick={() => toggleTheme('system')} color="inherit">
-                <Brightness4Icon />
-              </IconButton>
+              <Tooltip title="Dark mode">
+                <IconButton onClick={() => toggleTheme('system')} color="inherit">
+                  <DarkModeIcon />
+                </IconButton>
+              </Tooltip>
             )}
             <Box display={{ xs: 'none', md: 'flex' }} alignItems="center">
               {currentUserDetail.fullName !== ''
