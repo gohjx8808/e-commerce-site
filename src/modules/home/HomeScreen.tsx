@@ -16,14 +16,8 @@ import HomeImageList from '../../styledComponents/home/HomeImageList';
 import routeNames from '../../utils/routeNames';
 import { storeAllProducts } from '../products/src/productReducers';
 
-interface imageListImages{
-  productImage:ImageDataLike
-  rows:number
-  cols:number
-}
-
 const HomeScreen = () => {
-  const [productImages, setProductImages] = useState<imageListImages[]>([]);
+  const [productImages, setProductImages] = useState<ImageDataLike[]>([]);
   const dispatch = useAppDispatch();
   const homeQuery = useStaticQuery(graphql`
     query {
@@ -40,8 +34,6 @@ const HomeScreen = () => {
             contentDescription {
               raw
             }
-            row
-            column
             discountedPrice
           }
         }
@@ -52,14 +44,10 @@ const HomeScreen = () => {
   useEffect(() => {
     const extractedProducts:products.innerProductQueryData[] = homeQuery.products.edges;
     dispatch(storeAllProducts(extractedProducts));
-    const tempProduct = [] as imageListImages[];
+    const tempProduct:ImageDataLike[] = [];
     extractedProducts.every((product) => {
       if (tempProduct.length < 25) {
-        tempProduct.push({
-          productImage: product.node.productImage[0],
-          rows: parseInt(product.node.row, 10),
-          cols: parseInt(product.node.column, 10),
-        });
+        tempProduct.push(product.node.productImage[0]);
         return true;
       }
       return false;
@@ -84,13 +72,9 @@ const HomeScreen = () => {
       </Grid>
       <HomeImageList rowHeight="auto" cols={5}>
         {productImages.map((image) => {
-          const productImagesData = getImage(image.productImage)!;
+          const productImagesData = getImage(image)!;
           return (
-            <ImageListItem
-              key={productImagesData.images.fallback?.src}
-              cols={image.cols || 1}
-              rows={image.rows || 1}
-            >
+            <ImageListItem key={productImagesData.images.fallback?.src}>
               <GatsbyImage
                 image={productImagesData}
                 alt={productImagesData.images.fallback?.src!}
