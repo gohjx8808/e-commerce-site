@@ -59,25 +59,61 @@ const ImageGallery = () => {
 
   useEffect(() => {
     const contentfulImages = images.allContentfulGallery.edges;
+    const tempRegularProductImages:targetImage[] = [];
+    const tempLargeProductImages:targetImage[] = [];
     const tempProductImages:targetImage[] = [];
 
     contentfulImages.map((imageCategory) => {
       const imageCategoryData = imageCategory.node;
       imageCategoryData.productPhoto1.map((image) => {
-        const sameImageFound = tempProductImages.some((tempImage) => tempImage.id === image.id);
-        if (!sameImageFound) {
-          tempProductImages.push({
-            image: image.gatsbyImageData,
-            id: image.id,
-            row: imageCategoryData.row,
-            col: imageCategoryData.column,
-          });
+        if (imageCategoryData.row === 1) {
+          const sameImageFound = tempRegularProductImages.some(
+            (tempImage) => tempImage.id === image.id,
+          );
+          if (!sameImageFound) {
+            tempRegularProductImages.push({
+              image: image.gatsbyImageData,
+              id: image.id,
+              row: imageCategoryData.row,
+              col: imageCategoryData.column,
+            });
+          }
+        } else {
+          const sameImageFound = tempLargeProductImages.some(
+            (tempImage) => tempImage.id === image.id,
+          );
+          if (!sameImageFound) {
+            tempLargeProductImages.push({
+              image: image.gatsbyImageData,
+              id: image.id,
+              row: imageCategoryData.row,
+              col: imageCategoryData.column,
+            });
+          }
         }
         return null;
       });
       return null;
     });
-    tempProductImages.sort(() => Math.random() - 0.5);
+    tempLargeProductImages.sort(() => Math.random() - 0.5);
+    tempRegularProductImages.sort(() => Math.random() - 0.5);
+    while (tempLargeProductImages.length > 0 || tempRegularProductImages.length > 0) {
+      const tempArr = [
+        tempLargeProductImages.pop()!,
+        ...tempRegularProductImages.splice(0, 6),
+      ];
+      tempArr.sort(() => Math.random() - 0.5);
+      if (tempArr.length > 5) {
+        const largeProductIndex = tempArr.findIndex((image) => image.row > 1);
+        if (largeProductIndex > 3) {
+          const randomIndexToReplace = Math.floor(Math.random() * 4);
+          const temp = tempArr[randomIndexToReplace];
+          tempArr[randomIndexToReplace] = tempArr[largeProductIndex];
+          tempArr[largeProductIndex] = temp;
+        }
+      }
+      tempProductImages.push(...tempArr);
+    }
     setAllProductImages(tempProductImages);
   }, [images.allContentfulGallery.edges]);
 
