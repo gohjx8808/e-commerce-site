@@ -2,13 +2,13 @@ module.exports = {
   siteMetadata: {
     title: 'yjArtJournal',
     titleTemplate: '%s | The Handmade Cottage',
-    description:
-      'Crochet and drawings are made with love.',
+    description: 'Crochet and drawings are made with love.',
     url: 'https://yjartjournal.gtsb.io', // No trailing slash allowed!
     siteUrl: 'https://yjartjournal.gtsb.io',
     image: '/images/snape.jpg', // Path to your image you placed in the 'static' folder
-    twitterUsername: '@yj_artjournal',
     lang: 'en',
+    author: '@yj_artjournal',
+    keywords: 'art, craft, crochet, drawings',
   },
   plugins: [
     'gatsby-plugin-gatsby-cloud',

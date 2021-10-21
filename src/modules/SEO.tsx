@@ -3,82 +3,87 @@ import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-interface SEOOwnProps{
-  title?:string
-  description?:string
-  image?:string
-  article?:boolean
-}
-
-const SEO = (props:SEOOwnProps) => {
-  const {
-    title, description, image, article,
-  } = props;
+const SEO = () => {
   const { pathname } = useLocation();
 
   const { site } = useStaticQuery(graphql`
     query SEO {
       site {
         siteMetadata {
-          defaultTitle: title
+          title
           titleTemplate
-          defaultDescription: description
+          description
           siteUrl: url
-          defaultImage: image
-          twitterUsername
+          image
           lang
+          keywords
+          author
         }
       }
     }`);
 
   const {
-    defaultTitle,
+    title,
     titleTemplate,
-    defaultDescription,
+    description,
     siteUrl,
-    defaultImage,
-    twitterUsername,
+    image,
     lang,
+    keywords,
+    author,
   } = site.siteMetadata;
 
   const seo = {
-    title: title || defaultTitle,
-    description: description || defaultDescription,
-    image: `${siteUrl}${image || defaultImage}`,
+    title,
+    description,
+    image: `${siteUrl}${image}`,
     url: `${siteUrl}${pathname}`,
   };
 
   return (
-    <Helmet title={seo.title} titleTemplate={titleTemplate} htmlAttributes={{ lang }}>
-      <meta name="description" content={seo.description} />
-      <meta name="image" content={seo.image} />
-
-      {seo.url && <meta property="og:url" content={seo.url} />}
-
-      {(article ? true : null) && <meta property="og:type" content="article" />}
-
-      {seo.title && <meta property="og:title" content={seo.title} />}
-
-      {seo.description && (
-        <meta property="og:description" content={seo.description} />
-      )}
-
-      {seo.image && <meta property="og:image" content={seo.image} />}
-
-      <meta name="twitter:card" content="summary_large_image" />
-
-      {twitterUsername && (
-        <meta name="twitter:creator" content={twitterUsername} />
-      )}
-
-      {seo.title && <meta name="twitter:title" content={seo.title} />}
-
-      {seo.description && (
-        <meta name="twitter:description" content={seo.description} />
-      )}
-
-      {seo.image && <meta name="twitter:image" content={seo.image} />}
-
+    <Helmet
+      title={seo.title}
+      titleTemplate={titleTemplate}
+      htmlAttributes={{ lang }}
+      meta={[
+        {
+          name: 'description',
+          content: description,
+        },
+        {
+          name: 'keywords',
+          content: keywords,
+        },
+        {
+          property: 'og:title',
+          content: title,
+        },
+        {
+          property: 'og:description',
+          content: description,
+        },
+        {
+          property: 'og:type',
+          content: 'website',
+        },
+        {
+          name: 'twitter:card',
+          content: 'summary',
+        },
+        {
+          name: 'twitter:creator',
+          content: author || '',
+        },
+        {
+          name: 'twitter:title',
+          content: title,
+        },
+        {
+          name: 'twitter:description',
+          content: description,
+        },
+      ]}
+    >
       <style type="text/css">
         {`body {
           margin: 0;
@@ -89,10 +94,3 @@ const SEO = (props:SEOOwnProps) => {
 };
 
 export default SEO;
-
-SEO.defaultProps = {
-  title: '',
-  description: '',
-  image: '',
-  article: false,
-};
