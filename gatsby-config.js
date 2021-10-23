@@ -27,12 +27,29 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
-        host: 'https://yjartjournal.gtsb.io',
-        sitemap: 'https://yjartjournal.gtsb.io/sitemap/sitemap-index.xml',
+        host: '<https://yjartjournal.gtsb.io>',
+        sitemap: '<https://yjartjournal.gtsb.io/sitemap/sitemap-index.xml>',
         policy: [{ userAgent: '*', allow: '/' }],
       },
     },
-    'gatsby-plugin-sitemap',
+    {
+      resolve: 'gatsby-plugin-sitemap',
+      options: {
+        query: `
+          {
+            wp {
+              generalSettings {
+                siteUrl
+              }
+            }
+            allSitePage {
+              nodes {
+                path
+              }
+            }
+        }`,
+      },
+    },
     {
       resolve: 'gatsby-plugin-firebase',
       options: {
