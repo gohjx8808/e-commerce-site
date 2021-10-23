@@ -37,11 +37,6 @@ module.exports = {
       options: {
         query: `
           {
-            wp {
-              generalSettings {
-                siteUrl
-              }
-            }
             allSitePage {
               nodes {
                 path
