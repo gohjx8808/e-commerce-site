@@ -8,7 +8,7 @@ module.exports = {
     image: '/images/snape.jpg', // Path to your image you placed in the 'static' folder
     lang: 'en',
     author: '@yj_artjournal',
-    keywords: 'art, craft, crochet, drawings',
+    keywords: 'yjartjournal, art, craft, crochet, drawings',
   },
   plugins: [
     'gatsby-plugin-gatsby-cloud',
