@@ -84,6 +84,7 @@ const SEO = () => {
         },
       ]}
     >
+      <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js" />
       <style type="text/css">
         {`body {
           margin: 0;
