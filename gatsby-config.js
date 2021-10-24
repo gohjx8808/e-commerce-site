@@ -72,7 +72,7 @@ module.exports = {
         mergeStyleHashes: false,
         mergeScriptHashes: false,
         directives: {
-          'script-src': "'self' 'unsafe-inline' https://*.firebasedatabase.app https://apis.google.com",
+          'script-src': "'self' 'unsafe-inline' https://*.firebasedatabase.app https://apis.google.com https://connect.facebook.net",
           'style-src': "'self' 'unsafe-inline'",
           'img-src': "'self' data: http://images.ctfassets.net/",
           'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com",
