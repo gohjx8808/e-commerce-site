@@ -74,9 +74,9 @@ module.exports = {
         directives: {
           'script-src': "'self' 'unsafe-inline' https://*.firebasedatabase.app https://apis.google.com https://connect.facebook.net",
           'style-src': "'self' 'unsafe-inline'",
-          'img-src': "'self' data: http://images.ctfassets.net/",
-          'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com",
-          'frame-src': "'self' https://*.firebasedatabase.app https://apis.google.com https://*.firebase",
+          'img-src': "'self' data: http://images.ctfassets.net/ https://www.facebook.com",
+          'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com",
+          'frame-src': "'self' https://*.firebasedatabase.app https://apis.google.com https://*.firebase https://www.facebook.com",
         },
       },
     },
