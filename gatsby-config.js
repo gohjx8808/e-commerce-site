@@ -3,8 +3,8 @@ module.exports = {
     title: 'yjArtJournal',
     titleTemplate: '%s | The Handmade Cottage',
     description: 'Crochet and drawings are made with love.',
-    url: 'https://yjartjournal.gtsb.io', // No trailing slash allowed!
-    siteUrl: 'https://yjartjournal.gtsb.io',
+    url: 'https://www.yjartjournal.com/', // No trailing slash allowed!
+    siteUrl: 'https://www.yjartjournal.com/',
     image: '/images/snape.jpg', // Path to your image you placed in the 'static' folder
     lang: 'en',
     author: '@yj_artjournal',
@@ -28,8 +28,8 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
-        host: 'https://yjartjournal.gtsb.io',
-        sitemap: 'https://yjartjournal.gtsb.io/sitemap/sitemap-index.xml',
+        host: 'https://www.yjartjournal.com/',
+        sitemap: 'https://www.yjartjournal.com/sitemap/sitemap-index.xml',
         policy: [{ userAgent: '*', allow: '/' }],
       },
     },
