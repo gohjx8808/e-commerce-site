@@ -38,8 +38,7 @@ function MessengerChat() {
         // @ts-ignore
         attribution="page_inbox"
         page_id="1927588117459422"
-        desktop_bottom_spacing={200}
-        mobile_bottom_spacing={100}
+        alignment="left"
       />
     </>
   );
