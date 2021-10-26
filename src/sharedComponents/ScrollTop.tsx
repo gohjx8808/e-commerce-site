@@ -32,7 +32,7 @@ const ScrollTop = (props: Props) => {
         role="presentation"
         position="fixed"
         bottom={16}
-        right={16}
+        left={16}
       >
         {children}
       </Box>
