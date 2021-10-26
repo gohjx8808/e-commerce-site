@@ -33,11 +33,11 @@ function MessengerChat() {
     <>
       <div id="fb-root" />
       <div
+        style={{ left: 10 }}
         className="fb-customerchat"
         // @ts-ignore
         attribution="page_inbox"
         page_id="1927588117459422"
-        alignment="left"
       />
     </>
   );
