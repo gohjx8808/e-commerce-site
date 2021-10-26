@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Zoom from '@mui/material/Zoom';
 import React from 'react';
+import { useXsDownMediaQuery } from '../hooks';
 
 interface Props {
   children: React.ReactElement;
@@ -25,6 +26,8 @@ const ScrollTop = (props: Props) => {
     }
   };
 
+  const isPhoneView = useXsDownMediaQuery();
+
   return (
     <Zoom in={trigger}>
       <Box
@@ -33,6 +36,7 @@ const ScrollTop = (props: Props) => {
         position="fixed"
         bottom={16}
         left={16}
+        zIndex={(theme) => (isPhoneView ? theme.zIndex.drawer : theme.zIndex.drawer + 1)}
       >
         {children}
       </Box>
