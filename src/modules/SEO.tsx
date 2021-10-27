@@ -88,11 +88,6 @@ const SEO = () => {
       <style type="text/css">
         {`body {
           margin: 0;
-        }
-        .fb-customerchat { 
-          position: absolute;
-          left: 0;
-          bottom: 0;
         }`}
       </style>
     </Helmet>
