@@ -34,8 +34,8 @@ const ScrollTop = (props: Props) => {
         onClick={handleClick}
         role="presentation"
         position="fixed"
-        bottom={16}
-        left={16}
+        bottom={{ sm: 80, xs: 65 }}
+        right={16}
         zIndex={(theme) => (isPhoneView ? theme.zIndex.drawer : theme.zIndex.drawer + 1)}
       >
         {children}

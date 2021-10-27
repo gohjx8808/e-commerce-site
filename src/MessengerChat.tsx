@@ -37,6 +37,7 @@ function MessengerChat() {
         // @ts-ignore
         attribution="page_inbox"
         page_id="1927588117459422"
+        theme_color="#B67B5E"
       />
     </>
   );
