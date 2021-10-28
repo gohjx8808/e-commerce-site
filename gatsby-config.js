@@ -76,7 +76,7 @@ module.exports = {
           'style-src': "'self' 'unsafe-inline'",
           'img-src': "'self' data: http://images.ctfassets.net/ https://www.facebook.com",
           'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com https://web.facebook.com/",
-          'frame-src': "'self' https://*.firebasedatabase.app https://apis.google.com https://*.firebase https://www.facebook.com https://web.facebook.com/",
+          'frame-src': "'self' https://*.firebasedatabase.app https://apis.google.com https://*.firebase https://www.facebook.com https://web.facebook.com/ https://m.me/",
         },
       },
     },
