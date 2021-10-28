@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import React, { useEffect } from 'react';
 
 declare global {
@@ -29,8 +30,9 @@ function MessengerChat() {
       fjs.parentNode!.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   });
+
   return (
-    <>
+    <Box display={{ xs: 'none', sm: 'flex' }}>
       <div id="fb-root" />
       <div
         className="fb-customerchat"
@@ -39,7 +41,7 @@ function MessengerChat() {
         page_id="1927588117459422"
         theme_color="#B67B5E"
       />
-    </>
+    </Box>
   );
 }
 
