@@ -72,10 +72,10 @@ module.exports = {
         mergeStyleHashes: false,
         mergeScriptHashes: false,
         directives: {
-          'script-src': "'self' 'unsafe-inline' https://*.firebasedatabase.app https://apis.google.com https://connect.facebook.net",
+          'script-src': "'self' 'unsafe-inline' https://*.firebasedatabase.app https://apis.google.com https://connect.facebook.net https://www.googletagmanager.com",
           'style-src': "'self' 'unsafe-inline'",
           'img-src': "'self' data: http://images.ctfassets.net/ https://www.facebook.com",
-          'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com https://web.facebook.com/",
+          'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com https://web.facebook.com/ https://www.google-analytics.com",
           'frame-src': "'self' https://*.firebasedatabase.app https://apis.google.com https://*.firebase https://www.facebook.com https://web.facebook.com/ https://m.me/ https://m.facebook.com/",
         },
       },
@@ -85,6 +85,20 @@ module.exports = {
       resolve: 'gatsby-plugin-webpack-bundle-analyser-v2',
       options: {
         devMode: false,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-google-gtag',
+      options: {
+        // You can add multiple tracking ids and a pageview event will be fired for all of them.
+        trackingIds: [
+          process.env.GOOGLE_ANALYTICS_ID, // Google Analytics / GA
+        ],
+        // This object is used for configuration specific to this plugin
+        pluginConfig: {
+          // Puts tracking script in the head instead of the body
+          head: true,
+        },
       },
     },
   ],
