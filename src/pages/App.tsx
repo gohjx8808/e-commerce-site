@@ -6,7 +6,6 @@ import React, {
 } from 'react';
 import AuthLayout from '../layouts/AuthLayout';
 import MainLayout from '../layouts/MainLayout';
-import SEO from '../modules/SEO';
 import routeNames from '../utils/routeNames';
 
 const Products = lazy(() => import('../modules/products/views/Products'));
@@ -33,7 +32,6 @@ const App = () => (
       </Grid>
     )}
     >
-      <SEO />
       <Router>
         <MainRoutes path="/" pageComponent={<HomeScreen />} homeCarouselBanner />
         <RouterPage path={routeNames.login} pageComponent={<LoginScreen />} />
