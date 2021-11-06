@@ -1,6 +1,9 @@
-import WrapWithProvider from './src/WrapWithProvider';
+import React from 'react';
+import RootLayout from './src/RootLayout';
 import WrapPageElement from './src/WrapPageElement';
+import '@fontsource/amaranth';
 
-// eslint-disable-next-line import/prefer-default-export
-export const wrapRootElement = WrapWithProvider;
+// eslint-disable-next-line react/jsx-filename-extension
+export const wrapRootElement = ({ element }) => <RootLayout>{element}</RootLayout>;
+
 export const wrapPageElement = WrapPageElement;
