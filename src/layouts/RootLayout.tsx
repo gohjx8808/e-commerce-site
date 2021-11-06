@@ -9,9 +9,13 @@ import {
   useEffect, useMemo, useState,
 } from 'react';
 import { Provider } from 'react-redux';
-import CustomSnackbar from './sharedComponents/CustomSnackbar';
-import store from './store';
-import DarkModeContext from './utils/DarkModeContext';
+import LoadingOverlay from '../modules/overlay/views/LoadingOverlay';
+import EnlargedProductImageCarouselModal from '../modules/products/views/EnlargedProductImageCarouselModal';
+import StatusModal from '../modules/status/views/StatusModal';
+
+import CustomSnackbar from '../sharedComponents/CustomSnackbar';
+import store from '../store';
+import DarkModeContext from '../utils/DarkModeContext';
 
 declare module '@mui/material/AppBar' {
   interface AppBarPropsColorOverrides {
@@ -143,6 +147,9 @@ const RootLayout:React.FC = ({ children }) => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Provider store={store}>
               {children}
+              <StatusModal />
+              <LoadingOverlay />
+              <EnlargedProductImageCarouselModal />
             </Provider>
           </LocalizationProvider>
         </SnackbarProvider>

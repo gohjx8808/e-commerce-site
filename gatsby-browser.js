@@ -1,5 +1,5 @@
 import React from 'react';
-import RootLayout from './src/RootLayout';
+import RootLayout from './src/layouts/RootLayout';
 import WrapPageElement from './src/WrapPageElement';
 import '@fontsource/amaranth';
 
