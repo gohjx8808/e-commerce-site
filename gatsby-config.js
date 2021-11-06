@@ -4,6 +4,7 @@ module.exports = {
     titleTemplate: '%s | The Handmade Cottage',
     description: 'Crochet and drawings are made with love.',
     url: 'https://www.yjartjournal.com/', // No trailing slash allowed!
+    siteUrl: 'https://www.yjartjournal.com/', // for sitemap, DO NOT DELETE!
     lang: 'en',
     author: '@yj_artjournal',
     keywords: 'yjartjournal, art, craft, crochet, drawings',
@@ -48,8 +49,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-contentful',
       options: {
-        spaceId: process.env.CONTENTFUL_SPACE_ID,
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+        spaceId: 'r3a2vbpk4nlk',
+        accessToken: 'NEQnoryRJxmSWVc4a9KTINLOxZclPvtTfyS4nE6x3ws',
         forceFullSync: true,
       },
     },
