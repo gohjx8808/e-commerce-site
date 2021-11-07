@@ -83,7 +83,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
   };
 
   const openDescription = () => {
-    window.open(`${window.location.origin}/products/${product.contentful_id}`);
+    window.open(`/products/${product.contentful_id}`);
   };
 
   return (
