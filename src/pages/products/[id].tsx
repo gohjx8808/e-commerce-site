@@ -26,7 +26,7 @@ import ItemVariationToggleButton from '../../styledComponents/products/ItemVaria
 import ModifyQuantityButton from '../../styledComponents/products/ModifyQuantityButton';
 import ProductImage from '../../styledComponents/products/ProductImage';
 import ProductPrice from '../../styledComponents/products/ProductPrice';
-import { itemVariationOptions } from '../../utils/constants';
+import { defaultProductData, itemVariationOptions } from '../../utils/constants';
 import { formatPrice, getProductVariationSuffix } from '../../utils/helper';
 import routeNames from '../../utils/routeNames';
 import {
@@ -46,7 +46,7 @@ const ProductDescription:FC<PageProps> = (props) => {
   const allProducts = useAppSelector((state) => state.product.allProducts);
   const selectedProduct = allProducts.find(
     (product) => product.node.contentful_id === id,
-  )?.node!;
+  )?.node || defaultProductData;
 
   const [itemQuantity, setItemQuantity] = useState(1);
   const [selectedItemVariation, setSelectedItemVariation] = useState('');

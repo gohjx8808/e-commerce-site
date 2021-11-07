@@ -14,7 +14,7 @@ declare namespace products{
     contentful_id:string
     name:string
     price:number
-    contentDescription:productContentDescription
+    contentDescription?:productContentDescription
     productImage:import('gatsby-plugin-image').ImageDataLike[]
     discountedPrice:number
   }
