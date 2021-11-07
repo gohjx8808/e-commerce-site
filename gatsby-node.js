@@ -13,3 +13,12 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
     });
   }
 };
+
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage } = actions;
+  if (page.path === '/products/:id') {
+    // eslint-disable-next-line no-param-reassign
+    page.matchPath = '/products/:id';
+    createPage(page);
+  }
+};
