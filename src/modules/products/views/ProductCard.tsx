@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import {
   GatsbyImage, getImage, ImageDataLike,
@@ -82,14 +83,12 @@ const ProductCard = (props:ProductCardOwnProps) => {
     }
   };
 
-  const openDescription = () => {
-    window.open(`/products/${product.contentful_id}`);
-  };
-
   return (
     <Grid item lg={3} md={6} sm={6} xs={6}>
-      <StyledProductCard variant="outlined" onClick={openDescription}>
-        <CardHeader title={product.name} sx={{ minHeight: { sm: 95, xs: 105 } }} />
+      <StyledProductCard variant="outlined">
+        <Link href={`/products/${product.contentful_id}`} target="_blank" rel="noopener" color="secondary" underline="hover">
+          <CardHeader title={product.name} sx={{ minHeight: { sm: 95, xs: 105 } }} />
+        </Link>
         <Carousel indicators={false} autoPlay={false}>
           {product.productImage.map((image) => {
             const imageData = getImage(image)!;
@@ -107,16 +106,17 @@ const ProductCard = (props:ProductCardOwnProps) => {
             );
           })}
         </Carousel>
-        <CardContent sx={{ paddingBottom: '16px!important' }}>
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item>
-              <Grid container spacing={1} alignItems="center">
-                <Grid item>
-                  <ProductPrice discountprice={product.discountedPrice}>
-                    {formatPrice(product.price, 'MYR')}
-                  </ProductPrice>
-                </Grid>
-                {product.discountedPrice && (
+        <Link href={`/products/${product.contentful_id}`} target="_blank" rel="noopener" color="secondary" underline="hover">
+          <CardContent sx={{ paddingBottom: '16px!important' }}>
+            <Grid container justifyContent="space-between" alignItems="center">
+              <Grid item>
+                <Grid container spacing={1} alignItems="center">
+                  <Grid item>
+                    <ProductPrice discountprice={product.discountedPrice}>
+                      {formatPrice(product.price, 'MYR')}
+                    </ProductPrice>
+                  </Grid>
+                  {product.discountedPrice && (
                   <Grid item xs={12} sm>
                     <Grid container justifyContent="space-between" alignItems="center">
                       <Typography fontWeight="bold">
@@ -129,16 +129,17 @@ const ProductCard = (props:ProductCardOwnProps) => {
                       )}
                     </Grid>
                   </Grid>
-                )}
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-            {!(product.discountedPrice && isXsView) && (
+              {!(product.discountedPrice && isXsView) && (
               <IconButton aria-label="addToCart" onClick={onClickAddToCart} color="secondary">
                 <AddShoppingCartIcon />
               </IconButton>
-            )}
-          </Grid>
-        </CardContent>
+              )}
+            </Grid>
+          </CardContent>
+        </Link>
       </StyledProductCard>
       <ItemVariationMenu
         anchorEl={anchorEl}
