@@ -24,7 +24,7 @@ const CustomDrawerItems = () => {
         <ListItemText primary="Home" />
       </StyledListItem>
       <StyledListItem
-        selected={currentPathName === routeNames.learnMore}
+        selected={currentPathName.includes(routeNames.learnMore)}
         onClick={() => navigate(routeNames.learnMore)}
       >
         <ListItemIcon>
@@ -33,7 +33,7 @@ const CustomDrawerItems = () => {
         <ListItemText primary="Introduction" />
       </StyledListItem>
       <StyledListItem
-        selected={currentPathName === routeNames.imageGallery}
+        selected={currentPathName.includes(routeNames.imageGallery)}
         onClick={() => navigate(routeNames.imageGallery)}
       >
         <ListItemIcon>
@@ -42,7 +42,7 @@ const CustomDrawerItems = () => {
         <ListItemText primary="Image Gallery" />
       </StyledListItem>
       <StyledListItem
-        selected={currentPathName === routeNames.products}
+        selected={currentPathName.includes(routeNames.products)}
         onClick={() => navigate(routeNames.products)}
       >
         <ListItemIcon>
@@ -51,7 +51,7 @@ const CustomDrawerItems = () => {
         <ListItemText primary="Products" />
       </StyledListItem>
       <StyledListItem
-        selected={currentPathName === routeNames.feedbackForm}
+        selected={currentPathName.includes(routeNames.feedbackForm)}
         onClick={() => navigate(routeNames.feedbackForm)}
       >
         <ListItemIcon>
