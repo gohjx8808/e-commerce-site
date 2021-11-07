@@ -5,6 +5,7 @@ import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
+import { Link as GatsbyLink } from 'gatsby';
 import Typography from '@mui/material/Typography';
 import {
   GatsbyImage, getImage, ImageDataLike,
@@ -86,7 +87,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
   return (
     <Grid item lg={3} md={6} sm={6} xs={6}>
       <StyledProductCard variant="outlined">
-        <Link href={`/products/${product.contentful_id}`} target="_blank" rel="noopener" color="secondary" underline="hover">
+        <Link component={GatsbyLink} to={`/products/${product.contentful_id}`} color="secondary" underline="hover">
           <CardHeader title={product.name} sx={{ minHeight: { sm: 95, xs: 105 } }} />
         </Link>
         <Carousel indicators={false} autoPlay={false}>
@@ -106,7 +107,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
             );
           })}
         </Carousel>
-        <Link href={`/products/${product.contentful_id}`} target="_blank" rel="noopener" color="secondary" underline="hover">
+        <Link component={GatsbyLink} to={`/products/${product.contentful_id}`} color="secondary" underline="hover">
           <CardContent sx={{ paddingBottom: '16px!important' }}>
             <Grid container justifyContent="space-between" alignItems="center">
               <Grid item>
