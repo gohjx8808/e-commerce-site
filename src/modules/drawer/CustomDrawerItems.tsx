@@ -5,16 +5,15 @@ import ImageSearchOutlinedIcon from '@mui/icons-material/ImageSearchOutlined';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import SpeakerNotesIcon from '@mui/icons-material/SpeakerNotes';
-import { useLocation } from '@reach/router';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import StyledListItem from '../../styledComponents/StyledListItem';
 import routeNames from '../../utils/routeNames';
+import { isSSR } from '../../utils/constants';
 
 const CustomDrawerItems = () => {
-  const location = useLocation();
-  const currentPathName = location.pathname;
+  const currentPathName = (!isSSR && window.location.pathname) || '';
 
   return (
     <List component="nav">

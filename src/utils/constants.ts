@@ -64,3 +64,5 @@ export const emptyShippingInfo:products.submitShippingInfoPayload = {
   saveShippingInfo: false,
   paymentOptions: '',
 };
+
+export const isSSR = typeof window === 'undefined';

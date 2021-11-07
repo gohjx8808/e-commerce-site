@@ -1,10 +1,10 @@
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { useLocation } from '@reach/router';
 import React, { useEffect, useState } from 'react';
-import routeNames from '../utils/routeNames';
 import StyledBreadcrumbs from '../styledComponents/StyledBreadcrumbs';
+import { isSSR } from '../utils/constants';
+import routeNames from '../utils/routeNames';
 
 interface CustomBreadcrumbsOwnProps{
   customActiveName?:string
@@ -12,7 +12,8 @@ interface CustomBreadcrumbsOwnProps{
 
 const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
   const { customActiveName } = props;
-  const location = useLocation();
+  const pathname = (!isSSR && window.location.pathname) || '';
+
   const breadcrumbNameMap: { [key: string]: string } = {
     [routeNames.login]: 'Login',
     [routeNames.signUp]: 'Sign Up',
@@ -25,9 +26,9 @@ const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
   const [routesInBetween, setRoutesInBetween] = useState<string[]>([]);
 
   useEffect(() => {
-    const paths = location.pathname.split('/');
+    const paths = pathname.split('/');
     setRoutesInBetween(paths.slice(1, paths.length - 1));
-  }, [location]);
+  }, [pathname]);
 
   return (
     <StyledBreadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
@@ -40,7 +41,7 @@ const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
         </Link>
       ))}
       <Typography color="textPrimary">
-        {customActiveName || breadcrumbNameMap[location.pathname]}
+        {customActiveName || breadcrumbNameMap[pathname]}
       </Typography>
     </StyledBreadcrumbs>
   );

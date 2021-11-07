@@ -17,7 +17,6 @@ import Menu from '@mui/material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
 import React, { useContext, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../hooks';
@@ -32,9 +31,10 @@ import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
 import CustomDesktopDrawer from './drawer/CustomDesktopDrawer';
 import CustomMobileDrawer from './drawer/CustomMobileDrawer';
 import { updateProductFilterKeyword } from './products/src/productReducers';
+import { isSSR } from '../utils/constants';
 
 const MenuBar = () => {
-  const location = useLocation();
+  const pathname = (!isSSR && window.location.pathname) || '';
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mobileMoreAnchor, setMobileMoreAnchor] = useState<null | HTMLElement>(null);
   const currentUserDetail = useAppSelector((state) => state.auth.currentUser);
@@ -99,7 +99,7 @@ const MenuBar = () => {
         <div>
           <StyledMenuItem
             onClick={() => navigate(routeNames.account)}
-            selected={location.pathname === routeNames.account}
+            selected={pathname === routeNames.account}
           >
             <IconButton
               aria-label="account"
@@ -150,12 +150,12 @@ const MenuBar = () => {
             >
               <MenuIcon />
             </IconButton>
-            {!(isXsView && location.pathname === routeNames.products) && (
+            {!(isXsView && pathname === routeNames.products) && (
               <Button color="inherit" onClick={() => navigate('/')}>
                 <Typography variant="h6" sx={{ textTransform: 'none' }}>YJ Art Journal</Typography>
               </Button>
             )}
-            {location.pathname === routeNames.products && (
+            {pathname === routeNames.products && (
               <SearchContainer>
                 <SearchIconWrapper>
                   <SearchIcon />

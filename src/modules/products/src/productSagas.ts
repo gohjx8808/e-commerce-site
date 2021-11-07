@@ -1,9 +1,9 @@
-import { navigate } from '@reach/router';
 import firebase from 'gatsby-plugin-firebase';
 import {
   all,
   call, fork, put, select, take,
 } from 'redux-saga/effects';
+import { navigate } from 'gatsby';
 import { RootState } from '../../../store';
 import { emptyShippingInfo } from '../../../utils/constants';
 import {

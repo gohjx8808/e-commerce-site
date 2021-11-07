@@ -7,9 +7,10 @@ import {
   GatsbyImage, getImage, IGatsbyImageData, ImageDataLike,
 } from 'gatsby-plugin-image';
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../../hooks';
-import { toggleEnlargedImageModal, updateSelectedImage } from '../src/imageGalleryReducer';
-import EnlargedImageModal from './EnlargedImageModal';
+import { useAppDispatch } from '../hooks';
+import MainLayout from '../layouts/MainLayout';
+import { toggleEnlargedImageModal, updateSelectedImage } from '../modules/imageGallery/src/imageGalleryReducer';
+import EnlargedImageModal from '../modules/imageGallery/views/EnlargedImageModal';
 
 interface productImagesContentfulStructure{
   allContentfulGallery:{
@@ -123,30 +124,32 @@ const ImageGallery = () => {
   };
 
   return (
-    <Grid item xs={12}>
-      <Box paddingTop={1}>
-        <ImageList rowHeight="auto" cols={5} variant="quilted">
-          {allProductImages.map((image) => {
-            const productImagesData = getImage(image.image)!;
-            return (
-              <ImageListItem
-                key={image.id}
-                sx={{ cursor: 'zoom-in' }}
-                rows={image.row}
-                cols={image.col}
-              >
-                <GatsbyImage
-                  onClick={() => handleImageClick(productImagesData)}
-                  image={productImagesData}
-                  alt={image.id}
-                />
-              </ImageListItem>
-            );
-          })}
-        </ImageList>
-      </Box>
-      <EnlargedImageModal />
-    </Grid>
+    <MainLayout>
+      <Grid item xs={12}>
+        <Box paddingTop={1}>
+          <ImageList rowHeight="auto" cols={5} variant="quilted">
+            {allProductImages.map((image) => {
+              const productImagesData = getImage(image.image)!;
+              return (
+                <ImageListItem
+                  key={image.id}
+                  sx={{ cursor: 'zoom-in' }}
+                  rows={image.row}
+                  cols={image.col}
+                >
+                  <GatsbyImage
+                    onClick={() => handleImageClick(productImagesData)}
+                    image={productImagesData}
+                    alt={image.id}
+                  />
+                </ImageListItem>
+              );
+            })}
+          </ImageList>
+        </Box>
+        <EnlargedImageModal />
+      </Grid>
+    </MainLayout>
   );
 };
 

@@ -4,17 +4,15 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { graphql, useStaticQuery } from 'gatsby';
 import { getImage, IGatsbyImageData } from 'gatsby-plugin-image';
-import React, {
-  lazy, useCallback, useEffect, useState,
-} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-scroll';
-import { useAppSelector } from '../../../hooks';
-import ProductImage from '../../../styledComponents/products/ProductImage';
-import { compareString } from '../../../utils/helper';
-
-const ControlledPicker = lazy(() => import('../../../sharedComponents/inputs/ControlledPicker'));
-const ProductCard = lazy(() => import('./ProductCard'));
+import { useAppSelector } from '../../hooks';
+import MainLayout from '../../layouts/MainLayout';
+import ProductCard from '../../modules/products/views/ProductCard';
+import ControlledPicker from '../../sharedComponents/inputs/ControlledPicker';
+import ProductImage from '../../styledComponents/products/ProductImage';
+import { compareString } from '../../utils/helper';
 
 interface categoryAmountData{
   [key:string]:number
@@ -154,7 +152,7 @@ const Products = () => {
   };
 
   return (
-    <>
+    <MainLayout pageBannerTitle="Product Categories">
       <Grid container direction="row" justifyContent="center" marginTop={3}>
         {categories.map((category) => {
         // eslint-disable-next-line max-len
@@ -221,7 +219,7 @@ const Products = () => {
           </Button>
         </Grid>
       </Grid>
-    </>
+    </MainLayout>
   );
 };
 

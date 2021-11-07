@@ -4,17 +4,18 @@ import Fab from '@mui/material/Fab';
 import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { useLocation } from '@reach/router';
 import { navigate } from 'gatsby';
 import React, {
-  FC, ReactNode, useEffect,
+  FC, ReactNode, Suspense, useEffect,
 } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useAppSelector } from '../hooks';
 import Footer from '../modules/Footer';
-import HomeBanner from '../modules/home/HomeBanner';
 import MenuBar from '../modules/MenuBar';
 import ScrollTop from '../sharedComponents/ScrollTop';
 import routeNames from '../utils/routeNames';
+import HomeBanner from '../modules/home/HomeBanner';
+import { isSSR } from '../utils/constants';
 
 interface MainLayoutOwnProps{
   pageBannerTitle?:string,
@@ -27,43 +28,54 @@ const MainLayout:FC<MainLayoutOwnProps> = (props) => {
     children, pageBannerTitle, homeCarouselBanner,
   } = props;
   const currentUserDetail = useAppSelector((state) => state.auth.currentUser);
-  const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === routeNames.account) {
+    if (!isSSR && window.location.pathname === routeNames.account) {
       if (currentUserDetail.uid === '') {
         navigate('/');
       }
     }
-  }, [currentUserDetail.uid, location.pathname]);
+  }, [currentUserDetail.uid]);
 
   return (
-    <Box display="flex" minHeight="100vh">
-      <MenuBar />
-      <Grid container direction="column">
-        <Grid flexGrow={1}>
-          <div id="back-to-top-anchor" />
-          <Toolbar />
-          {homeCarouselBanner && <HomeBanner />}
-          {pageBannerTitle && (
-            <Grid item xs={12} padding={1} bgcolor="customSecondary.main">
-              <Grid container justifyContent="center" alignItems="center">
-                <Typography variant="h4" color="white">{pageBannerTitle}</Typography>
-              </Grid>
+    <>
+      {!isSSR && (
+        <Suspense
+          fallback={(
+            <Grid container display="flex" minHeight="100vh" justifyContent="center" alignItems="center">
+              <CircularProgress color="primary" size={60} />
             </Grid>
           )}
-          <Box margin={3}>
-            {children}
+        >
+          <Box display="flex" minHeight="100vh">
+            <MenuBar />
+            <Grid container direction="column">
+              <Grid flexGrow={1}>
+                <div id="back-to-top-anchor" />
+                <Toolbar />
+                {homeCarouselBanner && <HomeBanner />}
+                {pageBannerTitle && (
+                <Grid item xs={12} padding={1} bgcolor="customSecondary.main">
+                  <Grid container justifyContent="center" alignItems="center">
+                    <Typography variant="h4" color="white">{pageBannerTitle}</Typography>
+                  </Grid>
+                </Grid>
+                )}
+                <Box margin={3}>
+                  {children}
+                </Box>
+              </Grid>
+              <Footer />
+              <ScrollTop>
+                <Fab color="secondary" size="medium" aria-label="scroll back to top">
+                  <KeyboardArrowUpIcon />
+                </Fab>
+              </ScrollTop>
+            </Grid>
           </Box>
-        </Grid>
-        <Footer />
-        <ScrollTop>
-          <Fab color="secondary" size="medium" aria-label="scroll back to top">
-            <KeyboardArrowUpIcon />
-          </Fab>
-        </ScrollTop>
-      </Grid>
-    </Box>
+        </Suspense>
+      )}
+    </>
   );
 };
 
