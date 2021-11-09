@@ -1,22 +1,13 @@
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { Theme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import { graphql, useStaticQuery } from 'gatsby';
 import { getImage, ImageDataLike } from 'gatsby-plugin-image';
 import React from 'react';
-import Carousel from 'react-material-ui-carousel';
-import { makeStyles } from '@mui/styles';
-import { Theme } from '@mui/material/styles';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import HomeCarouselImage from '../../styledComponents/home/HomeCarouselImage';
 
-const useStyle = makeStyles((theme:Theme) => ({
-  carouselNavWrapper: {
-    '&:hover': {
-      backgroundColor: '#FFFFFF60',
-    },
-  },
-  productCarouselNavButton: {
-    backgroundColor: 'transparent!important',
-    color: 'black!important',
-  },
+const useStyle = makeStyles((theme: Theme) => ({
   carouselContainerRoot: {
     paddingTop: 15,
     [theme.breakpoints.up('sm')]: {
@@ -26,10 +17,10 @@ const useStyle = makeStyles((theme:Theme) => ({
   },
 }));
 
-interface imageInnerStructure{
-  node:{
-    childImageSharp:ImageDataLike
-    id:string
+interface imageInnerStructure {
+  node: {
+    childImageSharp: ImageDataLike
+    id: string
   }
 }
 
@@ -52,15 +43,15 @@ const HomeBanner = () => {
 
   return (
     <Carousel
-      navButtonsWrapperProps={{ className: styles.carouselNavWrapper }}
-      navButtonsProps={{ className: styles.productCarouselNavButton }}
-      animation="slide"
       interval={5000}
-      timeout={800}
-      IndicatorIcon={<FiberManualRecordIcon fontSize="small" aria-label="indicator" />}
+      transitionTime={800}
       className={styles.carouselContainerRoot}
+      autoPlay
+      infiniteLoop
+      showStatus={false}
+      showThumbs={false}
     >
-      {homeBannerQuery.allFile.edges.map((banner:imageInnerStructure) => {
+      {homeBannerQuery.allFile.edges.map((banner: imageInnerStructure) => {
         const bannerNode = banner.node;
         const bannerRealImageData = getImage(bannerNode.childImageSharp)!;
         return (
