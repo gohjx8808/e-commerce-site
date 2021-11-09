@@ -17,7 +17,7 @@ import Typography from '@mui/material/Typography';
 import { getImage, ImageDataLike } from 'gatsby-plugin-image';
 import { useSnackbar } from 'notistack';
 import React, { FC, useEffect, useState } from 'react';
-import { PageProps } from 'gatsby';
+import { Link as GatsbyLink, PageProps } from 'gatsby';
 import { Carousel } from 'react-responsive-carousel';
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../../hooks';
 import CustomBreadcrumbs from '../../sharedComponents/CustomBreadcrumbs';
@@ -281,7 +281,7 @@ const ProductDescription:FC<PageProps> = (props) => {
                   const imageData = getImage(product.productImage[0])!;
                   return (
                     <Grid item xs={6} sm={2} key={product.contentful_id}>
-                      <Link underline="hover" target="_blank" rel="noreferrer" href={`/products/${product.contentful_id}`}>
+                      <Link component={GatsbyLink} underline="hover" target="_blank" rel="noreferrer" to={`/products/${product.contentful_id}`}>
                         <Grid container alignItems="center" justifyContent="center" height={64}>
                           <Typography variant="h6" color="secondary" textAlign="center">{product.name}</Typography>
                         </Grid>
@@ -294,7 +294,7 @@ const ProductDescription:FC<PageProps> = (props) => {
             ))}
           </Carousel>
           <Grid container justifyContent="flex-end">
-            <Link target="_blank" rel="noreferrer" href={routeNames.products} color="textPrimary">
+            <Link target="_blank" component={GatsbyLink} rel="noreferrer" to={routeNames.products} color="textPrimary">
               <Typography variant="body1">View All Products</Typography>
             </Link>
           </Grid>

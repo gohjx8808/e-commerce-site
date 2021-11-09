@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { navigate } from 'gatsby';
+import { Link as GatsbyLink, navigate } from 'gatsby';
 import React, { useEffect, useState } from 'react';
 import {
   useAppDispatch, useAppSelector,
@@ -309,7 +309,7 @@ const Cart = () => {
                       <Typography>
                         Continue browsing
                         {' '}
-                        <Link href={routeNames.products} color="secondary" underline="hover">here</Link>
+                        <Link component={GatsbyLink} to={routeNames.products} color="secondary" underline="hover">here</Link>
                         .
                       </Typography>
                     </Grid>
