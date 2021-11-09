@@ -12,7 +12,7 @@ import {
 } from 'gatsby-plugin-image';
 import { useSnackbar } from 'notistack';
 import React, { memo } from 'react';
-import Carousel from 'react-material-ui-carousel';
+import { Carousel } from 'react-responsive-carousel';
 import { useAppDispatch, useXsDownMediaQuery } from '../../../hooks';
 import ProductPrice from '../../../styledComponents/products/ProductPrice';
 import StyledProductCard from '../../../styledComponents/products/StyledProductCard';
@@ -24,6 +24,7 @@ import {
   updateSelectedProductImageList,
 } from '../src/productReducers';
 import ItemVariationMenu from './ItemVariationMenu';
+import '../src/carousel.css';
 
 interface ProductCardOwnProps{
   product:products.productData
@@ -90,7 +91,14 @@ const ProductCard = (props:ProductCardOwnProps) => {
         <Link component={GatsbyLink} to={`/products/${product.contentful_id}`} color="secondary" underline="hover">
           <CardHeader title={product.name} sx={{ minHeight: { sm: 95, xs: 105 } }} />
         </Link>
-        <Carousel indicators={false} autoPlay={false}>
+        <Carousel
+          showIndicators={false}
+          infiniteLoop
+          animationHandler="fade"
+          showThumbs={false}
+          showStatus={false}
+          transitionTime={800}
+        >
           {product.productImage.map((image) => {
             const imageData = getImage(image)!;
             return (

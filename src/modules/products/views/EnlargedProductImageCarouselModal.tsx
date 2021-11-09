@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React from 'react';
-import Carousel from 'react-material-ui-carousel';
+import { Carousel } from 'react-responsive-carousel';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { toggleEnlargedProductImageModal } from '../src/productReducers';
 
@@ -22,23 +22,25 @@ const EnlargedProductImageCarouselModal = () => {
       onClose={() => dispatch(toggleEnlargedProductImageModal(false))}
     >
       <Carousel
-        indicators={false}
+        showIndicators={false}
+        showStatus={false}
         autoPlay={false}
-        index={selectedProductImageList && selectedProductImageList.findIndex(
+        showThumbs={false}
+        animationHandler="fade"
+        selectedItem={selectedProductImageList && selectedProductImageList.findIndex(
           (image) => image === selectedProductImage,
         )}
+        infiniteLoop
+        transitionTime={800}
       >
         {selectedProductImageList && selectedProductImageList.map((image) => {
           const imageData = getImage(image)!;
           return (
-            <Box
+            <GatsbyImage
               key={imageData.images.fallback?.src}
-            >
-              <GatsbyImage
-                image={imageData}
-                alt={imageData.images.fallback?.src!}
-              />
-            </Box>
+              image={imageData}
+              alt={imageData.images.fallback?.src!}
+            />
           );
         })}
       </Carousel>

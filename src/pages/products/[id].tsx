@@ -17,8 +17,8 @@ import Typography from '@mui/material/Typography';
 import { getImage, ImageDataLike } from 'gatsby-plugin-image';
 import { useSnackbar } from 'notistack';
 import React, { FC, useEffect, useState } from 'react';
-import Carousel from 'react-material-ui-carousel';
 import { PageProps } from 'gatsby';
+import { Carousel } from 'react-responsive-carousel';
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../../hooks';
 import CustomBreadcrumbs from '../../sharedComponents/CustomBreadcrumbs';
 import ItemQuantityInput from '../../styledComponents/products/ItemQuantityInput';
@@ -153,7 +153,16 @@ const ProductDescription:FC<PageProps> = (props) => {
         <Grid item lg={4} sm={12}>
           <Grid container justifyContent="center">
             <Grid item lg={12} sm={6} xs={12}>
-              <Carousel autoPlay indicators={false}>
+              <Carousel
+                showIndicators={false}
+                infiniteLoop
+                autoPlay
+                animationHandler="fade"
+                showThumbs={false}
+                showStatus={false}
+                interval={5000}
+                transitionTime={800}
+              >
                 {selectedProduct.productImage.map((image) => {
                   const imageData = getImage(image)!;
                   return (
@@ -259,7 +268,13 @@ const ProductDescription:FC<PageProps> = (props) => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h6" marginBottom={1}>You may also like...</Typography>
-          <Carousel>
+          <Carousel
+            showThumbs={false}
+            showIndicators={false}
+            transitionTime={800}
+            showStatus={false}
+            infiniteLoop
+          >
             {productRecommendation.map((productArray) => (
               <Grid container spacing={2} justifyContent="center" key={productArray.toString()}>
                 {productArray.map((product) => {
