@@ -1,5 +1,6 @@
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Link from '@mui/material/Link';
+import { Link as GatsbyLink } from 'gatsby';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import StyledBreadcrumbs from '../styledComponents/StyledBreadcrumbs';
@@ -32,11 +33,11 @@ const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
 
   return (
     <StyledBreadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-      <Link color="inherit" href="/" underline="hover">
+      <Link component={GatsbyLink} color="inherit" to="/" underline="hover">
         Home
       </Link>
       {routesInBetween.map((route) => (
-        <Link color="inherit" href={`/${route}`} key={route} underline="hover">
+        <Link component={GatsbyLink} color="inherit" to={`/${route}`} key={route} underline="hover">
           {breadcrumbNameMap[`/${route}`]}
         </Link>
       ))}
