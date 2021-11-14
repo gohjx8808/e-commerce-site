@@ -49,6 +49,7 @@ const ControlledPicker = (props:ControlledPickerOwnProps) => {
               onChange(newValue);
             }}
             autoComplete
+            isOptionEqualToValue={(option, selectedValue) => option.value === selectedValue.value}
             {...props}
           />
           <FormHelperText error>
