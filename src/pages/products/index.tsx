@@ -189,6 +189,7 @@ const Products = () => {
               label="Sort By"
               lightbg={1}
               disableClearable
+              isOptionEqualToValue={(option, value) => option.value === value.value}
               defaultValue={sortByOptions.find((option) => option.value === 'a2z')}
             />
           </Grid>
