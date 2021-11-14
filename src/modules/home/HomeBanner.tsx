@@ -1,21 +1,9 @@
-import { Theme } from '@mui/material/styles';
-import { makeStyles } from '@mui/styles';
 import { graphql, useStaticQuery } from 'gatsby';
 import { getImage, ImageDataLike } from 'gatsby-plugin-image';
 import React from 'react';
-import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import HomeCarousel from '../../styledComponents/home/HomeCarousel';
 import HomeCarouselImage from '../../styledComponents/home/HomeCarouselImage';
-
-const useStyle = makeStyles((theme: Theme) => ({
-  carouselContainerRoot: {
-    paddingTop: 15,
-    [theme.breakpoints.up('sm')]: {
-      padding: 24,
-      paddingBottom: 0,
-    },
-  },
-}));
 
 interface imageInnerStructure {
   node: {
@@ -25,7 +13,6 @@ interface imageInnerStructure {
 }
 
 const HomeBanner = () => {
-  const styles = useStyle();
   const homeBannerQuery = useStaticQuery(graphql`
     query {
       allFile(filter: {relativeDirectory: {eq: "banner"}}) {
@@ -42,10 +29,9 @@ const HomeBanner = () => {
   `);
 
   return (
-    <Carousel
+    <HomeCarousel
       interval={5000}
       transitionTime={800}
-      className={styles.carouselContainerRoot}
       autoPlay
       infiniteLoop
       showStatus={false}
@@ -62,7 +48,7 @@ const HomeBanner = () => {
           />
         );
       })}
-    </Carousel>
+    </HomeCarousel>
   );
 };
 
