@@ -68,7 +68,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
     carouselImageList:ImageDataLike[],
     event:React.MouseEvent<HTMLElement, MouseEvent>,
   ) => {
-    event.stopPropagation();
+    event.preventDefault();
     dispatch(updateSelectedProductImage(imageData));
     dispatch(updateSelectedProductImageList(carouselImageList));
     dispatch(toggleEnlargedProductImageModal(true));
@@ -77,7 +77,7 @@ const ProductCard = (props:ProductCardOwnProps) => {
   const onClickAddToCart = (
     event:React.MouseEvent<HTMLElement, MouseEvent>,
   ) => {
-    event.stopPropagation();
+    event.preventDefault();
     if (product.category === 'Keychain Series') {
       triggerItemVariationMenu(event);
     } else {
@@ -87,35 +87,33 @@ const ProductCard = (props:ProductCardOwnProps) => {
 
   return (
     <Grid item lg={3} md={6} sm={6} xs={6}>
-      <StyledProductCard variant="outlined">
-        <Link component={GatsbyLink} to={`/products/${product.contentful_id}`} color="secondary" underline="hover">
+      <Link component={GatsbyLink} to={`/products/${product.contentful_id}`} color="secondary" underline="hover">
+        <StyledProductCard variant="outlined">
           <CardHeader title={product.name} sx={{ minHeight: { sm: 95, xs: 105 } }} />
-        </Link>
-        <Carousel
-          showIndicators={false}
-          infiniteLoop
-          animationHandler="fade"
-          showThumbs={false}
-          showStatus={false}
-          transitionTime={800}
-        >
-          {product.productImage.map((image) => {
-            const imageData = getImage(image)!;
-            return (
-              <Box
-                sx={{ cursor: 'zoom-in' }}
-                key={imageData.images.fallback?.src}
-                onClick={(event) => triggerEnlargeImage(image, product.productImage, event)}
-              >
-                <GatsbyImage
-                  image={imageData}
-                  alt={product.name}
-                />
-              </Box>
-            );
-          })}
-        </Carousel>
-        <Link component={GatsbyLink} to={`/products/${product.contentful_id}`} color="secondary" underline="hover">
+          <Carousel
+            showIndicators={false}
+            infiniteLoop
+            animationHandler="fade"
+            showThumbs={false}
+            showStatus={false}
+            transitionTime={800}
+          >
+            {product.productImage.map((image) => {
+              const imageData = getImage(image)!;
+              return (
+                <Box
+                  sx={{ cursor: 'zoom-in' }}
+                  key={imageData.images.fallback?.src}
+                  onClick={(event) => triggerEnlargeImage(image, product.productImage, event)}
+                >
+                  <GatsbyImage
+                    image={imageData}
+                    alt={product.name}
+                  />
+                </Box>
+              );
+            })}
+          </Carousel>
           <CardContent sx={{ paddingBottom: '16px!important' }}>
             <Grid container justifyContent="space-between" alignItems="center">
               <Grid item>
@@ -142,14 +140,14 @@ const ProductCard = (props:ProductCardOwnProps) => {
                 </Grid>
               </Grid>
               {!(product.discountedPrice && isXsView) && (
-              <IconButton aria-label="addToCart" onClick={onClickAddToCart} color="secondary">
-                <AddShoppingCartIcon />
-              </IconButton>
+                <IconButton aria-label="addToCart" onClick={onClickAddToCart} color="secondary">
+                  <AddShoppingCartIcon />
+                </IconButton>
               )}
             </Grid>
           </CardContent>
-        </Link>
-      </StyledProductCard>
+        </StyledProductCard>
+      </Link>
       <ItemVariationMenu
         anchorEl={anchorEl}
         handleClose={handleClose}
