@@ -71,7 +71,7 @@ module.exports = {
         mergeStyleHashes: false,
         mergeScriptHashes: false,
         directives: {
-          'script-src': "'self' 'unsafe-inline' https://*.firebasedatabase.app https://apis.google.com https://connect.facebook.net https://www.googletagmanager.com https://static.cloudflareinsights.com",
+          'script-src': "'self' 'unsafe-inline' https://*.firebasedatabase.app https://apis.google.com https://connect.facebook.net https://www.googletagmanager.com https://static.cloudflareinsights.com https://cdn.mouseflow.com",
           'style-src': "'self' 'unsafe-inline'",
           'img-src': "'self' data: http://images.ctfassets.net/ https://www.facebook.com",
           'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com https://web.facebook.com/ https://www.google-analytics.com https://cloudflareinsights.com",
