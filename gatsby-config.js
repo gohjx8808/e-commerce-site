@@ -87,18 +87,21 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-google-gtag',
+      resolve: 'gatsby-plugin-google-tagmanager',
       options: {
-        // You can add multiple tracking ids and a pageview event will be fired for all of them.
-        trackingIds: [
-          process.env.GOOGLE_ANALYTICS_ID, // Google Analytics / GA
-          process.env.MOUSEFLOW_ID, // mouseflow
-        ],
-        // This object is used for configuration specific to this plugin
-        pluginConfig: {
-          // Puts tracking script in the head instead of the body
-          head: true,
-        },
+        id: process.env.GTM_ID,
+
+        // Include GTM in development.
+        //
+        // Defaults to false meaning GTM will only be loaded in production.
+        includeInDevelopment: false,
+
+        // datalayer to be set before GTM is loaded
+        // should be an object or a function that is executed in the browser
+        //
+        // Defaults to null
+        defaultDataLayer: { platform: 'gatsby' },
+        enableWebVitalsTracking: true,
       },
     },
   ],
