@@ -27,6 +27,7 @@
     "@mui/x-data-grid": "^5.0.0-beta.7",
     "@reduxjs/toolkit": "^1.6.0",
     "@sendgrid/mail": "^7.4.5",
+    "@types/prop-types": "^15.7.4",
     "@types/react": "^17.0.22",
     "@types/react-dom": "^17.0.9",
     "@types/react-scroll": "^1.8.3",

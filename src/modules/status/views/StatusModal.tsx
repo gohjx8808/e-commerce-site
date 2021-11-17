@@ -11,6 +11,7 @@ import {
   useAppDispatch, useAppSelector, useXsDownMediaQuery,
 } from '../../../hooks';
 import TextShadowFont from '../../../styledComponents/TextShadowFont';
+import { isSSR } from '../../../utils/constants';
 import { toggleStatusModal } from '../src/statusReducer';
 
 interface statusQueryInnerData{
@@ -67,6 +68,10 @@ const StatusModal = () => {
       return null;
     });
   }, [statusQuery.allFile.edges, isXsView]);
+
+  if (isSSR) {
+    return <div />;
+  }
 
   return (
     <Backdrop
