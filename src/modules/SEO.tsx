@@ -1,10 +1,14 @@
 import { graphql, PageProps, useStaticQuery } from 'gatsby';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { useAppSelector } from '../hooks';
 import { routeMap } from '../utils/constants';
+import routeNames from '../utils/routeNames';
 
 const SEO = (props:PageProps) => {
-  const { location } = props;
+  const { location, params } = props;
+  const allProducts = useAppSelector((state) => state.product.allProducts);
+  const [customTitle, setCustomTitle] = useState('');
   const { site } = useStaticQuery(graphql`
     query SEO {
       site {
@@ -28,12 +32,26 @@ const SEO = (props:PageProps) => {
     author,
   } = site.siteMetadata;
 
-  const pathname = (location.pathname) || '';
+  useEffect(() => {
+    const pathname = location.pathname.replace(params.id, ':id') || '';
+    const productName = allProducts.find(
+      (product) => product.node.contentful_id === params.id,
+    )?.node.name;
+    if (!params.id) {
+      if (pathname === '/') {
+        setCustomTitle(titleTemplate);
+      } else {
+        setCustomTitle(`%s | ${routeMap[pathname]}`);
+      }
+    } else if (pathname === routeNames.productDescription) {
+      setCustomTitle(`%s | ${productName}`);
+    }
+  }, [allProducts, location.pathname, params.id, titleTemplate]);
 
   return (
     <Helmet
       title={title}
-      titleTemplate={pathname === '/' ? titleTemplate : `%s | ${routeMap[pathname]}`}
+      titleTemplate={customTitle}
       htmlAttributes={{ lang }}
       meta={[
         {

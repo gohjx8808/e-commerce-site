@@ -89,4 +89,5 @@ export const routeMap: { [key: string]: string } = {
   [routeNames.feedbackForm]: 'Feedback',
   [routeNames.learnMore]: 'Learn More',
   [routeNames.imageGallery]: 'Image Gallery',
+  [routeNames.productDescription]: 'Product Description',
 };
