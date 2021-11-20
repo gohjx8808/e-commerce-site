@@ -40,7 +40,7 @@ const SEO = (props:PageProps) => {
     if (!params.id) {
       if (pathname === '/') {
         setCustomTitle(titleTemplate);
-      } else {
+      } else if (routeMap[pathname]) {
         setCustomTitle(`%s | ${routeMap[pathname]}`);
       }
     } else if (pathname === routeNames.productDescription) {
