@@ -16,8 +16,6 @@ export const loadState = () => {
       parseState.account.selectedAddress = defaultAddressData;
       parseState.auth.isSignOutConfirmationModalOpen = false;
       parseState.status.isStatusModalOpen = false;
-      parseState.status.statusMsg = '';
-      parseState.status.statusTitle = '';
       parseState.product.isEnlargedProductImageModalOpen = false;
       return parseState;
     }

@@ -69,7 +69,7 @@ const StatusModal = () => {
     });
   }, [statusQuery.allFile.edges, isXsView]);
 
-  if (isSSR) {
+  if (isSSR || !isStatusModalOpen) {
     return <div />;
   }
 

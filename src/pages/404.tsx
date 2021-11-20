@@ -38,16 +38,6 @@ const NotFoundPage = () => (
       {' '}
       we couldn’t find what you were looking for.
       <br />
-      {process.env.NODE_ENV === 'development' ? (
-        <>
-          <br />
-          Try creating a page in
-          {' '}
-          <code style={codeStyles}>src/pages/</code>
-          .
-          <br />
-        </>
-      ) : null}
       <br />
       <Link to="/">Go home</Link>
       .
