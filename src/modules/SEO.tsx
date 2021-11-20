@@ -1,8 +1,10 @@
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, PageProps, useStaticQuery } from 'gatsby';
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { routeMap } from '../utils/constants';
 
-const SEO = () => {
+const SEO = (props:PageProps) => {
+  const { location } = props;
   const { site } = useStaticQuery(graphql`
     query SEO {
       site {
@@ -26,10 +28,12 @@ const SEO = () => {
     author,
   } = site.siteMetadata;
 
+  const pathname = (location.pathname) || '';
+
   return (
     <Helmet
       title={title}
-      titleTemplate={titleTemplate}
+      titleTemplate={pathname === '/' ? titleTemplate : `%s | ${routeMap[pathname]}`}
       htmlAttributes={{ lang }}
       meta={[
         {

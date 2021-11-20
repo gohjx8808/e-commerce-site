@@ -1,16 +1,16 @@
-import React, { ReactElement } from 'react';
+import { PageProps } from 'gatsby';
+import React from 'react';
 import MessengerChat from './MessengerChat';
+import SEO from './modules/SEO';
+import { isSSR } from './utils/constants';
 
-interface WrapPageElementOwnProps{
-  element:ReactElement
-}
-
-const WrapPageElement = (props:WrapPageElementOwnProps) => {
-  const { element } = props;
+const WrapPageElement = (props:PageProps) => {
+  const { children } = props;
   return (
     <div>
-      {element}
+      {children}
       <MessengerChat />
+      {!isSSR && <SEO {...props} />}
     </div>
   );
 };

@@ -1,3 +1,5 @@
+import routeNames from './routeNames';
+
 export const stateOptions = [
   { value: 'Johor', label: 'Johor' },
   { value: 'Kedah', label: 'Kedah' },
@@ -74,4 +76,17 @@ export const defaultProductData:products.productData = {
   price: 0,
   productImage: [],
   discountedPrice: 0,
+};
+
+export const routeMap: { [key: string]: string } = {
+  [routeNames.login]: 'Login',
+  [routeNames.signUp]: 'Sign Up',
+  [routeNames.cart]: 'Shopping Cart',
+  '/': 'Home',
+  [routeNames.checkout]: 'Checkout',
+  [routeNames.account]: 'My Account',
+  [routeNames.products]: 'Products',
+  [routeNames.feedbackForm]: 'Feedback',
+  [routeNames.learnMore]: 'Learn More',
+  [routeNames.imageGallery]: 'Image Gallery',
 };

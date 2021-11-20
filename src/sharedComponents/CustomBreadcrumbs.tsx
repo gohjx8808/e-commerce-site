@@ -4,8 +4,7 @@ import { Link as GatsbyLink } from 'gatsby';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import StyledBreadcrumbs from '../styledComponents/StyledBreadcrumbs';
-import { isSSR } from '../utils/constants';
-import routeNames from '../utils/routeNames';
+import { isSSR, routeMap } from '../utils/constants';
 
 interface CustomBreadcrumbsOwnProps{
   customActiveName?:string
@@ -15,15 +14,6 @@ const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
   const { customActiveName } = props;
   const pathname = (!isSSR && window.location.pathname) || '';
 
-  const breadcrumbNameMap: { [key: string]: string } = {
-    [routeNames.login]: 'Login',
-    [routeNames.signUp]: 'Sign Up',
-    [routeNames.cart]: 'Shopping Cart',
-    '/': 'Home',
-    [routeNames.checkout]: 'Checkout',
-    [routeNames.account]: 'My Account',
-    [routeNames.products]: 'Products',
-  };
   const [routesInBetween, setRoutesInBetween] = useState<string[]>([]);
 
   useEffect(() => {
@@ -38,11 +28,11 @@ const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
       </Link>
       {routesInBetween.map((route) => (
         <Link component={GatsbyLink} color="inherit" to={`/${route}`} key={route} underline="hover">
-          {breadcrumbNameMap[`/${route}`]}
+          {routeMap[`/${route}`]}
         </Link>
       ))}
       <Typography color="textPrimary">
-        {customActiveName || breadcrumbNameMap[pathname]}
+        {customActiveName || routeMap[pathname]}
       </Typography>
     </StyledBreadcrumbs>
   );

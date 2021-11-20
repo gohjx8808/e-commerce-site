@@ -11,9 +11,7 @@ import {
 import { Provider } from 'react-redux';
 import LoadingOverlay from '../modules/overlay/views/LoadingOverlay';
 import EnlargedProductImageCarouselModal from '../modules/products/views/EnlargedProductImageCarouselModal';
-import SEO from '../modules/SEO';
 import StatusModal from '../modules/status/views/StatusModal';
-
 import CustomSnackbar from '../sharedComponents/CustomSnackbar';
 import store from '../store';
 import DarkModeContext from '../utils/DarkModeContext';
@@ -45,8 +43,6 @@ declare module '@mui/material/styles' {
 }
 
 type modeType = PaletteMode | 'system';
-
-const isSSR = typeof window === 'undefined';
 
 const RootLayout:React.FC = ({ children }) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -149,7 +145,6 @@ const RootLayout:React.FC = ({ children }) => {
         >
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Provider store={store}>
-              {!isSSR && <SEO />}
               {children}
               <StatusModal />
               <LoadingOverlay />
