@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React from 'react';

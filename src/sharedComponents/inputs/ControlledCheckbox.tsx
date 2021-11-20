@@ -6,7 +6,7 @@ import { Control, Controller, FieldError } from 'react-hook-form';
 
 interface ControlledCheckboxOwnProps extends CheckboxProps{
   control:Control,
-  label?:string,
+  label:string,
   error?:FieldError
 }
 
@@ -47,7 +47,6 @@ const ControlledCheckbox = (props:ControlledCheckboxOwnProps) => {
 };
 
 ControlledCheckbox.defaultProps = {
-  label: '',
   error: null,
 };
 
