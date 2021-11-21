@@ -44,6 +44,7 @@ function* submitSignUpSaga() {
         gender: payload.gender.value,
         fullName: payload.fullName,
         phoneNumber: payload.phoneNumber,
+        roles: ['customer'],
       };
       yield call(saveUserDetails, userID, userDetails);
       yield put(toggleSuccess(true));
@@ -74,9 +75,18 @@ function* submitLoginSaga() {
     yield put(toggleLoadingOverlay(true));
     try {
       const response:firebase.auth.UserCredential = yield call(signIn, payload);
-      yield put(getCurrentUserDetailsAction(response.user?.uid!));
-      yield put(toggleLoadingOverlay(false));
-      navigate('/');
+      const userDetails:firebase.database.DataSnapshot = yield call(
+        getCurrentUserDetails, response.user?.uid!,
+      );
+      if (userDetails.val().roles.includes('customer')) {
+        yield put(getCurrentUserDetailsAction(response.user?.uid!));
+        yield put(toggleLoadingOverlay(false));
+        navigate('/');
+      } else {
+        yield call(signOut);
+        yield put(clearCurrentUser());
+        throw new Error('No permission');
+      }
     } catch (error) {
       yield put(updateStatusTitle('Log In'));
       yield put(updateStatusMsg('Invalid credentials! Please try again.'));
