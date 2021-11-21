@@ -1,9 +1,14 @@
 import Grid from '@mui/material/Grid';
 import React, { FC } from 'react';
 import Footer from '../modules/Footer';
+import { isSSR } from '../utils/constants';
 
 const AuthLayout:FC = (props) => {
   const { children } = props;
+
+  if (isSSR) {
+    return <div />;
+  }
 
   return (
     <Grid container minHeight="100vh" direction="column">
