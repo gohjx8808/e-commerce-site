@@ -18,7 +18,7 @@ const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
 
   useEffect(() => {
     const paths = pathname.split('/');
-    setRoutesInBetween(paths.slice(1, paths.length - 1));
+    setRoutesInBetween(paths.slice(1, paths.length - 2));
   }, [pathname]);
 
   return (
@@ -27,8 +27,8 @@ const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
         Home
       </Link>
       {routesInBetween.map((route) => (
-        <Link component={GatsbyLink} color="inherit" to={`/${route}`} key={route} underline="hover">
-          {routeMap[`/${route}`]}
+        <Link component={GatsbyLink} color="inherit" to={`/${route}/`} key={route} underline="hover">
+          {routeMap[`/${route}/`]}
         </Link>
       ))}
       <Typography color="textPrimary">
