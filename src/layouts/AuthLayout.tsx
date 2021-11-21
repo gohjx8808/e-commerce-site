@@ -1,5 +1,7 @@
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
-import React, { FC } from 'react';
+import React, { FC, Suspense } from 'react';
 import Footer from '../modules/Footer';
 import { isSSR } from '../utils/constants';
 
@@ -11,12 +13,23 @@ const AuthLayout:FC = (props) => {
   }
 
   return (
-    <Grid container minHeight="100vh" direction="column">
-      <Grid alignItems="center" display="flex" flexGrow={1} bgcolor="customPrimary.main">
-        {children}
-      </Grid>
-      <Footer />
-    </Grid>
+    <Suspense
+      fallback={(
+        <Grid container display="flex" minHeight="100vh" justifyContent="center" alignItems="center">
+          <CircularProgress color="primary" size={60} />
+        </Grid>
+        )}
+    >
+      <Box display="flex" minHeight="100vh" bgcolor="customPrimary.main">
+        <Grid container direction="column">
+          <Grid flexGrow={1} alignItems="center" display="flex">
+            {children}
+          </Grid>
+          <Footer />
+        </Grid>
+      </Box>
+    </Suspense>
+
   );
 };
 
