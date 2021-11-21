@@ -6,4 +6,6 @@ import '@fontsource/amaranth';
 // eslint-disable-next-line react/jsx-filename-extension
 export const wrapRootElement = ({ element }) => <RootLayout>{element}</RootLayout>;
 
-export const wrapPageElement = WrapPageElement;
+export const wrapPageElement = ({ element, props }) => (
+  <WrapPageElement {...props}>{element}</WrapPageElement>
+);
