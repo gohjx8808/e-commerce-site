@@ -18,7 +18,11 @@ const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
 
   useEffect(() => {
     const paths = pathname.split('/');
-    setRoutesInBetween(paths.slice(1, paths.length - 2));
+    if (paths[paths.length - 1] === '') {
+      setRoutesInBetween(paths.slice(1, paths.length - 2));
+    } else {
+      setRoutesInBetween(paths.slice(1, paths.length - 1));
+    }
   }, [pathname]);
 
   return (
