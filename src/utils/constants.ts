@@ -90,4 +90,5 @@ export const routeMap: { [key: string]: string } = {
   [routeNames.learnMore]: 'Learn More',
   [routeNames.imageGallery]: 'Image Gallery',
   [routeNames.productDescription]: 'Product Description',
+  [routeNames.forgotPassword]: 'Forgot Password',
 };
