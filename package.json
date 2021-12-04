@@ -71,6 +71,7 @@
     "@types/redux-state-sync": "^3.1.2",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
+    "cypress": "^9.1.1",
     "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-import-resolver-typescript": "^2.4.0",
