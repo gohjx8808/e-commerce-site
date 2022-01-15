@@ -8,7 +8,7 @@ const sendFeedbackEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunction
 
   const email = [{
     to: 'yijie.lnl@gmail.com',
-    from: 'yj.artjournal@gmail.com',
+    from: 'hello@yjartjournal.com',
     templateId: 'd-3712d484569b41f18e1525a602254adf',
     dynamic_template_data: {
       nickname: postData.nickname,
@@ -20,7 +20,7 @@ const sendFeedbackEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunction
   try {
     await sgMail.send(email);
     return res.status(200).json({ msg: 'Feedback email sent successfully' });
-  } catch (e) {
+  } catch (e:any) {
     return res.status(e.code).json({ msg: e.message });
   }
 };

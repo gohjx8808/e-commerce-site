@@ -39,7 +39,7 @@ const Footer = () => {
               <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yj_artjournal/">
                 <InstagramIcon />
               </IconButton>
-              <IconButton aria-label="email" color="inherit" target="_blank" rel="noreferrer" href="mailto:yj.artjournal@gmail.com">
+              <IconButton aria-label="email" color="inherit" target="_blank" rel="noreferrer" href="mailto:hello@yjartjournal.com">
                 <EmailIcon />
               </IconButton>
             </>

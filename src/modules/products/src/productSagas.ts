@@ -114,7 +114,7 @@ function* sendPaymentEmailSaga() {
     } catch (e) {
       yield put(toggleSuccess(false));
       yield put(updateStatusTitle(''));
-      yield put(updateStatusMsg('Please check your internet connection or contact us at yj.artjournal@gmail.com for assistance.'));
+      yield put(updateStatusMsg('Please check your internet connection or contact us at hello@yjartjournal.com for assistance.'));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
     }
