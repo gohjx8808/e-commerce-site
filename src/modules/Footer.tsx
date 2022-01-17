@@ -19,10 +19,10 @@ const Footer = () => {
         <Toolbar disableGutters>
           {isSmView && (
             <>
-              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal.madewithlove/">
+              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal/">
                 <FacebookIcon />
               </IconButton>
-              <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yj_artjournal/">
+              <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yjartjournal/">
                 <InstagramIcon />
               </IconButton>
             </>
@@ -33,10 +33,10 @@ const Footer = () => {
           <Box flexGrow={1} />
           {!isSmView && (
             <>
-              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal.madewithlove/">
+              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal/">
                 <FacebookIcon />
               </IconButton>
-              <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yj_artjournal/">
+              <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yjartjournal">
                 <InstagramIcon />
               </IconButton>
               <IconButton aria-label="email" color="inherit" target="_blank" rel="noreferrer" href="mailto:hello@yjartjournal.com">
