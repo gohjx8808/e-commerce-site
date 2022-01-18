@@ -1,6 +1,3 @@
-import EmailIcon from '@mui/icons-material/Email';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -9,6 +6,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useXsDownMediaQuery } from '../hooks';
+import EmailIcon from '../svg/EmailIcon';
+import FBIcon from '../svg/FBIcon';
+import InstagramIcon from '../svg/InstagramIcon';
+import XhsIcon from '../svg/XhsIcon';
 
 const Footer = () => {
   const isSmView = useXsDownMediaQuery();
@@ -20,10 +21,13 @@ const Footer = () => {
           {isSmView && (
             <>
               <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal/">
-                <FacebookIcon />
+                <FBIcon />
               </IconButton>
               <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yjartjournal/">
                 <InstagramIcon />
+              </IconButton>
+              <IconButton aria-label="xiaohongshu" color="inherit" target="_blank" rel="noreferrer" href="https://www.xiaohongshu.com/user/profile/5cf791af000000000500c3eb?xhsshare=CopyLink&appuid=5cf791af000000000500c3eb&apptime=1642396244">
+                <XhsIcon />
               </IconButton>
             </>
           )}
@@ -34,10 +38,13 @@ const Footer = () => {
           {!isSmView && (
             <>
               <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal/">
-                <FacebookIcon />
+                <FBIcon />
               </IconButton>
               <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yjartjournal">
                 <InstagramIcon />
+              </IconButton>
+              <IconButton aria-label="xiaohongshu" color="inherit" target="_blank" rel="noreferrer" href="https://www.xiaohongshu.com/user/profile/5cf791af000000000500c3eb?xhsshare=CopyLink&appuid=5cf791af000000000500c3eb&apptime=1642396244">
+                <XhsIcon />
               </IconButton>
               <IconButton aria-label="email" color="inherit" target="_blank" rel="noreferrer" href="mailto:hello@yjartjournal.com">
                 <EmailIcon />
