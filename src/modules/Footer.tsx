@@ -20,11 +20,11 @@ const Footer = () => {
         <Toolbar disableGutters>
           {isSmView && (
             <>
-              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal/">
-                <FBIcon />
-              </IconButton>
               <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yjartjournal/">
                 <InstagramIcon />
+              </IconButton>
+              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal/">
+                <FBIcon />
               </IconButton>
               <IconButton aria-label="xiaohongshu" color="inherit" target="_blank" rel="noreferrer" href="https://www.xiaohongshu.com/user/profile/5cf791af000000000500c3eb?xhsshare=CopyLink&appuid=5cf791af000000000500c3eb&apptime=1642396244">
                 <XhsIcon />
@@ -37,11 +37,11 @@ const Footer = () => {
           <Box flexGrow={1} />
           {!isSmView && (
             <>
-              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal/">
-                <FBIcon />
-              </IconButton>
               <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yjartjournal">
                 <InstagramIcon />
+              </IconButton>
+              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal/">
+                <FBIcon />
               </IconButton>
               <IconButton aria-label="xiaohongshu" color="inherit" target="_blank" rel="noreferrer" href="https://www.xiaohongshu.com/user/profile/5cf791af000000000500c3eb?xhsshare=CopyLink&appuid=5cf791af000000000500c3eb&apptime=1642396244">
                 <XhsIcon />
