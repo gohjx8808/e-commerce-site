@@ -67,7 +67,7 @@ const RootLayout:React.FC = ({ children }) => {
         },
         customPrimary: {
           main: '#f5dbc9',
-          contrastText: 'black',
+          contrastText: '#38261d',
         },
         customSecondary: {
           main: '#B67B5E',

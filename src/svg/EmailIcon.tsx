@@ -12,7 +12,6 @@ const EmailIcon = () => (
   >
     <g
       transform="translate(0.000000,531.000000) scale(0.100000,-0.100000)"
-      fill="#000000"
       stroke="none"
     >
       <path d="M2475 5294 c-515 -43 -990 -221 -1400 -526 -137 -102 -415 -378 -514
