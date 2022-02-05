@@ -44,7 +44,8 @@ function* submitSignUpSaga() {
         gender: payload.gender.value,
         fullName: payload.fullName,
         phoneNumber: payload.phoneNumber,
-        roles: ['customer'],
+        admin: false,
+        customer: true,
       };
       yield call(saveUserDetails, userID, userDetails);
       yield put(toggleSuccess(true));
@@ -78,7 +79,7 @@ function* submitLoginSaga() {
       const userDetails:firebase.database.DataSnapshot = yield call(
         getCurrentUserDetails, response.user?.uid!,
       );
-      if (userDetails.val().roles.includes('customer')) {
+      if (userDetails.val().customer) {
         yield put(getCurrentUserDetailsAction(response.user?.uid!));
         yield put(toggleLoadingOverlay(false));
         navigate('/');
