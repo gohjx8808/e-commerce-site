@@ -15,8 +15,10 @@ const INITIAL_STATE:authState = {
     phoneNumber: '',
     addressBook: [],
     usedPromocode: [],
-    admin: false,
-    customer: false,
+    roles: {
+      admin: false,
+      customer: false,
+    },
   },
   isSignOutConfirmationModalOpen: false,
 };

@@ -25,8 +25,7 @@ declare namespace auth{
     gender:string
     fullName:string
     phoneNumber:string
-    admin:boolean
-    customer:boolean
+    roles:roleData
   }
 
   interface currentUserDetails{
@@ -38,6 +37,10 @@ declare namespace auth{
     phoneNumber:string
     addressBook:addressData[]
     usedPromocode:string[]
+    roles:roleData
+  }
+
+  interface roleData{
     admin:boolean
     customer:boolean
   }
