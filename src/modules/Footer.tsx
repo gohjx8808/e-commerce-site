@@ -46,7 +46,7 @@ const Footer = () => {
               <IconButton aria-label="xiaohongshu" color="inherit" target="_blank" rel="noreferrer" href="https://www.xiaohongshu.com/user/profile/5cf791af000000000500c3eb?xhsshare=CopyLink&appuid=5cf791af000000000500c3eb&apptime=1642396244">
                 <XhsIcon />
               </IconButton>
-              <IconButton aria-label="email" color="inherit" target="_blank" rel="noreferrer" href="mailto:hello@yjartjournal.com">
+              <IconButton aria-label="email" color="inherit" target="_blank" rel="noreferrer" href="mailto:yj.artjournal@gmail.com">
                 <EmailIcon />
               </IconButton>
             </>

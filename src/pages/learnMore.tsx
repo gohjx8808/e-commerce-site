@@ -2,9 +2,9 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import MainLayout from '../layouts/MainLayout';
 import BoldItalicFont from '../styledComponents/BoldItalicFont';
 import StyledTitle from '../styledComponents/StyledTitle';
-import MainLayout from '../layouts/MainLayout';
 
 const LearnMore = () => (
   <MainLayout>
@@ -44,8 +44,8 @@ const LearnMore = () => (
           {' '}
           or email me at
           {' '}
-          <Link variant="inherit" href="mailto:hello@yjartjournal.com" target="_blank" rel="noopener" color="secondary">
-            hello@yjartjournal.com
+          <Link variant="inherit" href="mailto:yj.artjournal@gmail.com" target="_blank" rel="noopener" color="secondary">
+            yj.artjournal@gmail.com
           </Link>
           {' '}
           for further discussion on your ideas!

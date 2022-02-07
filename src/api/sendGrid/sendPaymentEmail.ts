@@ -18,7 +18,7 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
   const emails = [{
     to: postData.email,
     bcc: 'yijie.lnl@gmail.com',
-    from: 'hello@yjartjournal.com',
+    from: 'yj.artjournal@gmail.com',
     templateId: paymentTemplate[postData.paymentOptions],
     dynamic_template_data: {
       customer_name: postData.accUserName,
@@ -36,7 +36,7 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
     },
   }, {
     to: 'yijie.lnl@gmail.com',
-    from: 'hello@yjartjournal.com',
+    from: 'yj.artjournal@gmail.com',
     templateId: 'd-178070cfd5484d9298f0c21efde0c44b',
     dynamic_template_data: {
       order_code: `YJ${String(postData.currentOrderCount).padStart(4, '0')}`,

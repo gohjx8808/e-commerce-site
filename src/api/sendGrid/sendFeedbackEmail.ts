@@ -8,7 +8,7 @@ const sendFeedbackEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunction
 
   const email = [{
     to: 'yijie.lnl@gmail.com',
-    from: 'hello@yjartjournal.com',
+    from: 'yj.artjournal@gmail.com',
     templateId: 'd-3712d484569b41f18e1525a602254adf',
     dynamic_template_data: {
       nickname: postData.nickname,
