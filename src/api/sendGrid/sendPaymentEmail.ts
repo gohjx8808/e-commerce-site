@@ -23,7 +23,7 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
     dynamic_template_data: {
       customer_name: postData.accUserName,
       checkoutItems: postData.selectedCheckoutItems,
-      shippingFee: postData.shippingFee.toFixed(2), 
+      shippingFee: postData.shippingFee.toFixed(2),
       totalAmount: postData.totalAmount.toFixed(2),
       note: postData.note,
       discountMargin: postData.discountMargin,
