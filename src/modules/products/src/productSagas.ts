@@ -48,7 +48,9 @@ function* sendPaymentEmailSaga() {
       );
       // @ts-ignore
       const res:any = yield call(sendPaymentEmailApi, payload);
-      console.log(res);
+      if (res.status !== 200) {
+        throw new Error('Server Error');
+      }
       yield call(updateOrderCount, payload.currentOrderCount);
       if (payload.promoCode) {
         let updatedUserDetails = { ...currentUserDetails };
@@ -114,7 +116,6 @@ function* sendPaymentEmailSaga() {
       yield put(toggleStatusModal(true));
       navigate('/');
     } catch (e) {
-      console.log(e);
       yield put(toggleSuccess(false));
       yield put(updateStatusTitle(''));
       yield put(updateStatusMsg('Please check your internet connection or contact us at yj.artjournal@gmail.com for assistance.'));
