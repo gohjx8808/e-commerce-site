@@ -56,7 +56,7 @@ const sendPaymentEmail = async (req: GatsbyFunctionRequest, res: GatsbyFunctionR
   }];
 
   try {
-    await sgMail.send(emails);
+    // await sgMail.send(emails);
     return res.status(200).json({ msg: 'Message sent successfully' });
   } catch (e:any) {
     return res.status(e.code).json({ msg: e.message });
