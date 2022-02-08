@@ -1,28 +1,28 @@
 import { navigate } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 import {
-    all,
-    call, fork, put, select, take
+  all,
+  call, fork, put, select, take,
 } from 'redux-saga/effects';
 import { RootState } from '../../../store';
 import { emptyShippingInfo } from '../../../utils/constants';
 import {
-    submitAddEditAddressAction, toggleIsDirectAction, updateAddressActionType
+  submitAddEditAddressAction, toggleIsDirectAction, updateAddressActionType,
 } from '../../account/src/accountReducer';
 import { getCurrentUserDetailsAction } from '../../auth/src/authReducer';
 import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
 import {
-    toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle
+  toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
 } from '../../status/src/statusReducer';
 import {
-    getPrevOrderCount, sendPaymentEmailApi, updateOrderCount, updatePromoCodeUsed
+  getPrevOrderCount, sendPaymentEmailApi, updateOrderCount, updatePromoCodeUsed,
 } from './productApi';
 import {
-    removeItemFromCart,
-    saveShippingInfo,
-    sendPaymentEmailAction,
-    updatePrevOrderCount,
-    updateSelectedCheckoutItemsID
+  removeItemFromCart,
+  saveShippingInfo,
+  sendPaymentEmailAction,
+  updatePrevOrderCount,
+  updateSelectedCheckoutItemsID,
 } from './productReducers';
 
 export default function* productRuntime() {
@@ -46,7 +46,9 @@ function* sendPaymentEmailSaga() {
       const currentUserDetails:auth.currentUserDetails = yield select(
         (state:RootState) => state.auth.currentUser,
       );
-      yield call(sendPaymentEmailApi, payload);
+      // @ts-ignore
+      const res:any = yield call(sendPaymentEmailApi, payload);
+      console.log(res);
       yield call(updateOrderCount, payload.currentOrderCount);
       if (payload.promoCode) {
         let updatedUserDetails = { ...currentUserDetails };
@@ -112,6 +114,7 @@ function* sendPaymentEmailSaga() {
       yield put(toggleStatusModal(true));
       navigate('/');
     } catch (e) {
+      console.log(e);
       yield put(toggleSuccess(false));
       yield put(updateStatusTitle(''));
       yield put(updateStatusMsg('Please check your internet connection or contact us at yj.artjournal@gmail.com for assistance.'));
