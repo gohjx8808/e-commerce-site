@@ -276,6 +276,9 @@ const Checkout = () => {
   const proceedToPayment = async (hookData:products.checkoutFormPayload) => {
     const emailData:products.sendPaymentEmailPayload = {
       ...hookData,
+      phoneNumber: String(hookData.phoneNumber),
+      postcode: String(hookData.postcode),
+      saveShippingInfo: String(hookData.saveShippingInfo),
       state: hookData.state.value,
       accUserName: currentUserDetails.fullName ? currentUserDetails.fullName : hookData.fullName,
       // currentOrderCount: prevOrderCount + 1,
