@@ -8,7 +8,6 @@ export const updateOrderCount = (currentOrderCount:number) => firebase.database(
 export const sendPaymentEmailApi = (emailData:products.sendPaymentEmailPayload) => (
   window.fetch('https://send-payment-email.gohjx8808.workers.dev/', {
     method: 'POST',
-    mode: 'no-cors',
     headers: {
       'content-type': 'application/json',
       'accept-type': 'application/json',
