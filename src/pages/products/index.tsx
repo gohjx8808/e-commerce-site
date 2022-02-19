@@ -159,24 +159,27 @@ const Products = () => {
           const currentCategoryImageData:imageInnerData = productQuery.productCategoriesImages.edges.find(
             (image:imageInnerData) => image.node.name === preprocessCateogryImageName(category),
           );
-          const categoryImage = getImage(currentCategoryImageData.node.childImageSharp)!;
-          return (
-            <Grid item xs={6} sm={2} key={category}>
-              <Button disabled={!categoryProductAmount[category]}>
-                <Link
-                  to={category}
-                  spy
-                  smooth
-                  offset={-60}
-                >
-                  <ProductImage
-                    image={categoryImage}
-                    alt={currentCategoryImageData.node.name}
-                  />
-                </Link>
-              </Button>
-            </Grid>
-          );
+          if (currentCategoryImageData) {
+            const categoryImage = getImage(currentCategoryImageData.node.childImageSharp)!;
+            return (
+              <Grid item xs={6} sm={2} key={category}>
+                <Button disabled={!categoryProductAmount[category]}>
+                  <Link
+                    to={category}
+                    spy
+                    smooth
+                    offset={-60}
+                  >
+                    <ProductImage
+                      image={categoryImage}
+                      alt={currentCategoryImageData.node.name}
+                    />
+                  </Link>
+                </Button>
+              </Grid>
+            );
+          }
+          return <div />;
         })}
       </Grid>
       <Grid container justifyContent="flex-end" alignItems="center" marginTop={5}>
