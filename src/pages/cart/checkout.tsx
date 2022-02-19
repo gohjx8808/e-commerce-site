@@ -278,12 +278,12 @@ const Checkout = () => {
       ...hookData,
       state: hookData.state.value,
       accUserName: currentUserDetails.fullName ? currentUserDetails.fullName : hookData.fullName,
-      currentOrderCount: prevOrderCount + 1,
-      totalAmount,
+      // currentOrderCount: prevOrderCount + 1,
+      // totalAmount,
       discountMargin: `${appliedPromo.code ? `${appliedPromo.discountType === 'value' ? 'RM ' : ''}${appliedPromo.discountValue}${appliedPromo.discountType === 'percentage' ? '%' : ''}` : ''}`,
-      discount: totalAmount - appliedPromo.discountedPrice,
-      discountedAmount: appliedPromo.discountedPrice + shippingFee.realShipping,
-      shippingFee: shippingFee.realShipping,
+      // discount: totalAmount - appliedPromo.discountedPrice,
+      // discountedAmount: appliedPromo.discountedPrice + shippingFee.realShipping,
+      // shippingFee: shippingFee.realShipping,
       selectedCheckoutItems: extractedCartItem,
     };
 
