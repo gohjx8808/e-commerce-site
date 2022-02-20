@@ -74,7 +74,7 @@ module.exports = {
           'script-src': "'self' 'unsafe-inline' https://*.firebasedatabase.app https://apis.google.com https://connect.facebook.net https://www.googletagmanager.com https://static.cloudflareinsights.com https://cdn.mouseflow.com",
           'style-src': "'self' 'unsafe-inline'",
           'img-src': "'self' data: http://images.ctfassets.net/ https://www.facebook.com",
-          'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com https://web.facebook.com/ https://www.google-analytics.com https://cloudflareinsights.com https://o2.mouseflow.com https://send-checkout-email.gohjx8808.workers.dev",
+          'connect-src': "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com https://web.facebook.com/ https://www.google-analytics.com https://cloudflareinsights.com https://o2.mouseflow.com https://send-checkout-email.gohjx8808.workers.dev https://send-feedback-email.gohjx8808.workers.dev",
           'frame-src': "'self' https://*.firebasedatabase.app https://apis.google.com https://*.firebase https://www.facebook.com https://web.facebook.com/ https://m.me/ https://m.facebook.com/",
         },
       },
