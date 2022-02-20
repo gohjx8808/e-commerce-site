@@ -2,27 +2,27 @@ import { navigate } from 'gatsby';
 import firebase from 'gatsby-plugin-firebase';
 import {
   all,
-  call, fork, put, select, take,
+  call, fork, put, select, take
 } from 'redux-saga/effects';
 import { RootState } from '../../../store';
 import { emptyShippingInfo } from '../../../utils/constants';
 import {
-  submitAddEditAddressAction, toggleIsDirectAction, updateAddressActionType,
+  submitAddEditAddressAction, toggleIsDirectAction, updateAddressActionType
 } from '../../account/src/accountReducer';
 import { getCurrentUserDetailsAction } from '../../auth/src/authReducer';
 import { toggleLoadingOverlay } from '../../overlay/src/overlayReducer';
 import {
-  toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle,
+  toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle
 } from '../../status/src/statusReducer';
 import {
-  getPrevOrderCount, sendPaymentEmailApi, updateOrderCount, updatePromoCodeUsed,
+  getPrevOrderCount, sendPaymentEmailApi, updateOrderCount, updatePromoCodeUsed
 } from './productApi';
 import {
   removeItemFromCart,
   saveShippingInfo,
   sendPaymentEmailAction,
   updatePrevOrderCount,
-  updateSelectedCheckoutItemsID,
+  updateSelectedCheckoutItemsID
 } from './productReducers';
 
 export default function* productRuntime() {
@@ -114,7 +114,7 @@ function* sendPaymentEmailSaga() {
     } catch (e) {
       yield put(toggleSuccess(false));
       yield put(updateStatusTitle(''));
-      yield put(updateStatusMsg('Please check your internet connection or contact us at yj.artjournal@gmail.com for assistance.'));
+      yield put(updateStatusMsg('Please check your internet connection or contact us at hello@yjartjournal.com for assistance.'));
       yield put(toggleLoadingOverlay(false));
       yield put(toggleStatusModal(true));
     }

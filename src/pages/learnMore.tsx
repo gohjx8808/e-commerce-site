@@ -44,8 +44,8 @@ const LearnMore = () => (
           {' '}
           or email me at
           {' '}
-          <Link variant="inherit" href="mailto:yj.artjournal@gmail.com" target="_blank" rel="noopener" color="secondary">
-            yj.artjournal@gmail.com
+          <Link variant="inherit" href="mailto:hello@yjartjournal.com" target="_blank" rel="noopener" color="secondary">
+            hello@yjartjournal.com
           </Link>
           {' '}
           for further discussion on your ideas!
