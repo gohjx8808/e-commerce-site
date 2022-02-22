@@ -3,27 +3,18 @@ import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { graphql, useStaticQuery } from 'gatsby';
-import { getImage, IGatsbyImageData } from 'gatsby-plugin-image';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-scroll';
+import { scroller } from 'react-scroll';
 import { useAppSelector } from '../../hooks';
 import MainLayout from '../../layouts/MainLayout';
 import ProductCard from '../../modules/products/views/ProductCard';
 import ControlledPicker from '../../sharedComponents/inputs/ControlledPicker';
-import ProductImage from '../../styledComponents/products/ProductImage';
 import { compareString } from '../../utils/helper';
 
 interface categoryAmountData{
   [key:string]:number
-}
-
-interface imageInnerData{
-  node:{
-    name:string
-    childImageSharp:IGatsbyImageData
-    id:string
-  }
 }
 
 const Products = () => {
@@ -32,20 +23,7 @@ const Products = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryProductAmount, setCategoryProductAmount] = useState<categoryAmountData>({});
   const { control, watch } = useForm();
-  const productQuery = useStaticQuery(graphql`
-    query {
-      productCategoriesImages: allFile(filter: {relativeDirectory: {eq: "productCategories"}}) {
-        edges {
-          node {
-            childImageSharp {
-              gatsbyImageData(placeholder: BLURRED)
-            }
-            id
-            name
-          }
-        }
-      }
-    }`);
+
   const sortByOptions = [
     { label: 'Name: A to Z', value: 'a2z' },
     { label: 'Name: Z to A', value: 'z2a' },
@@ -144,43 +122,48 @@ const Products = () => {
     return isProductInFilter && isProductInCategory;
   };
 
-  const preprocessCateogryImageName = (category:string) => {
-    if (category.toLowerCase().includes('series')) {
-      return category.toLowerCase().replace(' series', '');
+  const productCategoryBanner = useStaticQuery(graphql`
+  query {
+    file(relativePath: { eq: "productCategory.png" }) {
+      childImageSharp {
+        gatsbyImageData(placeholder: BLURRED)
+      }
     }
-    return category.toLowerCase().replace(' accessories', '');
+  }
+`);
+
+  const productCategoryBannerImage = getImage(productCategoryBanner.file);
+
+  const scrollTo = (category:string) => {
+    scroller.scrollTo(category, {
+      spy: true,
+      smooth: true,
+      offset: -80,
+    });
   };
 
   return (
     <MainLayout pageBannerTitle="Product Categories">
-      <Grid container direction="row" justifyContent="center" marginTop={3}>
-        {categories.map((category) => {
-        // eslint-disable-next-line max-len
-          const currentCategoryImageData:imageInnerData = productQuery.productCategoriesImages.edges.find(
-            (image:imageInnerData) => image.node.name === preprocessCateogryImageName(category),
-          );
-          if (currentCategoryImageData) {
-            const categoryImage = getImage(currentCategoryImageData.node.childImageSharp)!;
-            return (
-              <Grid item xs={6} sm={2} key={category}>
-                <Button disabled={!categoryProductAmount[category]}>
-                  <Link
-                    to={category}
-                    spy
-                    smooth
-                    offset={-60}
-                  >
-                    <ProductImage
-                      image={categoryImage}
-                      alt={currentCategoryImageData.node.name}
-                    />
-                  </Link>
+      <Grid container justifyContent="center" marginTop={3}>
+        <Grid item xs={12} sm={11}>
+          <GatsbyImage image={productCategoryBannerImage!} alt="productCategories" style={{ width: '100%' }} />
+        </Grid>
+        <Grid container item xs={12} sm={11} style={{ backgroundColor: '#f5dbc9' }} padding={3}>
+          <Grid container justifyContent="center" alignItems="center" rowSpacing={2}>
+            {categories.map((category) => (
+              <Grid item container xs={6} sm={4} key={category} justifyContent="center">
+                <Button
+                  variant="contained"
+                  color="whiteButton"
+                  sx={{ width: '80%' }}
+                  onClick={() => scrollTo(category)}
+                >
+                  <Typography>{category}</Typography>
                 </Button>
               </Grid>
-            );
-          }
-          return <div />;
-        })}
+            ))}
+          </Grid>
+        </Grid>
       </Grid>
       <Grid container justifyContent="flex-end" alignItems="center" marginTop={5}>
         <Grid item xs={12} sm={5} lg={3}>

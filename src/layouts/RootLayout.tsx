@@ -25,6 +25,7 @@ declare module '@mui/material/AppBar' {
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     primaryButton: true;
+    whiteButton:true;
   }
 }
 
@@ -76,6 +77,10 @@ const RootLayout:React.FC = ({ children }) => {
           main: '#f5dbc9',
           contrastText: 'black',
         },
+        whiteButton: {
+          main: 'white',
+          contrastText: '#B67B5E',
+        },
       } : {
         primary: {
           main: '#f5dbc9',
@@ -99,6 +104,10 @@ const RootLayout:React.FC = ({ children }) => {
         primaryButton: {
           main: '#B67B5E',
           contrastText: '#fff',
+        },
+        whiteButton: {
+          main: 'black',
+          contrastText: '#f5dbc9',
         },
       }),
     },
