@@ -146,7 +146,7 @@ const Products = () => {
     <MainLayout pageBannerTitle="Product Categories">
       <Grid container justifyContent="center" marginTop={3}>
         <Grid item xs={12} sm={11}>
-          <GatsbyImage image={productCategoryBannerImage!} alt="productCategories" style={{ width: '100%' }} />
+          <GatsbyImage image={productCategoryBannerImage!} alt="productCategories" objectFit="fill" style={{ width: '100%' }} />
         </Grid>
         <Grid container item xs={12} sm={11} style={{ backgroundColor: '#f5dbc9' }} padding={3}>
           <Grid container justifyContent="center" alignItems="center" rowSpacing={2}>
