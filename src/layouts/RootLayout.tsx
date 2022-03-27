@@ -9,6 +9,10 @@ import {
   useEffect, useMemo, useState,
 } from 'react';
 import { Provider } from 'react-redux';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 import LoadingOverlay from '../modules/overlay/views/LoadingOverlay';
 import EnlargedProductImageCarouselModal from '../modules/products/views/EnlargedProductImageCarouselModal';
 import StatusModal from '../modules/status/views/StatusModal';
@@ -49,6 +53,7 @@ const RootLayout:React.FC = ({ children }) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [mode, setMode] = useState<PaletteMode>('light');
   const [displayTheme, setDisplayTheme] = useState<modeType>('system');
+  const queryClient = new QueryClient();
 
   const theme = useMemo(() => createTheme({
     palette: {
@@ -154,10 +159,12 @@ const RootLayout:React.FC = ({ children }) => {
         >
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Provider store={store}>
-              {children}
-              <StatusModal />
-              <LoadingOverlay />
-              <EnlargedProductImageCarouselModal />
+              <QueryClientProvider client={queryClient}>
+                {children}
+                <StatusModal />
+                <LoadingOverlay />
+                <EnlargedProductImageCarouselModal />
+              </QueryClientProvider>
             </Provider>
           </LocalizationProvider>
         </SnackbarProvider>

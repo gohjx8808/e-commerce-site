@@ -9,13 +9,13 @@ import React, {
   FC, ReactNode, Suspense, useEffect,
 } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useAppSelector } from '../hooks';
 import Footer from '../modules/Footer';
 import MenuBar from '../modules/MenuBar';
 import ScrollTop from '../sharedComponents/ScrollTop';
 import routeNames from '../utils/routeNames';
 import HomeBanner from '../modules/home/HomeBanner';
 import { isSSR } from '../utils/constants';
+import { currentUserDetailStorageKey } from '../modules/auth/src/authConstants';
 
 interface MainLayoutOwnProps{
   pageBannerTitle?:string,
@@ -27,15 +27,15 @@ const MainLayout:FC<MainLayoutOwnProps> = (props) => {
   const {
     children, pageBannerTitle, homeCarouselBanner,
   } = props;
-  const currentUserDetail = useAppSelector((state) => state.auth.currentUser);
 
   useEffect(() => {
-    if (!isSSR && window.location.pathname === routeNames.account) {
-      if (currentUserDetail.uid === '') {
+    if (window.location.pathname === routeNames.account) {
+      const currentUserDetail = localStorage.getItem(currentUserDetailStorageKey);
+      if (!currentUserDetail) {
         navigate('/');
       }
     }
-  }, [currentUserDetail.uid]);
+  }, []);
 
   return (
     <>

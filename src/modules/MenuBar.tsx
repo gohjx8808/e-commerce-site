@@ -1,44 +1,55 @@
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import MenuIcon from '@mui/icons-material/Menu';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import SearchIcon from '@mui/icons-material/Search';
-import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import Badge from '@mui/material/Badge';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
-import { navigate } from 'gatsby';
-import React, { useContext, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from '../hooks';
-import ElevationScroll from '../sharedComponents/ElevationScroll';
-import StyledAppbar from '../styledComponents/drawer/StyledAppbar';
-import { SearchContainer, SearchIconWrapper, SearchInputBase } from '../styledComponents/search';
-import StyledMenuItem from '../styledComponents/StyledListItem';
-import DarkModeContext from '../utils/DarkModeContext';
-import routeNames from '../utils/routeNames';
-import { toggleSignOutConfirmationModal } from './auth/src/authReducer';
-import SignOutConfirmationModal from './auth/views/SignOutConfirmationModal';
-import CustomDesktopDrawer from './drawer/CustomDesktopDrawer';
-import CustomMobileDrawer from './drawer/CustomMobileDrawer';
-import { updateProductFilterKeyword } from './products/src/productReducers';
-import { isSSR } from '../utils/constants';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import MenuIcon from "@mui/icons-material/Menu";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import SearchIcon from "@mui/icons-material/Search";
+import SettingsBrightnessIcon from "@mui/icons-material/SettingsBrightness";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import { navigate } from "gatsby";
+import React, { useContext, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from "../hooks";
+import ElevationScroll from "../sharedComponents/ElevationScroll";
+import StyledAppbar from "../styledComponents/drawer/StyledAppbar";
+import {
+  SearchContainer,
+  SearchIconWrapper,
+  SearchInputBase,
+} from "../styledComponents/search";
+import StyledMenuItem from "../styledComponents/StyledListItem";
+import DarkModeContext from "../utils/DarkModeContext";
+import routeNames from "../utils/routeNames";
+import { toggleSignOutConfirmationModal } from "./auth/src/authReducer";
+import SignOutConfirmationModal from "./auth/views/SignOutConfirmationModal";
+import CustomDesktopDrawer from "./drawer/CustomDesktopDrawer";
+import CustomMobileDrawer from "./drawer/CustomMobileDrawer";
+import { updateProductFilterKeyword } from "./products/src/productReducers";
+import { isSSR } from "../utils/constants";
+import { currentUserDetailStorageKey } from "./auth/src/authConstants";
 
 const MenuBar = () => {
-  const pathname = (!isSSR && window.location.pathname) || '';
+  const pathname = (!isSSR && window.location.pathname) || "";
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [mobileMoreAnchor, setMobileMoreAnchor] = useState<null | HTMLElement>(null);
-  const currentUserDetail = useAppSelector((state) => state.auth.currentUser);
-  const shoppingCartItem = useAppSelector((state) => state.product.shoppingCartItem);
+  const [mobileMoreAnchor, setMobileMoreAnchor] = useState<null | HTMLElement>(
+    null
+  );
+  const currentUserDetail = JSON.parse(
+    String(localStorage.getItem(currentUserDetailStorageKey))
+  );
+  const shoppingCartItem = useAppSelector(
+    (state) => state.product.shoppingCartItem
+  );
   const [totalQuantity, setTotalQuantity] = useState(0);
   const dispatch = useAppDispatch();
   const isXsView = useXsDownMediaQuery();
@@ -67,53 +78,48 @@ const MenuBar = () => {
     dispatch(toggleSignOutConfirmationModal(true));
   };
 
-  const mobileMenuId = 'mobile-more';
+  const mobileMenuId = "mobile-more";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchor}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+      transformOrigin={{ vertical: "top", horizontal: "center" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {currentUserDetail.fullName !== ''
-        ? (
-          <StyledMenuItem disableRipple>
-            <Grid container justifyContent="center" alignItems="center">
-              <Typography>{`Welcome, ${currentUserDetail.fullName.split(' ')[0]}`}</Typography>
-            </Grid>
+      {currentUserDetail ? (
+        <StyledMenuItem disableRipple>
+          <Grid container justifyContent="center" alignItems="center">
+            <Typography>{`Welcome, ${
+              currentUserDetail.fullName.split(" ")[0]
+            }`}</Typography>
+          </Grid>
+        </StyledMenuItem>
+      ) : (
+        <div>
+          <StyledMenuItem onClick={() => navigate(routeNames.login)}>
+            <Button color="inherit">Login</Button>
           </StyledMenuItem>
-        ) : (
-          <div>
-            <StyledMenuItem onClick={() => navigate(routeNames.login)}>
-              <Button color="inherit">Login</Button>
-            </StyledMenuItem>
-            <StyledMenuItem onClick={() => navigate(routeNames.signUp)}>
-              <Button color="inherit">Sign Up</Button>
-            </StyledMenuItem>
-          </div>
-        )}
-      {currentUserDetail.fullName !== '' && (
+          <StyledMenuItem onClick={() => navigate(routeNames.signUp)}>
+            <Button color="inherit">Sign Up</Button>
+          </StyledMenuItem>
+        </div>
+      )}
+      {currentUserDetail && (
         <div>
           <StyledMenuItem
             onClick={() => navigate(routeNames.account)}
             selected={pathname === routeNames.account}
           >
-            <IconButton
-              aria-label="account"
-              color="inherit"
-            >
+            <IconButton aria-label="account" color="inherit">
               <AccountCircleIcon />
             </IconButton>
             <Typography>Profile</Typography>
           </StyledMenuItem>
           <StyledMenuItem onClick={promptSignOut}>
-            <IconButton
-              aria-label="logout"
-              color="inherit"
-            >
+            <IconButton aria-label="logout" color="inherit">
               <ExitToAppIcon />
             </IconButton>
             <Typography>Logout</Typography>
@@ -124,7 +130,7 @@ const MenuBar = () => {
   );
 
   const onChangeProductFilterKeyword = (
-    event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     dispatch(updateProductFilterKeyword(event.target.value));
   };
@@ -141,8 +147,8 @@ const MenuBar = () => {
           <Toolbar>
             <IconButton
               sx={{
-                marginRight: '36px',
-                ...(drawerOpen && { display: 'none' }),
+                marginRight: "36px",
+                ...(drawerOpen && { display: "none" }),
               }}
               color="inherit"
               aria-label="open drawer"
@@ -151,8 +157,10 @@ const MenuBar = () => {
               <MenuIcon />
             </IconButton>
             {!(isXsView && pathname === routeNames.products) && (
-              <Button color="inherit" onClick={() => navigate('/')}>
-                <Typography variant="h6" sx={{ textTransform: 'none' }}>YJ Art Journal</Typography>
+              <Button color="inherit" onClick={() => navigate("/")}>
+                <Typography variant="h6" sx={{ textTransform: "none" }}>
+                  YJ Art Journal
+                </Typography>
               </Button>
             )}
             {pathname === routeNames.products && (
@@ -162,51 +170,72 @@ const MenuBar = () => {
                 </SearchIconWrapper>
                 <SearchInputBase
                   placeholder="Search…"
-                  inputProps={{ 'aria-label': 'search' }}
+                  inputProps={{ "aria-label": "search" }}
                   onChange={onChangeProductFilterKeyword}
                 />
               </SearchContainer>
             )}
             <Box flexGrow={1} />
-            {displayTheme === 'system' && (
+            {displayTheme === "system" && (
               <Tooltip title="System preference mode">
-                <IconButton onClick={() => toggleTheme('light')} color="inherit">
+                <IconButton
+                  onClick={() => toggleTheme("light")}
+                  color="inherit"
+                >
                   <SettingsBrightnessIcon />
                 </IconButton>
               </Tooltip>
             )}
-            {displayTheme === 'light' && (
+            {displayTheme === "light" && (
               <Tooltip title="Light mode">
-                <IconButton onClick={() => toggleTheme('dark')} color="inherit">
+                <IconButton onClick={() => toggleTheme("dark")} color="inherit">
                   <WbSunnyIcon />
                 </IconButton>
               </Tooltip>
             )}
-            {displayTheme === 'dark' && (
+            {displayTheme === "dark" && (
               <Tooltip title="Dark mode">
-                <IconButton onClick={() => toggleTheme('system')} color="inherit">
+                <IconButton
+                  onClick={() => toggleTheme("system")}
+                  color="inherit"
+                >
                   <DarkModeIcon />
                 </IconButton>
               </Tooltip>
             )}
-            <Box display={{ xs: 'none', md: 'flex' }} alignItems="center">
-              {currentUserDetail.fullName !== ''
-                ? (
-                  <Box marginRight={2}>
-                    <Typography>{`Welcome, ${currentUserDetail.fullName.split(' ')[0]}`}</Typography>
-                  </Box>
-                ) : (
-                  <>
-                    <Button color="inherit" onClick={() => navigate(routeNames.login)}>Login</Button>
-                    <Button color="inherit" onClick={() => navigate(routeNames.signUp)}>Sign Up</Button>
-                  </>
-                )}
-              <IconButton aria-label="shopping cart" color="inherit" onClick={() => navigate(routeNames.cart)}>
+            <Box display={{ xs: "none", md: "flex" }} alignItems="center">
+              {currentUserDetail ? (
+                <Box marginRight={2}>
+                  <Typography>{`Welcome, ${
+                    currentUserDetail.fullName.split(" ")[0]
+                  }`}</Typography>
+                </Box>
+              ) : (
+                <>
+                  <Button
+                    color="inherit"
+                    onClick={() => navigate(routeNames.login)}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    color="inherit"
+                    onClick={() => navigate(routeNames.signUp)}
+                  >
+                    Sign Up
+                  </Button>
+                </>
+              )}
+              <IconButton
+                aria-label="shopping cart"
+                color="inherit"
+                onClick={() => navigate(routeNames.cart)}
+              >
                 <Badge badgeContent={totalQuantity} color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-              {currentUserDetail.fullName !== '' && (
+              {currentUserDetail && (
                 <>
                   <IconButton
                     aria-label="account"
@@ -225,8 +254,12 @@ const MenuBar = () => {
                 </>
               )}
             </Box>
-            <Box display={{ xs: 'flex', md: 'none' }}>
-              <IconButton aria-label="shopping cart" color="inherit" onClick={() => navigate(routeNames.cart)}>
+            <Box display={{ xs: "flex", md: "none" }}>
+              <IconButton
+                aria-label="shopping cart"
+                color="inherit"
+                onClick={() => navigate(routeNames.cart)}
+              >
                 <Badge badgeContent={totalQuantity} color="secondary">
                   <ShoppingCartIcon />
                 </Badge>
@@ -245,9 +278,17 @@ const MenuBar = () => {
         </StyledAppbar>
       </ElevationScroll>
       {renderMobileMenu}
-      {!isXsView
-        ? <CustomDesktopDrawer drawerOpen={drawerOpen} handleDrawerClose={toggleDrawer} />
-        : <CustomMobileDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />}
+      {!isXsView ? (
+        <CustomDesktopDrawer
+          drawerOpen={drawerOpen}
+          handleDrawerClose={toggleDrawer}
+        />
+      ) : (
+        <CustomMobileDrawer
+          drawerOpen={drawerOpen}
+          toggleDrawer={toggleDrawer}
+        />
+      )}
       <SignOutConfirmationModal />
     </>
   );
