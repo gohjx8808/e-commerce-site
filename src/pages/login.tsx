@@ -5,21 +5,17 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { graphql, Link as GatsbyLink, navigate, useStaticQuery } from "gatsby";
+import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { useAppDispatch } from "../hooks";
 import AuthLayout from "../layouts/AuthLayout";
 import {
-  getCurrentUserDetails,
-  signIn,
-  signOut,
+  signIn
 } from "../modules/auth/src/authApis";
-import { currentUserDetailStorageKey } from "../modules/auth/src/authConstants";
+import { useUserDetails } from "../modules/auth/src/authQueries";
 import { loginSchema } from "../modules/auth/src/authSchema";
-import { toggleLoadingOverlay } from "../modules/overlay/src/overlayReducer";
 import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
 import ControlledPasswordInput from "../sharedComponents/inputs/ControlledPasswordInput";
 import ControlledTextInput from "../sharedComponents/inputs/ControlledTextInput";
@@ -38,7 +34,6 @@ const Login = () => {
   `);
 
   const image = getImage(data.file);
-  const dispatch = useAppDispatch();
 
   const {
     control,
@@ -48,37 +43,13 @@ const Login = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  const { mutate: logout } = useMutation("signOut", signOut, {
-    onSuccess: () => localStorage.clear(),
-  });
-
-  const { mutate: getUserDetails } = useMutation(
-    "getCurrentUserDetails",
-    getCurrentUserDetails,
-    {
-      onSuccess: (response, payload) => {
-        const userDetails: auth.userDetails = response.val();
-        const storedData: auth.currentUserDetails = {
-          ...userDetails,
-          uid: payload,
-        };
-        if (userDetails.roles.customer) {
-          localStorage.setItem(
-            currentUserDetailStorageKey,
-            JSON.stringify(storedData)
-          );
-          dispatch(toggleLoadingOverlay(false));
-          navigate("/");
-        } else {
-          logout();
-          throw new Error("No permission");
-        }
-      },
-    }
-  );
+  const { refetch: getUserDetails } = useUserDetails();
 
   const { mutate: loginIn } = useMutation("login", signIn, {
-    onSuccess: (response) => getUserDetails(response.user?.uid || ""),
+    onSuccess: (response) => {
+      localStorage.setItem("uid", response.user?.uid || "");
+      getUserDetails();
+    },
   });
 
   const submitLogin = (hookData: auth.submitSignInPayload) => {
