@@ -1,7 +1,7 @@
 import { navigate } from "gatsby";
 import { useMutation, useQuery } from "react-query";
 import { useAppDispatch } from "../../../hooks";
-import { currentUserDetailStorageKey } from "./authConstants";
+import { currentUserDetailStorageKey, uidStorageKey } from "./authConstants";
 import { getCurrentUserDetails, signOut } from "./authApis";
 import { toggleLoadingOverlay } from "../../overlay/src/overlayReducer";
 import {
@@ -11,7 +11,6 @@ import {
   toggleStatusModal,
 } from "../../status/src/statusReducer";
 
-// eslint-disable-next-line import/prefer-default-export
 export const useLogout = () =>
   useMutation("signOut", signOut, {
     onSuccess: () => localStorage.clear(),
@@ -24,7 +23,7 @@ export const useUserDetails = () => {
   return useQuery(
     "getCurrentUserDetails",
     async () => {
-      const uid = localStorage.getItem("uid") || "";
+      const uid = localStorage.getItem(uidStorageKey) || "";
       const response = await getCurrentUserDetails(uid);
 
       return response.val();

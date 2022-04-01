@@ -14,6 +14,7 @@ import AuthLayout from "../layouts/AuthLayout";
 import {
   signIn
 } from "../modules/auth/src/authApis";
+import { uidStorageKey } from "../modules/auth/src/authConstants";
 import { useUserDetails } from "../modules/auth/src/authQueries";
 import { loginSchema } from "../modules/auth/src/authSchema";
 import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
@@ -47,7 +48,7 @@ const Login = () => {
 
   const { mutate: loginIn } = useMutation("login", signIn, {
     onSuccess: (response) => {
-      localStorage.setItem("uid", response.user?.uid || "");
+      localStorage.setItem(uidStorageKey, response.user?.uid || "");
       getUserDetails();
     },
   });

@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
-export const currentUserDetailStorageKey = 'currentUser';
+export const currentUserDetailStorageKey = "currentUser";
+export const uidStorageKey = "uid";
