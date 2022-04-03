@@ -1,146 +1,155 @@
-import AdapterDayjs from '@mui/lab/AdapterDayjs';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { PaletteMode } from '@mui/material';
-import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { SnackbarProvider } from 'notistack';
-import * as React from 'react';
+import AdapterDayjs from "@mui/lab/AdapterDayjs";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { PaletteMode } from "@mui/material";
 import {
-  useEffect, useMemo, useState,
-} from 'react';
-import { Provider } from 'react-redux';
-import {
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query';
-import LoadingOverlay from '../modules/overlay/views/LoadingOverlay';
-import EnlargedProductImageCarouselModal from '../modules/products/views/EnlargedProductImageCarouselModal';
-import StatusModal from '../modules/status/views/StatusModal';
-import CustomSnackbar from '../sharedComponents/CustomSnackbar';
-import store from '../store';
-import DarkModeContext from '../utils/DarkModeContext';
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+} from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { SnackbarProvider } from "notistack";
+import * as React from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "react-query";
+import LoadingOverlay from "../modules/overlay/views/LoadingOverlay";
+import EnlargedProductImageCarouselModal from "../modules/products/views/EnlargedProductImageCarouselModal";
+import StatusModal from "../modules/status/views/StatusModal";
+import CustomSnackbar from "../sharedComponents/CustomSnackbar";
+import store from "../store";
+import DarkModeContext from "../utils/DarkModeContext";
 
-declare module '@mui/material/AppBar' {
+declare module "@mui/material/AppBar" {
   interface AppBarPropsColorOverrides {
     customPrimary: true;
   }
 }
 
-declare module '@mui/material/Button' {
+declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     primaryButton: true;
-    whiteButton:true;
+    whiteButton: true;
   }
 }
 
-declare module '@mui/material/styles' {
+declare module "@mui/material/styles" {
   interface Palette {
-    customSecondary: Palette['primary'];
-    customPrimary: Palette['primary'];
-    primaryButton:Palette['primary'];
+    customSecondary: Palette["primary"];
+    customPrimary: Palette["primary"];
+    primaryButton: Palette["primary"];
   }
 
   interface PaletteOptions {
-    customSecondary: PaletteOptions['primary'];
-    customPrimary: PaletteOptions['primary'];
-    primaryButton: PaletteOptions['primary'];
+    customSecondary: PaletteOptions["primary"];
+    customPrimary: PaletteOptions["primary"];
+    primaryButton: PaletteOptions["primary"];
   }
 }
 
-type modeType = PaletteMode | 'system';
+type modeType = PaletteMode | "system";
 
-const RootLayout:React.FC = ({ children }) => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [mode, setMode] = useState<PaletteMode>('light');
-  const [displayTheme, setDisplayTheme] = useState<modeType>('system');
-  const queryClient = new QueryClient();
+const RootLayout: React.FC = ({ children }) => {
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const [mode, setMode] = useState<PaletteMode>("light");
+  const [displayTheme, setDisplayTheme] = useState<modeType>("system");
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { refetchOnMount: false },
+    },
+  });
 
-  const theme = useMemo(() => createTheme({
-    palette: {
-      mode,
-      ...(mode === 'light' ? {
-        primary: {
-          main: '#f5dbc9',
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+          ...(mode === "light"
+            ? {
+                primary: {
+                  main: "#f5dbc9",
+                },
+                error: {
+                  main: "#EF9A9A",
+                },
+                secondary: {
+                  main: "#B67B5E",
+                },
+                text: {
+                  primary: "#6b3e2e",
+                },
+                customPrimary: {
+                  main: "#f5dbc9",
+                  contrastText: "#38261d",
+                },
+                customSecondary: {
+                  main: "#B67B5E",
+                },
+                primaryButton: {
+                  main: "#f5dbc9",
+                  contrastText: "black",
+                },
+                whiteButton: {
+                  main: "white",
+                  contrastText: "#B67B5E",
+                },
+              }
+            : {
+                primary: {
+                  main: "#f5dbc9",
+                },
+                error: {
+                  main: "#EF9A9A",
+                },
+                secondary: {
+                  main: "#B67B5E",
+                },
+                text: {
+                  primary: "#f5dbc9",
+                },
+                customPrimary: {
+                  main: "#292421",
+                  contrastText: "#f5dbc9",
+                },
+                customSecondary: {
+                  main: "#7A6B62",
+                },
+                primaryButton: {
+                  main: "#B67B5E",
+                  contrastText: "#fff",
+                },
+                whiteButton: {
+                  main: "black",
+                  contrastText: "#f5dbc9",
+                },
+              }),
         },
-        error: {
-          main: '#EF9A9A',
+        typography: {
+          fontFamily: "Amaranth",
         },
-        secondary: {
-          main: '#B67B5E',
-        },
-        text: {
-          primary: '#6b3e2e',
-        },
-        customPrimary: {
-          main: '#f5dbc9',
-          contrastText: '#38261d',
-        },
-        customSecondary: {
-          main: '#B67B5E',
-        },
-        primaryButton: {
-          main: '#f5dbc9',
-          contrastText: 'black',
-        },
-        whiteButton: {
-          main: 'white',
-          contrastText: '#B67B5E',
-        },
-      } : {
-        primary: {
-          main: '#f5dbc9',
-        },
-        error: {
-          main: '#EF9A9A',
-        },
-        secondary: {
-          main: '#B67B5E',
-        },
-        text: {
-          primary: '#f5dbc9',
-        },
-        customPrimary: {
-          main: '#292421',
-          contrastText: '#f5dbc9',
-        },
-        customSecondary: {
-          main: '#7A6B62',
-        },
-        primaryButton: {
-          main: '#B67B5E',
-          contrastText: '#fff',
-        },
-        whiteButton: {
-          main: 'black',
-          contrastText: '#f5dbc9',
+        components: {
+          MuiAppBar: {
+            defaultProps: {
+              enableColorOnDark: true,
+            },
+          },
         },
       }),
-    },
-    typography: {
-      fontFamily: 'Amaranth',
-    },
-    components: {
-      MuiAppBar: {
-        defaultProps: {
-          enableColorOnDark: true,
-        },
-      },
-    },
-  }), [mode]);
+    [mode]
+  );
 
   useEffect(() => {
-    if (displayTheme === 'system') {
+    if (displayTheme === "system") {
       if (prefersDarkMode) {
-        setMode('dark');
+        setMode("dark");
       } else {
-        setMode('light');
+        setMode("light");
       }
     } else {
       setMode(displayTheme);
     }
   }, [prefersDarkMode, displayTheme]);
 
-  const toggleTheme = (selectedMode:modeType) => {
+  const toggleTheme = (selectedMode: modeType) => {
     setDisplayTheme(selectedMode);
   };
 
@@ -149,8 +158,8 @@ const RootLayout:React.FC = ({ children }) => {
       <ThemeProvider theme={responsiveFontSizes(theme)}>
         <SnackbarProvider
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
+            vertical: "bottom",
+            horizontal: "left",
           }}
           autoHideDuration={3000}
           content={(key, message) => (

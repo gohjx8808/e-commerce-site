@@ -36,7 +36,7 @@ import CustomDesktopDrawer from "./drawer/CustomDesktopDrawer";
 import CustomMobileDrawer from "./drawer/CustomMobileDrawer";
 import { updateProductFilterKeyword } from "./products/src/productReducers";
 import { isSSR } from "../utils/constants";
-import { currentUserDetailStorageKey } from "./auth/src/authConstants";
+import { useUserDetails } from "./auth/src/authQueries";
 
 const MenuBar = () => {
   const pathname = (!isSSR && window.location.pathname) || "";
@@ -44,9 +44,7 @@ const MenuBar = () => {
   const [mobileMoreAnchor, setMobileMoreAnchor] = useState<null | HTMLElement>(
     null
   );
-  const currentUserDetail = JSON.parse(
-    String(localStorage.getItem(currentUserDetailStorageKey))
-  );
+  const { data: currentUserDetail } = useUserDetails();
   const shoppingCartItem = useAppSelector(
     (state) => state.product.shoppingCartItem
   );

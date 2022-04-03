@@ -1,22 +1,22 @@
 import { navigate } from "gatsby";
 import { useMutation, useQuery } from "react-query";
 import { useAppDispatch } from "../../../hooks";
-import { currentUserDetailStorageKey, uidStorageKey } from "./authConstants";
-import { getCurrentUserDetails, signOut } from "./authApis";
 import { toggleLoadingOverlay } from "../../overlay/src/overlayReducer";
 import {
-  updateStatusTitle,
-  updateStatusMsg,
-  toggleSuccess,
   toggleStatusModal,
+  toggleSuccess,
+  updateStatusMsg,
+  updateStatusTitle,
 } from "../../status/src/statusReducer";
+import { getCurrentUserDetails, signOut } from "./authApis";
+import { uidStorageKey } from "./authConstants";
 
 export const useLogout = () =>
   useMutation("signOut", signOut, {
     onSuccess: () => localStorage.clear(),
   });
 
-export const useUserDetails = () => {
+export const useUserDetails = (onAdditionalSuccess?: () => void) => {
   const dispatch = useAppDispatch();
   const { mutate: logout } = useLogout();
 
@@ -33,12 +33,10 @@ export const useUserDetails = () => {
         try {
           const userDetails: auth.userDetails = response;
           if (userDetails.roles.customer) {
-            localStorage.setItem(
-              currentUserDetailStorageKey,
-              JSON.stringify(userDetails)
-            );
             dispatch(toggleLoadingOverlay(false));
-            navigate("/");
+            if (onAdditionalSuccess) {
+              onAdditionalSuccess();
+            }
           } else {
             logout();
             throw new Error("No permission");
@@ -51,7 +49,7 @@ export const useUserDetails = () => {
           dispatch(toggleStatusModal(true));
         }
       },
-      enabled: false,
+      enabled: !!localStorage.getItem(uidStorageKey),
     }
   );
 };

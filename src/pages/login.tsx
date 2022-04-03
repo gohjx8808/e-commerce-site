@@ -5,15 +5,13 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
+import { graphql, Link as GatsbyLink, navigate, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import AuthLayout from "../layouts/AuthLayout";
-import {
-  signIn
-} from "../modules/auth/src/authApis";
+import { signIn } from "../modules/auth/src/authApis";
 import { uidStorageKey } from "../modules/auth/src/authConstants";
 import { useUserDetails } from "../modules/auth/src/authQueries";
 import { loginSchema } from "../modules/auth/src/authSchema";
@@ -44,7 +42,11 @@ const Login = () => {
     resolver: yupResolver(loginSchema),
   });
 
-  const { refetch: getUserDetails } = useUserDetails();
+  const navigateToDashboard = () => {
+    navigate("/");
+  };
+
+  const { refetch: getUserDetails } = useUserDetails(navigateToDashboard);
 
   const { mutate: loginIn } = useMutation("login", signIn, {
     onSuccess: (response) => {
