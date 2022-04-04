@@ -1,25 +1,31 @@
-import CakeIcon from '@mui/icons-material/Cake';
-import EmailIcon from '@mui/icons-material/Email';
-import PersonIcon from '@mui/icons-material/Person';
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
-import WcIcon from '@mui/icons-material/Wc';
-import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid';
-import dayjs from 'dayjs';
-import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { toggleEditAccDetailModal } from '../src/accountReducer';
-import EditAccDetailModal from './EditAccDetailModal';
-import SingleAccData from './SingleAccData';
+import CakeIcon from "@mui/icons-material/Cake";
+import EmailIcon from "@mui/icons-material/Email";
+import PersonIcon from "@mui/icons-material/Person";
+import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
+import WcIcon from "@mui/icons-material/Wc";
+import Skeleton from "@mui/material/Skeleton";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import dayjs from "dayjs";
+import React from "react";
+import { useAppDispatch } from "../../../hooks";
+import { useUserDetails } from "../../auth/src/authQueries";
+import { toggleEditAccDetailModal } from "../src/accountReducer";
+import EditAccDetailModal from "./EditAccDetailModal";
+import SingleAccData from "./SingleAccData";
 
-interface stringDict{
-  [key:string]:string
+interface stringDict {
+  [key: string]: string;
 }
 
 const AccountDetails = () => {
-  const currentUserDetails = useAppSelector((state) => state.auth.currentUser);
-  const genderMap:stringDict = { F: 'Female', M: 'Male' };
+  const { data: currentUserDetails, isLoading } = useUserDetails();
+  const genderMap: stringDict = { F: "Female", M: "Male" };
   const dispatch = useAppDispatch();
+
+  if (isLoading) {
+    return <Skeleton variant="rectangular" width="100%" height={200} />;
+  }
 
   return (
     <Grid container justifyContent="center" alignItems="center" marginY={3}>
@@ -47,7 +53,7 @@ const AccountDetails = () => {
           />
           <SingleAccData
             label="Date of Birth"
-            data={dayjs(currentUserDetails.dob).format('DD MMMM YYYY')}
+            data={dayjs(currentUserDetails.dob).format("DD MMMM YYYY")}
             Icon={<CakeIcon />}
           />
           <Grid item xs={6} />
