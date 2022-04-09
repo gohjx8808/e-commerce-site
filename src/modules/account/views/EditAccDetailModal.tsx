@@ -1,61 +1,69 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import EmailIcon from '@mui/icons-material/Email';
-import PersonIcon from '@mui/icons-material/Person';
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Grid from '@mui/material/Grid';
-import InputAdornment from '@mui/material/InputAdornment';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import ControlledDatePicker from '../../../sharedComponents/inputs/ControlledDatePicker';
-import ControlledPicker from '../../../sharedComponents/inputs/ControlledPicker';
-import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
-import DialogActionButtonsContainer from '../../../styledComponents/DialogActionButtonsContainer';
-import { submitEditAccDetailsAction, toggleEditAccDetailModal } from '../src/accountReducer';
-import { editAccountSchema } from '../src/accountScheme';
+import { yupResolver } from "@hookform/resolvers/yup";
+import EmailIcon from "@mui/icons-material/Email";
+import PersonIcon from "@mui/icons-material/Person";
+import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
+import Button from "@mui/material/Button";
+import Dialog, { DialogProps } from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Grid from "@mui/material/Grid";
+import InputAdornment from "@mui/material/InputAdornment";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import ControlledDatePicker from "../../../sharedComponents/inputs/ControlledDatePicker";
+import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker";
+import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
+import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
+import {
+  submitEditAccDetailsAction,
+  toggleEditAccDetailModal,
+} from "../src/accountReducer";
+import { editAccountSchema } from "../src/accountScheme";
 
-const EditAccDetailModal = () => {
+interface editAccDetailModalProps extends DialogProps{
+  toggleModal:()=>void
+}
+
+const EditAccDetailModal = (props: editAccDetailModalProps) => {
+  const { toggleModal } = props;
   const dispatch = useAppDispatch();
-  const isEditAccDetailModalOpen = useAppSelector(
-    (state) => state.account.isEditAccDetailModalDisplay,
-  );
   const currentUserDetails = useAppSelector((state) => state.auth.currentUser);
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(editAccountSchema),
   });
 
-  const closeModal = () => {
-    dispatch(toggleEditAccDetailModal(false));
-  };
+  const genderOptions = [
+    { value: "M", label: "Male" },
+    { value: "F", label: "Female" },
+  ];
 
-  const genderOptions = [{ value: 'M', label: 'Male' }, { value: 'F', label: 'Female' }];
-
-  const onEditSubmit = (hookData:account.rawSubmitEditAccDetailPayload) => {
-    const processedPayload:account.submitEditAccDetailPayload = {
-      ...hookData, gender: hookData.gender.value,
+  const onEditSubmit = (hookData: account.rawSubmitEditAccDetailPayload) => {
+    const processedPayload: account.submitEditAccDetailPayload = {
+      ...hookData,
+      gender: hookData.gender.value,
     };
     dispatch(submitEditAccDetailsAction(processedPayload));
   };
 
   return (
-    <Dialog
-      open={isEditAccDetailModalOpen}
-      onClose={closeModal}
-      aria-labelledby="editAccDetail"
-      fullWidth
-      maxWidth="md"
-    >
+    <Dialog {...props} aria-labelledby="editAccDetail" fullWidth maxWidth="md">
       <Grid container justifyContent="center">
         <DialogTitle id="editAccDetail">Edit Account Details</DialogTitle>
       </Grid>
       <form onSubmit={handleSubmit(onEditSubmit)}>
         <DialogContent>
-          <Grid container justifyContent="center" alignItems="center" spacing={2}>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+          >
             <Grid item xs={12}>
               <ControlledTextInput
                 control={control}
@@ -63,7 +71,11 @@ const EditAccDetailModal = () => {
                 lightbg={1}
                 label="Full Name"
                 defaultinput={currentUserDetails.fullName}
-                startAdornment={<InputAdornment position="start"><PersonIcon /></InputAdornment>}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <PersonIcon />
+                  </InputAdornment>
+                }
                 formerror={errors.fullName}
               />
             </Grid>
@@ -74,7 +86,11 @@ const EditAccDetailModal = () => {
                 lightbg={1}
                 label="Email"
                 defaultinput={currentUserDetails.email}
-                startAdornment={<InputAdornment position="start"><EmailIcon /></InputAdornment>}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <EmailIcon />
+                  </InputAdornment>
+                }
                 formerror={errors.email}
               />
             </Grid>
@@ -85,7 +101,11 @@ const EditAccDetailModal = () => {
                 lightbg={1}
                 label="Phone Number"
                 defaultinput={currentUserDetails.phoneNumber}
-                startAdornment={<InputAdornment position="start"><PhoneIphoneIcon /></InputAdornment>}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <PhoneIphoneIcon />
+                  </InputAdornment>
+                }
                 formerror={errors.phoneNumber}
               />
             </Grid>
@@ -97,7 +117,7 @@ const EditAccDetailModal = () => {
                 label="Gender"
                 options={genderOptions}
                 defaultValue={genderOptions.find(
-                  (gender) => gender.value === currentUserDetails.gender,
+                  (gender) => gender.value === currentUserDetails.gender
                 )}
                 error={errors.gender}
               />
@@ -115,7 +135,7 @@ const EditAccDetailModal = () => {
           </Grid>
         </DialogContent>
         <DialogActionButtonsContainer>
-          <Button onClick={closeModal} color="secondary">
+          <Button onClick={toggleModal} color="secondary">
             Cancel
           </Button>
           <Button color="secondary" variant="contained" type="submit">
