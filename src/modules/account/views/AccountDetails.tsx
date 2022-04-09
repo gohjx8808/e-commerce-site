@@ -21,13 +21,13 @@ const AccountDetails = () => {
   const { data: currentUserDetails, isLoading } = useUserDetails();
   const genderMap: stringDict = { F: "Female", M: "Male" };
 
-  if (isLoading) {
-    return <Skeleton variant="rectangular" width="100%" height={200} />;
-  }
-
   const toggleEditAccDetailModal = () => {
     setEditAccDetailModalOpen(!isEditAccDetailModalOpen);
   };
+
+  if (isLoading || !currentUserDetails) {
+    return <Skeleton variant="rectangular" width="100%" height={200} />;
+  }
 
   return (
     <Grid container justifyContent="center" alignItems="center" marginY={3}>

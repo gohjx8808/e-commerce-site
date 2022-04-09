@@ -1,4 +1,3 @@
-import { navigate } from "gatsby";
 import { useMutation, useQuery } from "react-query";
 import { useAppDispatch } from "../../../hooks";
 import { toggleLoadingOverlay } from "../../overlay/src/overlayReducer";
@@ -11,6 +10,8 @@ import {
 import { getCurrentUserDetails, signOut } from "./authApis";
 import { uidStorageKey } from "./authConstants";
 
+export const getCurrentUserDetailsKey = "getCurrentUserDetails";
+
 export const useLogout = () =>
   useMutation("signOut", signOut, {
     onSuccess: () => localStorage.clear(),
@@ -21,12 +22,13 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
   const { mutate: logout } = useLogout();
 
   return useQuery(
-    "getCurrentUserDetails",
+    getCurrentUserDetailsKey,
     async () => {
       const uid = localStorage.getItem(uidStorageKey) || "";
       const response = await getCurrentUserDetails(uid);
 
-      return response.val();
+      const parsedResponse: auth.currentUserDetails = response.val();
+      return parsedResponse;
     },
     {
       onSuccess: (response) => {
@@ -50,6 +52,8 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
         }
       },
       enabled: !!localStorage.getItem(uidStorageKey),
+      cacheTime: Infinity,
+      staleTime: Infinity,
     }
   );
 };

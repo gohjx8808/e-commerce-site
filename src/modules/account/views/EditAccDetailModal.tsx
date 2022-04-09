@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import EmailIcon from "@mui/icons-material/Email";
 import PersonIcon from "@mui/icons-material/Person";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
-import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Dialog, { DialogProps } from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -10,25 +10,23 @@ import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
 import ControlledDatePicker from "../../../sharedComponents/inputs/ControlledDatePicker";
 import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker";
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
 import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
-import {
-  submitEditAccDetailsAction,
-  toggleEditAccDetailModal,
-} from "../src/accountReducer";
+import { uidStorageKey } from "../../auth/src/authConstants";
+import { useUserDetails } from "../../auth/src/authQueries";
+import { useEditAccDetails } from "../src/accountQueries";
 import { editAccountSchema } from "../src/accountScheme";
 
-interface editAccDetailModalProps extends DialogProps{
-  toggleModal:()=>void
+interface editAccDetailModalProps extends DialogProps {
+  toggleModal: () => void;
 }
 
 const EditAccDetailModal = (props: editAccDetailModalProps) => {
   const { toggleModal } = props;
-  const dispatch = useAppDispatch();
-  const currentUserDetails = useAppSelector((state) => state.auth.currentUser);
+  const { data: currentUserDetails } = useUserDetails();
+  const { mutate: submitEditAccDetail,isLoading } = useEditAccDetails(toggleModal);
 
   const {
     control,
@@ -44,11 +42,11 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
   ];
 
   const onEditSubmit = (hookData: account.rawSubmitEditAccDetailPayload) => {
-    const processedPayload: account.submitEditAccDetailPayload = {
-      ...hookData,
-      gender: hookData.gender.value,
+    const processedPayload = {
+      uid: localStorage.getItem(uidStorageKey)!,
+      details: { ...hookData, gender: hookData.gender.value },
     };
-    dispatch(submitEditAccDetailsAction(processedPayload));
+    submitEditAccDetail(processedPayload);
   };
 
   return (
@@ -70,7 +68,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 name="fullName"
                 lightbg={1}
                 label="Full Name"
-                defaultinput={currentUserDetails.fullName}
+                defaultinput={currentUserDetails?.fullName}
                 startAdornment={
                   <InputAdornment position="start">
                     <PersonIcon />
@@ -85,7 +83,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 name="email"
                 lightbg={1}
                 label="Email"
-                defaultinput={currentUserDetails.email}
+                defaultinput={currentUserDetails?.email}
                 startAdornment={
                   <InputAdornment position="start">
                     <EmailIcon />
@@ -100,7 +98,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 name="phoneNumber"
                 lightbg={1}
                 label="Phone Number"
-                defaultinput={currentUserDetails.phoneNumber}
+                defaultinput={currentUserDetails?.phoneNumber}
                 startAdornment={
                   <InputAdornment position="start">
                     <PhoneIphoneIcon />
@@ -117,7 +115,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 label="Gender"
                 options={genderOptions}
                 defaultValue={genderOptions.find(
-                  (gender) => gender.value === currentUserDetails.gender
+                  (gender) => gender.value === currentUserDetails?.gender
                 )}
                 error={errors.gender}
               />
@@ -128,19 +126,19 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 name="dob"
                 lightbg={1}
                 label="Date of Birth"
-                defaultdate={currentUserDetails.dob}
+                defaultdate={currentUserDetails?.dob}
                 formerror={errors.dob}
               />
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActionButtonsContainer>
-          <Button onClick={toggleModal} color="secondary">
+          <LoadingButton onClick={toggleModal} color="secondary" loading={isLoading}>
             Cancel
-          </Button>
-          <Button color="secondary" variant="contained" type="submit">
+          </LoadingButton>
+          <LoadingButton color="secondary" variant="contained" type="submit" loading={isLoading}>
             Submit
-          </Button>
+          </LoadingButton>
         </DialogActionButtonsContainer>
       </form>
     </Dialog>
