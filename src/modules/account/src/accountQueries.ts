@@ -67,6 +67,14 @@ export const useAddEditAddress = (
           }
         }
         currentAddresses.push(formData);
+      }else {
+        const editIndex = currentAddresses.findIndex(
+          (address) => address === modalData.selectedAddress
+        );
+        if (formData.defaultOption === "1") {
+          currentAddresses = removeDefaultAddress(currentAddresses);
+        }
+        currentAddresses[editIndex] = formData;
       }
       const finalPostData = {
         uid: localStorage.getItem(uidStorageKey)!,
@@ -98,7 +106,7 @@ export const useAddEditAddress = (
         dispatch(toggleSuccess(false));
         dispatch(
           updateStatusMsg(
-            "Duplicated address detected. Please add a different address."
+            "Duplicated address detected. Please use a different address."
           )
         );
         if (toggleModal) {
