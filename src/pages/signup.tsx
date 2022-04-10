@@ -11,7 +11,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import AuthLayout from "../layouts/AuthLayout";
 import { useSignUp } from "../modules/auth/src/authQueries";
-// import { submitSignUp } from '../modules/auth/src/authReducer';
 import { signupSchema } from "../modules/auth/src/authSchema";
 import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
 import ControlledDatePicker from "../sharedComponents/inputs/ControlledDatePicker";
