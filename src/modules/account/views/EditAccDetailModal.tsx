@@ -70,6 +70,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
             <Grid item sm={6} xs={12}>
               <ControlledTextInput
                 control={control}
+                disabled
                 name="email"
                 lightbg={1}
                 label="Email"
