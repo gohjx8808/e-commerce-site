@@ -34,7 +34,6 @@ declare namespace auth {
   }
 
   interface currentUserDetails {
-    uid: string;
     dob: string;
     email: string;
     fullName: string;

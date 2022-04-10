@@ -16,22 +16,18 @@ declare namespace account {
     dob: string;
   }
 
-  interface rawSubmitAddEditAddressPayload extends submitAddEditAddressPayload {
+  interface rawSubmitAddEditAddressPayload extends auth.addressData {
     state: optionsData;
   }
 
   interface submitAddEditAddressPayload {
-    fullName: string;
-    phoneNumber: string;
-    email: string;
-    addressLine1: string;
-    addressLine2: string;
-    postcode: string;
-    city: string;
-    state: string;
-    outsideMalaysiaState: string;
-    country: string;
-    defaultOption: string;
-    tag: string;
+    uid: string;
+    addressData: auth.addressData[];
+  }
+
+  interface addEditAddressModalData {
+    actionType: "Add" | "Edit" | "";
+    isModalOpen: boolean;
+    selectedAddress: auth.addressData | null;
   }
 }

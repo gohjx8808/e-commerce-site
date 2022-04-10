@@ -1,68 +1,87 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import HomeIcon from '@mui/icons-material/Home';
-import WorkIcon from '@mui/icons-material/Work';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Grid from '@mui/material/Grid';
-import InputAdornment from '@mui/material/InputAdornment';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import ControlledPicker from '../../../sharedComponents/inputs/ControlledPicker';
-import ControlledRadioButton from '../../../sharedComponents/inputs/ControlledRadioButton';
-import ControlledTextInput from '../../../sharedComponents/inputs/ControlledTextInput';
-import ControlledToggleButton from '../../../sharedComponents/inputs/ControlledToggleButton';
-import DialogActionButtonsContainer from '../../../styledComponents/DialogActionButtonsContainer';
+import { yupResolver } from "@hookform/resolvers/yup";
+import HomeIcon from "@mui/icons-material/Home";
+import WorkIcon from "@mui/icons-material/Work";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Grid from "@mui/material/Grid";
+import InputAdornment from "@mui/material/InputAdornment";
+import React, { useEffect, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { useAppDispatch } from "../../../hooks";
+import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker";
+import ControlledRadioButton from "../../../sharedComponents/inputs/ControlledRadioButton";
+import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
+import ControlledToggleButton from "../../../sharedComponents/inputs/ControlledToggleButton";
+import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
 import {
-  booleanOptions, defaultAddressData, homeColor, stateOptions, workColor,
-} from '../../../utils/constants';
-import { submitAddEditAddressAction, toggleAddressModal, updateSelectedAddress } from '../src/accountReducer';
-import { addressSchema } from '../src/accountScheme';
+  booleanOptions,
+  homeColor,
+  stateOptions,
+  workColor,
+} from "../../../utils/constants";
+import { useUserDetails } from "../../auth/src/authQueries";
+import { useAddEditAddress } from "../src/accountQueries";
+import { addressSchema } from "../src/accountScheme";
 
-const addressTag:toggleButtonOptionData[] = [
+const addressTag: toggleButtonOptionData[] = [
   {
     icon: <HomeIcon />,
-    label: 'Home',
-    value: 'Home',
+    label: "Home",
+    value: "Home",
     activeColor: homeColor,
   },
   {
     icon: <WorkIcon />,
-    label: 'Work',
-    value: 'Work',
+    label: "Work",
+    value: "Work",
     activeColor: workColor,
   },
 ];
 
-const AddressModal = () => {
+interface AddressModalProps {
+  modalData: account.addEditAddressModalData;
+  toggleModal: () => void;
+}
+
+const AddressModal = (props: AddressModalProps) => {
+  const { modalData, toggleModal } = props;
   const dispatch = useAppDispatch();
-  const isAddressModalOpen = useAppSelector((state) => state.account.isAddressModalOpen);
-  const addressActionType = useAppSelector((state) => state.account.addressActionType);
-  const selectedAddress = useAppSelector((state) => state.account.selectedAddress);
+  const selectedAddress = useMemo(
+    () => modalData.selectedAddress,
+    [modalData.selectedAddress]
+  );
+
+  const { data: currentUserDetails } = useUserDetails();
+
+  const { mutate: submitAddEditAddress } = useAddEditAddress(modalData);
+
   const {
-    control, handleSubmit, formState: { errors }, watch, setValue, reset,
+    control,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(addressSchema),
   });
 
-  const closeModal = () => {
-    dispatch(updateSelectedAddress(defaultAddressData));
-    dispatch(toggleAddressModal(false));
+  const onSubmitForm = (hookData: account.rawSubmitAddEditAddressPayload) => {
+    const parsedFormData = { ...hookData, state: hookData.state.value };
+    submitAddEditAddress(parsedFormData);
   };
 
-  const onSubmitForm = (hookData:account.rawSubmitAddEditAddressPayload) => {
-    dispatch(submitAddEditAddressAction({ ...hookData, state: hookData.state.value }));
-  };
-
-  const outsideMalaysiaState = (selectedAddress && selectedAddress.state === 'Outside Malaysia') || (watch('state') && watch('state').value === 'Outside Malaysia');
+  const outsideMalaysiaState =
+    (selectedAddress && selectedAddress.state === "Outside Malaysia") ||
+    (watch("state") && watch("state").value === "Outside Malaysia");
 
   useEffect(() => {
     if (!outsideMalaysiaState) {
-      setValue('country', 'Malaysia');
+      setValue("country", "Malaysia");
     } else {
-      setValue('country', '');
+      setValue("country", "");
     }
   }, [setValue, outsideMalaysiaState]);
 
@@ -77,8 +96,11 @@ const AddressModal = () => {
         postcode: selectedAddress.postcode,
         city: selectedAddress.city,
         state: selectedAddress.state
-          ? { label: selectedAddress.state, value: selectedAddress.state } : null,
-        outsideMalaysiaState: selectedAddress.outsideMalaysiaState ? selectedAddress.outsideMalaysiaState : '',
+          ? { label: selectedAddress.state, value: selectedAddress.state }
+          : null,
+        outsideMalaysiaState: selectedAddress.outsideMalaysiaState
+          ? selectedAddress.outsideMalaysiaState
+          : "",
         country: selectedAddress.country,
         defaultOption: selectedAddress.defaultOption,
         tag: selectedAddress.tag,
@@ -88,22 +110,25 @@ const AddressModal = () => {
 
   return (
     <Dialog
-      open={isAddressModalOpen}
-      onClose={closeModal}
+      open={modalData.isModalOpen}
+      onClose={toggleModal}
       aria-labelledby="addressActionModal"
       fullWidth
       maxWidth="md"
     >
       <Grid container justifyContent="center">
         <DialogTitle id="addressActionModal">
-          {addressActionType}
-          {' '}
-          Address
+          {modalData.actionType} Address
         </DialogTitle>
       </Grid>
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <DialogContent>
-          <Grid container justifyContent="center" alignItems="center" spacing={2}>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+          >
             <Grid item xs={12}>
               <ControlledTextInput
                 control={control}
@@ -120,11 +145,9 @@ const AddressModal = () => {
                 lightbg={1}
                 label="Phone Number"
                 formerror={errors.phoneNumber}
-                startAdornment={(
-                  <InputAdornment position="start">
-                    +
-                  </InputAdornment>
-                )}
+                startAdornment={
+                  <InputAdornment position="start">+</InputAdornment>
+                }
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -224,7 +247,7 @@ const AddressModal = () => {
           </Grid>
         </DialogContent>
         <DialogActionButtonsContainer>
-          <Button onClick={closeModal} color="secondary">
+          <Button onClick={toggleModal} color="secondary">
             Cancel
           </Button>
           <Button color="secondary" variant="contained" type="submit">
