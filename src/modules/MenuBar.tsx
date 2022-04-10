@@ -1,4 +1,5 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import MenuIcon from "@mui/icons-material/Menu";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -6,7 +7,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import SettingsBrightnessIcon from "@mui/icons-material/SettingsBrightness";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -28,15 +28,14 @@ import {
   SearchInputBase,
 } from "../styledComponents/search";
 import StyledMenuItem from "../styledComponents/StyledListItem";
+import { isSSR } from "../utils/constants";
 import DarkModeContext from "../utils/DarkModeContext";
 import routeNames from "../utils/routeNames";
-import { toggleSignOutConfirmationModal } from "./auth/src/authReducer";
+import { useUserDetails } from "./auth/src/authQueries";
 import SignOutConfirmationModal from "./auth/views/SignOutConfirmationModal";
 import CustomDesktopDrawer from "./drawer/CustomDesktopDrawer";
 import CustomMobileDrawer from "./drawer/CustomMobileDrawer";
 import { updateProductFilterKeyword } from "./products/src/productReducers";
-import { isSSR } from "../utils/constants";
-import { useUserDetails } from "./auth/src/authQueries";
 
 const MenuBar = () => {
   const pathname = (!isSSR && window.location.pathname) || "";
@@ -44,7 +43,14 @@ const MenuBar = () => {
   const [mobileMoreAnchor, setMobileMoreAnchor] = useState<null | HTMLElement>(
     null
   );
+  const [isSignOutModalOpen, setSignOutModal] = useState(false);
+
+  const toggleSignOutModal = () => {
+    setSignOutModal(!isSignOutModalOpen);
+  };
+
   const { data: currentUserDetail } = useUserDetails();
+
   const shoppingCartItem = useAppSelector(
     (state) => state.product.shoppingCartItem
   );
@@ -70,10 +76,6 @@ const MenuBar = () => {
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchor(event.currentTarget);
-  };
-
-  const promptSignOut = () => {
-    dispatch(toggleSignOutConfirmationModal(true));
   };
 
   const mobileMenuId = "mobile-more";
@@ -116,7 +118,7 @@ const MenuBar = () => {
             </IconButton>
             <Typography>Profile</Typography>
           </StyledMenuItem>
-          <StyledMenuItem onClick={promptSignOut}>
+          <StyledMenuItem onClick={toggleSignOutModal}>
             <IconButton aria-label="logout" color="inherit">
               <ExitToAppIcon />
             </IconButton>
@@ -245,7 +247,7 @@ const MenuBar = () => {
                   <IconButton
                     aria-label="logout"
                     color="inherit"
-                    onClick={promptSignOut}
+                    onClick={toggleSignOutModal}
                   >
                     <ExitToAppIcon />
                   </IconButton>
@@ -287,7 +289,10 @@ const MenuBar = () => {
           toggleDrawer={toggleDrawer}
         />
       )}
-      <SignOutConfirmationModal />
+      <SignOutConfirmationModal
+        isOpen={isSignOutModalOpen}
+        toggleModal={toggleSignOutModal}
+      />
     </>
   );
 };

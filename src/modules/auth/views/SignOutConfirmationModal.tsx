@@ -1,27 +1,26 @@
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { signOutAction, toggleSignOutConfirmationModal } from '../src/authReducer';
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import React from "react";
+import { useLogout } from "../src/authQueries";
 
-const SignOutConfirmationModal = () => {
-  const isSignOutConfirmationmodalOpen = useAppSelector(
-    (state) => state.auth.isSignOutConfirmationModalOpen,
-  );
-  const dispatch = useAppDispatch();
+interface SignOutConfirmationModalProps {
+  toggleModal: () => void;
+  isOpen: boolean;
+}
 
-  const closeModal = () => {
-    dispatch(toggleSignOutConfirmationModal(false));
-  };
+const SignOutConfirmationModal = (props: SignOutConfirmationModalProps) => {
+  const { toggleModal, isOpen } = props;
+
+  const { mutate: logout } = useLogout(toggleModal);
 
   return (
     <Dialog
-      open={isSignOutConfirmationmodalOpen}
-      onClose={closeModal}
+      open={isOpen}
+      onClose={toggleModal}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -32,10 +31,10 @@ const SignOutConfirmationModal = () => {
         </DialogContentText>
       </DialogContent>
       <DialogActions sx={{ padding: 3 }}>
-        <Button onClick={closeModal} color="secondary" variant="contained">
+        <Button onClick={toggleModal} color="secondary" variant="contained">
           Cancel
         </Button>
-        <Button onClick={() => dispatch(signOutAction())} color="secondary">
+        <Button onClick={() => logout()} color="secondary">
           Confirm
         </Button>
       </DialogActions>

@@ -21,9 +21,15 @@ import { uidStorageKey } from "./authConstants";
 
 export const getCurrentUserDetailsKey = "getCurrentUserDetails";
 
-export const useLogout = () =>
+export const useLogout = (toggleModal?: () => void) =>
   useMutation("signOut", signOut, {
-    onSuccess: () => localStorage.clear(),
+    onSuccess: () => {
+      if (toggleModal) {
+        toggleModal();
+      }
+      window.location.reload();
+      localStorage.removeItem(uidStorageKey);
+    },
   });
 
 export const useUserDetails = (onAdditionalSuccess?: () => void) => {
@@ -99,11 +105,8 @@ export const useForgotPassword = () => {
   });
 };
 
-const useSaveUserDetails = () => {
-  const dispatch = useAppDispatch();
-
-  return useMutation("saveUserDetails", saveUserDetails);
-};
+const useSaveUserDetails = () =>
+  useMutation("saveUserDetails", saveUserDetails);
 
 export const useSignUp = () => {
   const dispatch = useAppDispatch();

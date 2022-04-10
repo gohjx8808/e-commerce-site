@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
@@ -48,12 +48,16 @@ const Login = () => {
 
   const { refetch: getUserDetails } = useUserDetails(navigateToDashboard);
 
-  const { mutate: loginIn } = useMutation("login", signIn, {
-    onSuccess: (response) => {
-      localStorage.setItem(uidStorageKey, response.user?.uid || "");
-      getUserDetails();
-    },
-  });
+  const { mutate: loginIn, isLoading: loginLoading } = useMutation(
+    "login",
+    signIn,
+    {
+      onSuccess: (response) => {
+        localStorage.setItem(uidStorageKey, response.user?.uid || "");
+        getUserDetails();
+      },
+    }
+  );
 
   const submitLogin = (hookData: auth.submitSignInPayload) => {
     loginIn(hookData);
@@ -139,14 +143,15 @@ const Login = () => {
                     marginBottom={2}
                   >
                     <Grid item xs={6} sm={3}>
-                      <Button
+                      <LoadingButton
                         variant="contained"
                         color="primaryButton"
                         type="submit"
                         fullWidth
+                        loading={loginLoading}
                       >
                         Log In
-                      </Button>
+                      </LoadingButton>
                     </Grid>
                   </Grid>
                 </form>
