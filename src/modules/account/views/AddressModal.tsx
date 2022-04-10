@@ -9,7 +9,6 @@ import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { useAppDispatch } from "../../../hooks";
 import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker";
 import ControlledRadioButton from "../../../sharedComponents/inputs/ControlledRadioButton";
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
@@ -21,7 +20,6 @@ import {
   stateOptions,
   workColor,
 } from "../../../utils/constants";
-import { useUserDetails } from "../../auth/src/authQueries";
 import { useAddEditAddress } from "../src/accountQueries";
 import { addressSchema } from "../src/accountScheme";
 
@@ -47,15 +45,15 @@ interface AddressModalProps {
 
 const AddressModal = (props: AddressModalProps) => {
   const { modalData, toggleModal } = props;
-  const dispatch = useAppDispatch();
   const selectedAddress = useMemo(
     () => modalData.selectedAddress,
     [modalData.selectedAddress]
   );
 
-  const { data: currentUserDetails } = useUserDetails();
-
-  const { mutate: submitAddEditAddress } = useAddEditAddress(modalData);
+  const { mutate: submitAddEditAddress } = useAddEditAddress(
+    modalData,
+    toggleModal
+  );
 
   const {
     control,

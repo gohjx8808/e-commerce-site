@@ -46,6 +46,7 @@ export const useEditAccDetails = (toggleModal?: () => void) => {
 
 export const useAddEditAddress = (
   modalData: account.addEditAddressModalData,
+  toggleModal?: () => void,
   showStatusModal: boolean = true
 ) => {
   const dispatch = useAppDispatch();
@@ -85,6 +86,9 @@ export const useAddEditAddress = (
         dispatch(
           updateStatusMsg(addressStatus[modalData.actionType].successMsg)
         );
+        if (toggleModal) {
+          toggleModal();
+        }
         dispatch(toggleStatusModal(true));
       }
     },
@@ -97,6 +101,9 @@ export const useAddEditAddress = (
             "Duplicated address detected. Please add a different address."
           )
         );
+        if (toggleModal) {
+          toggleModal();
+        }
         dispatch(toggleStatusModal(true));
       }
     },
