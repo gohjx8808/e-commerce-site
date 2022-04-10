@@ -1,37 +1,44 @@
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import DialogActionButtonsContainer from '../../../styledComponents/DialogActionButtonsContainer';
-import { deleteAddressAction, toggleDeleteAddressConfirmationModal } from '../src/accountReducer';
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import React from "react";
+import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
+import { useDeleteAddress } from "../src/accountQueries";
 
-const DeleteAddressConfirmationModal = () => {
-  const dispatch = useAppDispatch();
-  const isDeleteAddressConfirmationModalOpen = useAppSelector(
-    (state) => state.account.isDeleteAddressConfirmationModalOpen,
-  );
+interface DeleteAddressConfirmationModalProps {
+  modalData: account.deleteAddressModalData;
+  toggleModal: () => void;
+}
 
-  const hideModal = () => {
-    dispatch(toggleDeleteAddressConfirmationModal(false));
-  };
+const DeleteAddressConfirmationModal = (
+  props: DeleteAddressConfirmationModalProps
+) => {
+  const { modalData, toggleModal } = props;
+
+  const { mutate: deleteAddress } = useDeleteAddress(toggleModal);
 
   const confirmDelete = () => {
-    dispatch(deleteAddressAction());
+    deleteAddress(modalData.selectedAddress!);
   };
 
   return (
-    <Dialog open={isDeleteAddressConfirmationModalOpen} onClose={hideModal} aria-labelledby="deleteAddressConfirmation">
-      <DialogTitle id="deleteAddressConfirmation">Delete Confirmation</DialogTitle>
+    <Dialog
+      open={modalData.isModalOpen}
+      onClose={toggleModal}
+      aria-labelledby="deleteAddressConfirmation"
+    >
+      <DialogTitle id="deleteAddressConfirmation">
+        Delete Confirmation
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>
           Are you sure you wish to delete this address? This cannot be undone.
         </DialogContentText>
       </DialogContent>
       <DialogActionButtonsContainer>
-        <Button onClick={hideModal} color="secondary" variant="contained">
+        <Button onClick={toggleModal} color="secondary" variant="contained">
           Cancel
         </Button>
         <Button onClick={confirmDelete} color="secondary">

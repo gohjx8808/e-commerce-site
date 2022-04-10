@@ -12,25 +12,24 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import React, { useMemo, useState } from "react";
-import { useAppDispatch } from "../../../hooks";
 import AddressChip from "../../../styledComponents/AddressChip";
 import SmUpDivider from "../../../styledComponents/SmUpDivider";
 import { homeColor, workColor } from "../../../utils/constants";
 import { internationalPhoneNumberFormatter } from "../../../utils/helper";
 import { useUserDetails } from "../../auth/src/authQueries";
-import {
-  toggleDeleteAddressConfirmationModal,
-  updateSelectedAddress,
-} from "../src/accountReducer";
 import AddressModal from "./AddressModal";
 import DeleteAddressConfirmationModal from "./DeleteAddressConfirmationModal";
 
 const AddressBook = () => {
-  const dispatch = useAppDispatch();
   const [addEditModalData, setAddEditModalData] =
     useState<account.addEditAddressModalData>({
       isModalOpen: false,
       actionType: "",
+      selectedAddress: null,
+    });
+  const [deleteModalData, setDeleteModalData] =
+    useState<account.deleteAddressModalData>({
+      isModalOpen: false,
       selectedAddress: null,
     });
 
@@ -65,11 +64,18 @@ const AddressBook = () => {
     });
   };
 
-  const onDeleteAddress = (
-    selectedAddress: account.submitAddEditAddressPayload
-  ) => {
-    dispatch(updateSelectedAddress(selectedAddress));
-    dispatch(toggleDeleteAddressConfirmationModal(true));
+  const onDeleteAddress = (selectedAddress: auth.addressData) => {
+    setDeleteModalData({
+      selectedAddress,
+      isModalOpen: true,
+    });
+  };
+
+  const toggleDeleteAddressModal = () => {
+    setDeleteModalData({
+      selectedAddress: null,
+      isModalOpen: false,
+    });
   };
 
   return (
@@ -304,7 +310,10 @@ const AddressBook = () => {
         modalData={addEditModalData}
         toggleModal={toggleAddEditAddressModal}
       />
-      <DeleteAddressConfirmationModal />
+      <DeleteAddressConfirmationModal
+        modalData={deleteModalData}
+        toggleModal={toggleDeleteAddressModal}
+      />
     </Grid>
   );
 };

@@ -25,8 +25,11 @@ declare namespace account {
     addressData: auth.addressData[];
   }
 
-  interface addEditAddressModalData {
+  interface addEditAddressModalData extends deleteAddressModalData {
     actionType: "Add" | "Edit" | "";
+  }
+
+  interface deleteAddressModalData {
     isModalOpen: boolean;
     selectedAddress: auth.addressData | null;
   }

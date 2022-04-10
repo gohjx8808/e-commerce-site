@@ -1,20 +1,18 @@
 import { useMutation, useQueryClient } from "react-query";
 import { useAppDispatch } from "../../../hooks";
+import { uidStorageKey } from "../../auth/src/authConstants";
 import {
   getCurrentUserDetailsKey,
   useUserDetails,
 } from "../../auth/src/authQueries";
-import { toggleLoadingOverlay } from "../../overlay/src/overlayReducer";
 import {
   toggleStatusModal,
   toggleSuccess,
   updateStatusMsg,
   updateStatusTitle,
 } from "../../status/src/statusReducer";
-import { uidStorageKey } from "../../auth/src/authConstants";
 import { submitEditAccDetail, updateAddress } from "./accountApi";
 import { addressStatus } from "./accountConstants";
-import { toggleEditAccDetailModal } from "./accountReducer";
 import { removeDefaultAddress, sameAddressDetector } from "./accountUtils";
 
 export const useEditAccDetails = (toggleModal?: () => void) => {
@@ -30,15 +28,12 @@ export const useEditAccDetails = (toggleModal?: () => void) => {
       dispatch(updateStatusTitle("Edit Account Details"));
       dispatch(toggleSuccess(true));
       dispatch(updateStatusMsg("Your profile has been successfully updated!"));
-      dispatch(toggleLoadingOverlay(false));
-      dispatch(toggleEditAccDetailModal(false));
       dispatch(toggleStatusModal(true));
     },
     onError: () => {
       dispatch(updateStatusTitle("Edit Account Details"));
       dispatch(toggleSuccess(false));
       dispatch(updateStatusMsg("Your profile has failed to be update!"));
-      dispatch(toggleLoadingOverlay(false));
       dispatch(toggleStatusModal(true));
     },
   });
@@ -67,7 +62,7 @@ export const useAddEditAddress = (
           }
         }
         currentAddresses.push(formData);
-      }else {
+      } else {
         const editIndex = currentAddresses.findIndex(
           (address) => address === modalData.selectedAddress
         );
@@ -114,6 +109,42 @@ export const useAddEditAddress = (
         }
         dispatch(toggleStatusModal(true));
       }
+    },
+  });
+};
+
+export const useDeleteAddress = (toggleModal: () => void) => {
+  const dispatch = useAppDispatch();
+  const { data: currentUserDetails } = useUserDetails();
+  const queryClient=useQueryClient();
+
+  const deleteAddress = (selectedAddress: auth.addressData) => {
+    const currentAddresses = currentUserDetails?.addressBook || [];
+    const removeIndex = currentAddresses.findIndex(
+      (address) => address === selectedAddress
+    );
+    currentAddresses.splice(removeIndex, 1);
+    const postData = {
+      uid: localStorage.getItem(uidStorageKey)!,
+      addressData: currentAddresses,
+    };
+    return updateAddress(postData);
+  };
+
+  return useMutation("deleteAddress", deleteAddress, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(getCurrentUserDetailsKey);
+      dispatch(toggleSuccess(true));
+      dispatch(updateStatusTitle("Delete Address"));
+      dispatch(updateStatusMsg("Your address has been successfully deleted!"));
+      toggleModal();
+      dispatch(toggleStatusModal(true));
+    },
+    onError: () => {
+      dispatch(toggleSuccess(false));
+      dispatch(updateStatusTitle("Delete Address"));
+      dispatch(updateStatusMsg("Your address has failed to be deleted!"));
+      dispatch(toggleStatusModal(true));
     },
   });
 };
