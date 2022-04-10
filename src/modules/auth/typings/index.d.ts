@@ -20,6 +20,11 @@ declare namespace auth {
   }
 
   interface saveUserDetailsPayload {
+    userData: userData;
+    uid: string;
+  }
+
+  interface userData {
     email: string;
     dob: string;
     gender: string;

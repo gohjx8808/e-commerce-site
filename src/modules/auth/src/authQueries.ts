@@ -10,7 +10,13 @@ import {
   updateStatusMsg,
   updateStatusTitle,
 } from "../../status/src/statusReducer";
-import { getCurrentUserDetails, resetPassword, signOut } from "./authApis";
+import {
+  getCurrentUserDetails,
+  registerUser,
+  resetPassword,
+  saveUserDetails,
+  signOut,
+} from "./authApis";
 import { uidStorageKey } from "./authConstants";
 
 export const getCurrentUserDetailsKey = "getCurrentUserDetails";
@@ -85,6 +91,68 @@ export const useForgotPassword = () => {
         );
       } else {
         dispatch(updateStatusMsg("Network error! Please try again."));
+      }
+      dispatch(toggleSuccess(false));
+      dispatch(toggleLoadingOverlay(false));
+      dispatch(toggleStatusModal(true));
+    },
+  });
+};
+
+const useSaveUserDetails = () => {
+  const dispatch = useAppDispatch();
+
+  return useMutation("saveUserDetails", saveUserDetails);
+};
+
+export const useSignUp = () => {
+  const dispatch = useAppDispatch();
+
+  const { mutate: saveUserData } = useSaveUserDetails();
+
+  return useMutation("submitSignUp", registerUser, {
+    onSuccess: (response, variables) => {
+      const userID = response.user?.uid!;
+      const userDetails = {
+        uid: userID,
+        userData: {
+          email: variables.email,
+          dob: variables.dob,
+          gender: variables.gender.value,
+          fullName: variables.fullName,
+          phoneNumber: variables.phoneNumber,
+          roles: {
+            admin: false,
+            customer: true,
+          },
+        },
+      };
+      saveUserData(userDetails);
+      dispatch(toggleSuccess(true));
+      dispatch(
+        updateStatusMsg(
+          "Your registration is successful! Please login using your credentials."
+        )
+      );
+      dispatch(toggleLoadingOverlay(false));
+      dispatch(toggleStatusModal(true));
+      navigate(routeNames.login);
+    },
+    onError: (error: firebase.auth.Error) => {
+      const errorCode = error.code;
+      if (errorCode === "auth/email-already-in-use") {
+        dispatch(
+          updateStatusMsg(
+            "The provided email is already in use by an existing user. " +
+              "Please register using another email or login using the correct credentials."
+          )
+        );
+      } else if (errorCode === "auth/invalid-email") {
+        dispatch(updateStatusMsg("Invalid email! Please try again."));
+      } else {
+        dispatch(
+          updateStatusMsg("Your registration has failed! Please try again.")
+        );
       }
       dispatch(toggleSuccess(false));
       dispatch(toggleLoadingOverlay(false));
