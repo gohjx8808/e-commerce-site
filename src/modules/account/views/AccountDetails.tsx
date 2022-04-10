@@ -8,7 +8,9 @@ import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
 import dayjs from "dayjs";
 import React, { useState } from "react";
+import { uidStorageKey } from "../../auth/src/authConstants";
 import { useUserDetails } from "../../auth/src/authQueries";
+import { useEditAccDetails } from "../src/accountQueries";
 import EditAccDetailModal from "./EditAccDetailModal";
 import SingleAccData from "./SingleAccData";
 
@@ -18,14 +20,27 @@ interface stringDict {
 
 const AccountDetails = () => {
   const [isEditAccDetailModalOpen, setEditAccDetailModalOpen] = useState(false);
-  const { data: currentUserDetails, isLoading } = useUserDetails();
   const genderMap: stringDict = { F: "Female", M: "Male" };
 
   const toggleEditAccDetailModal = () => {
     setEditAccDetailModalOpen(!isEditAccDetailModalOpen);
   };
 
-  if (isLoading || !currentUserDetails) {
+  const { data: currentUserDetails, isLoading: currentUserDetailsLoading } =
+    useUserDetails();
+
+  const { mutate: submitEditAccDetail, isLoading: editAccDetailModalLoading } =
+    useEditAccDetails(toggleEditAccDetailModal);
+
+  const onEditSubmit = (hookData: account.rawSubmitEditAccDetailPayload) => {
+    const processedPayload = {
+      uid: localStorage.getItem(uidStorageKey)!,
+      details: { ...hookData, gender: hookData.gender.value },
+    };
+    submitEditAccDetail(processedPayload);
+  };
+
+  if (currentUserDetailsLoading || !currentUserDetails) {
     return <Skeleton variant="rectangular" width="100%" height={200} />;
   }
 
@@ -73,6 +88,8 @@ const AccountDetails = () => {
           open={isEditAccDetailModalOpen}
           onClose={toggleEditAccDetailModal}
           toggleModal={toggleEditAccDetailModal}
+          onFormSubmit={onEditSubmit}
+          isLoading={editAccDetailModalLoading}
         />
       </Grid>
     </Grid>

@@ -14,20 +14,18 @@ import ControlledDatePicker from "../../../sharedComponents/inputs/ControlledDat
 import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker";
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
 import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
-import { uidStorageKey } from "../../auth/src/authConstants";
 import { useUserDetails } from "../../auth/src/authQueries";
-import { useEditAccDetails } from "../src/accountQueries";
 import { editAccountSchema } from "../src/accountScheme";
 
 interface editAccDetailModalProps extends DialogProps {
   toggleModal: () => void;
+  onFormSubmit: (hookData: account.rawSubmitEditAccDetailPayload) => void;
+  isLoading: boolean;
 }
 
 const EditAccDetailModal = (props: editAccDetailModalProps) => {
-  const { toggleModal } = props;
+  const { toggleModal, onFormSubmit,isLoading } = props;
   const { data: currentUserDetails } = useUserDetails();
-  const { mutate: submitEditAccDetail,isLoading } = useEditAccDetails(toggleModal);
-
   const {
     control,
     handleSubmit,
@@ -41,20 +39,12 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
     { value: "F", label: "Female" },
   ];
 
-  const onEditSubmit = (hookData: account.rawSubmitEditAccDetailPayload) => {
-    const processedPayload = {
-      uid: localStorage.getItem(uidStorageKey)!,
-      details: { ...hookData, gender: hookData.gender.value },
-    };
-    submitEditAccDetail(processedPayload);
-  };
-
   return (
     <Dialog {...props} aria-labelledby="editAccDetail" fullWidth maxWidth="md">
       <Grid container justifyContent="center">
         <DialogTitle id="editAccDetail">Edit Account Details</DialogTitle>
       </Grid>
-      <form onSubmit={handleSubmit(onEditSubmit)}>
+      <form onSubmit={handleSubmit(onFormSubmit)}>
         <DialogContent>
           <Grid
             container

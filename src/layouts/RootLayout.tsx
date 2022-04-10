@@ -52,7 +52,14 @@ const RootLayout: React.FC = ({ children }) => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [mode, setMode] = useState<PaletteMode>("light");
   const [displayTheme, setDisplayTheme] = useState<modeType>("system");
-  const queryClient = new QueryClient({defaultOptions:{queries:{refetchOnMount:false}}});
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: 1,
+      },
+    },
+  });
 
   const theme = useMemo(
     () =>
