@@ -1,5 +1,8 @@
+import { navigate } from "gatsby";
+import firebase from "gatsby-plugin-firebase";
 import { useMutation, useQuery } from "react-query";
 import { useAppDispatch } from "../../../hooks";
+import routeNames from "../../../utils/routeNames";
 import { toggleLoadingOverlay } from "../../overlay/src/overlayReducer";
 import {
   toggleStatusModal,
@@ -7,7 +10,7 @@ import {
   updateStatusMsg,
   updateStatusTitle,
 } from "../../status/src/statusReducer";
-import { getCurrentUserDetails, signOut } from "./authApis";
+import { getCurrentUserDetails, resetPassword, signOut } from "./authApis";
 import { uidStorageKey } from "./authConstants";
 
 export const getCurrentUserDetailsKey = "getCurrentUserDetails";
@@ -56,4 +59,36 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
       staleTime: Infinity,
     }
   );
+};
+
+export const useForgotPassword = () => {
+  const dispatch = useAppDispatch();
+
+  return useMutation("submitForgotPassword", resetPassword, {
+    onSuccess: () => {
+      dispatch(toggleSuccess(true));
+      dispatch(
+        updateStatusMsg(
+          "An email to reset your password has been sent to your registered email address."
+        )
+      );
+      dispatch(toggleLoadingOverlay(false));
+      dispatch(toggleStatusModal(true));
+      navigate(routeNames.login);
+    },
+    onError: (error: firebase.auth.Error) => {
+      if (error.code === "auth/user-not-found") {
+        dispatch(
+          updateStatusMsg(
+            "The email address is not registered. Please insert a registered email address!"
+          )
+        );
+      } else {
+        dispatch(updateStatusMsg("Network error! Please try again."));
+      }
+      dispatch(toggleSuccess(false));
+      dispatch(toggleLoadingOverlay(false));
+      dispatch(toggleStatusModal(true));
+    },
+  });
 };
