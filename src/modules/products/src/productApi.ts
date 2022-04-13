@@ -19,4 +19,4 @@ export const sendPaymentEmailApi = (emailData:products.sendPaymentEmailPayload) 
 
 export const getAvailablePromocodes = () => (firebase.database().ref('promoCodes').once('value'));
 
-export const updatePromoCodeUsed = (updatedDetails:auth.currentUserDetails) => firebase.database().ref(`users/${updatedDetails.uid}`).set(updatedDetails);
+export const updatePromoCodeUsed = (updatedDetails:products.updateUsedPromoCodePayload) => firebase.database().ref(`users/${updatedDetails.uid}`).set(updatedDetails.userData);
