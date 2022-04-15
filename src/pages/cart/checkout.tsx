@@ -59,7 +59,8 @@ interface shippingFeeData {
 const Checkout = () => {
   const isXsView = useXsDownMediaQuery();
   const dispatch = useAppDispatch();
-  const [selectedAddress, setSelectedAddress] = useState<auth.addressData>();
+  const [selectedAddress, setSelectedAddress] =
+    useState<auth.addressData | null>();
 
   const { data: currentUserDetails } = useUserDetails();
   const isLoggedIn = useMemo(() => !!localStorage.getItem(uidStorageKey), []);
@@ -375,6 +376,11 @@ const Checkout = () => {
 
   const toggleCheckoutAddressListModal = () => {
     setIsCheckoutAddressListModalOpen(!isCheckoutAddressListModalOpen);
+  };
+
+  const updateSelectedAddress = (address: auth.addressData | null) => {
+    setSelectedAddress(address);
+    toggleCheckoutAddressListModal();
   };
 
   return (
@@ -768,6 +774,8 @@ const Checkout = () => {
         <CheckoutAddressListModal
           isVisible={isCheckoutAddressListModalOpen}
           toggleModal={toggleCheckoutAddressListModal}
+          selectedAddress={selectedAddress}
+          updateSelectedAddress={updateSelectedAddress}
         />
       </Grid>
     </MainLayout>

@@ -1,44 +1,50 @@
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
-import List from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
-import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import StyledListItem from '../../../styledComponents/StyledListItem';
-import { defaultAddressData } from '../../../utils/constants';
-import { updateSelectedAddress } from '../../account/src/accountReducer';
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
+import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
+import React, { useMemo } from "react";
+import StyledListItem from "../../../styledComponents/StyledListItem";
+import { useUserDetails } from "../../auth/src/authQueries";
 
-interface CheckoutAddressListModalOwnProps{
-  isVisible:boolean
-  toggleModal:()=>void
+interface CheckoutAddressListModalOwnProps {
+  isVisible: boolean;
+  toggleModal: () => void;
+  selectedAddress?: auth.addressData | null;
+  updateSelectedAddress: (address: auth.addressData | null) => void;
 }
 
-const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
-  const dispatch = useAppDispatch();
-  const { isVisible, toggleModal } = props;
-  const addressList = useAppSelector((state) => state.auth.currentUser.addressBook);
-  const selectedAddress = useAppSelector((state) => state.account.selectedAddress);
-
-  const onSelectAddress = (address:account.submitAddEditAddressPayload) => {
-    dispatch(updateSelectedAddress(address));
-    toggleModal();
-  };
-
-  const clearSelection = () => {
-    dispatch(updateSelectedAddress(defaultAddressData));
-    toggleModal();
-  };
+const CheckoutAddressListModal = (props: CheckoutAddressListModalOwnProps) => {
+  const { isVisible, toggleModal, selectedAddress, updateSelectedAddress } =
+    props;
+  const { data: userDetails } = useUserDetails();
+  const addressList = useMemo(
+    () => userDetails?.addressBook,
+    [userDetails?.addressBook]
+  );
 
   return (
-    <Dialog onClose={toggleModal} aria-labelledby="addressBook" open={isVisible} fullWidth>
+    <Dialog
+      onClose={toggleModal}
+      aria-labelledby="addressBook"
+      open={isVisible}
+      fullWidth
+    >
       <DialogTitle id="addressBook">
         <Grid container justifyContent="space-between">
           <Typography variant="h4">Address Book</Typography>
-          {selectedAddress.addressLine1 && <Button variant="outlined" color="secondary" onClick={clearSelection}>Clear selection</Button>}
+          {selectedAddress && (
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={() => updateSelectedAddress(null)}
+            >
+              Clear selection
+            </Button>
+          )}
         </Grid>
       </DialogTitle>
       {addressList ? (
@@ -46,11 +52,11 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
           {addressList.map((address) => (
             <StyledListItem
               selected={address === selectedAddress}
-              onClick={() => onSelectAddress(address)}
+              onClick={() => updateSelectedAddress(address)}
               key={address.addressLine1}
             >
               <ListItemText
-                primary={(
+                primary={
                   <>
                     <Grid container>
                       <Grid item xs={5}>
@@ -58,7 +64,11 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
                           {address.fullName}
                         </Typography>
                       </Grid>
-                      <Divider orientation="vertical" flexItem variant="middle" />
+                      <Divider
+                        orientation="vertical"
+                        flexItem
+                        variant="middle"
+                      />
                       <Grid item xs={5}>
                         <Typography fontWeight="bold">
                           {address.phoneNumber}
@@ -67,22 +77,20 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
                     </Grid>
                     <Typography fontWeight="bold">{address.email}</Typography>
                     <Typography>
-                      {address.addressLine1}
-                      {' '}
-                      {address.addressLine2}
+                      {address.addressLine1} {address.addressLine2}
                     </Typography>
                     <Typography>
-                      {address.postcode}
-                      {' '}
-                      {address.city}
+                      {address.postcode} {address.city}
                     </Typography>
                     <Typography>
-                      {address.outsideMalaysiaState ? address.outsideMalaysiaState : address.state}
-                      {', '}
+                      {address.outsideMalaysiaState
+                        ? address.outsideMalaysiaState
+                        : address.state}
+                      {", "}
                       {address.country}
                     </Typography>
                   </>
-                )}
+                }
               />
             </StyledListItem>
           ))}
@@ -94,6 +102,10 @@ const CheckoutAddressListModal = (props:CheckoutAddressListModalOwnProps) => {
       )}
     </Dialog>
   );
+};
+
+CheckoutAddressListModal.defaultProps = {
+  selectedAddress: null,
 };
 
 export default CheckoutAddressListModal;
