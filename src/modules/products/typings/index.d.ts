@@ -80,9 +80,4 @@ declare namespace products {
     discountType: string;
     discountValue: string;
   }
-
-  interface updateUsedPromoCodePayload {
-    uid: string;
-    userData: auth.currentUserDetails;
-  }
 }

@@ -15,7 +15,7 @@ import {
   toggleStatusModal, toggleSuccess, updateStatusMsg, updateStatusTitle
 } from '../../status/src/statusReducer';
 import {
-  getPrevOrderCount, sendPaymentEmailApi, updateOrderCount, updatePromoCodeUsed
+  getOrderCount, sendPaymentEmailApi, updateOrderCount, updatePromoCodeUsed
 } from './productApi';
 import {
   removeItemFromCart,
@@ -31,7 +31,7 @@ export default function* productRuntime() {
 }
 
 function* getPrevOrderCountSaga() {
-  const response:firebase.database.DataSnapshot = yield call(getPrevOrderCount);
+  const response:firebase.database.DataSnapshot = yield call(getOrderCount);
   const prevOrderCount:number = response.val();
   yield put(updatePrevOrderCount(prevOrderCount));
 }

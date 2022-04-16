@@ -30,7 +30,7 @@ declare namespace account {
   }
 
   interface deleteAddressModalData {
-    isModalOpen: boolean;
+    isModalOpen?: boolean;
     selectedAddress: auth.addressData | null;
   }
 }
