@@ -38,6 +38,7 @@ import CheckoutAddressListModal from "../../modules/products/views/CheckoutAddre
 import MainLayout from "../../layouts/MainLayout";
 import { useUserDetails } from "../../modules/auth/src/authQueries";
 import { uidStorageKey } from "../../modules/auth/src/authConstants";
+import { useSubmitOrder } from "../../modules/products/src/productQueries";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
@@ -111,6 +112,8 @@ const Checkout = () => {
   } = useForm({
     resolver: yupResolver(productSchema.shippingInfoSchema),
   });
+
+  const { mutate: submitOrder } = useSubmitOrder();
 
   useEffect(() => {
     const getAvailablePromocodesEffect = async () => {
@@ -370,7 +373,7 @@ const Checkout = () => {
     };
 
     if (!validatePromocode()) {
-      dispatch(sendPaymentEmailAction(emailData));
+      submitOrder(emailData);
     }
   };
 

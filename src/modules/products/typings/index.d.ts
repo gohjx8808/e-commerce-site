@@ -32,8 +32,8 @@ declare namespace products {
     quantity: number;
     img?: import("gatsby-plugin-image").IGatsbyImageData;
     name: string;
-    price: string;
-    itemPrice: string;
+    price: number;
+    itemPrice: number;
   }
 
   interface checkoutData {

@@ -96,11 +96,11 @@ export const useSubmitOrder = () => {
     } else {
       localStorage.removeItem(productLocalStorageKeys.shippingInfo);
     }
-    await sendPaymentEmailApi(payload);
+    return sendPaymentEmailApi(payload);
     // dispatch(updateSelectedCheckoutItemsID([]));
   };
 
-  useMutation("submitOrder", onUpdate, {
+  return useMutation("submitOrder", onUpdate, {
     onSuccess: () => {
       dispatch(toggleSuccess(true));
       dispatch(updateStatusTitle("Your order is confirmed"));
