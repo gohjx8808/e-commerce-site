@@ -1,13 +1,21 @@
+import { productLocalStorageKeys } from '@utils/localStorageKeys';
 import { graphql, PageProps, useStaticQuery } from 'gatsby';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useAppSelector } from '../hooks';
-import { routeMap } from '../utils/constants';
+import { isSSR, routeMap } from '../utils/constants';
 import routeNames from '../utils/routeNames';
 
 const SEO = (props:PageProps) => {
   const { location, params } = props;
-  const allProducts = useAppSelector((state) => state.product.allProducts);
+  const allProducts: products.innerProductQueryData[] = useMemo(
+    () =>
+      (!isSSR &&
+        JSON.parse(
+          String(localStorage.getItem(productLocalStorageKeys.products))
+        )) ||
+      [],
+    []
+  );
   const [customTitle, setCustomTitle] = useState('');
   const { site } = useStaticQuery(graphql`
     query SEO {

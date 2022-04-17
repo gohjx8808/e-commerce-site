@@ -18,16 +18,21 @@ import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import ToggleButton from "@mui/material/ToggleButton";
 import Typography from "@mui/material/Typography";
+import { productLocalStorageKeys } from "@utils/localStorageKeys";
+import { Link as GatsbyLink, PageProps } from "gatsby";
 import { getImage, ImageDataLike } from "gatsby-plugin-image";
 import { useSnackbar } from "notistack";
-import React, { FC, useEffect, useState } from "react";
-import { Link as GatsbyLink, PageProps } from "gatsby";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
+import { useAppDispatch, useXsDownMediaQuery } from "../../hooks";
+import MainLayout from "../../layouts/MainLayout";
 import {
-  useAppDispatch,
-  useAppSelector,
-  useXsDownMediaQuery,
-} from "../../hooks";
+  toggleEnlargedProductImageModal,
+  updateSelectedProductImage,
+  updateSelectedProductImageList,
+} from "../../modules/products/src/productReducers";
+import { addToCart } from "../../modules/products/src/productUtils";
+import ProductErrorSnackbar from "../../modules/products/views/ProductErrorSnackbar";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
 import ItemQuantityInput from "../../styledComponents/products/ItemQuantityInput";
 import ItemVariationToggleButton from "../../styledComponents/products/ItemVariationToggleButton";
@@ -36,26 +41,26 @@ import ProductImage from "../../styledComponents/products/ProductImage";
 import ProductPrice from "../../styledComponents/products/ProductPrice";
 import {
   defaultProductData,
+  isSSR,
   itemVariationOptions,
 } from "../../utils/constants";
 import { formatPrice, getProductVariationSuffix } from "../../utils/helper";
 import routeNames from "../../utils/routeNames";
-import {
-  addToShoppingCart,
-  toggleEnlargedProductImageModal,
-  updateSelectedProductImage,
-  updateSelectedProductImageList,
-} from "../../modules/products/src/productReducers";
-import ProductErrorSnackbar from "../../modules/products/views/ProductErrorSnackbar";
-import MainLayout from "../../layouts/MainLayout";
-import { addToCart } from "../../modules/products/src/productUtils";
 
 const ProductDescription: FC<PageProps> = (props) => {
   const { params } = props;
   const { id } = params;
   const dispatch = useAppDispatch();
   const isXsView = useXsDownMediaQuery();
-  const allProducts = useAppSelector((state) => state.product.allProducts);
+  const allProducts: products.innerProductQueryData[] = useMemo(
+    () =>
+      (!isSSR &&
+        JSON.parse(
+          String(localStorage.getItem(productLocalStorageKeys.products))
+        )) ||
+      [],
+    []
+  );
   const selectedProduct =
     allProducts.find((product) => product.node.contentful_id === id)?.node ||
     defaultProductData;
@@ -134,7 +139,10 @@ const ProductDescription: FC<PageProps> = (props) => {
         itemQuantity,
         selectedItemVariation
       );
-      const variationSuffix = getProductVariationSuffix(isKeyChainSeries, selectedItemVariation);
+      const variationSuffix = getProductVariationSuffix(
+        isKeyChainSeries,
+        selectedItemVariation
+      );
       const productName = selectedProduct.name + variationSuffix;
       // const formattedData = {
       //   id: selectedProduct.contentful_id + variationSuffix,
