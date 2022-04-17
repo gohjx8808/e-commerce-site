@@ -17,11 +17,16 @@ interface productContextState {
     quantity: number,
     variation?: string
   ) => void;
+  modifyItemQuantity: (
+    itemId: string,
+    mode: "increase" | "reduce" | "delete"
+  ) => void;
 }
 
 const initialState: productContextState = {
   shoppingCart: [],
   addToCart: () => {},
+  modifyItemQuantity: () => {},
 };
 
 export const ProductContext = createContext(initialState);
@@ -83,8 +88,36 @@ const ProductContextProvider: FC = (props) => {
     setShoppingCart(shoppingCartItems);
   };
 
+  const modifyItemQuantity = (
+    itemId: string,
+    mode: "increase" | "reduce" | "delete"
+  ) => {
+    const shoppingCartItems = [...shoppingCart];
+    const targetIndex = shoppingCartItems.findIndex(
+      (item) => item.id === itemId
+    );
+    if (mode === "increase") {
+      shoppingCartItems[targetIndex].quantity += 1;
+      shoppingCartItems[targetIndex].itemPrice +=
+        shoppingCartItems[targetIndex].price;
+    } else if (mode === "reduce") {
+      shoppingCartItems[targetIndex].quantity -= 1;
+      shoppingCartItems[targetIndex].itemPrice -=
+        shoppingCartItems[targetIndex].price;
+    } else {
+      shoppingCartItems.splice(targetIndex, 1);
+    }
+    setShoppingCart(shoppingCartItems);
+    localStorage.setItem(
+      productLocalStorageKeys.shoppingCart,
+      JSON.stringify(shoppingCartItems)
+    );
+  };
+
   return (
-    <ProductContext.Provider value={{ shoppingCart, addToCart }}>
+    <ProductContext.Provider
+      value={{ shoppingCart, addToCart, modifyItemQuantity }}
+    >
       {children}
     </ProductContext.Provider>
   );

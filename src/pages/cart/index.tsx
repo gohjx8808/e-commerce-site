@@ -1,5 +1,4 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
-import { modifyItemQuantity } from "@modules/products/src/productUtils";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Box from "@mui/material/Box";
@@ -10,10 +9,8 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { isSSR } from "@utils/constants";
-import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import { Link as GatsbyLink, navigate } from "gatsby";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import { updateSelectedCheckoutItemsID } from "../../modules/products/src/productReducers";
@@ -23,7 +20,7 @@ import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
 import CartCard from "../../styledComponents/products/CartCard";
 import CartItemGrid from "../../styledComponents/products/CartItemGrid";
 import ProductImage from "../../styledComponents/products/ProductImage";
-import { customJSONParse, formatPrice } from "../../utils/helper";
+import { formatPrice } from "../../utils/helper";
 import routeNames from "../../utils/routeNames";
 
 type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -32,15 +29,6 @@ type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
 
 const Cart = () => {
   const cartTitle = ["Item", "Price (RM)", "Quantity", "Total (RM)"];
-  const shoppingCartItems: products.shoppingCartItemData[] = useMemo(
-    () =>
-      (!isSSR &&
-        customJSONParse(
-          localStorage.getItem(productLocalStorageKeys.shoppingCart)
-        )) ||
-      [],
-    []
-  );
   const selectedCheckoutItemsID = useAppSelector(
     (state) => state.product.selectedCheckoutItemsID
   );
@@ -57,24 +45,24 @@ const Cart = () => {
     useState<boolean>(false);
   const [isCheckoutError, setIsCheckoutError] = useState(false);
   const dispatch = useAppDispatch();
-  const { shoppingCart } = useContext(ProductContext);
+  const { shoppingCart, modifyItemQuantity } = useContext(ProductContext);
 
   useEffect(() => {
     let currentTotal = 0;
-    shoppingCartItems.map((item) => {
+    shoppingCart.map((item) => {
       if (selectedCheckoutItemsID.includes(item.id)) {
         currentTotal += +item.itemPrice;
       }
       return null;
     });
     setTotalAmount(currentTotal);
-  }, [shoppingCartItems, selectedCheckoutItemsID]);
+  }, [shoppingCart, selectedCheckoutItemsID]);
 
   const onChangeSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.id === "selectAll") {
       if (event.target.checked) {
         const allIds = [] as string[];
-        shoppingCartItems.map((item) => {
+        shoppingCart.map((item) => {
           allIds.push(item.id);
           return null;
         });
@@ -107,13 +95,6 @@ const Cart = () => {
 
   const confirmItemRemove = () => {
     modifyItemQuantity(toBeRemovedItem.id, "delete");
-    // const removeIndex = selectedCheckoutItemsID.indexOf(toBeRemovedItem.id);
-    // if (removeIndex !== -1) {
-    //   const copiedIDs = [...selectedCheckoutItemsID];
-    //   copiedIDs.splice(removeIndex, 1);
-    //   dispatch(updateSelectedCheckoutItemsID(copiedIDs));
-    // }
-    // dispatch(removeItemFromCart(toBeRemovedItem.id));
     toggleRemoveConfirmModalDisplay();
   };
 
@@ -146,7 +127,7 @@ const Cart = () => {
         <Grid item xs={11}>
           <CustomBreadcrumbs />
         </Grid>
-        {shoppingCartItems.length > 0 ? (
+        {shoppingCart.length > 0 ? (
           <>
             <Grid item xs={11}>
               <CartCard>
@@ -167,7 +148,7 @@ const Cart = () => {
                           onChange={onChangeSelect}
                           indeterminate={
                             selectedCheckoutItemsID.length <
-                              shoppingCartItems.length &&
+                              shoppingCart.length &&
                             selectedCheckoutItemsID.length > 0
                           }
                           checked={selectedCheckoutItemsID.length > 0}
@@ -203,7 +184,7 @@ const Cart = () => {
             <Grid item xs={11}>
               <CartCard>
                 <CardContent>
-                  {shoppingCartItems.map((cartItem, index) => (
+                  {shoppingCart.map((cartItem, index) => (
                     <Grid key={cartItem.id}>
                       <CartItemGrid
                         container

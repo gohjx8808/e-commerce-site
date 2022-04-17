@@ -6,6 +6,7 @@ import {
   Inline,
   MARKS,
 } from "@contentful/rich-text-types";
+import { ProductContext } from "@contextProvider/ProductContextProvider";
 import AddIcon from "@mui/icons-material/Add";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -22,7 +23,7 @@ import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import { Link as GatsbyLink, PageProps } from "gatsby";
 import { getImage, ImageDataLike } from "gatsby-plugin-image";
 import { useSnackbar } from "notistack";
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { useAppDispatch, useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
@@ -31,7 +32,6 @@ import {
   updateSelectedProductImage,
   updateSelectedProductImageList,
 } from "../../modules/products/src/productReducers";
-import { addToCart } from "../../modules/products/src/productUtils";
 import ProductErrorSnackbar from "../../modules/products/views/ProductErrorSnackbar";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
 import ItemQuantityInput from "../../styledComponents/products/ItemQuantityInput";
@@ -56,6 +56,7 @@ const ProductDescription: FC<PageProps> = (props) => {
   const { id } = params;
   const dispatch = useAppDispatch();
   const isXsView = useXsDownMediaQuery();
+  const { addToCart } = useContext(ProductContext);
   const allProducts: products.innerProductQueryData[] = useMemo(
     () =>
       (!isSSR &&

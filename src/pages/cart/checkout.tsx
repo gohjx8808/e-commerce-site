@@ -58,7 +58,6 @@ interface shippingFeeData {
 
 const Checkout = () => {
   const isXsView = useXsDownMediaQuery();
-  const dispatch = useAppDispatch();
   const [selectedAddress, setSelectedAddress] =
     useState<auth.addressData | null>();
 
