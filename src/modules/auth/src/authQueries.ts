@@ -1,3 +1,4 @@
+import { accountLocalStorageKeys } from '@utils/localStorageKeys';
 import { navigate } from "gatsby";
 import firebase from "gatsby-plugin-firebase";
 import { useMutation, useQuery } from "react-query";
@@ -17,7 +18,6 @@ import {
   saveUserDetails,
   signOut,
 } from "./authApis";
-import { uidStorageKey } from "./authConstants";
 
 export const getCurrentUserDetailsKey = "getCurrentUserDetails";
 
@@ -28,7 +28,7 @@ export const useLogout = (toggleModal?: () => void) =>
         toggleModal();
       }
       window.location.reload();
-      localStorage.removeItem(uidStorageKey);
+      localStorage.removeItem(accountLocalStorageKeys.uid);
     },
   });
 
@@ -39,7 +39,7 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
   return useQuery(
     getCurrentUserDetailsKey,
     async () => {
-      const uid = localStorage.getItem(uidStorageKey) || "";
+      const uid = localStorage.getItem(accountLocalStorageKeys.uid) || "";
       const response = await getCurrentUserDetails(uid);
 
       const parsedResponse: auth.currentUserDetails = response.val();
@@ -66,7 +66,7 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
           dispatch(toggleStatusModal(true));
         }
       },
-      enabled: !!localStorage.getItem(uidStorageKey),
+      enabled: !!localStorage.getItem(accountLocalStorageKeys.uid),
       cacheTime: Infinity,
       staleTime: Infinity,
     }

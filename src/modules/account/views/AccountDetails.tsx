@@ -6,9 +6,9 @@ import WcIcon from "@mui/icons-material/Wc";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
+import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import dayjs from "dayjs";
 import React, { useState } from "react";
-import { uidStorageKey } from "../../auth/src/authConstants";
 import { useUserDetails } from "../../auth/src/authQueries";
 import { useEditAccDetails } from "../src/accountQueries";
 import EditAccDetailModal from "./EditAccDetailModal";
@@ -34,7 +34,7 @@ const AccountDetails = () => {
 
   const onEditSubmit = (hookData: account.rawSubmitEditAccDetailPayload) => {
     const processedPayload = {
-      uid: localStorage.getItem(uidStorageKey)!,
+      uid: localStorage.getItem(accountLocalStorageKeys.uid)!,
       details: { ...hookData, gender: hookData.gender.value },
     };
     submitEditAccDetail(processedPayload);

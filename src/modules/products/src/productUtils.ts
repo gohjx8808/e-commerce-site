@@ -1,6 +1,6 @@
+import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import { getImage } from "gatsby-plugin-image";
 import { getProductVariationSuffix, roundTo2Dp } from "../../../utils/helper";
-import { productLocalStorageKeys } from "./productConstants";
 
 // eslint-disable-next-line import/prefer-default-export
 export const addToCart = (

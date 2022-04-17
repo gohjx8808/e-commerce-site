@@ -1,6 +1,6 @@
+import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import { useMutation, useQueryClient } from "react-query";
 import { useAppDispatch } from "../../../hooks";
-import { uidStorageKey } from "../../auth/src/authConstants";
 import {
   getCurrentUserDetailsKey,
   useUserDetails,
@@ -72,7 +72,7 @@ export const useAddEditAddress = (
         currentAddresses[editIndex] = formData;
       }
       const finalPostData = {
-        uid: localStorage.getItem(uidStorageKey)!,
+        uid: localStorage.getItem(accountLocalStorageKeys.uid)!,
         addressData: currentAddresses,
       };
       return updateAddress(finalPostData);
@@ -125,7 +125,7 @@ export const useDeleteAddress = (toggleModal: () => void) => {
     );
     currentAddresses.splice(removeIndex, 1);
     const postData = {
-      uid: localStorage.getItem(uidStorageKey)!,
+      uid: localStorage.getItem(accountLocalStorageKeys.uid)!,
       addressData: currentAddresses,
     };
     return updateAddress(postData);

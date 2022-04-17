@@ -5,9 +5,9 @@ import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
 import React, { FC, ReactNode, Suspense, useEffect } from "react";
-import { uidStorageKey } from "../modules/auth/src/authConstants";
 import Footer from "../modules/Footer";
 import HomeBanner from "../modules/home/HomeBanner";
 import MenuBar from "../modules/MenuBar";
@@ -26,7 +26,7 @@ const MainLayout: FC<MainLayoutOwnProps> = (props) => {
 
   useEffect(() => {
     if (window.location.pathname === routeNames.account) {
-      const uid = localStorage.getItem(uidStorageKey);
+      const uid = localStorage.getItem(accountLocalStorageKeys.uid);
       if (!uid) {
         navigate("/");
       }

@@ -22,7 +22,6 @@ import {
 } from "../src/productReducers";
 import ItemVariationMenu from "./ItemVariationMenu";
 import "../src/carousel.css";
-import { productLocalStorageKeys } from "../src/productConstants";
 import { addToCart } from "../src/productUtils";
 
 interface ProductCardOwnProps {

@@ -1,26 +1,25 @@
+import { accountLocalStorageKeys, productLocalStorageKeys } from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useAppDispatch } from "../../../hooks";
 import { useAddEditAddress } from "../../account/src/accountQueries";
-import { uidStorageKey } from "../../auth/src/authConstants";
 import {
   getCurrentUserDetailsKey,
-  useUserDetails,
+  useUserDetails
 } from "../../auth/src/authQueries";
 import {
   toggleStatusModal,
   toggleSuccess,
   updateStatusMsg,
-  updateStatusTitle,
+  updateStatusTitle
 } from "../../status/src/statusReducer";
-import { useAppDispatch } from "../../../hooks";
 import {
   getAvailablePromocodes,
   getOrderCount,
   sendPaymentEmailApi,
   updateOrderCount,
-  updatePromoCodeUsed,
+  updatePromoCodeUsed
 } from "./productApi";
-import { productLocalStorageKeys } from "./productConstants";
 
 export const productQueriesKeys = {
   getOrderCount: "getOrderCount",
@@ -84,7 +83,7 @@ export const useSubmitOrder = () => {
         paymentOptions: payload.paymentOptions,
       };
       // add address to user's address book if authorized
-      if (localStorage.getItem(uidStorageKey)) {
+      if (localStorage.getItem(accountLocalStorageKeys.uid)) {
         addAddress(saveAddressData);
       } else {
         // save to local storage for unauthorized user

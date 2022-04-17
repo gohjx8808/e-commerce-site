@@ -16,6 +16,15 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "removeComments": false,
+        "baseUrl": ".",
+        "paths": {
+            "@*": [
+                "src/*"
+            ],
+            "@utils": [
+                "src/utils"
+            ]
+        }
     },
     "include": [
         "./src/**/*"

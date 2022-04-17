@@ -10,6 +10,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isBetween from "dayjs/plugin/isBetween";
@@ -19,8 +20,14 @@ import { useForm } from "react-hook-form";
 import {
   useAppDispatch,
   useAppSelector,
-  useXsDownMediaQuery,
+  useXsDownMediaQuery
 } from "../../hooks";
+import MainLayout from "../../layouts/MainLayout";
+import { useUserDetails } from "../../modules/auth/src/authQueries";
+import { getAvailablePromocodes } from "../../modules/products/src/productApi";
+import { useSubmitOrder } from "../../modules/products/src/productQueries";
+import productSchema from "../../modules/products/src/productSchema";
+import CheckoutAddressListModal from "../../modules/products/views/CheckoutAddressListModal";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
 import DividerWithText from "../../sharedComponents/DividerWithText";
 import ExpandedCell from "../../sharedComponents/ExpandedCell";
@@ -31,14 +38,6 @@ import ControlledTextInput from "../../sharedComponents/inputs/ControlledTextInp
 import CheckoutCard from "../../styledComponents/products/CheckoutCard";
 import { stateOptions } from "../../utils/constants";
 import { formatPrice } from "../../utils/helper";
-import { getAvailablePromocodes } from "../../modules/products/src/productApi";
-import { sendPaymentEmailAction } from "../../modules/products/src/productReducers";
-import productSchema from "../../modules/products/src/productSchema";
-import CheckoutAddressListModal from "../../modules/products/views/CheckoutAddressListModal";
-import MainLayout from "../../layouts/MainLayout";
-import { useUserDetails } from "../../modules/auth/src/authQueries";
-import { uidStorageKey } from "../../modules/auth/src/authConstants";
-import { useSubmitOrder } from "../../modules/products/src/productQueries";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
@@ -64,7 +63,7 @@ const Checkout = () => {
     useState<auth.addressData | null>();
 
   const { data: currentUserDetails } = useUserDetails();
-  const isLoggedIn = useMemo(() => !!localStorage.getItem(uidStorageKey), []);
+  const isLoggedIn = useMemo(() => !!localStorage.getItem(accountLocalStorageKeys.uid), []);
   const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
   const selectedCheckoutItemsID = useAppSelector(
     (state) => state.product.selectedCheckoutItemsID

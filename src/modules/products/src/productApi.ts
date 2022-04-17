@@ -1,6 +1,6 @@
+import { accountLocalStorageKeys } from '@utils/localStorageKeys';
 import "firebase/database";
 import firebase from "gatsby-plugin-firebase";
-import { uidStorageKey } from "../../auth/src/authConstants";
 
 export const getOrderCount = () =>
   firebase.database().ref("orderCount").once("value");
@@ -25,6 +25,6 @@ export const getAvailablePromocodes = () =>
   firebase.database().ref("promoCodes").once("value");
 
 export const updatePromoCodeUsed = (usedPromocode: string[]) => {
-  const uid = localStorage.getItem(uidStorageKey);
+  const uid = localStorage.getItem(accountLocalStorageKeys.uid);
   return firebase.database().ref(`users/${uid}/usedPromocode`).set(usedPromocode);
 };
