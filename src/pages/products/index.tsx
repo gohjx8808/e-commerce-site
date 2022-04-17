@@ -13,7 +13,7 @@ import { useAppSelector } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import ProductCard from "../../modules/products/views/ProductCard";
 import ControlledPicker from "../../sharedComponents/inputs/ControlledPicker";
-import { compareString } from "../../utils/helper";
+import { compareString, customJSONParse } from "../../utils/helper";
 
 interface categoryAmountData {
   [key: string]: number;
@@ -26,8 +26,8 @@ const Products = () => {
   const allProducts: products.innerProductQueryData[] = useMemo(
     () =>
       (!isSSR &&
-        JSON.parse(
-          String(localStorage.getItem(productLocalStorageKeys.products))
+        customJSONParse(
+          localStorage.getItem(productLocalStorageKeys.products)
         )) ||
       [],
     []

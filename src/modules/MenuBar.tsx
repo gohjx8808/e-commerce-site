@@ -17,8 +17,10 @@ import Menu from "@mui/material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { customJSONParse } from "@utils/helper";
+import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from "../hooks";
 import ElevationScroll from "../sharedComponents/ElevationScroll";
 import StyledAppbar from "../styledComponents/drawer/StyledAppbar";
@@ -51,8 +53,9 @@ const MenuBar = () => {
 
   const { data: currentUserDetail } = useUserDetails();
 
-  const shoppingCartItem = useAppSelector(
-    (state) => state.product.shoppingCartItem
+  const shoppingCartItem:products.shoppingCartItemData[] = useMemo(
+    () => customJSONParse(localStorage.getItem(productLocalStorageKeys.shoppingCart)) || [],
+    []
   );
   const [totalQuantity, setTotalQuantity] = useState(0);
   const dispatch = useAppDispatch();

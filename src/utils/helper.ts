@@ -43,3 +43,6 @@ export const compareString = (a: string, b: string) => {
 };
 
 export const roundTo2Dp = (value: number) => Number(value.toFixed(2));
+
+export const customJSONParse = (value: string | null) =>
+  JSON.parse(String(value));

@@ -44,7 +44,11 @@ import {
   isSSR,
   itemVariationOptions,
 } from "../../utils/constants";
-import { formatPrice, getProductVariationSuffix } from "../../utils/helper";
+import {
+  customJSONParse,
+  formatPrice,
+  getProductVariationSuffix,
+} from "../../utils/helper";
 import routeNames from "../../utils/routeNames";
 
 const ProductDescription: FC<PageProps> = (props) => {
@@ -55,8 +59,8 @@ const ProductDescription: FC<PageProps> = (props) => {
   const allProducts: products.innerProductQueryData[] = useMemo(
     () =>
       (!isSSR &&
-        JSON.parse(
-          String(localStorage.getItem(productLocalStorageKeys.products))
+        customJSONParse(
+          localStorage.getItem(productLocalStorageKeys.products)
         )) ||
       [],
     []
@@ -144,15 +148,6 @@ const ProductDescription: FC<PageProps> = (props) => {
         selectedItemVariation
       );
       const productName = selectedProduct.name + variationSuffix;
-      // const formattedData = {
-      //   id: selectedProduct.contentful_id + variationSuffix,
-      //   name: productName,
-      //   img: getImage(selectedProduct.productImage[0]),
-      //   price: selectedProduct.discountedPrice
-      //     ? selectedProduct.discountedPrice.toFixed(2) : selectedProduct.price.toFixed(2),
-      //   quantity: itemQuantity,
-      // } as products.shoppingCartItemData;
-      // dispatch(addToShoppingCart(formattedData));
       enqueueSnackbar(`${productName} had been added to your cart!`);
     } else {
       toggleErrorSnackbar();
