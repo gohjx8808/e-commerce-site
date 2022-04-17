@@ -1,3 +1,5 @@
+// import { addToCart } from "../src/productUtils";
+import { ProductContext } from "@contextProvider/ProductContextProvider";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
@@ -5,24 +7,23 @@ import CardHeader from "@mui/material/CardHeader";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
-import { Link as GatsbyLink } from "gatsby";
 import Typography from "@mui/material/Typography";
+import { Link as GatsbyLink } from "gatsby";
 import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image";
 import { useSnackbar } from "notistack";
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { useAppDispatch, useXsDownMediaQuery } from "../../../hooks";
 import ProductPrice from "../../../styledComponents/products/ProductPrice";
 import StyledProductCard from "../../../styledComponents/products/StyledProductCard";
 import { formatPrice, getProductVariationSuffix } from "../../../utils/helper";
+import "../src/carousel.css";
 import {
   toggleEnlargedProductImageModal,
   updateSelectedProductImage,
-  updateSelectedProductImageList,
+  updateSelectedProductImageList
 } from "../src/productReducers";
 import ItemVariationMenu from "./ItemVariationMenu";
-import "../src/carousel.css";
-import { addToCart } from "../src/productUtils";
 
 interface ProductCardOwnProps {
   product: products.productData;
@@ -33,6 +34,7 @@ const ProductCard = (props: ProductCardOwnProps) => {
   const dispatch = useAppDispatch();
   const isXsView = useXsDownMediaQuery();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const { addToCart } = useContext(ProductContext);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -46,41 +48,12 @@ const ProductCard = (props: ProductCardOwnProps) => {
     productData: products.productData,
     variation?: string
   ) => {
-    // const shoppingCart: products.shoppingCartItemData[] = JSON.parse(
-    //   String(localStorage.getItem(productLocalStorageKeys.shoppingCart))
-    // );
     const variationSuffix = getProductVariationSuffix(
       isKeyChainSeries,
       variation
     );
     const productName = productData.name + variationSuffix;
     addToCart(productData, isKeyChainSeries, 1, variation);
-    // const formattedData = {
-    //   id: productData.contentful_id + variationSuffix,
-    //   name: productName,
-    //   img: getImage(productData.productImage[0]),
-    //   price: productData.discountedPrice
-    //     ? productData.discountedPrice.toFixed(2)
-    //     : productData.price.toFixed(2),
-    //   quantity: 1,
-    //   itemPrice: productData.discountedPrice
-    //     ? productData.discountedPrice.toFixed(2)
-    //     : productData.price.toFixed(2),
-    // };
-    // const targetIndex = shoppingCart.findIndex(
-    //   (item) => item.id === formattedData.id
-    // );
-    // // no same item in cart storage
-    // if (targetIndex === -1) {
-    //   shoppingCart.push(formattedData);
-    // } else {
-    //   shoppingCart[targetIndex].quantity += 1;
-    //   shoppingCart[targetIndex].itemPrice += formattedData.price;
-    // }
-    // localStorage.setItem(
-    //   productLocalStorageKeys.shoppingCart,
-    //   JSON.stringify(shoppingCart)
-    // );
     enqueueSnackbar(`${productName} had been added to your cart!`);
   };
 

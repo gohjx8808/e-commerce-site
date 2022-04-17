@@ -1,3 +1,4 @@
+import { ProductContext } from "@contextProvider/ProductContextProvider";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -17,11 +18,9 @@ import Menu from "@mui/material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { customJSONParse } from "@utils/helper";
-import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useAppDispatch, useAppSelector, useXsDownMediaQuery } from "../hooks";
+import React, { useContext, useEffect, useState } from "react";
+import { useAppDispatch, useXsDownMediaQuery } from "../hooks";
 import ElevationScroll from "../sharedComponents/ElevationScroll";
 import StyledAppbar from "../styledComponents/drawer/StyledAppbar";
 import {
@@ -53,15 +52,8 @@ const MenuBar = () => {
 
   const { data: currentUserDetail } = useUserDetails();
 
-  const shoppingCartItem: products.shoppingCartItemData[] = useMemo(
-    () =>
-      (!isSSR &&
-        customJSONParse(
-          localStorage.getItem(productLocalStorageKeys.shoppingCart)
-        )) ||
-      [],
-    []
-  );
+  const { shoppingCart } = useContext(ProductContext);
+
   const [totalQuantity, setTotalQuantity] = useState(0);
   const dispatch = useAppDispatch();
   const isXsView = useXsDownMediaQuery();
@@ -69,12 +61,12 @@ const MenuBar = () => {
 
   useEffect(() => {
     let total = 0;
-    shoppingCartItem.map((item) => {
+    shoppingCart.map((item) => {
       total += item.quantity;
       return null;
     });
     setTotalQuantity(total);
-  }, [shoppingCartItem]);
+  }, [shoppingCart]);
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchor);
 
