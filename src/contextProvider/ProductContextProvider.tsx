@@ -21,12 +21,16 @@ interface productContextState {
     itemId: string,
     mode: "increase" | "reduce" | "delete"
   ) => void;
+  selectedCheckoutItem: string[];
+  updateSelectedCheckoutItem: (itemIds: string[]) => void;
 }
 
 const initialState: productContextState = {
   shoppingCart: [],
   addToCart: () => {},
   modifyItemQuantity: () => {},
+  selectedCheckoutItem: [],
+  updateSelectedCheckoutItem: () => {},
 };
 
 export const ProductContext = createContext(initialState);
@@ -37,12 +41,21 @@ const ProductContextProvider: FC = (props) => {
   const [shoppingCart, setShoppingCart] = useState<
     products.shoppingCartItemData[]
   >([]);
+  // only store item ID
+  const [selectedCheckoutItem, setSelectedCheckoutItem] = useState<string[]>(
+    []
+  );
 
   useEffect(() => {
     setShoppingCart(
       customJSONParse(
         localStorage.getItem(productLocalStorageKeys.shoppingCart)
-      )
+      ) || []
+    );
+    setSelectedCheckoutItem(
+      customJSONParse(
+        localStorage.getItem(productLocalStorageKeys.selectedCheckoutItem)
+      ) || []
     );
   }, []);
 
@@ -114,9 +127,23 @@ const ProductContextProvider: FC = (props) => {
     );
   };
 
+  const updateSelectedCheckoutItem = (itemIds: string[]) => {
+    localStorage.setItem(
+      productLocalStorageKeys.selectedCheckoutItem,
+      JSON.stringify(itemIds)
+    );
+    setSelectedCheckoutItem(itemIds);
+  };
+
   return (
     <ProductContext.Provider
-      value={{ shoppingCart, addToCart, modifyItemQuantity }}
+      value={{
+        shoppingCart,
+        addToCart,
+        modifyItemQuantity,
+        selectedCheckoutItem,
+        updateSelectedCheckoutItem,
+      }}
     >
       {children}
     </ProductContext.Provider>

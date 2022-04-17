@@ -11,9 +11,7 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { Link as GatsbyLink, navigate } from "gatsby";
 import React, { useContext, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
-import { updateSelectedCheckoutItemsID } from "../../modules/products/src/productReducers";
 import ItemRemoveConfirmationDialog from "../../modules/products/views/ItemRemoveConfirmationDialog";
 import ProductErrorSnackbar from "../../modules/products/views/ProductErrorSnackbar";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
@@ -29,9 +27,6 @@ type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
 
 const Cart = () => {
   const cartTitle = ["Item", "Price (RM)", "Quantity", "Total (RM)"];
-  const selectedCheckoutItemsID = useAppSelector(
-    (state) => state.product.selectedCheckoutItemsID
-  );
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [toBeRemovedItem, setToBeRemovedItem] =
     useState<products.shoppingCartItemData>({
@@ -44,19 +39,23 @@ const Cart = () => {
   const [removeConfirmModalDisplay, setRemoveConfirmModalDisplay] =
     useState<boolean>(false);
   const [isCheckoutError, setIsCheckoutError] = useState(false);
-  const dispatch = useAppDispatch();
-  const { shoppingCart, modifyItemQuantity } = useContext(ProductContext);
+  const {
+    shoppingCart,
+    modifyItemQuantity,
+    selectedCheckoutItem,
+    updateSelectedCheckoutItem,
+  } = useContext(ProductContext);
 
   useEffect(() => {
     let currentTotal = 0;
     shoppingCart.map((item) => {
-      if (selectedCheckoutItemsID.includes(item.id)) {
+      if (selectedCheckoutItem.includes(item.id)) {
         currentTotal += +item.itemPrice;
       }
       return null;
     });
     setTotalAmount(currentTotal);
-  }, [shoppingCart, selectedCheckoutItemsID]);
+  }, [shoppingCart, selectedCheckoutItem]);
 
   const onChangeSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.id === "selectAll") {
@@ -66,17 +65,17 @@ const Cart = () => {
           allIds.push(item.id);
           return null;
         });
-        dispatch(updateSelectedCheckoutItemsID(allIds));
+        updateSelectedCheckoutItem(allIds);
       } else {
-        dispatch(updateSelectedCheckoutItemsID([]));
+        updateSelectedCheckoutItem([]);
       }
     } else if (event.target.checked) {
-      const prevArr = [...selectedCheckoutItemsID, event.target.id];
-      dispatch(updateSelectedCheckoutItemsID(prevArr));
+      const prevArr = [...selectedCheckoutItem, event.target.id];
+      updateSelectedCheckoutItem(prevArr);
     } else {
-      const splicedArr = [...selectedCheckoutItemsID];
+      const splicedArr = [...selectedCheckoutItem];
       splicedArr.splice(splicedArr.indexOf(event.target.id), 1);
-      dispatch(updateSelectedCheckoutItemsID(splicedArr));
+      updateSelectedCheckoutItem(splicedArr);
     }
   };
 
@@ -103,7 +102,7 @@ const Cart = () => {
   };
 
   const onCheckout = () => {
-    if (selectedCheckoutItemsID.length > 0) {
+    if (selectedCheckoutItem.length > 0) {
       navigate(routeNames.checkout);
     } else {
       setIsCheckoutError(true);
@@ -147,11 +146,10 @@ const Cart = () => {
                           color="secondary"
                           onChange={onChangeSelect}
                           indeterminate={
-                            selectedCheckoutItemsID.length <
-                              shoppingCart.length &&
-                            selectedCheckoutItemsID.length > 0
+                            selectedCheckoutItem.length < shoppingCart.length &&
+                            selectedCheckoutItem.length > 0
                           }
-                          checked={selectedCheckoutItemsID.length > 0}
+                          checked={selectedCheckoutItem.length > 0}
                           id="selectAll"
                           inputProps={{ "aria-label": "checkAll" }}
                         />
@@ -198,7 +196,7 @@ const Cart = () => {
                             alignItems="center"
                           >
                             <Checkbox
-                              checked={selectedCheckoutItemsID.includes(
+                              checked={selectedCheckoutItem.includes(
                                 cartItem.id
                               )}
                               color="secondary"
@@ -280,7 +278,7 @@ const Cart = () => {
                             alignItems="center"
                           >
                             <Checkbox
-                              checked={selectedCheckoutItemsID.includes(
+                              checked={selectedCheckoutItem.includes(
                                 cartItem.id
                               )}
                               color="secondary"
