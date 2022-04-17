@@ -112,6 +112,7 @@ module.exports = {
         alias: {
           "@src": "src",
           "@utils": "src/utils",
+          "@modules": "src/modules",
         },
         extensions: ["ts"],
       },

@@ -1,3 +1,5 @@
+import { isSSR } from "@utils/constants";
+import { customJSONParse } from "@utils/helper";
 import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import { getImage } from "gatsby-plugin-image";
 import { getProductVariationSuffix, roundTo2Dp } from "../../../utils/helper";
@@ -44,5 +46,33 @@ export const addToCart = (
   localStorage.setItem(
     productLocalStorageKeys.shoppingCart,
     JSON.stringify(shoppingCart)
+  );
+};
+
+export const modifyItemQuantity = (
+  itemId: string,
+  mode: "increase" | "reduce" | "delete"
+) => {
+  const shoppingCartItems: products.shoppingCartItemData[] =
+    (!isSSR &&
+      customJSONParse(
+        localStorage.getItem(productLocalStorageKeys.shoppingCart)
+      )) ||
+    [];
+  const targetIndex = shoppingCartItems.findIndex((item) => item.id === itemId);
+  if (mode === "increase") {
+    shoppingCartItems[targetIndex].quantity += 1;
+    shoppingCartItems[targetIndex].itemPrice +=
+      shoppingCartItems[targetIndex].price;
+  } else if (mode === "reduce") {
+    shoppingCartItems[targetIndex].quantity -= 1;
+    shoppingCartItems[targetIndex].itemPrice -=
+      shoppingCartItems[targetIndex].price;
+  } else {
+    shoppingCartItems.splice(targetIndex, 1);
+  }
+  localStorage.setItem(
+    productLocalStorageKeys.shoppingCart,
+    JSON.stringify(shoppingCartItems)
   );
 };

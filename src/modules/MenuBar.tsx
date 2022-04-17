@@ -53,8 +53,13 @@ const MenuBar = () => {
 
   const { data: currentUserDetail } = useUserDetails();
 
-  const shoppingCartItem:products.shoppingCartItemData[] = useMemo(
-    () => customJSONParse(localStorage.getItem(productLocalStorageKeys.shoppingCart)) || [],
+  const shoppingCartItem: products.shoppingCartItemData[] = useMemo(
+    () =>
+      (!isSSR &&
+        customJSONParse(
+          localStorage.getItem(productLocalStorageKeys.shoppingCart)
+        )) ||
+      [],
     []
   );
   const [totalQuantity, setTotalQuantity] = useState(0);
