@@ -1,3 +1,4 @@
+import { ProductContext } from "@contextProvider/ProductContextProvider";
 import { modifyItemQuantity } from "@modules/products/src/productUtils";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -12,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import { isSSR } from "@utils/constants";
 import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import { Link as GatsbyLink, navigate } from "gatsby";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import { updateSelectedCheckoutItemsID } from "../../modules/products/src/productReducers";
@@ -56,6 +57,7 @@ const Cart = () => {
     useState<boolean>(false);
   const [isCheckoutError, setIsCheckoutError] = useState(false);
   const dispatch = useAppDispatch();
+  const { shoppingCart } = useContext(ProductContext);
 
   useEffect(() => {
     let currentTotal = 0;

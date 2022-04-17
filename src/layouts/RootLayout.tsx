@@ -1,17 +1,18 @@
+import ProductContextProvider from "@contextProvider/ProductContextProvider";
 import AdapterDayjs from "@mui/lab/AdapterDayjs";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { PaletteMode } from "@mui/material";
 import {
   createTheme,
   responsiveFontSizes,
-  ThemeProvider,
+  ThemeProvider
 } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { SnackbarProvider } from "notistack";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
-import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Provider } from "react-redux";
 import LoadingOverlay from "../modules/overlay/views/LoadingOverlay";
 import EnlargedProductImageCarouselModal from "../modules/products/views/EnlargedProductImageCarouselModal";
 import StatusModal from "../modules/status/views/StatusModal";
@@ -172,10 +173,12 @@ const RootLayout: React.FC = ({ children }) => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Provider store={store}>
               <QueryClientProvider client={queryClient}>
-                {children}
-                <StatusModal />
-                <LoadingOverlay />
-                <EnlargedProductImageCarouselModal />
+                <ProductContextProvider>
+                  {children}
+                  <StatusModal />
+                  <LoadingOverlay />
+                  <EnlargedProductImageCarouselModal />
+                </ProductContextProvider>
               </QueryClientProvider>
             </Provider>
           </LocalizationProvider>

@@ -113,6 +113,7 @@ module.exports = {
           "@src": "src",
           "@utils": "src/utils",
           "@modules": "src/modules",
+          "@contextProvider": "src/contextProvider",
         },
         extensions: ["ts"],
       },
