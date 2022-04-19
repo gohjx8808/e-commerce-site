@@ -12,7 +12,10 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { accountLocalStorageKeys } from "@utils/localStorageKeys";
+import {
+  accountLocalStorageKeys,
+  productLocalStorageKeys,
+} from "@utils/localStorageKeys";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isBetween from "dayjs/plugin/isBetween";
@@ -25,7 +28,7 @@ import React, {
   useState,
 } from "react";
 import { useForm } from "react-hook-form";
-import { useAppSelector, useXsDownMediaQuery } from "../../hooks";
+import { useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import { useUserDetails } from "../../modules/auth/src/authQueries";
 import { getAvailablePromocodes } from "../../modules/products/src/productApi";
@@ -44,7 +47,7 @@ import ControlledRadioButton from "../../sharedComponents/inputs/ControlledRadio
 import ControlledTextInput from "../../sharedComponents/inputs/ControlledTextInput";
 import CheckoutCard from "../../styledComponents/products/CheckoutCard";
 import { isSSR, stateOptions } from "../../utils/constants";
-import { formatPrice, roundTo2Dp } from "../../utils/helper";
+import { customJSONParse, formatPrice, roundTo2Dp } from "../../utils/helper";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
@@ -82,13 +85,14 @@ const Checkout = () => {
 
   const { data: currentUserDetails } = useUserDetails();
   const { data: orderCount } = useOrderCount();
-  const { mutate: submitOrder,isLoading:submitOrderLoading } = useSubmitOrder(onSuccessOrder);
+  const { mutate: submitOrder, isLoading: submitOrderLoading } =
+    useSubmitOrder(onSuccessOrder);
 
   const isLoggedIn =
     !isSSR && !!localStorage.getItem(accountLocalStorageKeys.uid);
-  const prevShippingInfo = useAppSelector(
-    (state) => state.product.prevShippingInfo
-  );
+  const prevShippingInfo =
+    !isSSR && customJSONParse(localStorage.getItem(productLocalStorageKeys.shippingInfo));
+
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<
     products.shoppingCartItemData[]
@@ -151,12 +155,14 @@ const Checkout = () => {
   }, [shoppingCart, selectedCheckoutItem]);
 
   useEffect(() => {
-    const addressBook = currentUserDetails?.addressBook;
-    const defaultAddress = addressBook?.find(
-      (address) => address.defaultOption === "1"
-    );
-    setSelectedAddress(defaultAddress);
-  }, [currentUserDetails?.addressBook]);
+    if (isLoggedIn) {
+      const addressBook = currentUserDetails?.addressBook;
+      const defaultAddress = addressBook?.find(
+        (address) => address.defaultOption === "1"
+      );
+      setSelectedAddress(defaultAddress);
+    }
+  }, [currentUserDetails?.addressBook, isLoggedIn]);
 
   const columns: GridColDef[] = [
     {
@@ -542,7 +548,7 @@ const Checkout = () => {
                   >
                     <Tooltip
                       title="Please login to use this feature"
-                      disableHoverListener={!isLoggedIn}
+                      disableHoverListener={isLoggedIn}
                     >
                       <span>
                         <Button
