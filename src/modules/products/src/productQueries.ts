@@ -48,7 +48,7 @@ export const useSubmitOrder = (onSuccessOrder: () => void) => {
 
   const onUpdate = async (payload: products.sendPaymentEmailPayload) => {
     // update order count
-    await updateOrderCount(+orderCount);
+    await updateOrderCount(orderCount + 1);
     // update promo code used for the user
     if (payload.promoCode) {
       const usedPromocode = [...(userDetails?.usedPromocode || [])];
@@ -56,17 +56,13 @@ export const useSubmitOrder = (onSuccessOrder: () => void) => {
       await updatePromoCodeUsed(usedPromocode);
       queryClient.invalidateQueries(getCurrentUserDetailsKey);
     }
-    // const toBeRemovedItems = payload.selectedCheckoutItems;
-    // yield all(
-    //   toBeRemovedItems.map((item) => put(removeItemFromCart(item.id)))
-    // );
     if (payload.saveShippingInfo) {
       const addressData = {
         fullName: payload.fullName,
         email: payload.email,
         phoneNumber: payload.phoneNumber,
         addressLine1: payload.addressLine1,
-        addressLine2: payload.addressLine2,
+        addressLine2: payload.addressLine2 || "",
         postcode: payload.postcode,
         city: payload.city,
         state: payload.state,
