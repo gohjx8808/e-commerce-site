@@ -42,7 +42,7 @@ import ControlledPicker from "../../sharedComponents/inputs/ControlledPicker";
 import ControlledRadioButton from "../../sharedComponents/inputs/ControlledRadioButton";
 import ControlledTextInput from "../../sharedComponents/inputs/ControlledTextInput";
 import CheckoutCard from "../../styledComponents/products/CheckoutCard";
-import { stateOptions } from "../../utils/constants";
+import { isSSR, stateOptions } from "../../utils/constants";
 import { formatPrice, roundTo2Dp } from "../../utils/helper";
 
 dayjs.extend(isBetween);
@@ -71,10 +71,8 @@ const Checkout = () => {
 
   const { data: currentUserDetails } = useUserDetails();
   const { data: orderCount } = useOrderCount();
-  const isLoggedIn = useMemo(
-    () => !!localStorage.getItem(accountLocalStorageKeys.uid),
-    []
-  );
+  const isLoggedIn =
+    !isSSR && !!localStorage.getItem(accountLocalStorageKeys.uid);
   const prevShippingInfo = useAppSelector(
     (state) => state.product.prevShippingInfo
   );

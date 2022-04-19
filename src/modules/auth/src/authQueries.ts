@@ -1,4 +1,5 @@
-import { accountLocalStorageKeys } from '@utils/localStorageKeys';
+import { isSSR } from "@utils/constants";
+import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
 import firebase from "gatsby-plugin-firebase";
 import { useMutation, useQuery } from "react-query";
@@ -66,7 +67,7 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
           dispatch(toggleStatusModal(true));
         }
       },
-      enabled: !!localStorage.getItem(accountLocalStorageKeys.uid),
+      enabled: !isSSR && !!localStorage.getItem(accountLocalStorageKeys.uid),
       cacheTime: Infinity,
       staleTime: Infinity,
     }
