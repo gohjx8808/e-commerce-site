@@ -1,24 +1,27 @@
-import { accountLocalStorageKeys, productLocalStorageKeys } from "@utils/localStorageKeys";
+import {
+  accountLocalStorageKeys,
+  productLocalStorageKeys,
+} from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useAppDispatch } from "../../../hooks";
 import { useAddEditAddress } from "../../account/src/accountQueries";
 import {
   getCurrentUserDetailsKey,
-  useUserDetails
+  useUserDetails,
 } from "../../auth/src/authQueries";
 import {
   toggleStatusModal,
   toggleSuccess,
   updateStatusMsg,
-  updateStatusTitle
+  updateStatusTitle,
 } from "../../status/src/statusReducer";
 import {
   getAvailablePromocodes,
   getOrderCount,
   sendPaymentEmailApi,
   updateOrderCount,
-  updatePromoCodeUsed
+  updatePromoCodeUsed,
 } from "./productApi";
 
 export const productQueriesKeys = {

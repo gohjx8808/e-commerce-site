@@ -1,3 +1,4 @@
+import { ProductContext } from "@contextProvider/ProductContextProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -15,17 +16,22 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isBetween from "dayjs/plugin/isBetween";
 import firebase from "gatsby-plugin-firebase";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useForm } from "react-hook-form";
-import {
-  useAppDispatch,
-  useAppSelector,
-  useXsDownMediaQuery
-} from "../../hooks";
+import { useAppSelector, useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import { useUserDetails } from "../../modules/auth/src/authQueries";
 import { getAvailablePromocodes } from "../../modules/products/src/productApi";
-import { useSubmitOrder } from "../../modules/products/src/productQueries";
+import {
+  useOrderCount,
+  useSubmitOrder,
+} from "../../modules/products/src/productQueries";
 import productSchema from "../../modules/products/src/productSchema";
 import CheckoutAddressListModal from "../../modules/products/views/CheckoutAddressListModal";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
@@ -37,7 +43,7 @@ import ControlledRadioButton from "../../sharedComponents/inputs/ControlledRadio
 import ControlledTextInput from "../../sharedComponents/inputs/ControlledTextInput";
 import CheckoutCard from "../../styledComponents/products/CheckoutCard";
 import { stateOptions } from "../../utils/constants";
-import { formatPrice } from "../../utils/helper";
+import { formatPrice, roundTo2Dp } from "../../utils/helper";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
@@ -61,14 +67,13 @@ const Checkout = () => {
   const [selectedAddress, setSelectedAddress] =
     useState<auth.addressData | null>();
 
+  const { shoppingCart, selectedCheckoutItem } = useContext(ProductContext);
+
   const { data: currentUserDetails } = useUserDetails();
-  const isLoggedIn = useMemo(() => !!localStorage.getItem(accountLocalStorageKeys.uid), []);
-  const cartItems = useAppSelector((state) => state.product.shoppingCartItem);
-  const selectedCheckoutItemsID = useAppSelector(
-    (state) => state.product.selectedCheckoutItemsID
-  );
-  const prevOrderCount = useAppSelector(
-    (state) => state.product.prevOrderCount
+  const { data: orderCount } = useOrderCount();
+  const isLoggedIn = useMemo(
+    () => !!localStorage.getItem(accountLocalStorageKeys.uid),
+    []
   );
   const prevShippingInfo = useAppSelector(
     (state) => state.product.prevShippingInfo
@@ -123,18 +128,18 @@ const Checkout = () => {
   }, []);
 
   useEffect(() => {
-    const filteredItems = cartItems.filter((item) => {
-      if (selectedCheckoutItemsID.includes(item.id)) {
+    const filteredItems = shoppingCart.filter((item) => {
+      if (selectedCheckoutItem.includes(item.id)) {
         const itemPrice = +item.price * +item.quantity;
         // eslint-disable-next-line no-param-reassign
-        item = { ...item, itemPrice: itemPrice.toFixed(2) };
+        item = { ...item, itemPrice: roundTo2Dp(itemPrice) };
         setTotalAmount((prevTotalAmount) => prevTotalAmount + itemPrice);
         return true;
       }
       return false;
     });
     setExtractedCartItem(filteredItems);
-  }, [cartItems, selectedCheckoutItemsID]);
+  }, [shoppingCart, selectedCheckoutItem]);
 
   useEffect(() => {
     const addressBook = currentUserDetails?.addressBook;
@@ -355,7 +360,7 @@ const Checkout = () => {
       accUserName: currentUserDetails?.fullName
         ? currentUserDetails.fullName
         : hookData.fullName,
-      currentOrderCount: prevOrderCount + 1,
+      currentOrderCount: orderCount + 1,
       totalAmount,
       discountMargin: `${
         appliedPromo.code
