@@ -23,6 +23,8 @@ interface productContextState {
   ) => void;
   selectedCheckoutItem: string[];
   updateSelectedCheckoutItem: (itemIds: string[]) => void;
+  clearSelectedCheckoutItem: () => void;
+  removeCartItem: () => void;
 }
 
 const initialState: productContextState = {
@@ -31,6 +33,8 @@ const initialState: productContextState = {
   modifyItemQuantity: () => {},
   selectedCheckoutItem: [],
   updateSelectedCheckoutItem: () => {},
+  clearSelectedCheckoutItem: () => {},
+  removeCartItem: () => {},
 };
 
 export const ProductContext = createContext(initialState);
@@ -135,6 +139,26 @@ const ProductContextProvider: FC = (props) => {
     setSelectedCheckoutItem(itemIds);
   };
 
+  const clearSelectedCheckoutItem = () => {
+    setSelectedCheckoutItem([]);
+    localStorage.setItem(
+      productLocalStorageKeys.selectedCheckoutItem,
+      JSON.stringify([])
+    );
+  };
+
+  const removeCartItem = () => {
+    let cartItem = [...shoppingCart];
+    cartItem = cartItem.filter(
+      (item) => !selectedCheckoutItem.includes(item.id)
+    );
+    setShoppingCart(cartItem);
+    localStorage.setItem(
+      productLocalStorageKeys.shoppingCart,
+      JSON.stringify(cartItem)
+    );
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -143,6 +167,8 @@ const ProductContextProvider: FC = (props) => {
         modifyItemQuantity,
         selectedCheckoutItem,
         updateSelectedCheckoutItem,
+        clearSelectedCheckoutItem,
+        removeCartItem,
       }}
     >
       {children}

@@ -35,7 +35,7 @@ export const useOrderCount = () =>
     (await getOrderCount()).val()
   );
 
-export const useSubmitOrder = () => {
+export const useSubmitOrder = (onSuccessOrder: () => void) => {
   const { data: orderCount } = useOrderCount();
   const { data: userDetails } = useUserDetails();
   const { mutate: addAddress } = useAddEditAddress(
@@ -98,8 +98,8 @@ export const useSubmitOrder = () => {
     } else {
       localStorage.removeItem(productLocalStorageKeys.shippingInfo);
     }
+    onSuccessOrder();
     return sendPaymentEmailApi(payload);
-    // dispatch(updateSelectedCheckoutItemsID([]));
   };
 
   return useMutation("submitOrder", onUpdate, {

@@ -1,5 +1,6 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -67,10 +68,22 @@ const Checkout = () => {
   const [selectedAddress, setSelectedAddress] =
     useState<auth.addressData | null>();
 
-  const { shoppingCart, selectedCheckoutItem } = useContext(ProductContext);
+  const {
+    shoppingCart,
+    selectedCheckoutItem,
+    clearSelectedCheckoutItem,
+    removeCartItem,
+  } = useContext(ProductContext);
+
+  const onSuccessOrder = () => {
+    removeCartItem();
+    clearSelectedCheckoutItem();
+  };
 
   const { data: currentUserDetails } = useUserDetails();
   const { data: orderCount } = useOrderCount();
+  const { mutate: submitOrder,isLoading:submitOrderLoading } = useSubmitOrder(onSuccessOrder);
+
   const isLoggedIn =
     !isSSR && !!localStorage.getItem(accountLocalStorageKeys.uid);
   const prevShippingInfo = useAppSelector(
@@ -113,8 +126,6 @@ const Checkout = () => {
   } = useForm({
     resolver: yupResolver(productSchema.shippingInfoSchema),
   });
-
-  const { mutate: submitOrder } = useSubmitOrder();
 
   useEffect(() => {
     const getAvailablePromocodesEffect = async () => {
@@ -761,14 +772,15 @@ const Checkout = () => {
                     alignItems="center"
                     marginTop={1}
                   >
-                    <Button
+                    <LoadingButton
                       variant="contained"
                       color="secondary"
                       size="medium"
                       type="submit"
+                      loading={submitOrderLoading}
                     >
                       Proceed To Payment
-                    </Button>
+                    </LoadingButton>
                   </Grid>
                 </Grid>
               </Grid>
