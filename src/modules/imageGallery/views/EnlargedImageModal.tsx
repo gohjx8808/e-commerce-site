@@ -1,25 +1,23 @@
-import Dialog from '@mui/material/Dialog';
-import { GatsbyImage } from 'gatsby-plugin-image';
-import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { toggleEnlargedImageModal } from '../src/imageGalleryReducer';
+import Dialog from "@mui/material/Dialog";
+import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
+import React from "react";
 
-const EnlargedImageModal = () => {
-  const dispatch = useAppDispatch();
-  const selectedProductImage = useAppSelector((state) => state.imageGallery.selectedImage);
-  const isEnlargedImageModalOpen = useAppSelector(
-    (state) => state.imageGallery.isEnlargedImageModalOpen,
-  );
+interface enlargedImageModalProps {
+  selectedProductImage: IGatsbyImageData | null;
+  setSelectedProductImage: (value: IGatsbyImageData | null) => void;
+}
+
+const EnlargedImageModal = (props: enlargedImageModalProps) => {
+  const { selectedProductImage, setSelectedProductImage } = props;
 
   return (
     <Dialog
-      open={isEnlargedImageModalOpen}
-      onClose={() => dispatch(toggleEnlargedImageModal(false))}
+      open={!!selectedProductImage}
+      onClose={() => setSelectedProductImage(null)}
     >
-      <GatsbyImage
-        image={selectedProductImage}
-        alt=""
-      />
+      {selectedProductImage && (
+        <GatsbyImage image={selectedProductImage} alt="" />
+      )}
     </Dialog>
   );
 };

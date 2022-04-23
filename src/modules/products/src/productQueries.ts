@@ -39,7 +39,7 @@ export const useSubmitOrder = (onSuccessOrder: () => void) => {
   const { data: orderCount } = useOrderCount();
   const { data: userDetails } = useUserDetails();
   const { mutate: addAddress } = useAddEditAddress(
-    { actionType: "Add", selectedAddress: null },
+    { actionType: "Add", selectedAddress: null, isModalOpen: false },
     () => {},
     false
   );
