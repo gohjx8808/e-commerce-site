@@ -1,24 +1,19 @@
-import Dialog from '@mui/material/Dialog';
-import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import React from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { toggleEnlargedProductImageModal } from '../src/productReducers';
+import { ProductContext } from "@contextProvider/ProductContextProvider";
+import Dialog from "@mui/material/Dialog";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import React, { useContext } from "react";
+import { Carousel } from "react-responsive-carousel";
 
 const EnlargedProductImageCarouselModal = () => {
-  const dispatch = useAppDispatch();
-  const selectedProductImage = useAppSelector((state) => state.product.selectedProductImage);
-  const selectedProductImageList = useAppSelector(
-    (state) => state.product.selectedProductImageList,
-  );
-  const isEnlargedProductImageModalOpen = useAppSelector(
-    (state) => state.product.isEnlargedProductImageModalOpen,
-  );
+  const { enlargedImageCarouselData, updateEnlargedImageCarouselData } =
+    useContext(ProductContext);
 
   return (
     <Dialog
-      open={isEnlargedProductImageModalOpen}
-      onClose={() => dispatch(toggleEnlargedProductImageModal(false))}
+      open={enlargedImageCarouselData.imageList.length > 0}
+      onClose={() =>
+        updateEnlargedImageCarouselData({ imageList: [], clickedIndex: 0 })
+      }
     >
       <Carousel
         showIndicators={false}
@@ -26,13 +21,11 @@ const EnlargedProductImageCarouselModal = () => {
         autoPlay={false}
         showThumbs={false}
         animationHandler="fade"
-        selectedItem={selectedProductImageList && selectedProductImageList.findIndex(
-          (image) => image === selectedProductImage,
-        )}
+        selectedItem={enlargedImageCarouselData.clickedIndex}
         infiniteLoop
         transitionTime={800}
       >
-        {selectedProductImageList && selectedProductImageList.map((image) => {
+        {enlargedImageCarouselData.imageList.map((image) => {
           const imageData = getImage(image)!;
           return (
             <GatsbyImage

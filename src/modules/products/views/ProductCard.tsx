@@ -9,20 +9,15 @@ import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { Link as GatsbyLink } from "gatsby";
-import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { useSnackbar } from "notistack";
 import React, { memo, useContext } from "react";
 import { Carousel } from "react-responsive-carousel";
-import { useAppDispatch, useXsDownMediaQuery } from "../../../hooks";
+import { useXsDownMediaQuery } from "../../../hooks";
 import ProductPrice from "../../../styledComponents/products/ProductPrice";
 import StyledProductCard from "../../../styledComponents/products/StyledProductCard";
 import { formatPrice, getProductVariationSuffix } from "../../../utils/helper";
 import "../src/carousel.css";
-import {
-  toggleEnlargedProductImageModal,
-  updateSelectedProductImage,
-  updateSelectedProductImageList
-} from "../src/productReducers";
 import ItemVariationMenu from "./ItemVariationMenu";
 
 interface ProductCardOwnProps {
@@ -31,10 +26,10 @@ interface ProductCardOwnProps {
 
 const ProductCard = (props: ProductCardOwnProps) => {
   const { product } = props;
-  const dispatch = useAppDispatch();
   const isXsView = useXsDownMediaQuery();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { addToCart } = useContext(ProductContext);
+  const { addToCart, updateEnlargedImageCarouselData } =
+    useContext(ProductContext);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -61,15 +56,11 @@ const ProductCard = (props: ProductCardOwnProps) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const triggerEnlargeImage = (
-    imageData: ImageDataLike,
-    carouselImageList: ImageDataLike[],
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    dispatch(updateSelectedProductImage(imageData));
-    dispatch(updateSelectedProductImageList(carouselImageList));
-    dispatch(toggleEnlargedProductImageModal(true));
+  const triggerEnlargeImage = (index: number) => {
+    updateEnlargedImageCarouselData({
+      imageList: product.productImage,
+      clickedIndex: index,
+    });
   };
 
   const onClickAddToCart = (
@@ -96,29 +87,29 @@ const ProductCard = (props: ProductCardOwnProps) => {
             title={product.name}
             sx={{ minHeight: { sm: 95, xs: 105 } }}
           />
-          <Carousel
-            showIndicators={false}
-            infiniteLoop
-            animationHandler="fade"
-            showThumbs={false}
-            showStatus={false}
-            transitionTime={800}
-          >
-            {product.productImage.map((image) => {
-              const imageData = getImage(image)!;
-              return (
-                <Box
-                  sx={{ cursor: "zoom-in" }}
-                  key={imageData.images.fallback?.src}
-                  onClick={(event) =>
-                    triggerEnlargeImage(image, product.productImage, event)
-                  }
-                >
-                  <GatsbyImage image={imageData} alt={product.name} />
-                </Box>
-              );
-            })}
-          </Carousel>
+          <Box onClick={(event) => event.preventDefault()}>
+            <Carousel
+              showIndicators={false}
+              infiniteLoop
+              animationHandler="fade"
+              showThumbs={false}
+              showStatus={false}
+              transitionTime={800}
+              onClickItem={triggerEnlargeImage}
+            >
+              {product.productImage.map((image) => {
+                const imageData = getImage(image)!;
+                return (
+                  <Box
+                    sx={{ cursor: "zoom-in" }}
+                    key={imageData.images.fallback?.src}
+                  >
+                    <GatsbyImage image={imageData} alt={product.name} />
+                  </Box>
+                );
+              })}
+            </Carousel>
+          </Box>
           <CardContent sx={{ paddingBottom: "16px!important" }}>
             <Grid container justifyContent="space-between" alignItems="center">
               <Grid item>

@@ -80,4 +80,9 @@ declare namespace products {
     discountType: string;
     discountValue: string;
   }
+
+  interface enlargedImageCarouselData {
+    imageList: import("gatsby-plugin-image").ImageDataLike[];
+    clickedIndex: number;
+  }
 }

@@ -25,6 +25,10 @@ interface productContextState {
   updateSelectedCheckoutItem: (itemIds: string[]) => void;
   clearSelectedCheckoutItem: () => void;
   removeCartItem: () => void;
+  enlargedImageCarouselData: products.enlargedImageCarouselData;
+  updateEnlargedImageCarouselData: (
+    value: products.enlargedImageCarouselData
+  ) => void;
 }
 
 const initialState: productContextState = {
@@ -35,6 +39,8 @@ const initialState: productContextState = {
   updateSelectedCheckoutItem: () => {},
   clearSelectedCheckoutItem: () => {},
   removeCartItem: () => {},
+  enlargedImageCarouselData: { imageList: [], clickedIndex: 0 },
+  updateEnlargedImageCarouselData: () => {},
 };
 
 export const ProductContext = createContext(initialState);
@@ -49,6 +55,10 @@ const ProductContextProvider: FC = (props) => {
   const [selectedCheckoutItem, setSelectedCheckoutItem] = useState<string[]>(
     []
   );
+  const [enlargedImageCarouselData, setEnlargedImageCarouselData] =
+    useState<products.enlargedImageCarouselData>(
+      initialState.enlargedImageCarouselData
+    );
 
   useEffect(() => {
     setShoppingCart(
@@ -169,6 +179,8 @@ const ProductContextProvider: FC = (props) => {
         updateSelectedCheckoutItem,
         clearSelectedCheckoutItem,
         removeCartItem,
+        enlargedImageCarouselData,
+        updateEnlargedImageCarouselData: setEnlargedImageCarouselData,
       }}
     >
       {children}
