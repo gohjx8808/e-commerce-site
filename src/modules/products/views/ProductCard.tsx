@@ -56,6 +56,7 @@ const ProductCard = (props: ProductCardOwnProps) => {
     setAnchorEl(event.currentTarget);
   };
 
+  // TODO wrong enlarged image
   const triggerEnlargeImage = (index: number) => {
     updateEnlargedImageCarouselData({
       imageList: product.productImage,

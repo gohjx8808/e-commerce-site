@@ -20,7 +20,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { navigate } from "gatsby";
 import React, { useContext, useEffect, useState } from "react";
-import { useAppDispatch, useXsDownMediaQuery } from "../hooks";
+import { useXsDownMediaQuery } from "../hooks";
 import ElevationScroll from "../sharedComponents/ElevationScroll";
 import StyledAppbar from "../styledComponents/drawer/StyledAppbar";
 import {
@@ -36,7 +36,6 @@ import { useUserDetails } from "./auth/src/authQueries";
 import SignOutConfirmationModal from "./auth/views/SignOutConfirmationModal";
 import CustomDesktopDrawer from "./drawer/CustomDesktopDrawer";
 import CustomMobileDrawer from "./drawer/CustomMobileDrawer";
-import { updateProductFilterKeyword } from "./products/src/productReducers";
 
 const MenuBar = () => {
   const pathname = (!isSSR && window.location.pathname) || "";
@@ -52,10 +51,9 @@ const MenuBar = () => {
 
   const { data: currentUserDetail } = useUserDetails();
 
-  const { shoppingCart } = useContext(ProductContext);
+  const { shoppingCart, updateFilterKeyword } = useContext(ProductContext);
 
   const [totalQuantity, setTotalQuantity] = useState(0);
-  const dispatch = useAppDispatch();
   const isXsView = useXsDownMediaQuery();
   const { toggleTheme, displayTheme } = useContext(DarkModeContext);
 
@@ -132,7 +130,7 @@ const MenuBar = () => {
   const onChangeProductFilterKeyword = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    dispatch(updateProductFilterKeyword(event.target.value));
+    updateFilterKeyword(event.target.value);
   };
 
   const toggleDrawer = () => {

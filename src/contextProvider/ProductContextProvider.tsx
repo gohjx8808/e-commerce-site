@@ -29,6 +29,8 @@ interface productContextState {
   updateEnlargedImageCarouselData: (
     value: products.enlargedImageCarouselData
   ) => void;
+  filterKeyword: string;
+  updateFilterKeyword: (value: string) => void;
 }
 
 const initialState: productContextState = {
@@ -41,6 +43,8 @@ const initialState: productContextState = {
   removeCartItem: () => {},
   enlargedImageCarouselData: { imageList: [], clickedIndex: 0 },
   updateEnlargedImageCarouselData: () => {},
+  filterKeyword: "",
+  updateFilterKeyword: () => {},
 };
 
 export const ProductContext = createContext(initialState);
@@ -59,6 +63,7 @@ const ProductContextProvider: FC = (props) => {
     useState<products.enlargedImageCarouselData>(
       initialState.enlargedImageCarouselData
     );
+  const [filterKeyword, setFilterKeyword] = useState<string>("");
 
   useEffect(() => {
     setShoppingCart(
@@ -181,6 +186,8 @@ const ProductContextProvider: FC = (props) => {
         removeCartItem,
         enlargedImageCarouselData,
         updateEnlargedImageCarouselData: setEnlargedImageCarouselData,
+        filterKeyword,
+        updateFilterKeyword: setFilterKeyword,
       }}
     >
       {children}

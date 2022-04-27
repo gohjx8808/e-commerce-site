@@ -1,3 +1,4 @@
+import { ProductContext } from "@contextProvider/ProductContextProvider";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
@@ -6,10 +7,15 @@ import { isSSR } from "@utils/constants";
 import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import { graphql, useStaticQuery } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useForm } from "react-hook-form";
 import { scroller } from "react-scroll";
-import { useAppSelector } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import ProductCard from "../../modules/products/views/ProductCard";
 import ControlledPicker from "../../sharedComponents/inputs/ControlledPicker";
@@ -20,9 +26,7 @@ interface categoryAmountData {
 }
 
 const Products = () => {
-  const productFilterKeyword = useAppSelector(
-    (state) => state.product.productFilterKeyword
-  );
+  const { filterKeyword } = useContext(ProductContext);
   const allProducts: products.innerProductQueryData[] = useMemo(
     () =>
       (!isSSR &&
@@ -46,14 +50,14 @@ const Products = () => {
 
   const filterProductKeyword = useCallback(
     (productName: string) => {
-      if (productFilterKeyword) {
+      if (filterKeyword) {
         return productName
           .toLowerCase()
-          .includes(productFilterKeyword.toLowerCase());
+          .includes(filterKeyword.toLowerCase());
       }
       return true;
     },
-    [productFilterKeyword]
+    [filterKeyword]
   );
 
   useEffect(() => {
