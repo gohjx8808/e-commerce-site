@@ -2,7 +2,6 @@ import { useMutation } from "react-query";
 import { navigate } from "gatsby";
 import { sendFeedbackEmail } from "./feedbackApi";
 import { useAppDispatch } from "../../../hooks";
-import { toggleLoadingOverlay } from "../../overlay/src/overlayReducer";
 import {
   toggleSuccess,
   updateStatusMsg,
@@ -20,14 +19,12 @@ export const useSubmitFeedback = () => {
           "Love to know that! Thank you for your precious feedback. Together we can make it better!"
         )
       );
-      dispatch(toggleLoadingOverlay(false));
       dispatch(toggleStatusModal(true));
       navigate("/");
     },
     onError: () => {
       dispatch(toggleSuccess(false));
       dispatch(updateStatusMsg("Somethings wrong happened! Please try again."));
-      dispatch(toggleLoadingOverlay(false));
       dispatch(toggleStatusModal(true));
     },
   });

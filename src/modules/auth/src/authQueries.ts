@@ -5,7 +5,6 @@ import firebase from "gatsby-plugin-firebase";
 import { useMutation, useQuery } from "react-query";
 import { useAppDispatch } from "../../../hooks";
 import routeNames from "../../../utils/routeNames";
-import { toggleLoadingOverlay } from "../../overlay/src/overlayReducer";
 import {
   toggleStatusModal,
   toggleSuccess,
@@ -51,7 +50,6 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
         try {
           const userDetails: auth.userDetails = response;
           if (userDetails.roles.customer) {
-            dispatch(toggleLoadingOverlay(false));
             if (onAdditionalSuccess) {
               onAdditionalSuccess();
             }
@@ -63,7 +61,6 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
           dispatch(updateStatusTitle("Log In"));
           dispatch(updateStatusMsg("Invalid credentials! Please try again."));
           dispatch(toggleSuccess(false));
-          dispatch(toggleLoadingOverlay(false));
           dispatch(toggleStatusModal(true));
         }
       },
@@ -85,7 +82,6 @@ export const useForgotPassword = () => {
           "An email to reset your password has been sent to your registered email address."
         )
       );
-      dispatch(toggleLoadingOverlay(false));
       dispatch(toggleStatusModal(true));
       navigate(routeNames.login);
     },
@@ -100,7 +96,6 @@ export const useForgotPassword = () => {
         dispatch(updateStatusMsg("Network error! Please try again."));
       }
       dispatch(toggleSuccess(false));
-      dispatch(toggleLoadingOverlay(false));
       dispatch(toggleStatusModal(true));
     },
   });
@@ -138,7 +133,6 @@ export const useSignUp = () => {
           "Your registration is successful! Please login using your credentials."
         )
       );
-      dispatch(toggleLoadingOverlay(false));
       dispatch(toggleStatusModal(true));
       navigate(routeNames.login);
     },
@@ -159,7 +153,6 @@ export const useSignUp = () => {
         );
       }
       dispatch(toggleSuccess(false));
-      dispatch(toggleLoadingOverlay(false));
       dispatch(toggleStatusModal(true));
     },
   });

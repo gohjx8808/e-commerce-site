@@ -13,7 +13,6 @@ import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
-import LoadingOverlay from "../modules/overlay/views/LoadingOverlay";
 import EnlargedProductImageCarouselModal from "../modules/products/views/EnlargedProductImageCarouselModal";
 import StatusModal from "../modules/status/views/StatusModal";
 import CustomSnackbar from "../sharedComponents/CustomSnackbar";
@@ -176,7 +175,6 @@ const RootLayout: React.FC = ({ children }) => {
                 <ProductContextProvider>
                   {children}
                   <StatusModal />
-                  <LoadingOverlay />
                   <EnlargedProductImageCarouselModal />
                 </ProductContextProvider>
               </QueryClientProvider>
