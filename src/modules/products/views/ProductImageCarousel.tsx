@@ -1,6 +1,6 @@
 import { getImage, ImageDataLike } from "gatsby-plugin-image";
 import { Carousel } from "react-responsive-carousel";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import ProductImage from "@styledComponents/products/ProductImage";
@@ -14,15 +14,19 @@ interface ProductImageCarouselProps {
 
 const ProductImageCarousel = (props: ProductImageCarouselProps) => {
   const { imageList, productName, autoPlay, card } = props;
+  const [clickedIndex, setClickedIndex] = useState<number>(0);
 
   const { updateEnlargedImageCarouselData } = useContext(ProductContext);
 
-  // TODO wrong enlarged image
-  const triggerEnlargeImage = (index: number) => {
+  const triggerEnlargeImage = () => {
     updateEnlargedImageCarouselData({
       imageList,
-      clickedIndex: index,
+      clickedIndex,
     });
+  };
+
+  const onChangeIndex = (index: number) => {
+    setClickedIndex(index);
   };
 
   return (
@@ -34,8 +38,10 @@ const ProductImageCarousel = (props: ProductImageCarouselProps) => {
       showThumbs={false}
       showStatus={false}
       transitionTime={800}
+      interval={5000}
       onClickItem={triggerEnlargeImage}
       autoPlay={autoPlay}
+      onChange={onChangeIndex}
     >
       {imageList.map((image) => {
         const imageData = getImage(image)!;
