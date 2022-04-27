@@ -21,17 +21,12 @@ import ToggleButton from "@mui/material/ToggleButton";
 import Typography from "@mui/material/Typography";
 import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import { Link as GatsbyLink, PageProps } from "gatsby";
-import { getImage, ImageDataLike } from "gatsby-plugin-image";
+import { getImage } from "gatsby-plugin-image";
 import { useSnackbar } from "notistack";
 import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
-import { useAppDispatch, useXsDownMediaQuery } from "../../hooks";
+import { useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
-import {
-  toggleEnlargedProductImageModal,
-  updateSelectedProductImage,
-  updateSelectedProductImageList,
-} from "../../modules/products/src/productReducers";
 import ProductErrorSnackbar from "../../modules/products/views/ProductErrorSnackbar";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
 import ItemQuantityInput from "../../styledComponents/products/ItemQuantityInput";
@@ -54,9 +49,9 @@ import routeNames from "../../utils/routeNames";
 const ProductDescription: FC<PageProps> = (props) => {
   const { params } = props;
   const { id } = params;
-  const dispatch = useAppDispatch();
   const isXsView = useXsDownMediaQuery();
-  const { addToCart } = useContext(ProductContext);
+  const { addToCart, updateEnlargedImageCarouselData } =
+    useContext(ProductContext);
   const allProducts: products.innerProductQueryData[] = useMemo(
     () =>
       (!isSSR &&
@@ -102,13 +97,11 @@ const ProductDescription: FC<PageProps> = (props) => {
     setProductRecommendation(overallProductArray);
   }, [allProducts, id, isXsView]);
 
-  const triggerEnlargeImage = (
-    imageData: ImageDataLike,
-    carouselImageList: ImageDataLike[]
-  ) => {
-    dispatch(updateSelectedProductImage(imageData));
-    dispatch(updateSelectedProductImageList(carouselImageList));
-    dispatch(toggleEnlargedProductImageModal(true));
+  const triggerEnlargeImage = (index: number) => {
+    updateEnlargedImageCarouselData({
+      imageList: selectedProduct.productImage,
+      clickedIndex: index,
+    });
   };
 
   const jsonContentDescription: Document =
@@ -194,6 +187,7 @@ const ProductDescription: FC<PageProps> = (props) => {
                 showStatus={false}
                 interval={5000}
                 transitionTime={800}
+                onClickItem={triggerEnlargeImage}
               >
                 {selectedProduct.productImage.map((image) => {
                   const imageData = getImage(image)!;
@@ -201,9 +195,6 @@ const ProductDescription: FC<PageProps> = (props) => {
                     <Box
                       sx={{ cursor: "zoom-in" }}
                       key={imageData.images.fallback?.src}
-                      onClick={() =>
-                        triggerEnlargeImage(image, selectedProduct.productImage)
-                      }
                     >
                       <ProductImage
                         image={imageData}
