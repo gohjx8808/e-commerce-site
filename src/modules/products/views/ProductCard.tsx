@@ -9,16 +9,15 @@ import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { Link as GatsbyLink } from "gatsby";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { useSnackbar } from "notistack";
 import React, { memo, useContext } from "react";
-import { Carousel } from "react-responsive-carousel";
 import { useXsDownMediaQuery } from "../../../hooks";
 import ProductPrice from "../../../styledComponents/products/ProductPrice";
 import StyledProductCard from "../../../styledComponents/products/StyledProductCard";
 import { formatPrice, getProductVariationSuffix } from "../../../utils/helper";
 import "../src/carousel.css";
 import ItemVariationMenu from "./ItemVariationMenu";
+import ProductImageCarousel from "./ProductImageCarousel";
 
 interface ProductCardOwnProps {
   product: products.productData;
@@ -28,8 +27,7 @@ const ProductCard = (props: ProductCardOwnProps) => {
   const { product } = props;
   const isXsView = useXsDownMediaQuery();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { addToCart, updateEnlargedImageCarouselData } =
-    useContext(ProductContext);
+  const { addToCart } = useContext(ProductContext);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -54,14 +52,6 @@ const ProductCard = (props: ProductCardOwnProps) => {
 
   const triggerItemVariationMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-  };
-
-  // TODO wrong enlarged image
-  const triggerEnlargeImage = (index: number) => {
-    updateEnlargedImageCarouselData({
-      imageList: product.productImage,
-      clickedIndex: index,
-    });
   };
 
   const onClickAddToCart = (
@@ -89,27 +79,11 @@ const ProductCard = (props: ProductCardOwnProps) => {
             sx={{ minHeight: { sm: 95, xs: 105 } }}
           />
           <Box onClick={(event) => event.preventDefault()}>
-            <Carousel
-              showIndicators={false}
-              infiniteLoop
-              animationHandler="fade"
-              showThumbs={false}
-              showStatus={false}
-              transitionTime={800}
-              onClickItem={triggerEnlargeImage}
-            >
-              {product.productImage.map((image) => {
-                const imageData = getImage(image)!;
-                return (
-                  <Box
-                    sx={{ cursor: "zoom-in" }}
-                    key={imageData.images.fallback?.src}
-                  >
-                    <GatsbyImage image={imageData} alt={product.name} />
-                  </Box>
-                );
-              })}
-            </Carousel>
+            <ProductImageCarousel
+              imageList={product.productImage}
+              productName={product.name}
+              card
+            />
           </Box>
           <CardContent sx={{ paddingBottom: "16px!important" }}>
             <Grid container justifyContent="space-between" alignItems="center">

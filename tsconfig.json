@@ -30,6 +30,9 @@
             "@contextProvider": [
                 "src/contextProvider"
             ],
+            "@styledComponents": [
+                "src/styledComponents"
+            ]
         }
     },
     "include": [

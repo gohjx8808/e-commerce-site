@@ -7,10 +7,10 @@ import {
   MARKS,
 } from "@contentful/rich-text-types";
 import { ProductContext } from "@contextProvider/ProductContextProvider";
+import ProductImageCarousel from "@modules/products/views/ProductImageCarousel";
 import AddIcon from "@mui/icons-material/Add";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import RemoveIcon from "@mui/icons-material/Remove";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import FilledInput from "@mui/material/FilledInput";
@@ -50,8 +50,7 @@ const ProductDescription: FC<PageProps> = (props) => {
   const { params } = props;
   const { id } = params;
   const isXsView = useXsDownMediaQuery();
-  const { addToCart, updateEnlargedImageCarouselData } =
-    useContext(ProductContext);
+  const { addToCart } = useContext(ProductContext);
   const allProducts: products.innerProductQueryData[] = useMemo(
     () =>
       (!isSSR &&
@@ -96,13 +95,6 @@ const ProductDescription: FC<PageProps> = (props) => {
     overallProductArray.push(innerProductArray);
     setProductRecommendation(overallProductArray);
   }, [allProducts, id, isXsView]);
-
-  const triggerEnlargeImage = (index: number) => {
-    updateEnlargedImageCarouselData({
-      imageList: selectedProduct.productImage,
-      clickedIndex: index,
-    });
-  };
 
   const jsonContentDescription: Document =
     selectedProduct.contentDescription &&
@@ -178,32 +170,11 @@ const ProductDescription: FC<PageProps> = (props) => {
         <Grid item lg={4} sm={12}>
           <Grid container justifyContent="center">
             <Grid item lg={12} sm={6} xs={12}>
-              <Carousel
-                showIndicators={false}
-                infiniteLoop
+              <ProductImageCarousel
+                imageList={selectedProduct.productImage}
+                productName={selectedProduct.name}
                 autoPlay
-                animationHandler="fade"
-                showThumbs={false}
-                showStatus={false}
-                interval={5000}
-                transitionTime={800}
-                onClickItem={triggerEnlargeImage}
-              >
-                {selectedProduct.productImage.map((image) => {
-                  const imageData = getImage(image)!;
-                  return (
-                    <Box
-                      sx={{ cursor: "zoom-in" }}
-                      key={imageData.images.fallback?.src}
-                    >
-                      <ProductImage
-                        image={imageData}
-                        alt={selectedProduct.name}
-                      />
-                    </Box>
-                  );
-                })}
-              </Carousel>
+              />
             </Grid>
           </Grid>
         </Grid>
