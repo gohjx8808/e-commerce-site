@@ -1,3 +1,4 @@
+import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
@@ -5,15 +6,12 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import { graphql, Link as GatsbyLink, navigate, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
 import AuthLayout from "../layouts/AuthLayout";
-import { signIn } from "../modules/auth/src/authApis";
-import { useUserDetails } from "../modules/auth/src/authQueries";
+import { useLogin, useUserDetails } from "../modules/auth/src/authQueries";
 import { loginSchema } from "../modules/auth/src/authSchema";
 import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
 import ControlledPasswordInput from "../sharedComponents/inputs/ControlledPasswordInput";
@@ -48,16 +46,7 @@ const Login = () => {
 
   const { refetch: getUserDetails } = useUserDetails(navigateToDashboard);
 
-  const { mutate: loginIn, isLoading: loginLoading } = useMutation(
-    "login",
-    signIn,
-    {
-      onSuccess: (response) => {
-        localStorage.setItem(accountLocalStorageKeys.uid, response.user?.uid || "");
-        getUserDetails();
-      },
-    }
-  );
+  const { mutate: loginIn, isLoading: loginLoading } = useLogin();
 
   const submitLogin = (hookData: auth.submitSignInPayload) => {
     loginIn(hookData);

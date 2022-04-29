@@ -1,25 +1,45 @@
+import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import { isSSR } from "@utils/constants";
 import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
 import firebase from "gatsby-plugin-firebase";
+import { useContext } from "react";
 import { useMutation, useQuery } from "react-query";
-import { useAppDispatch } from "../../../hooks";
 import routeNames from "../../../utils/routeNames";
-import {
-  toggleStatusModal,
-  toggleSuccess,
-  updateStatusMsg,
-  updateStatusTitle,
-} from "../../status/src/statusReducer";
 import {
   getCurrentUserDetails,
   registerUser,
   resetPassword,
   saveUserDetails,
+  signIn,
   signOut,
 } from "./authApis";
 
 export const getCurrentUserDetailsKey = "getCurrentUserDetails";
+
+export const useLogin = () => {
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle,isVisible } =
+    useContext(StatusModalContext);
+
+  return useMutation("login", signIn, {
+    onSuccess: (response) => {
+      localStorage.setItem(
+        accountLocalStorageKeys.uid,
+        response.user?.uid || ""
+      );
+      // getUserDetails();
+      navigate("/");
+    },
+    onError: () => {
+      updateTitle("Login");
+      updateMsg(
+        "Your credentials are invalid! Please login with a valid username and password."
+      );
+      toggleSuccess(false);
+      toggleVisible(true);
+    },
+  });
+};
 
 export const useLogout = (toggleModal?: () => void) =>
   useMutation("signOut", signOut, {
@@ -33,7 +53,8 @@ export const useLogout = (toggleModal?: () => void) =>
   });
 
 export const useUserDetails = (onAdditionalSuccess?: () => void) => {
-  const dispatch = useAppDispatch();
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
   const { mutate: logout } = useLogout();
 
   return useQuery(
@@ -58,10 +79,10 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
             throw new Error("No permission");
           }
         } catch (error) {
-          dispatch(updateStatusTitle("Log In"));
-          dispatch(updateStatusMsg("Invalid credentials! Please try again."));
-          dispatch(toggleSuccess(false));
-          dispatch(toggleStatusModal(true));
+          updateTitle("Log In");
+          updateMsg("Invalid credentials! Please try again.");
+          toggleSuccess(false);
+          toggleVisible(true);
         }
       },
       enabled: !isSSR && !!localStorage.getItem(accountLocalStorageKeys.uid),
@@ -72,32 +93,30 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
 };
 
 export const useForgotPassword = () => {
-  const dispatch = useAppDispatch();
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
 
   return useMutation("submitForgotPassword", resetPassword, {
     onSuccess: () => {
-      dispatch(toggleSuccess(true));
-      dispatch(
-        updateStatusMsg(
-          "An email to reset your password has been sent to your registered email address."
-        )
+      toggleSuccess(true);
+      updateMsg(
+        "An email to reset your password has been sent to your registered email address."
       );
-      dispatch(toggleStatusModal(true));
+      toggleVisible(true);
       navigate(routeNames.login);
     },
     onError: (error: firebase.auth.Error) => {
       if (error.code === "auth/user-not-found") {
-        dispatch(
-          updateStatusMsg(
-            "The email address is not registered. Please insert a registered email address!"
-          )
+        updateMsg(
+          "The email address is not registered. Please insert a registered email address!"
         );
       } else {
-        dispatch(updateStatusMsg("Network error! Please try again."));
+        updateMsg("Network error! Please try again.");
       }
-      dispatch(toggleSuccess(false));
-      dispatch(toggleStatusModal(true));
+      toggleSuccess(false);
+      toggleVisible(true);
     },
+    onSettled: () => updateTitle("Reset Password"),
   });
 };
 
@@ -105,7 +124,8 @@ const useSaveUserDetails = () =>
   useMutation("saveUserDetails", saveUserDetails);
 
 export const useSignUp = () => {
-  const dispatch = useAppDispatch();
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
 
   const { mutate: saveUserData } = useSaveUserDetails();
 
@@ -127,33 +147,28 @@ export const useSignUp = () => {
         },
       };
       saveUserData(userDetails);
-      dispatch(toggleSuccess(true));
-      dispatch(
-        updateStatusMsg(
-          "Your registration is successful! Please login using your credentials."
-        )
+      toggleSuccess(true);
+      updateMsg(
+        "Your registration is successful! Please login using your credentials."
       );
-      dispatch(toggleStatusModal(true));
+      toggleVisible(true);
       navigate(routeNames.login);
     },
     onError: (error: firebase.auth.Error) => {
       const errorCode = error.code;
       if (errorCode === "auth/email-already-in-use") {
-        dispatch(
-          updateStatusMsg(
-            "The provided email is already in use by an existing user. " +
-              "Please register using another email or login using the correct credentials."
-          )
+        updateMsg(
+          "The provided email is already in use by an existing user. " +
+            "Please register using another email or login using the correct credentials."
         );
       } else if (errorCode === "auth/invalid-email") {
-        dispatch(updateStatusMsg("Invalid email! Please try again."));
+        updateMsg("Invalid email! Please try again.");
       } else {
-        dispatch(
-          updateStatusMsg("Your registration has failed! Please try again.")
-        );
+        updateMsg("Your registration has failed! Please try again.");
       }
-      dispatch(toggleSuccess(false));
-      dispatch(toggleStatusModal(true));
+      toggleSuccess(false);
+      toggleVisible(true);
     },
+    onSettled: () => updateTitle("Registration"),
   });
 };

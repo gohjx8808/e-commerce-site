@@ -1,11 +1,12 @@
 import ProductContextProvider from "@contextProvider/ProductContextProvider";
+import StatusModalContextProvider from "@contextProvider/StatusModalContextProvider";
 import AdapterDayjs from "@mui/lab/AdapterDayjs";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { PaletteMode } from "@mui/material";
 import {
   createTheme,
   responsiveFontSizes,
-  ThemeProvider
+  ThemeProvider,
 } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { SnackbarProvider } from "notistack";
@@ -173,9 +174,11 @@ const RootLayout: React.FC = ({ children }) => {
             <Provider store={store}>
               <QueryClientProvider client={queryClient}>
                 <ProductContextProvider>
-                  {children}
-                  <StatusModal />
-                  <EnlargedProductImageCarouselModal />
+                  <StatusModalContextProvider>
+                    {children}
+                    <StatusModal />
+                    <EnlargedProductImageCarouselModal />
+                  </StatusModalContextProvider>
                 </ProductContextProvider>
               </QueryClientProvider>
             </Provider>
