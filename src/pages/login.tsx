@@ -1,4 +1,3 @@
-import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
@@ -6,12 +5,12 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { graphql, Link as GatsbyLink, navigate, useStaticQuery } from "gatsby";
+import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import AuthLayout from "../layouts/AuthLayout";
-import { useLogin, useUserDetails } from "../modules/auth/src/authQueries";
+import { useLogin } from "../modules/auth/src/authQueries";
 import { loginSchema } from "../modules/auth/src/authSchema";
 import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
 import ControlledPasswordInput from "../sharedComponents/inputs/ControlledPasswordInput";
@@ -39,12 +38,6 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(loginSchema),
   });
-
-  const navigateToDashboard = () => {
-    navigate("/");
-  };
-
-  const { refetch: getUserDetails } = useUserDetails(navigateToDashboard);
 
   const { mutate: loginIn, isLoading: loginLoading } = useLogin();
 

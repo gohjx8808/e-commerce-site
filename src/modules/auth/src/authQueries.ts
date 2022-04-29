@@ -18,7 +18,7 @@ import {
 export const getCurrentUserDetailsKey = "getCurrentUserDetails";
 
 export const useLogin = () => {
-  const { toggleSuccess, toggleVisible, updateMsg, updateTitle,isVisible } =
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);
 
   return useMutation("login", signIn, {
