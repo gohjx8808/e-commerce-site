@@ -1,31 +1,27 @@
-import { useMutation } from "react-query";
+import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import { navigate } from "gatsby";
+import { useContext } from "react";
+import { useMutation } from "react-query";
 import { sendFeedbackEmail } from "./feedbackApi";
-import { useAppDispatch } from "../../../hooks";
-import {
-  toggleSuccess,
-  updateStatusMsg,
-  toggleStatusModal,
-} from "../../status/src/statusReducer";
 
 // eslint-disable-next-line import/prefer-default-export
 export const useSubmitFeedback = () => {
-  const dispatch = useAppDispatch();
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
   return useMutation("submitFeedback", sendFeedbackEmail, {
     onSuccess: () => {
-      dispatch(toggleSuccess(true));
-      dispatch(
-        updateStatusMsg(
-          "Love to know that! Thank you for your precious feedback. Together we can make it better!"
-        )
+      toggleSuccess(true);
+      updateMsg(
+        "Love to know that! Thank you for your precious feedback. Together we can make it better!"
       );
-      dispatch(toggleStatusModal(true));
+      toggleVisible(true);
       navigate("/");
     },
     onError: () => {
-      dispatch(toggleSuccess(false));
-      dispatch(updateStatusMsg("Somethings wrong happened! Please try again."));
-      dispatch(toggleStatusModal(true));
+      toggleSuccess(false);
+      updateMsg("Somethings wrong happened! Please try again.");
+      toggleVisible(true);
     },
+    onSettled: () => updateTitle("Feedback"),
   });
 };
