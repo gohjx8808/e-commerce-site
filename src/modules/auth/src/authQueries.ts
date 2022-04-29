@@ -27,7 +27,6 @@ export const useLogin = () => {
         accountLocalStorageKeys.uid,
         response.user?.uid || ""
       );
-      // getUserDetails();
       navigate("/");
     },
     onError: () => {
