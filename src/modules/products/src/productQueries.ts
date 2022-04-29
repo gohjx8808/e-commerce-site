@@ -1,21 +1,16 @@
+import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import {
   accountLocalStorageKeys,
   productLocalStorageKeys,
 } from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
+import { useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useAppDispatch } from "../../../hooks";
 import { useAddEditAddress } from "../../account/src/accountQueries";
 import {
   getCurrentUserDetailsKey,
   useUserDetails,
 } from "../../auth/src/authQueries";
-import {
-  toggleStatusModal,
-  toggleSuccess,
-  updateStatusMsg,
-  updateStatusTitle,
-} from "../../status/src/statusReducer";
 import {
   getAvailablePromocodes,
   getOrderCount,
@@ -44,7 +39,8 @@ export const useSubmitOrder = (onSuccessOrder: () => void) => {
     false
   );
   const queryClient = useQueryClient();
-  const dispatch = useAppDispatch();
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
 
   const onUpdate = async (payload: products.sendPaymentEmailPayload) => {
     // update order count
@@ -100,25 +96,21 @@ export const useSubmitOrder = (onSuccessOrder: () => void) => {
 
   return useMutation("submitOrder", onUpdate, {
     onSuccess: () => {
-      dispatch(toggleSuccess(true));
-      dispatch(updateStatusTitle("Your order is confirmed"));
-      dispatch(
-        updateStatusMsg(
-          "An email regarding payment details will be sent to your email shortly. Please kindly proceed your payment within 24 hours."
-        )
+      toggleSuccess(true);
+      updateTitle("Your order is confirmed");
+      updateMsg(
+        "An email regarding payment details will be sent to your email shortly. Please kindly proceed your payment within 24 hours."
       );
-      dispatch(toggleStatusModal(true));
+      toggleVisible(true);
       navigate("/");
     },
     onError: () => {
-      dispatch(toggleSuccess(false));
-      dispatch(updateStatusTitle("Order confirmation failed"));
-      dispatch(
-        updateStatusMsg(
-          "Please check your internet connection or contact us at hello@yjartjournal.com for assistance."
-        )
+      toggleSuccess(false);
+      updateTitle("Order confirmation failed");
+      updateMsg(
+        "Please check your internet connection or contact us at hello@yjartjournal.com for assistance."
       );
-      dispatch(toggleStatusModal(true));
+      toggleVisible(true);
     },
   });
 };

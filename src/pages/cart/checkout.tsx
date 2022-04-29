@@ -576,7 +576,7 @@ const Checkout = () => {
                         label="Full Name"
                         lightbg={1}
                         formerror={errors.fullName}
-                        defaultinput={prevShippingInfo.fullName}
+                        defaultinput={prevShippingInfo?.fullName}
                         readOnly={!!selectedAddress?.fullName}
                       />
                     </Grid>
@@ -587,7 +587,7 @@ const Checkout = () => {
                         label="Email Address"
                         lightbg={1}
                         formerror={errors.email}
-                        defaultinput={prevShippingInfo.email}
+                        defaultinput={prevShippingInfo?.email}
                         readOnly={!!selectedAddress?.email}
                       />
                     </Grid>
@@ -601,7 +601,7 @@ const Checkout = () => {
                           <InputAdornment position="start">+</InputAdornment>
                         }
                         formerror={errors.phoneNumber}
-                        defaultinput={prevShippingInfo.phoneNumber}
+                        defaultinput={prevShippingInfo?.phoneNumber}
                         readOnly={!!selectedAddress?.email}
                       />
                     </Grid>
@@ -612,7 +612,7 @@ const Checkout = () => {
                         label="Address Line 1"
                         lightbg={1}
                         formerror={errors.addressLine1}
-                        defaultinput={prevShippingInfo.addressLine1}
+                        defaultinput={prevShippingInfo?.addressLine1}
                         readOnly={!!selectedAddress?.addressLine1}
                       />
                     </Grid>
@@ -622,7 +622,7 @@ const Checkout = () => {
                         name="addressLine2"
                         label="Address Line 2"
                         lightbg={1}
-                        defaultinput={prevShippingInfo.addressLine2}
+                        defaultinput={prevShippingInfo?.addressLine2}
                         readOnly={!!selectedAddress?.addressLine1}
                       />
                     </Grid>
@@ -634,7 +634,7 @@ const Checkout = () => {
                         lightbg={1}
                         maxLength={10}
                         formerror={errors.postcode}
-                        defaultinput={prevShippingInfo.postcode}
+                        defaultinput={prevShippingInfo?.postcode}
                         readOnly={!!selectedAddress?.postcode}
                       />
                     </Grid>
@@ -645,7 +645,7 @@ const Checkout = () => {
                         label="City"
                         lightbg={1}
                         formerror={errors.city}
-                        defaultinput={prevShippingInfo.city}
+                        defaultinput={prevShippingInfo?.city}
                         readOnly={!!selectedAddress?.city}
                       />
                     </Grid>
@@ -659,7 +659,7 @@ const Checkout = () => {
                         error={errors.state}
                         defaultValue={
                           stateOptions.find(
-                            (state) => state.value === prevShippingInfo.state
+                            (state) => state.value === prevShippingInfo?.state
                           ) || null
                         }
                         disabled={!!selectedAddress?.state}
@@ -673,7 +673,7 @@ const Checkout = () => {
                           label="Foreign Country State"
                           lightbg={1}
                           formerror={errors.outsideMalaysiaState}
-                          defaultinput={prevShippingInfo.outsideMalaysiaState}
+                          defaultinput={prevShippingInfo?.outsideMalaysiaState}
                           readOnly={!!selectedAddress?.outsideMalaysiaState}
                         />
                       </Grid>
@@ -685,7 +685,7 @@ const Checkout = () => {
                         label="Country"
                         lightbg={1}
                         formerror={errors.country}
-                        defaultinput={prevShippingInfo.country}
+                        defaultinput={prevShippingInfo?.country}
                         readOnly={!!selectedAddress?.country}
                       />
                     </Grid>
@@ -738,7 +738,7 @@ const Checkout = () => {
                               ? "Use this shipping information for the next time"
                               : "Save to address book"
                           }
-                          defaultChecked={prevShippingInfo.saveShippingInfo}
+                          defaultChecked={prevShippingInfo?.saveShippingInfo}
                         />
                       </Grid>
                     )}
@@ -766,7 +766,7 @@ const Checkout = () => {
                       label="Payment Options:"
                       options={paymentOptions}
                       error={errors.paymentOptions}
-                      defaultselect={prevShippingInfo.paymentOptions}
+                      defaultselect={prevShippingInfo?.paymentOptions}
                       row={!isXsView}
                     />
                   </Grid>
