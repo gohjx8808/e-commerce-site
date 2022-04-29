@@ -13,11 +13,9 @@ import { SnackbarProvider } from "notistack";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Provider } from "react-redux";
 import EnlargedProductImageCarouselModal from "../modules/products/views/EnlargedProductImageCarouselModal";
 import StatusModal from "../modules/status/views/StatusModal";
 import CustomSnackbar from "../sharedComponents/CustomSnackbar";
-import store from "../store";
 import DarkModeContext from "../utils/DarkModeContext";
 
 declare module "@mui/material/AppBar" {
@@ -171,7 +169,6 @@ const RootLayout: React.FC = ({ children }) => {
           )}
         >
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Provider store={store}>
               <QueryClientProvider client={queryClient}>
                 <ProductContextProvider>
                   <StatusModalContextProvider>
@@ -181,7 +178,6 @@ const RootLayout: React.FC = ({ children }) => {
                   </StatusModalContextProvider>
                 </ProductContextProvider>
               </QueryClientProvider>
-            </Provider>
           </LocalizationProvider>
         </SnackbarProvider>
       </ThemeProvider>
