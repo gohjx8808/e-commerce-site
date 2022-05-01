@@ -47,7 +47,8 @@ declare module "@mui/material/styles" {
 
 type modeType = PaletteMode | "system";
 
-const RootLayout: React.FC = ({ children }) => {
+const RootLayout = (props: parentComponent) => {
+  const { children } = props;
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [mode, setMode] = useState<PaletteMode>("light");
   const [displayTheme, setDisplayTheme] = useState<modeType>("system");
@@ -169,15 +170,15 @@ const RootLayout: React.FC = ({ children }) => {
           )}
         >
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <QueryClientProvider client={queryClient}>
-                <ProductContextProvider>
-                  <StatusModalContextProvider>
-                    {children}
-                    <StatusModal />
-                    <EnlargedProductImageCarouselModal />
-                  </StatusModalContextProvider>
-                </ProductContextProvider>
-              </QueryClientProvider>
+            <QueryClientProvider client={queryClient}>
+              <ProductContextProvider>
+                <StatusModalContextProvider>
+                  {children}
+                  <StatusModal />
+                  <EnlargedProductImageCarouselModal />
+                </StatusModalContextProvider>
+              </ProductContextProvider>
+            </QueryClientProvider>
           </LocalizationProvider>
         </SnackbarProvider>
       </ThemeProvider>

@@ -1,4 +1,4 @@
-import React, { createContext, FC, useState } from "react";
+import React, { createContext, useState } from "react";
 
 interface statusModalData {
   isVisible: boolean;
@@ -24,7 +24,7 @@ const initialState: statusModalData = {
 
 export const StatusModalContext = createContext(initialState);
 
-const StatusModalContextProvider: FC = (props) => {
+const StatusModalContextProvider = (props: parentComponent) => {
   const { children } = props;
 
   const [isVisible, setIsVisible] = useState(initialState.isVisible);

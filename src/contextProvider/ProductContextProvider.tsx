@@ -4,10 +4,8 @@ import {
   roundTo2Dp,
 } from "@utils/helper";
 import { productLocalStorageKeys } from "@utils/localStorageKeys";
-import { useEffect } from "react";
-import React, { FC, useState } from "react";
-import { createContext } from "react";
 import { getImage } from "gatsby-plugin-image";
+import React, { createContext, useEffect, useState } from "react";
 
 interface productContextState {
   shoppingCart: products.shoppingCartItemData[];
@@ -49,7 +47,7 @@ const initialState: productContextState = {
 
 export const ProductContext = createContext(initialState);
 
-const ProductContextProvider: FC = (props) => {
+const ProductContextProvider = (props: parentComponent) => {
   const { children } = props;
 
   const [shoppingCart, setShoppingCart] = useState<
