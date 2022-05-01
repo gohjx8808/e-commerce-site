@@ -1,23 +1,32 @@
-import FormHelperText from '@mui/material/FormHelperText';
-import FormLabel from '@mui/material/FormLabel';
-import ToggleButtonGroup, { ToggleButtonGroupProps } from '@mui/material/ToggleButtonGroup';
-import Typography from '@mui/material/Typography';
-import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
-import StyledToggleButton from '../../styledComponents/inputs/StyledToggleButton';
+import FormHelperText from "@mui/material/FormHelperText";
+import FormLabel from "@mui/material/FormLabel";
+import ToggleButtonGroup, {
+  ToggleButtonGroupProps,
+} from "@mui/material/ToggleButtonGroup";
+import Typography from "@mui/material/Typography";
+import React from "react";
+import {
+  Control,
+  Controller,
+  FieldError,
+  FieldValues,
+  Path,
+} from "react-hook-form";
+import StyledToggleButton from "../../styledComponents/inputs/StyledToggleButton";
 
-interface ControlledToggleButtonOwnProps extends ToggleButtonGroupProps{
-  control:Control
-  error?:FieldError
-  options:toggleButtonOptionData[]
-  name:string
-  label:string
+interface ControlledToggleButtonOwnProps<T extends FieldValues>
+  extends ToggleButtonGroupProps {
+  control: Control<T>;
+  error?: FieldError;
+  options: toggleButtonOptionData[];
+  label: string;
+  name: Path<T>;
 }
 
-const ControlledToggleButton = (props:ControlledToggleButtonOwnProps) => {
-  const {
-    control, error, options, name, label,
-  } = props;
+const ControlledToggleButton = <T extends FieldValues>(
+  props: ControlledToggleButtonOwnProps<T>
+) => {
+  const { control, error, options, name, label } = props;
 
   return (
     <Controller
@@ -25,11 +34,16 @@ const ControlledToggleButton = (props:ControlledToggleButtonOwnProps) => {
       name={name}
       render={({ field: { onChange, value } }) => (
         <>
-          <FormLabel component="legend" focused={false} sx={{ marginY: 1 }}>{label}</FormLabel>
+          <FormLabel component="legend" focused={false} sx={{ marginY: 1 }}>
+            {label}
+          </FormLabel>
           <ToggleButtonGroup
             value={value}
             exclusive
-            onChange={(_event: React.MouseEvent<HTMLElement>, newValue: string) => {
+            onChange={(
+              _event: React.MouseEvent<HTMLElement>,
+              newValue: string
+            ) => {
               onChange(newValue);
             }}
             aria-label={name}
@@ -50,7 +64,6 @@ const ControlledToggleButton = (props:ControlledToggleButtonOwnProps) => {
           <FormHelperText error>{error?.message}</FormHelperText>
         </>
       )}
-      defaultValue=""
     />
   );
 };
