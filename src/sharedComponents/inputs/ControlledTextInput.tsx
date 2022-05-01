@@ -1,23 +1,35 @@
-import FormHelperText from '@mui/material/FormHelperText';
-import InputAdornment from '@mui/material/InputAdornment';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput';
-import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
-import StyledFormControl from '../../styledComponents/inputs/StyledFormControl';
-import CustomInputErrorIcon from './CustomInputErrorIcon';
+import FormHelperText from "@mui/material/FormHelperText";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput, { OutlinedInputProps } from "@mui/material/OutlinedInput";
+import React from "react";
+import {
+  Control,
+  Controller,
+  FieldError,
+  FieldValues,
+  Path,
+  PathValue,
+  UnpackNestedValue,
+} from "react-hook-form";
+import StyledFormControl from "../../styledComponents/inputs/StyledFormControl";
+import CustomInputErrorIcon from "./CustomInputErrorIcon";
 
-interface ControlledTextInputOwnProps extends Omit<OutlinedInputProps, 'defaultValue'>{
-  control:Control,
-  defaultinput?:string
-  formerror?:FieldError
-  lightbg?:booleanInteger
-  maxLength?:number
-  readOnly?:boolean
-  infotext?:string
+interface ControlledTextInputOwnProps<T extends FieldValues>
+  extends Omit<OutlinedInputProps, "defaultValue" | "name"> {
+  control: Control<T>;
+  defaultinput?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  formerror?: FieldError;
+  lightbg?: booleanInteger;
+  maxLength?: number;
+  readOnly?: boolean;
+  infotext?: string;
+  name: Path<T>;
 }
 
-const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
+const ControlledTextInput = <T extends FieldValues>(
+  props: ControlledTextInputOwnProps<T>
+) => {
   const {
     control,
     label,
@@ -35,11 +47,7 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
     <Controller
       control={control}
       name={name!}
-      render={({
-        field: {
-          onChange, value,
-        },
-      }) => (
+      render={({ field: { onChange, value } }) => (
         <StyledFormControl disabled={disabled} lightbg={lightbg}>
           <InputLabel htmlFor={name} error={!!formerror}>
             {label}
@@ -49,11 +57,13 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
             value={value}
             onChange={onChange}
             error={!!formerror}
-            endAdornment={formerror && (
-              <InputAdornment position="end">
-                <CustomInputErrorIcon />
-              </InputAdornment>
-            )}
+            endAdornment={
+              formerror && (
+                <InputAdornment position="end">
+                  <CustomInputErrorIcon />
+                </InputAdornment>
+              )
+            }
             inputProps={{
               maxLength,
               readOnly,
@@ -70,12 +80,12 @@ const ControlledTextInput = (props:ControlledTextInputOwnProps) => {
 };
 
 ControlledTextInput.defaultProps = {
-  defaultinput: '',
+  defaultinput: "",
   formerror: null,
   lightbg: 0,
   maxLength: null,
   readOnly: false,
-  infotext: '',
+  infotext: "",
 };
 
 export default ControlledTextInput;

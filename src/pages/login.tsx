@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import AuthLayout from "../layouts/AuthLayout";
 import { useLogin } from "../modules/auth/src/authQueries";
 import { loginSchema } from "../modules/auth/src/authSchema";
@@ -35,13 +35,13 @@ const Login = () => {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm({
+  } = useForm<auth.submitSignInPayload>({
     resolver: yupResolver(loginSchema),
   });
 
   const { mutate: loginIn, isLoading: loginLoading } = useLogin();
 
-  const submitLogin = (hookData: auth.submitSignInPayload) => {
+  const submitLogin: SubmitHandler<auth.submitSignInPayload> = (hookData) => {
     loginIn(hookData);
   };
 
