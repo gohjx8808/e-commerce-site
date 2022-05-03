@@ -1,7 +1,5 @@
 import ProductContextProvider from "@contextProvider/ProductContextProvider";
 import StatusModalContextProvider from "@contextProvider/StatusModalContextProvider";
-import AdapterDayjs from "@mui/lab/AdapterDayjs";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import { PaletteMode } from "@mui/material";
 import {
   createTheme,
@@ -9,6 +7,8 @@ import {
   ThemeProvider,
 } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { SnackbarProvider } from "notistack";
 import * as React from "react";
 import { useEffect, useMemo, useState } from "react";

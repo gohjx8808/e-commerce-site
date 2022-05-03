@@ -1,6 +1,14 @@
-import DatePicker, { DatePickerProps } from "@mui/lab/DatePicker";
+import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 import React from "react";
-import { Control, Controller, FieldError, FieldValues, Path, PathValue, UnpackNestedValue } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldError,
+  FieldValues,
+  Path,
+  PathValue,
+  UnpackNestedValue,
+} from "react-hook-form";
 import StyledTextField from "../../styledComponents/inputs/StyledTextField";
 
 interface ControlledDatePickerOwnProps<T>
