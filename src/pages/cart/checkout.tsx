@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {
   accountLocalStorageKeys,
-  productLocalStorageKeys,
+  productLocalStorageKeys
 } from "@utils/localStorageKeys";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -25,16 +25,16 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useState
 } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import { useUserDetails } from "../../modules/auth/src/authQueries";
 import { getAvailablePromocodes } from "../../modules/products/src/productApi";
 import {
   useOrderCount,
-  useSubmitOrder,
+  useSubmitOrder
 } from "../../modules/products/src/productQueries";
 import productSchema from "../../modules/products/src/productSchema";
 import CheckoutAddressListModal from "../../modules/products/views/CheckoutAddressListModal";
@@ -91,7 +91,8 @@ const Checkout = () => {
   const isLoggedIn =
     !isSSR && !!localStorage.getItem(accountLocalStorageKeys.uid);
   const prevShippingInfo =
-    !isSSR && customJSONParse(localStorage.getItem(productLocalStorageKeys.shippingInfo));
+    !isSSR &&
+    customJSONParse(localStorage.getItem(productLocalStorageKeys.shippingInfo));
 
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<
@@ -127,7 +128,7 @@ const Checkout = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<products.checkoutFormPayload>({
     resolver: yupResolver(productSchema.shippingInfoSchema),
   });
 
@@ -288,7 +289,7 @@ const Checkout = () => {
         city: selectedAddress?.city,
         state: selectedAddress?.state
           ? { label: selectedAddress?.state, value: selectedAddress?.state }
-          : null,
+          : { label: "", value: "" },
         outsideMalaysiaState: selectedAddress?.outsideMalaysiaState,
         country: selectedAddress?.country,
         saveShippingInfo: false,
@@ -368,7 +369,9 @@ const Checkout = () => {
     validatePromocode();
   }, [inputPromoCode, validatePromocode]);
 
-  const proceedToPayment = async (hookData: products.checkoutFormPayload) => {
+  const proceedToPayment: SubmitHandler<products.checkoutFormPayload> = async (
+    hookData
+  ) => {
     const emailData: products.sendPaymentEmailPayload = {
       ...hookData,
       state: hookData.state.value,
@@ -656,7 +659,7 @@ const Checkout = () => {
                         name="state"
                         lightbg={1}
                         label="State"
-                        error={errors.state}
+                        error={errors.state?.value}
                         defaultValue={
                           stateOptions.find(
                             (state) => state.value === prevShippingInfo?.state

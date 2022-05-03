@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import ControlledDatePicker from "../../../sharedComponents/inputs/ControlledDatePicker";
 import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker";
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
@@ -19,12 +19,12 @@ import { editAccountSchema } from "../src/accountScheme";
 
 interface editAccDetailModalProps extends DialogProps {
   toggleModal: () => void;
-  onFormSubmit: (hookData: account.rawSubmitEditAccDetailPayload) => void;
+  onFormSubmit: SubmitHandler<account.rawSubmitEditAccDetailPayload>;
   isLoading: boolean;
 }
 
 const EditAccDetailModal = (props: editAccDetailModalProps) => {
-  const { toggleModal, onFormSubmit,isLoading } = props;
+  const { toggleModal, onFormSubmit, isLoading } = props;
   const { data: currentUserDetails } = useUserDetails();
   const {
     control,
@@ -124,10 +124,19 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
           </Grid>
         </DialogContent>
         <DialogActionButtonsContainer>
-          <LoadingButton onClick={toggleModal} color="secondary" loading={isLoading}>
+          <LoadingButton
+            onClick={toggleModal}
+            color="secondary"
+            loading={isLoading}
+          >
             Cancel
           </LoadingButton>
-          <LoadingButton color="secondary" variant="contained" type="submit" loading={isLoading}>
+          <LoadingButton
+            color="secondary"
+            variant="contained"
+            type="submit"
+            loading={isLoading}
+          >
             Submit
           </LoadingButton>
         </DialogActionButtonsContainer>
