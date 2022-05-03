@@ -1,6 +1,8 @@
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
+import { accountLocalStorageKeys } from "@utils/localStorageKeys";
+import { navigate } from "gatsby";
 import React, { Suspense } from "react";
 import Footer from "../modules/Footer";
 import { isSSR } from "../utils/constants";
@@ -10,6 +12,10 @@ const AuthLayout = (props: parentComponent) => {
 
   if (isSSR) {
     return <div />;
+  }
+
+  if (localStorage.getItem(accountLocalStorageKeys.uid)) {
+    navigate("/");
   }
 
   return (
