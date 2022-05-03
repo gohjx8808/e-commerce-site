@@ -30,7 +30,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<account.rawSubmitEditAccDetailPayload>({
     resolver: yupResolver(editAccountSchema),
   });
 
@@ -108,7 +108,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 defaultValue={genderOptions.find(
                   (gender) => gender.value === currentUserDetails?.gender
                 )}
-                error={errors.gender}
+                error={errors.gender?.value}
               />
             </Grid>
             <Grid item sm={6} xs={12}>

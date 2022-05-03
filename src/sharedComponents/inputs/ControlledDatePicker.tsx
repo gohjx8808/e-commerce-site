@@ -1,34 +1,33 @@
-import DatePicker, { DatePickerProps } from '@mui/lab/DatePicker';
-import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
-import StyledTextField from '../../styledComponents/inputs/StyledTextField';
+import DatePicker, { DatePickerProps } from "@mui/lab/DatePicker";
+import React from "react";
+import { Control, Controller, FieldError, FieldValues, Path, PathValue, UnpackNestedValue } from "react-hook-form";
+import StyledTextField from "../../styledComponents/inputs/StyledTextField";
 
-interface ControlledDatePickerOwnProps extends Omit<DatePickerProps<Date>, 'renderInput'|'onChange'|'value'>{
-  control:Control,
-  defaultdate?:string
-  formerror?:FieldError
-  lightbg?:booleanInteger
-  name:string
+interface ControlledDatePickerOwnProps<T>
+  extends Omit<DatePickerProps<Date>, "renderInput" | "onChange" | "value"> {
+  control: Control<T>;
+  defaultdate?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  formerror?: FieldError;
+  lightbg?: booleanInteger;
+  name: Path<T>;
 }
 
-const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
-  const {
-    control, name, defaultdate, formerror, lightbg,
-  } = props;
+const ControlledDatePicker = <T extends FieldValues>(
+  props: ControlledDatePickerOwnProps<T>
+) => {
+  const { control, name, defaultdate, formerror, lightbg } = props;
 
   return (
     <Controller
       control={control}
-      name={name!}
-      render={({
-        field: {
-          onChange, value,
-        },
-      }) => (
+      name={name}
+      render={({ field: { onChange, value } }) => (
         <DatePicker
           inputFormat="DD/MM/YYYY"
           value={value ? new Date(value) : null}
-          onChange={(selectedDate) => onChange(selectedDate ? selectedDate.toString() : '')}
+          onChange={(selectedDate) =>
+            onChange(selectedDate ? selectedDate.toString() : "")
+          }
           renderInput={(params) => (
             <StyledTextField
               {...params}
@@ -47,7 +46,7 @@ const ControlledDatePicker = (props:ControlledDatePickerOwnProps) => {
 };
 
 ControlledDatePicker.defaultProps = {
-  defaultdate: '',
+  defaultdate: "",
   formerror: null,
   lightbg: 0,
 };

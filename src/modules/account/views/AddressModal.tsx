@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import React, { useEffect, useMemo } from "react";
-import { FieldError, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker";
 import ControlledRadioButton from "../../../sharedComponents/inputs/ControlledRadioButton";
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
@@ -18,7 +18,7 @@ import {
   booleanOptions,
   homeColor,
   stateOptions,
-  workColor,
+  workColor
 } from "../../../utils/constants";
 import { useAddEditAddress } from "../src/accountQueries";
 import { addressSchema } from "../src/accountScheme";
