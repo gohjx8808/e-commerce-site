@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import MainLayout from "../layouts/MainLayout";
 import { useSubmitFeedback } from "../modules/feedback/src/feedbackQueries";
 import { feedbackFormSchema } from "../modules/feedback/src/feedbackSchema";
@@ -15,15 +15,16 @@ const FeedbackForm = () => {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm({
+  } = useForm<feedback.submitFeedbackFormPayload>({
     resolver: yupResolver(feedbackFormSchema),
   });
 
-  const { mutate: submitFeedback,isLoading:submitFeedbackLoading } = useSubmitFeedback();
+  const { mutate: submitFeedback, isLoading: submitFeedbackLoading } =
+    useSubmitFeedback();
 
-  const onSubmitFeedbackForm = (
-    hookData: feedback.submitFeedbackFormPayload
-  ) => {
+  const onSubmitFeedbackForm: SubmitHandler<
+    feedback.submitFeedbackFormPayload
+  > = (hookData) => {
     submitFeedback(hookData);
   };
 

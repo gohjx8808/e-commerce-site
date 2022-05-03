@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import AuthLayout from "../layouts/AuthLayout";
 import { useForgotPassword } from "../modules/auth/src/authQueries";
 import { forgotPasswordSchema } from "../modules/auth/src/authSchema";
@@ -36,11 +36,13 @@ const ForgotPassword = () => {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm({
+  } = useForm<auth.submitForgotPasswordPayload>({
     resolver: yupResolver(forgotPasswordSchema),
   });
 
-  const submitLogin = (hookData: auth.submitForgotPasswordPayload) => {
+  const onSubmit: SubmitHandler<auth.submitForgotPasswordPayload> = (
+    hookData
+  ) => {
     submitForgotPassword(hookData);
   };
 
@@ -77,7 +79,7 @@ const ForgotPassword = () => {
                 </Box>
               </Grid>
               <CardContent>
-                <form onSubmit={handleSubmit(submitLogin)}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <Grid
                     container
                     justifyContent="center"
