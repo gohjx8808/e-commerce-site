@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import React, { useEffect, useMemo } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FieldError, SubmitHandler, useForm } from "react-hook-form";
 import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker";
 import ControlledRadioButton from "../../../sharedComponents/inputs/ControlledRadioButton";
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
@@ -66,7 +66,9 @@ const AddressModal = (props: AddressModalProps) => {
     resolver: yupResolver(addressSchema),
   });
 
-  const onSubmitForm:SubmitHandler<account.rawSubmitAddEditAddressPayload> = (hookData: account.rawSubmitAddEditAddressPayload) => {
+  const onSubmitForm: SubmitHandler<account.rawSubmitAddEditAddressPayload> = (
+    hookData: account.rawSubmitAddEditAddressPayload
+  ) => {
     const parsedFormData = { ...hookData, state: hookData.state.value };
     submitAddEditAddress(parsedFormData);
   };
@@ -95,7 +97,7 @@ const AddressModal = (props: AddressModalProps) => {
         city: selectedAddress.city,
         state: selectedAddress.state
           ? { label: selectedAddress.state, value: selectedAddress.state }
-          : { label: '', value: '' },
+          : { label: "", value: "" },
         outsideMalaysiaState: selectedAddress.outsideMalaysiaState
           ? selectedAddress.outsideMalaysiaState
           : "",
@@ -143,6 +145,7 @@ const AddressModal = (props: AddressModalProps) => {
                 lightbg={1}
                 label="Phone Number"
                 formerror={errors.phoneNumber}
+                defaultinput="60"
                 startAdornment={
                   <InputAdornment position="start">+</InputAdornment>
                 }
