@@ -89,10 +89,10 @@ const Checkout = () => {
     useSubmitOrder(onSuccessOrder);
 
   const isLoggedIn =
-    !isSSR && !!localStorage.getItem(accountLocalStorageKeys.uid);
+    !isSSR && !!localStorage.getItem(accountLocalStorageKeys.UID);
   const prevShippingInfo =
     !isSSR &&
-    customJSONParse(localStorage.getItem(productLocalStorageKeys.shippingInfo));
+    customJSONParse(localStorage.getItem(productLocalStorageKeys.SHIPPING_INFO));
 
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<

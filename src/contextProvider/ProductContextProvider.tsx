@@ -66,12 +66,12 @@ const ProductContextProvider = (props: parentComponent) => {
   useEffect(() => {
     setShoppingCart(
       customJSONParse(
-        localStorage.getItem(productLocalStorageKeys.shoppingCart)
+        localStorage.getItem(productLocalStorageKeys.SHOPPING_CART)
       ) || []
     );
     setSelectedCheckoutItem(
       customJSONParse(
-        localStorage.getItem(productLocalStorageKeys.selectedCheckoutItem)
+        localStorage.getItem(productLocalStorageKeys.SELECTED_CHECKOUT_ITEM)
       ) || []
     );
   }, []);
@@ -112,7 +112,7 @@ const ProductContextProvider = (props: parentComponent) => {
         formattedData.price * formattedData.quantity;
     }
     localStorage.setItem(
-      productLocalStorageKeys.shoppingCart,
+      productLocalStorageKeys.SHOPPING_CART,
       JSON.stringify(shoppingCartItems)
     );
     setShoppingCart(shoppingCartItems);
@@ -139,14 +139,14 @@ const ProductContextProvider = (props: parentComponent) => {
     }
     setShoppingCart(shoppingCartItems);
     localStorage.setItem(
-      productLocalStorageKeys.shoppingCart,
+      productLocalStorageKeys.SHOPPING_CART,
       JSON.stringify(shoppingCartItems)
     );
   };
 
   const updateSelectedCheckoutItem = (itemIds: string[]) => {
     localStorage.setItem(
-      productLocalStorageKeys.selectedCheckoutItem,
+      productLocalStorageKeys.SELECTED_CHECKOUT_ITEM,
       JSON.stringify(itemIds)
     );
     setSelectedCheckoutItem(itemIds);
@@ -155,7 +155,7 @@ const ProductContextProvider = (props: parentComponent) => {
   const clearSelectedCheckoutItem = () => {
     setSelectedCheckoutItem([]);
     localStorage.setItem(
-      productLocalStorageKeys.selectedCheckoutItem,
+      productLocalStorageKeys.SELECTED_CHECKOUT_ITEM,
       JSON.stringify([])
     );
   };
@@ -167,7 +167,7 @@ const ProductContextProvider = (props: parentComponent) => {
     );
     setShoppingCart(cartItem);
     localStorage.setItem(
-      productLocalStorageKeys.shoppingCart,
+      productLocalStorageKeys.SHOPPING_CART,
       JSON.stringify(cartItem)
     );
   };

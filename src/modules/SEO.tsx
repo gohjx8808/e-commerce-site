@@ -11,7 +11,7 @@ const SEO = (props:PageProps) => {
     () =>
       (!isSSR &&
         JSON.parse(
-          String(localStorage.getItem(productLocalStorageKeys.products))
+          String(localStorage.getItem(productLocalStorageKeys.PRODUCTS))
         )) ||
       [],
     []

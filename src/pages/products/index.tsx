@@ -31,7 +31,7 @@ const Products = () => {
     () =>
       (!isSSR &&
         customJSONParse(
-          localStorage.getItem(productLocalStorageKeys.products)
+          localStorage.getItem(productLocalStorageKeys.PRODUCTS)
         )) ||
       [],
     []

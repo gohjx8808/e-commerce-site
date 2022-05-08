@@ -78,17 +78,17 @@ export const useSubmitOrder = (onSuccessOrder: () => void) => {
         paymentOptions: payload.paymentOptions,
       };
       // add address to user's address book if authorized
-      if (localStorage.getItem(accountLocalStorageKeys.uid)) {
+      if (localStorage.getItem(accountLocalStorageKeys.UID)) {
         addAddress(saveAddressData);
       } else {
         // save to local storage for unauthorized user
         localStorage.setItem(
-          productLocalStorageKeys.shippingInfo,
+          productLocalStorageKeys.SHIPPING_INFO,
           JSON.stringify(shippingInfo)
         );
       }
     } else {
-      localStorage.removeItem(productLocalStorageKeys.shippingInfo);
+      localStorage.removeItem(productLocalStorageKeys.SHIPPING_INFO);
     }
     onSuccessOrder();
     return sendPaymentEmailApi(payload);

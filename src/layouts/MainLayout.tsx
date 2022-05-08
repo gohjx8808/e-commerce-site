@@ -26,7 +26,7 @@ const MainLayout: FC<MainLayoutOwnProps> = (props) => {
 
   useEffect(() => {
     if (window.location.pathname === routeNames.account) {
-      const uid = localStorage.getItem(accountLocalStorageKeys.uid);
+      const uid = localStorage.getItem(accountLocalStorageKeys.UID);
       if (!uid) {
         navigate("/");
       }

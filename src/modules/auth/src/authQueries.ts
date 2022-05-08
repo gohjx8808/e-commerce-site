@@ -24,7 +24,7 @@ export const useLogin = () => {
   return useMutation("login", signIn, {
     onSuccess: (response) => {
       localStorage.setItem(
-        accountLocalStorageKeys.uid,
+        accountLocalStorageKeys.UID,
         response.user?.uid || ""
       );
       navigate("/");
@@ -47,7 +47,7 @@ export const useLogout = (toggleModal?: () => void) =>
         toggleModal();
       }
       window.location.reload();
-      localStorage.removeItem(accountLocalStorageKeys.uid);
+      localStorage.removeItem(accountLocalStorageKeys.UID);
     },
   });
 
@@ -59,7 +59,7 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
   return useQuery(
     getCurrentUserDetailsKey,
     async () => {
-      const uid = localStorage.getItem(accountLocalStorageKeys.uid) || "";
+      const uid = localStorage.getItem(accountLocalStorageKeys.UID) || "";
       const response = await getCurrentUserDetails(uid);
 
       const parsedResponse: auth.currentUserDetails = response.val();
@@ -84,8 +84,8 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
           toggleVisible(true);
         }
       },
-      onError: () => localStorage.removeItem(accountLocalStorageKeys.uid),
-      enabled: !isSSR && !!localStorage.getItem(accountLocalStorageKeys.uid),
+      onError: () => localStorage.removeItem(accountLocalStorageKeys.UID),
+      enabled: !isSSR && !!localStorage.getItem(accountLocalStorageKeys.UID),
       cacheTime: Infinity,
       staleTime: Infinity,
     }

@@ -14,7 +14,7 @@ const AuthLayout = (props: parentComponent) => {
     return <div />;
   }
 
-  if (localStorage.getItem(accountLocalStorageKeys.uid)) {
+  if (localStorage.getItem(accountLocalStorageKeys.UID)) {
     navigate("/");
   }
 

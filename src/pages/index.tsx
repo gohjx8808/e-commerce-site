@@ -42,7 +42,7 @@ const HomeScreen = () => {
     const extractedProducts: products.innerProductQueryData[] =
       homeQuery.products.edges;
     localStorage.setItem(
-      productLocalStorageKeys.products,
+      productLocalStorageKeys.PRODUCTS,
       JSON.stringify(extractedProducts)
     );
     const tempProduct: ImageDataLike[] = [];

@@ -25,6 +25,6 @@ export const getAvailablePromocodes = () =>
   firebase.database().ref("promoCodes").once("value");
 
 export const updatePromoCodeUsed = (usedPromocode: string[]) => {
-  const uid = localStorage.getItem(accountLocalStorageKeys.uid);
+  const uid = localStorage.getItem(accountLocalStorageKeys.UID);
   return firebase.database().ref(`users/${uid}/usedPromocode`).set(usedPromocode);
 };

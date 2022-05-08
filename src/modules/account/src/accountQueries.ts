@@ -68,7 +68,7 @@ export const useAddEditAddress = (
         currentAddresses[editIndex] = formData;
       }
       const finalPostData = {
-        uid: localStorage.getItem(accountLocalStorageKeys.uid)!,
+        uid: localStorage.getItem(accountLocalStorageKeys.UID)!,
         addressData: currentAddresses,
       };
       return updateAddress(finalPostData);
@@ -117,7 +117,7 @@ export const useDeleteAddress = (toggleModal: () => void) => {
     );
     currentAddresses.splice(removeIndex, 1);
     const postData = {
-      uid: localStorage.getItem(accountLocalStorageKeys.uid)!,
+      uid: localStorage.getItem(accountLocalStorageKeys.UID)!,
       addressData: currentAddresses,
     };
     return updateAddress(postData);

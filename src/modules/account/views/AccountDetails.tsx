@@ -37,7 +37,7 @@ const AccountDetails = () => {
     hookData
   ) => {
     const processedPayload = {
-      uid: localStorage.getItem(accountLocalStorageKeys.uid)!,
+      uid: localStorage.getItem(accountLocalStorageKeys.UID)!,
       details: { ...hookData, gender: hookData.gender.value },
     };
     submitEditAccDetail(processedPayload);

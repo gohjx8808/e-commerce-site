@@ -55,7 +55,7 @@ const ProductDescription: FC<PageProps> = (props) => {
     () =>
       (!isSSR &&
         customJSONParse(
-          localStorage.getItem(productLocalStorageKeys.products)
+          localStorage.getItem(productLocalStorageKeys.PRODUCTS)
         )) ||
       [],
     []
