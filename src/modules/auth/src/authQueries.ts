@@ -84,6 +84,7 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
           toggleVisible(true);
         }
       },
+      onError: () => localStorage.removeItem(accountLocalStorageKeys.uid),
       enabled: !isSSR && !!localStorage.getItem(accountLocalStorageKeys.uid),
       cacheTime: Infinity,
       staleTime: Infinity,
