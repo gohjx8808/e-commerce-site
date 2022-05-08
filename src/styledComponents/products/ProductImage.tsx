@@ -6,11 +6,13 @@ interface ProductImageProps {
   card?: boolean;
 }
 
-const ProductImage = styled(GatsbyImage)<ProductImageProps>(
-  ({ cart, card }) => ({
-    borderRadius: card ? 0 : 5,
-    width: cart ? "40%" : "100%",
-  })
-);
+const excludedProps: PropertyKey[] = ["cart", "card"];
+
+const ProductImage = styled(GatsbyImage, {
+  shouldForwardProp: (prop) => !excludedProps.includes(prop),
+})<ProductImageProps>(({ cart, card }) => ({
+  borderRadius: card ? 0 : 5,
+  width: cart ? "40%" : "100%",
+}));
 
 export default ProductImage;

@@ -31,7 +31,6 @@ const ProductImageCarousel = (props: ProductImageCarouselProps) => {
 
   return (
     <Carousel
-      {...props}
       showIndicators={false}
       infiniteLoop
       animationHandler="fade"
