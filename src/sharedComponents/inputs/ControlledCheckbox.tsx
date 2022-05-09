@@ -17,25 +17,25 @@ interface ControlledCheckboxOwnProps<T> extends Omit<CheckboxProps, "name"> {
   label: string;
   error?: FieldError;
   name: Path<T>;
-  defaultcheck?: UnpackNestedValue<PathValue<T, NonNullable<Path<T>>>>;
 }
 
 const ControlledCheckbox = <T extends FieldValues>(
   props: ControlledCheckboxOwnProps<T>
 ) => {
-  const { control, label, defaultcheck, name, error } = props;
+  const { control, label, name, error } = props;
 
   return (
     <Controller
       control={control}
       name={name!}
-      render={({ field: { onChange } }) => (
+      render={({ field: { onChange, value } }) => (
         <>
           <FormControlLabel
             control={
               <Checkbox
-                onChange={(event) => onChange(event.target.checked)}
                 {...props}
+                checked={value}
+                onChange={(event) => onChange(event.target.checked)}
               />
             }
             label={label}
@@ -43,14 +43,15 @@ const ControlledCheckbox = <T extends FieldValues>(
           <FormHelperText error>{error?.message}</FormHelperText>
         </>
       )}
-      defaultValue={defaultcheck}
+      defaultValue={
+        false as UnpackNestedValue<PathValue<T, NonNullable<Path<T>>>>
+      }
     />
   );
 };
 
 ControlledCheckbox.defaultProps = {
   error: null,
-  defaultcheck: false,
 };
 
 export default ControlledCheckbox;

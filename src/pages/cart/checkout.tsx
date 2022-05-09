@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {
   accountLocalStorageKeys,
-  productLocalStorageKeys
+  productLocalStorageKeys,
 } from "@utils/localStorageKeys";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -25,7 +25,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useState
+  useState,
 } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useXsDownMediaQuery } from "../../hooks";
@@ -34,7 +34,7 @@ import { useUserDetails } from "../../modules/auth/src/authQueries";
 import { getAvailablePromocodes } from "../../modules/products/src/productApi";
 import {
   useOrderCount,
-  useSubmitOrder
+  useSubmitOrder,
 } from "../../modules/products/src/productQueries";
 import productSchema from "../../modules/products/src/productSchema";
 import CheckoutAddressListModal from "../../modules/products/views/CheckoutAddressListModal";
@@ -90,9 +90,11 @@ const Checkout = () => {
 
   const isLoggedIn =
     !isSSR && !!localStorage.getItem(accountLocalStorageKeys.UID);
-  const prevShippingInfo =
+  const prevShippingInfo: products.submitShippingInfoPayload =
     !isSSR &&
-    customJSONParse(localStorage.getItem(productLocalStorageKeys.SHIPPING_INFO));
+    customJSONParse(
+      localStorage.getItem(productLocalStorageKeys.SHIPPING_INFO)
+    );
 
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<
@@ -276,7 +278,7 @@ const Checkout = () => {
   const inputPromoCode = watch("promoCode");
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (selectedAddress) {
       reset({
         fullName: selectedAddress?.fullName,
         email: selectedAddress?.email,
@@ -296,8 +298,29 @@ const Checkout = () => {
         paymentOptions: "",
         promoCode: inputPromoCode || "",
       });
+    } else {
+      reset({
+        fullName: prevShippingInfo?.fullName,
+        email: prevShippingInfo?.email,
+        phoneNumber: prevShippingInfo?.phoneNumber
+          ? prevShippingInfo?.phoneNumber
+          : "60",
+        addressLine1: prevShippingInfo?.addressLine1,
+        addressLine2: prevShippingInfo?.addressLine2,
+        postcode: prevShippingInfo?.postcode,
+        city: prevShippingInfo?.city,
+        state: prevShippingInfo?.state
+          ? { label: prevShippingInfo?.state, value: prevShippingInfo?.state }
+          : { label: "", value: "" },
+        outsideMalaysiaState: prevShippingInfo?.outsideMalaysiaState,
+        country: prevShippingInfo?.country,
+        saveShippingInfo: prevShippingInfo?.saveShippingInfo,
+        paymentOptions: prevShippingInfo?.paymentOptions,
+        promoCode: inputPromoCode || "",
+      });
     }
-  }, [reset, selectedAddress, inputPromoCode, isLoggedIn]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reset, selectedAddress, inputPromoCode]);
 
   const validatePromocode = useCallback(() => {
     const isPromoCodeUsed =
@@ -579,7 +602,6 @@ const Checkout = () => {
                         label="Full Name"
                         lightbg={1}
                         formerror={errors.fullName}
-                        defaultinput={prevShippingInfo?.fullName}
                         readOnly={!!selectedAddress?.fullName}
                       />
                     </Grid>
@@ -590,7 +612,6 @@ const Checkout = () => {
                         label="Email Address"
                         lightbg={1}
                         formerror={errors.email}
-                        defaultinput={prevShippingInfo?.email}
                         readOnly={!!selectedAddress?.email}
                       />
                     </Grid>
@@ -604,7 +625,6 @@ const Checkout = () => {
                           <InputAdornment position="start">+</InputAdornment>
                         }
                         formerror={errors.phoneNumber}
-                        defaultinput={prevShippingInfo?.phoneNumber}
                         readOnly={!!selectedAddress?.email}
                       />
                     </Grid>
@@ -615,7 +635,6 @@ const Checkout = () => {
                         label="Address Line 1"
                         lightbg={1}
                         formerror={errors.addressLine1}
-                        defaultinput={prevShippingInfo?.addressLine1}
                         readOnly={!!selectedAddress?.addressLine1}
                       />
                     </Grid>
@@ -625,7 +644,6 @@ const Checkout = () => {
                         name="addressLine2"
                         label="Address Line 2"
                         lightbg={1}
-                        defaultinput={prevShippingInfo?.addressLine2}
                         readOnly={!!selectedAddress?.addressLine1}
                       />
                     </Grid>
@@ -637,7 +655,6 @@ const Checkout = () => {
                         lightbg={1}
                         maxLength={10}
                         formerror={errors.postcode}
-                        defaultinput={prevShippingInfo?.postcode}
                         readOnly={!!selectedAddress?.postcode}
                       />
                     </Grid>
@@ -648,7 +665,6 @@ const Checkout = () => {
                         label="City"
                         lightbg={1}
                         formerror={errors.city}
-                        defaultinput={prevShippingInfo?.city}
                         readOnly={!!selectedAddress?.city}
                       />
                     </Grid>
@@ -660,11 +676,6 @@ const Checkout = () => {
                         lightbg={1}
                         label="State"
                         error={errors.state?.value}
-                        defaultValue={
-                          stateOptions.find(
-                            (state) => state.value === prevShippingInfo?.state
-                          ) || null
-                        }
                         disabled={!!selectedAddress?.state}
                       />
                     </Grid>
@@ -676,7 +687,6 @@ const Checkout = () => {
                           label="Foreign Country State"
                           lightbg={1}
                           formerror={errors.outsideMalaysiaState}
-                          defaultinput={prevShippingInfo?.outsideMalaysiaState}
                           readOnly={!!selectedAddress?.outsideMalaysiaState}
                         />
                       </Grid>
@@ -688,7 +698,6 @@ const Checkout = () => {
                         label="Country"
                         lightbg={1}
                         formerror={errors.country}
-                        defaultinput={prevShippingInfo?.country}
                         readOnly={!!selectedAddress?.country}
                       />
                     </Grid>
@@ -741,7 +750,6 @@ const Checkout = () => {
                               ? "Use this shipping information for the next time"
                               : "Save to address book"
                           }
-                          defaultChecked={prevShippingInfo?.saveShippingInfo}
                         />
                       </Grid>
                     )}
@@ -769,7 +777,6 @@ const Checkout = () => {
                       label="Payment Options:"
                       options={paymentOptions}
                       error={errors.paymentOptions}
-                      defaultselect={prevShippingInfo?.paymentOptions}
                       row={!isXsView}
                     />
                   </Grid>
