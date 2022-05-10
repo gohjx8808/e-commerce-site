@@ -24,7 +24,7 @@ interface editAccDetailModalProps extends DialogProps {
 }
 
 const EditAccDetailModal = (props: editAccDetailModalProps) => {
-  const { toggleModal, onFormSubmit, isLoading } = props;
+  const { toggleModal, onFormSubmit, isLoading, ...dialogProps } = props;
   const { data: currentUserDetails } = useUserDetails();
   const {
     control,
@@ -40,7 +40,12 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
   ];
 
   return (
-    <Dialog {...props} aria-labelledby="editAccDetail" fullWidth maxWidth="md">
+    <Dialog
+      {...dialogProps}
+      aria-labelledby="editAccDetail"
+      fullWidth
+      maxWidth="md"
+    >
       <Grid container justifyContent="center">
         <DialogTitle id="editAccDetail">Edit Account Details</DialogTitle>
       </Grid>
