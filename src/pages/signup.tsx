@@ -173,7 +173,6 @@ const Signup = () => {
                             label="Gender"
                             error={errors.gender?.value}
                             options={genderOptions}
-                            defaultValue={null}
                           />
                         </Grid>
                       </Grid>

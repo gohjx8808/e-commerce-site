@@ -29,7 +29,7 @@ interface ControlledPickerOwnProps<T extends FieldValues>
 const ControlledPicker = <T extends FieldValues>(
   props: ControlledPickerOwnProps<T>
 ) => {
-  const { control, label, name, defaultcheck, error, lightbg } = props;
+  const { control, label, name, defaultcheck, error, lightbg, options } = props;
 
   return (
     <Controller
@@ -60,7 +60,10 @@ const ControlledPicker = <T extends FieldValues>(
           <FormHelperText error>{error?.message}</FormHelperText>
         </StyledAutocompleteFormControl>
       )}
-      defaultValue={defaultcheck}
+      defaultValue={
+        (options.find((option) => option.value === defaultcheck) ||
+          null) as UnpackNestedValue<PathValue<T, Path<T>>>
+      }
     />
   );
 };

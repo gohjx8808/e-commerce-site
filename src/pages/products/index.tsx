@@ -51,9 +51,7 @@ const Products = () => {
   const filterProductKeyword = useCallback(
     (productName: string) => {
       if (filterKeyword) {
-        return productName
-          .toLowerCase()
-          .includes(filterKeyword.toLowerCase());
+        return productName.toLowerCase().includes(filterKeyword.toLowerCase());
       }
       return true;
     },
@@ -226,9 +224,7 @@ const Products = () => {
               label="Sort By"
               lightbg={1}
               disableClearable
-              defaultValue={sortByOptions.find(
-                (option) => option.value === "a2z"
-              )}
+              defaultcheck="a2z"
             />
           </Grid>
         </Grid>
