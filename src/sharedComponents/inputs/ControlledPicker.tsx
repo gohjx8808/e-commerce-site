@@ -38,6 +38,7 @@ const ControlledPicker = <T extends FieldValues>(
       render={({ field: { onChange, value } }) => (
         <StyledAutocompleteFormControl lightbg={lightbg}>
           <Autocomplete
+            {...props}
             value={value}
             renderInput={(params) => (
               <TextField
@@ -55,7 +56,6 @@ const ControlledPicker = <T extends FieldValues>(
             isOptionEqualToValue={(option, selectedValue) =>
               option.value === selectedValue.value
             }
-            {...props}
           />
           <FormHelperText error>{error?.message}</FormHelperText>
         </StyledAutocompleteFormControl>
@@ -68,7 +68,7 @@ const ControlledPicker = <T extends FieldValues>(
 ControlledPicker.defaultProps = {
   error: null,
   lightbg: 0,
-  defaultcheck: { value: "", label: "" },
+  defaultcheck: null,
 };
 
 export default ControlledPicker;

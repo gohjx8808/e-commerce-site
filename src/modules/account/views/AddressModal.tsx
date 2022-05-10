@@ -18,8 +18,9 @@ import {
   booleanOptions,
   homeColor,
   stateOptions,
-  workColor
+  workColor,
 } from "../../../utils/constants";
+import { defaultAddressData } from "../src/accountConstants";
 import { useAddEditAddress } from "../src/accountQueries";
 import { addressSchema } from "../src/accountScheme";
 
@@ -67,7 +68,7 @@ const AddressModal = (props: AddressModalProps) => {
   });
 
   const onSubmitForm: SubmitHandler<account.rawSubmitAddEditAddressPayload> = (
-    hookData: account.rawSubmitAddEditAddressPayload
+    hookData
   ) => {
     const parsedFormData = { ...hookData, state: hookData.state.value };
     submitAddEditAddress(parsedFormData);
@@ -108,10 +109,15 @@ const AddressModal = (props: AddressModalProps) => {
     }
   }, [reset, selectedAddress]);
 
+  const onCloseModal = () => {
+    reset(defaultAddressData);
+    toggleModal();
+  };
+
   return (
     <Dialog
       open={modalData.isModalOpen}
-      onClose={toggleModal}
+      onClose={onCloseModal}
       aria-labelledby="addressActionModal"
       fullWidth
       maxWidth="md"

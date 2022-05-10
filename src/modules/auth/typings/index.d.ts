@@ -60,7 +60,7 @@ declare namespace auth {
     state: string;
     outsideMalaysiaState: string;
     country: string;
-    defaultOption: "0" | "1";
+    defaultOption: "0" | "1" | "";
     tag: string;
   }
 

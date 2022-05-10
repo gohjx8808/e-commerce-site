@@ -28,21 +28,6 @@ export const booleanOptions = [
 export const homeColor = 'orange';
 export const workColor = 'lightblue';
 
-export const defaultAddressData = {
-  fullName: '',
-  phoneNumber: '60',
-  addressLine1: '',
-  addressLine2: '',
-  postcode: '',
-  city: '',
-  state: '',
-  outsideMalaysiaState: '',
-  country: '',
-  defaultOption: '',
-  tag: '',
-  email: '',
-};
-
 export const itemVariationOptions = [
   { label: 'With Keychain', value: 'With Keychain' },
   { label: 'Without Keychain', value: 'Without Keychain' },

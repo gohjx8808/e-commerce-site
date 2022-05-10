@@ -110,7 +110,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 lightbg={1}
                 label="Gender"
                 options={genderOptions}
-                defaultValue={genderOptions.find(
+                defaultcheck={genderOptions.find(
                   (gender) => gender.value === currentUserDetails?.gender
                 )}
                 error={errors.gender?.value}
