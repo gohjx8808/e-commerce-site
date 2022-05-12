@@ -12,7 +12,6 @@ import Footer from "../modules/Footer";
 import HomeBanner from "../modules/home/HomeBanner";
 import MenuBar from "../modules/MenuBar";
 import ScrollTop from "../sharedComponents/ScrollTop";
-import { isSSR } from "../utils/constants";
 import routeNames from "../utils/routeNames";
 
 interface MainLayoutOwnProps {
@@ -35,52 +34,50 @@ const MainLayout: FC<MainLayoutOwnProps> = (props) => {
 
   return (
     <>
-      {!isSSR && (
-        <Suspense
-          fallback={
-            <Grid
-              container
-              display="flex"
-              minHeight="100vh"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <CircularProgress color="primary" size={60} />
-            </Grid>
-          }
-        >
-          <Box display="flex" minHeight="100vh">
-            <MenuBar />
-            <Grid container direction="column">
-              <Grid flexGrow={1}>
-                <div id="back-to-top-anchor" />
-                <Toolbar />
-                {homeCarouselBanner && <HomeBanner />}
-                {pageBannerTitle && (
-                  <Grid item xs={12} padding={1} bgcolor="customSecondary.main">
-                    <Grid container justifyContent="center" alignItems="center">
-                      <Typography variant="h4" color="white">
-                        {pageBannerTitle}
-                      </Typography>
-                    </Grid>
+      <Suspense
+        fallback={
+          <Grid
+            container
+            display="flex"
+            minHeight="100vh"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <CircularProgress color="primary" size={60} />
+          </Grid>
+        }
+      >
+        <Box display="flex" minHeight="100vh">
+          <MenuBar />
+          <Grid container direction="column">
+            <Grid flexGrow={1}>
+              <div id="back-to-top-anchor" />
+              <Toolbar />
+              {homeCarouselBanner && <HomeBanner />}
+              {pageBannerTitle && (
+                <Grid item xs={12} padding={1} bgcolor="customSecondary.main">
+                  <Grid container justifyContent="center" alignItems="center">
+                    <Typography variant="h4" color="white">
+                      {pageBannerTitle}
+                    </Typography>
                   </Grid>
-                )}
-                <Box margin={3}>{children}</Box>
-              </Grid>
-              <Footer />
-              <ScrollTop>
-                <Fab
-                  color="secondary"
-                  size="medium"
-                  aria-label="scroll back to top"
-                >
-                  <KeyboardArrowUpIcon />
-                </Fab>
-              </ScrollTop>
+                </Grid>
+              )}
+              <Box margin={3}>{children}</Box>
             </Grid>
-          </Box>
-        </Suspense>
-      )}
+            <Footer />
+            <ScrollTop>
+              <Fab
+                color="secondary"
+                size="medium"
+                aria-label="scroll back to top"
+              >
+                <KeyboardArrowUpIcon />
+              </Fab>
+            </ScrollTop>
+          </Grid>
+        </Box>
+      </Suspense>
     </>
   );
 };
