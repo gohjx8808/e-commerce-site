@@ -1,5 +1,5 @@
 import {
-  customJSONParse,
+  getLocalStorageItem,
   getProductVariationSuffix,
   roundTo2Dp,
 } from "@utils/helper";
@@ -65,14 +65,10 @@ const ProductContextProvider = (props: parentComponent) => {
 
   useEffect(() => {
     setShoppingCart(
-      customJSONParse(
-        localStorage.getItem(productLocalStorageKeys.SHOPPING_CART)
-      ) || []
+      getLocalStorageItem(productLocalStorageKeys.SHOPPING_CART) || []
     );
     setSelectedCheckoutItem(
-      customJSONParse(
-        localStorage.getItem(productLocalStorageKeys.SELECTED_CHECKOUT_ITEM)
-      ) || []
+      getLocalStorageItem(productLocalStorageKeys.SELECTED_CHECKOUT_ITEM) || []
     );
   }, []);
 

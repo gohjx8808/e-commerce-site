@@ -5,7 +5,7 @@ import {
   productLocalStorageKeys,
 } from "@utils/localStorageKeys";
 import { useEffect, useState } from "react";
-import { customJSONParse } from "./utils/helper";
+import { getLocalStorageItem } from "./utils/helper";
 
 const theme = useTheme;
 
@@ -18,9 +18,7 @@ export const useAllProducts = () => {
   >([]);
 
   useEffect(() => {
-    setAllProducts(
-      customJSONParse(localStorage.getItem(productLocalStorageKeys.PRODUCTS))
-    );
+    setAllProducts(getLocalStorageItem(productLocalStorageKeys.PRODUCTS));
   }, []);
 
   return allProducts;
@@ -30,7 +28,7 @@ export const useUID = () => {
   const [uid, setUid] = useState<string>("");
 
   useEffect(() => {
-    setUid(customJSONParse(localStorage.getItem(accountLocalStorageKeys.UID)));
+    setUid(getLocalStorageItem(accountLocalStorageKeys.UID));
   }, []);
 
   return uid;
@@ -67,9 +65,7 @@ export const usePrevShippingInfo = () => {
 
   useEffect(() => {
     setPrevShippingInfo(
-      customJSONParse(
-        localStorage.getItem(productLocalStorageKeys.SHIPPING_INFO)
-      )
+      getLocalStorageItem(productLocalStorageKeys.SHIPPING_INFO)
     );
   }, []);
 
