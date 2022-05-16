@@ -1,23 +1,26 @@
-import { navigate } from 'gatsby';
-import React from 'react';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import ImageSearchOutlinedIcon from '@mui/icons-material/ImageSearchOutlined';
-import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
-import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
-import SpeakerNotesIcon from '@mui/icons-material/SpeakerNotes';
-import List from '@mui/material/List';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import StyledListItem from '../../styledComponents/StyledListItem';
-import routeNames from '../../utils/routeNames';
-import { isSSR } from '../../utils/constants';
+import { usePathname } from "@hooks";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import ImageSearchOutlinedIcon from "@mui/icons-material/ImageSearchOutlined";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
+import SpeakerNotesIcon from "@mui/icons-material/SpeakerNotes";
+import List from "@mui/material/List";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import { navigate } from "gatsby";
+import React from "react";
+import StyledListItem from "../../styledComponents/StyledListItem";
+import routeNames from "../../utils/routeNames";
 
 const CustomDrawerItems = () => {
-  const currentPathName = (!isSSR && window.location.pathname) || '';
+  const currentPathName = usePathname();
 
   return (
     <List component="nav">
-      <StyledListItem selected={currentPathName === '/'} onClick={() => navigate('/')}>
+      <StyledListItem
+        selected={currentPathName === "/"}
+        onClick={() => navigate("/")}
+      >
         <ListItemIcon>
           <HomeOutlinedIcon />
         </ListItemIcon>

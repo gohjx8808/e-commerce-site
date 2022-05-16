@@ -1,24 +1,25 @@
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Link from '@mui/material/Link';
-import { Link as GatsbyLink } from 'gatsby';
-import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from 'react';
-import StyledBreadcrumbs from '../styledComponents/StyledBreadcrumbs';
-import { isSSR, routeMap } from '../utils/constants';
+import { usePathname } from "@hooks";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
+import { Link as GatsbyLink } from "gatsby";
+import React, { useEffect, useState } from "react";
+import StyledBreadcrumbs from "../styledComponents/StyledBreadcrumbs";
+import { routeMap } from "../utils/constants";
 
-interface CustomBreadcrumbsOwnProps{
-  customActiveName?:string
+interface CustomBreadcrumbsOwnProps {
+  customActiveName?: string;
 }
 
-const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
+const CustomBreadcrumbs = (props: CustomBreadcrumbsOwnProps) => {
   const { customActiveName } = props;
-  const pathname = (!isSSR && window.location.pathname) || '';
+  const pathname = usePathname();
 
   const [routesInBetween, setRoutesInBetween] = useState<string[]>([]);
 
   useEffect(() => {
-    const paths = pathname.split('/');
-    if (paths[paths.length - 1] === '') {
+    const paths = pathname.split("/");
+    if (paths[paths.length - 1] === "") {
       setRoutesInBetween(paths.slice(1, paths.length - 2));
     } else {
       setRoutesInBetween(paths.slice(1, paths.length - 1));
@@ -26,12 +27,21 @@ const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
   }, [pathname]);
 
   return (
-    <StyledBreadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+    <StyledBreadcrumbs
+      separator={<NavigateNextIcon fontSize="small" />}
+      aria-label="breadcrumb"
+    >
       <Link component={GatsbyLink} color="inherit" to="/" underline="hover">
         Home
       </Link>
       {routesInBetween.map((route) => (
-        <Link component={GatsbyLink} color="inherit" to={`/${route}/`} key={route} underline="hover">
+        <Link
+          component={GatsbyLink}
+          color="inherit"
+          to={`/${route}/`}
+          key={route}
+          underline="hover"
+        >
           {routeMap[`/${route}/`]}
         </Link>
       ))}
@@ -43,7 +53,7 @@ const CustomBreadcrumbs = (props:CustomBreadcrumbsOwnProps) => {
 };
 
 CustomBreadcrumbs.defaultProps = {
-  customActiveName: '',
+  customActiveName: "",
 };
 
 export default CustomBreadcrumbs;

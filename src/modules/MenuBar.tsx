@@ -20,7 +20,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { navigate } from "gatsby";
 import React, { useContext, useEffect, useState } from "react";
-import { useXsDownMediaQuery } from "../hooks";
+import { usePathname, useXsDownMediaQuery } from "../hooks";
 import ElevationScroll from "../sharedComponents/ElevationScroll";
 import StyledAppbar from "../styledComponents/drawer/StyledAppbar";
 import {
@@ -29,7 +29,6 @@ import {
   SearchInputBase,
 } from "../styledComponents/search";
 import StyledMenuItem from "../styledComponents/StyledListItem";
-import { isSSR } from "../utils/constants";
 import DarkModeContext from "../utils/DarkModeContext";
 import routeNames from "../utils/routeNames";
 import { useUserDetails } from "./auth/src/authQueries";
@@ -38,7 +37,7 @@ import CustomDesktopDrawer from "./drawer/CustomDesktopDrawer";
 import CustomMobileDrawer from "./drawer/CustomMobileDrawer";
 
 const MenuBar = () => {
-  const pathname = (!isSSR && window.location.pathname) || "";
+  const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mobileMoreAnchor, setMobileMoreAnchor] = useState<null | HTMLElement>(
     null

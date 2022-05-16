@@ -19,13 +19,12 @@ import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import ToggleButton from "@mui/material/ToggleButton";
 import Typography from "@mui/material/Typography";
-import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import { Link as GatsbyLink, PageProps } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import { useSnackbar } from "notistack";
-import React, { FC, useContext, useEffect, useMemo, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
-import { useXsDownMediaQuery } from "../../hooks";
+import { useAllProducts, useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import ProductErrorSnackbar from "../../modules/products/views/ProductErrorSnackbar";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
@@ -36,14 +35,9 @@ import ProductImage from "../../styledComponents/products/ProductImage";
 import ProductPrice from "../../styledComponents/products/ProductPrice";
 import {
   defaultProductData,
-  isSSR,
   itemVariationOptions,
 } from "../../utils/constants";
-import {
-  customJSONParse,
-  formatPrice,
-  getProductVariationSuffix,
-} from "../../utils/helper";
+import { formatPrice, getProductVariationSuffix } from "../../utils/helper";
 import routeNames from "../../utils/routeNames";
 
 const ProductDescription: FC<PageProps> = (props) => {
@@ -51,15 +45,7 @@ const ProductDescription: FC<PageProps> = (props) => {
   const { id } = params;
   const isXsView = useXsDownMediaQuery();
   const { addToCart } = useContext(ProductContext);
-  const allProducts: products.innerProductQueryData[] = useMemo(
-    () =>
-      (!isSSR &&
-        customJSONParse(
-          localStorage.getItem(productLocalStorageKeys.PRODUCTS)
-        )) ||
-      [],
-    []
-  );
+  const allProducts = useAllProducts();
   const selectedProduct =
     allProducts.find((product) => product.node.contentful_id === id)?.node ||
     defaultProductData;

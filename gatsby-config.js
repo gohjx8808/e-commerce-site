@@ -49,8 +49,8 @@ module.exports = {
     {
       resolve: "gatsby-source-contentful",
       options: {
-        spaceId: process.env.CONTENTFUL_SPACE_ID,
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+        spaceId: "r3a2vbpk4nlk",
+        accessToken: "NEQnoryRJxmSWVc4a9KTINLOxZclPvtTfyS4nE6x3ws",
       },
     },
     {
@@ -79,8 +79,8 @@ module.exports = {
             "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com https://web.facebook.com/ https://www.google-analytics.com https://cloudflareinsights.com https://o2.mouseflow.com https://send-checkout-email.gohjx8808.workers.dev https://send-feedback-email.gohjx8808.workers.dev",
           "frame-src":
             "'self' https://*.firebasedatabase.app https://apis.google.com https://*.firebase https://www.facebook.com https://web.facebook.com/ https://m.me/ https://m.facebook.com/",
-          "font-src":"'self' data: https://fonts.gstatic.com"
-          },
+          "font-src": "'self' data: https://fonts.gstatic.com",
+        },
       },
     },
     "gatsby-plugin-offline",
@@ -115,6 +115,7 @@ module.exports = {
           "@modules": "src/modules",
           "@contextProvider": "src/contextProvider",
           "@styledComponents": "src/styledComponents",
+          "@hooks": "src/hooks.ts",
         },
         extensions: ["ts"],
       },

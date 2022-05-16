@@ -12,10 +12,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import {
-  accountLocalStorageKeys,
-  productLocalStorageKeys,
-} from "@utils/localStorageKeys";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isBetween from "dayjs/plugin/isBetween";
@@ -28,7 +24,7 @@ import React, {
   useState,
 } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useXsDownMediaQuery } from "../../hooks";
+import { usePrevShippingInfo, useUID, useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import { useUserDetails } from "../../modules/auth/src/authQueries";
 import { getAvailablePromocodes } from "../../modules/products/src/productApi";
@@ -46,8 +42,8 @@ import ControlledPicker from "../../sharedComponents/inputs/ControlledPicker";
 import ControlledRadioButton from "../../sharedComponents/inputs/ControlledRadioButton";
 import ControlledTextInput from "../../sharedComponents/inputs/ControlledTextInput";
 import CheckoutCard from "../../styledComponents/products/CheckoutCard";
-import { isSSR, stateOptions } from "../../utils/constants";
-import { customJSONParse, formatPrice, roundTo2Dp } from "../../utils/helper";
+import { stateOptions } from "../../utils/constants";
+import { formatPrice, roundTo2Dp } from "../../utils/helper";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
@@ -88,13 +84,8 @@ const Checkout = () => {
   const { mutate: submitOrder, isLoading: submitOrderLoading } =
     useSubmitOrder(onSuccessOrder);
 
-  const isLoggedIn =
-    !isSSR && !!localStorage.getItem(accountLocalStorageKeys.UID);
-  const prevShippingInfo: products.submitShippingInfoPayload =
-    !isSSR &&
-    customJSONParse(
-      localStorage.getItem(productLocalStorageKeys.SHIPPING_INFO)
-    );
+  const isLoggedIn = !!useUID();
+  const prevShippingInfo = usePrevShippingInfo();
 
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<
@@ -319,7 +310,7 @@ const Checkout = () => {
         promoCode: inputPromoCode || "",
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, selectedAddress, inputPromoCode]);
 
   const validatePromocode = useCallback(() => {

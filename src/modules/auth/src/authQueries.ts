@@ -1,5 +1,5 @@
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
-import { isSSR } from "@utils/constants";
+import { useUID } from "@hooks";
 import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
 import firebase from "gatsby-plugin-firebase";
@@ -56,6 +56,8 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
     useContext(StatusModalContext);
   const { mutate: logout } = useLogout();
 
+  const isLoggedIn = useUID();
+
   return useQuery(
     getCurrentUserDetailsKey,
     async () => {
@@ -85,7 +87,7 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
         }
       },
       onError: () => localStorage.removeItem(accountLocalStorageKeys.UID),
-      enabled: !isSSR && !!localStorage.getItem(accountLocalStorageKeys.UID),
+      enabled: !!isLoggedIn,
       cacheTime: Infinity,
       staleTime: Infinity,
     }

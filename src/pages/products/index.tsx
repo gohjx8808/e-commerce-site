@@ -1,25 +1,18 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
+import { useAllProducts } from "@hooks";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { isSSR } from "@utils/constants";
-import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import { graphql, useStaticQuery } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { scroller } from "react-scroll";
 import MainLayout from "../../layouts/MainLayout";
 import ProductCard from "../../modules/products/views/ProductCard";
 import ControlledPicker from "../../sharedComponents/inputs/ControlledPicker";
-import { compareString, customJSONParse } from "../../utils/helper";
+import { compareString } from "../../utils/helper";
 
 interface categoryAmountData {
   [key: string]: number;
@@ -27,15 +20,8 @@ interface categoryAmountData {
 
 const Products = () => {
   const { filterKeyword } = useContext(ProductContext);
-  const allProducts: products.innerProductQueryData[] = useMemo(
-    () =>
-      (!isSSR &&
-        customJSONParse(
-          localStorage.getItem(productLocalStorageKeys.PRODUCTS)
-        )) ||
-      [],
-    []
-  );
+  const allProducts = useAllProducts();
+
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryProductAmount, setCategoryProductAmount] =
     useState<categoryAmountData>({});

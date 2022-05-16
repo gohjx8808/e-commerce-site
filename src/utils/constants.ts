@@ -52,8 +52,6 @@ export const emptyShippingInfo:products.submitShippingInfoPayload = {
   paymentOptions: '',
 };
 
-export const isSSR = typeof window === 'undefined';
-
 export const defaultProductData:products.productData = {
   category: '',
   contentful_id: '',
