@@ -1,4 +1,4 @@
-import { accountLocalStorageKeys } from '@utils/localStorageKeys';
+import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import "firebase/database";
 import firebase from "gatsby-plugin-firebase";
 
@@ -26,5 +26,18 @@ export const getAvailablePromocodes = () =>
 
 export const updatePromoCodeUsed = (usedPromocode: string[]) => {
   const uid = localStorage.getItem(accountLocalStorageKeys.UID);
-  return firebase.database().ref(`users/${uid}/usedPromocode`).set(usedPromocode);
+  return firebase
+    .database()
+    .ref(`users/${uid}/usedPromocode`)
+    .set(usedPromocode);
+};
+
+export const getOrderHistory = () => {
+  const uid = localStorage.getItem(accountLocalStorageKeys.UID);
+  return firebase.database().ref(`orderHistory/${uid}`).once("value");
+};
+
+export const updateOrderHistory = (payload: products.saveOrderPayload[]) => {
+  const uid = localStorage.getItem(accountLocalStorageKeys.UID);
+  return firebase.database().ref(`orderHistory/${uid}`).set(payload);
 };

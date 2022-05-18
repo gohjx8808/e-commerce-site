@@ -1,4 +1,6 @@
+import dayjs from "dayjs";
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
+import { useUID } from "@hooks";
 import {
   accountLocalStorageKeys,
   productLocalStorageKeys,
@@ -14,8 +16,10 @@ import {
 import {
   getAvailablePromocodes,
   getOrderCount,
+  getOrderHistory,
   sendPaymentEmailApi,
   updateOrderCount,
+  updateOrderHistory,
   updatePromoCodeUsed,
 } from "./productApi";
 
@@ -33,11 +37,16 @@ export const useOrderCount = () =>
 export const useSubmitOrder = (onSuccessOrder: () => void) => {
   const { data: orderCount } = useOrderCount();
   const { data: userDetails } = useUserDetails();
+  const { data: orderHistory } = useOrderHistory();
+  const uid = useUID();
+
   const { mutate: addAddress } = useAddEditAddress(
     { actionType: "Add", selectedAddress: null, isModalOpen: false },
     () => {},
     false
   );
+  const { mutate: saveOrder } = useUpdateOrderHistory();
+
   const queryClient = useQueryClient();
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);
@@ -90,6 +99,17 @@ export const useSubmitOrder = (onSuccessOrder: () => void) => {
     } else {
       localStorage.removeItem(productLocalStorageKeys.SHIPPING_INFO);
     }
+    // save order to db if logged in
+    if (uid) {
+      const orderData: products.saveOrderPayload = {
+        ...payload,
+        createdAt: dayjs().format("DD/MM/YYYY"),
+        status: "Pending Payment",
+      };
+      const currentOrderHistory = [...(orderHistory || []), orderData];
+
+      saveOrder(currentOrderHistory);
+    }
     onSuccessOrder();
     return sendPaymentEmailApi(payload);
   };
@@ -119,3 +139,22 @@ export const useAvailablePromocodes = () =>
   useQuery(productQueriesKeys.getAvailablePromocodes, async () =>
     (await getAvailablePromocodes()).val()
   );
+
+export const useOrderHistory = () => {
+  const uid = useUID();
+
+  return useQuery(
+    "getOrderHistory",
+    async () => {
+      const orderHistory: products.saveOrderPayload[] = (
+        await getOrderHistory()
+      ).val();
+
+      return orderHistory;
+    },
+    { enabled: !!uid }
+  );
+};
+
+export const useUpdateOrderHistory = () =>
+  useMutation("updateOrderHistory", updateOrderHistory);

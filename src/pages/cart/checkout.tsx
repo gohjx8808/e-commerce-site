@@ -30,6 +30,7 @@ import { useUserDetails } from "../../modules/auth/src/authQueries";
 import { getAvailablePromocodes } from "../../modules/products/src/productApi";
 import {
   useOrderCount,
+  useOrderHistory,
   useSubmitOrder,
 } from "../../modules/products/src/productQueries";
 import productSchema from "../../modules/products/src/productSchema";

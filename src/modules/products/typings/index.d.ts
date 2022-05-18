@@ -85,4 +85,9 @@ declare namespace products {
     imageList: import("gatsby-plugin-image").ImageDataLike[];
     clickedIndex: number;
   }
+
+  interface saveOrderPayload extends sendPaymentEmailPayload {
+    status: "Pending Payment";
+    createdAt: string;
+  }
 }

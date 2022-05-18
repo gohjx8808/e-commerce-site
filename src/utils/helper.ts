@@ -43,5 +43,10 @@ export const compareString = (a: string, b: string) => {
 
 export const roundTo2Dp = (value: number) => Number(value.toFixed(2));
 
-export const getLocalStorageItem = (key: string) =>
-  JSON.parse(String(localStorage.getItem(key)));
+export const getLocalStorageItem = (key: string) => {
+  try {
+    return JSON.parse(String(localStorage.getItem(key)));
+  } catch (error) {
+    return localStorage.getItem(key);
+  }
+};
