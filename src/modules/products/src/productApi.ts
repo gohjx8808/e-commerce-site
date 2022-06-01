@@ -21,15 +21,15 @@ export const sendPaymentEmailApi = (
     body: JSON.stringify(emailData),
   });
 
-export const getAvailablePromocodes = () =>
+export const getAvailablePromoCodes = () =>
   firebase.database().ref("promoCodes").once("value");
 
-export const updatePromoCodeUsed = (usedPromocode: string[]) => {
+export const updatePromoCodeUsed = (usedPromoCode: string[]) => {
   const uid = localStorage.getItem(accountLocalStorageKeys.UID);
   return firebase
     .database()
-    .ref(`users/${uid}/usedPromocode`)
-    .set(usedPromocode);
+    .ref(`users/${uid}/usedPromoCodes`)
+    .set(usedPromoCode);
 };
 
 export const getOrderHistory = () => {

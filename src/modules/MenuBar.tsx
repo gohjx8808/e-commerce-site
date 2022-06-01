@@ -22,11 +22,11 @@ import { navigate } from "gatsby";
 import React, { useContext, useEffect, useState } from "react";
 import { usePathname, useXsDownMediaQuery } from "../hooks";
 import ElevationScroll from "../sharedComponents/ElevationScroll";
-import StyledAppbar from "../styledComponents/drawer/StyledAppbar";
+import StyledAppBar from "../styledComponents/drawer/StyledAppBar";
 import {
   SearchContainer,
   SearchIconWrapper,
-  SearchInputBase,
+  SearchInputBase
 } from "../styledComponents/search";
 import StyledMenuItem from "../styledComponents/StyledListItem";
 import DarkModeContext from "../utils/DarkModeContext";
@@ -140,7 +140,7 @@ const MenuBar = () => {
     <>
       <CssBaseline />
       <ElevationScroll>
-        <StyledAppbar position="fixed" open={drawerOpen} color="customPrimary">
+        <StyledAppBar position="fixed" open={drawerOpen} color="customPrimary">
           <Toolbar>
             <IconButton
               sx={{
@@ -272,7 +272,7 @@ const MenuBar = () => {
               </IconButton>
             </Box>
           </Toolbar>
-        </StyledAppbar>
+        </StyledAppBar>
       </ElevationScroll>
       {renderMobileMenu}
       {!isXsView ? (

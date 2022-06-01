@@ -4,7 +4,7 @@ declare namespace auth {
     password: string;
   }
 
-  interface submitSignupPayload {
+  interface submitSignUpPayload {
     email: string;
     dob: string;
     confirmPassword: string;
@@ -40,7 +40,7 @@ declare namespace auth {
     gender: string;
     phoneNumber: string;
     addressBook: addressData[];
-    usedPromocode: string[];
+    usedPromoCodes: string[];
     roles: roleData;
   }
 
@@ -75,7 +75,7 @@ declare namespace auth {
     fullName: string;
     gender: string;
     phoneNumber: string;
-    usedPromocode: string[];
+    usedPromoCodes: string[];
     roles: roleData;
   }
 }

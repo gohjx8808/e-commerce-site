@@ -29,7 +29,7 @@ const LearnMore = () => (
         </Typography>
         <Typography variant="h6" textAlign="justify">
           Since it is all handmade (with cares and love), please allow 1 to 2 cm varies with the
-          dimension stated in the description box. Colour might be slightly differed from the
+          dimension stated in the description box. Color might be slightly differed from the
           image shown due to lighting and different screen projection.
         </Typography>
       </Grid>
@@ -97,7 +97,7 @@ const LearnMore = () => (
         <Typography variant="h6" textAlign="justify">
           First of all, soaked the crochet item in room temperature soapy water for about 15 - 30
           mins. Next, rinse it gently. Roll the crochet item with a towel to remove excess water
-          and let it dry completely. Avoid drying under direct sunlight to prevent colour fading.
+          and let it dry completely. Avoid drying under direct sunlight to prevent color fading.
         </Typography>
       </Grid>
     </Grid>

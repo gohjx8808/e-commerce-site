@@ -73,7 +73,7 @@ declare namespace products {
     accUserName: string;
   }
 
-  interface availablePromocodeData {
+  interface availablePromoCodeData {
     code: string;
     endDate: string;
     startDate: string;

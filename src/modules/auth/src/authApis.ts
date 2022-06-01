@@ -1,8 +1,8 @@
-import firebase from "gatsby-plugin-firebase";
 import "firebase/auth";
 import "firebase/database";
+import firebase from "gatsby-plugin-firebase";
 
-export const registerUser = (payload: auth.submitSignupPayload) =>
+export const registerUser = (payload: auth.submitSignUpPayload) =>
   firebase
     .auth()
     .createUserWithEmailAndPassword(payload.email, payload.password);

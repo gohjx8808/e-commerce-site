@@ -1,32 +1,32 @@
-import dayjs from "dayjs";
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import { useUID } from "@hooks";
 import {
   accountLocalStorageKeys,
-  productLocalStorageKeys,
+  productLocalStorageKeys
 } from "@utils/localStorageKeys";
+import dayjs from "dayjs";
 import { navigate } from "gatsby";
 import { useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useAddEditAddress } from "../../account/src/accountQueries";
 import {
   getCurrentUserDetailsKey,
-  useUserDetails,
+  useUserDetails
 } from "../../auth/src/authQueries";
 import {
-  getAvailablePromocodes,
+  getAvailablePromoCodes,
   getOrderCount,
   getOrderHistory,
   sendPaymentEmailApi,
   updateOrderCount,
   updateOrderHistory,
-  updatePromoCodeUsed,
+  updatePromoCodeUsed
 } from "./productApi";
 
 export const productQueriesKeys = {
   getOrderCount: "getOrderCount",
   updateOrderCount: "updateOrderCount",
-  getAvailablePromocodes: "getAvailablePromocodes",
+  getAvailablePromoCodes: "getAvailablePromoCodes",
 };
 
 export const useOrderCount = () =>
@@ -56,9 +56,9 @@ export const useSubmitOrder = (onSuccessOrder: () => void) => {
     await updateOrderCount(orderCount + 1);
     // update promo code used for the user
     if (payload.promoCode) {
-      const usedPromocode = [...(userDetails?.usedPromocode || [])];
-      usedPromocode.push(payload.promoCode);
-      await updatePromoCodeUsed(usedPromocode);
+      const usedPromoCode = [...(userDetails?.usedPromoCodes || [])];
+      usedPromoCode.push(payload.promoCode);
+      await updatePromoCodeUsed(usedPromoCode);
       queryClient.invalidateQueries(getCurrentUserDetailsKey);
     }
     if (payload.saveShippingInfo) {
@@ -135,10 +135,13 @@ export const useSubmitOrder = (onSuccessOrder: () => void) => {
   });
 };
 
-export const useAvailablePromocodes = () =>
-  useQuery(productQueriesKeys.getAvailablePromocodes, async () =>
-    (await getAvailablePromocodes()).val()
-  );
+export const useAvailablePromoCodes = () =>
+  useQuery(productQueriesKeys.getAvailablePromoCodes, async () => {
+    const response: products.availablePromoCodeData[] = (
+      await getAvailablePromoCodes()
+    ).val();
+    return response;
+  });
 
 export const useOrderHistory = () => {
   const uid = useUID();

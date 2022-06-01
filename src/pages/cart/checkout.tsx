@@ -15,7 +15,6 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isBetween from "dayjs/plugin/isBetween";
-import firebase from "gatsby-plugin-firebase";
 import React, {
   useCallback,
   useContext,
@@ -27,10 +26,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { usePrevShippingInfo, useUID, useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import { useUserDetails } from "../../modules/auth/src/authQueries";
-import { getAvailablePromocodes } from "../../modules/products/src/productApi";
 import {
+  useAvailablePromoCodes,
   useOrderCount,
-  useOrderHistory,
   useSubmitOrder,
 } from "../../modules/products/src/productQueries";
 import productSchema from "../../modules/products/src/productSchema";
@@ -84,6 +82,7 @@ const Checkout = () => {
   const { data: orderCount } = useOrderCount();
   const { mutate: submitOrder, isLoading: submitOrderLoading } =
     useSubmitOrder(onSuccessOrder);
+  const { data: availablePromoCodes } = useAvailablePromoCodes();
 
   const isLoggedIn = !!useUID();
   const prevShippingInfo = usePrevShippingInfo();
@@ -99,9 +98,7 @@ const Checkout = () => {
   });
   const [isCheckoutAddressListModalOpen, setIsCheckoutAddressListModalOpen] =
     useState(false);
-  const [availablePromocodes, setAvailablePromocodes] = useState<
-    products.availablePromocodeData[]
-  >([]);
+
   const defaultPromoObject: promoCodeObject = useMemo(
     () => ({
       code: "",
@@ -115,6 +112,7 @@ const Checkout = () => {
   );
   const [appliedPromo, setAppliedPromo] =
     useState<promoCodeObject>(defaultPromoObject);
+
   const {
     control,
     watch,
@@ -125,15 +123,6 @@ const Checkout = () => {
   } = useForm<products.checkoutFormPayload>({
     resolver: yupResolver(productSchema.shippingInfoSchema),
   });
-
-  useEffect(() => {
-    const getAvailablePromocodesEffect = async () => {
-      const promocodesResponse: firebase.database.DataSnapshot =
-        await getAvailablePromocodes();
-      setAvailablePromocodes(promocodesResponse.val());
-    };
-    getAvailablePromocodesEffect();
-  }, []);
 
   useEffect(() => {
     const filteredItems = shoppingCart.filter((item) => {
@@ -314,16 +303,16 @@ const Checkout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, selectedAddress, inputPromoCode]);
 
-  const validatePromocode = useCallback(() => {
+  const validatePromoCode = useCallback(() => {
     const isPromoCodeUsed =
-      currentUserDetails?.usedPromocode &&
-      currentUserDetails.usedPromocode.includes(inputPromoCode) &&
-      !!currentUserDetails.usedPromocode;
+      currentUserDetails?.usedPromoCodes &&
+      currentUserDetails.usedPromoCodes.includes(inputPromoCode) &&
+      !!currentUserDetails.usedPromoCodes;
     let rawPromoObject: promoCodeObject = defaultPromoObject;
     let discountedPrice = totalAmount;
     if (!isPromoCodeUsed) {
       const today = dayjs();
-      const targetPromoCode = availablePromocodes.find(
+      const targetPromoCode = availablePromoCodes?.find(
         (promoCode) => promoCode.code === inputPromoCode
       );
       if (targetPromoCode) {
@@ -373,16 +362,16 @@ const Checkout = () => {
     setAppliedPromo(rawPromoObject);
     return rawPromoObject.error;
   }, [
-    availablePromocodes,
-    currentUserDetails?.usedPromocode,
+    availablePromoCodes,
+    currentUserDetails?.usedPromoCodes,
     inputPromoCode,
     totalAmount,
     defaultPromoObject,
   ]);
 
   useEffect(() => {
-    validatePromocode();
-  }, [inputPromoCode, validatePromocode]);
+    validatePromoCode();
+  }, [inputPromoCode, validatePromoCode]);
 
   const proceedToPayment: SubmitHandler<products.checkoutFormPayload> = async (
     hookData
@@ -408,7 +397,7 @@ const Checkout = () => {
       selectedCheckoutItems: extractedCartItem,
     };
 
-    if (!validatePromocode()) {
+    if (!validatePromoCode()) {
       submitOrder(emailData);
     }
   };

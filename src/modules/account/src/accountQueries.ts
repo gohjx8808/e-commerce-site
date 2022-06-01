@@ -73,7 +73,7 @@ export const useAddEditAddress = (
       };
       return updateAddress(finalPostData);
     }
-    throw new Error("duplicate addres");
+    throw new Error("duplicate address");
   };
 
   return useMutation("addEditAddress", onSubmitForm, {

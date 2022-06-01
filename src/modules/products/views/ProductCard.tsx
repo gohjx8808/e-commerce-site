@@ -1,4 +1,3 @@
-// import { addToCart } from "../src/productUtils";
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Box from "@mui/material/Box";

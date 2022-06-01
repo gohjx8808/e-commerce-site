@@ -11,7 +11,7 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AuthLayout from "../layouts/AuthLayout";
 import { useSignUp } from "../modules/auth/src/authQueries";
-import { signupSchema } from "../modules/auth/src/authSchema";
+import { signUpSchema } from "../modules/auth/src/authSchema";
 import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
 import ControlledDatePicker from "../sharedComponents/inputs/ControlledDatePicker";
 import ControlledPasswordInput from "../sharedComponents/inputs/ControlledPasswordInput";
@@ -21,7 +21,7 @@ import PasswordRequirements from "../sharedComponents/PasswordRequirements";
 import { AuthCard, AuthCardHeader, AuthIcon } from "../styledComponents/auth";
 import routeNames from "../utils/routeNames";
 
-const Signup = () => {
+const SignUp = () => {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "icon.jpeg" }) {
@@ -41,11 +41,11 @@ const Signup = () => {
     formState: { errors },
     handleSubmit,
     watch,
-  } = useForm<auth.submitSignupPayload>({
-    resolver: yupResolver(signupSchema),
+  } = useForm<auth.submitSignUpPayload>({
+    resolver: yupResolver(signUpSchema),
   });
 
-  const submitSignup: SubmitHandler<auth.submitSignupPayload> = (hookData) => {
+  const onSubmitSignUp: SubmitHandler<auth.submitSignUpPayload> = (hookData) => {
     submitSignUp(hookData);
   };
 
@@ -93,7 +93,7 @@ const Signup = () => {
                 </Box>
               </Grid>
               <CardContent>
-                <form onSubmit={handleSubmit(submitSignup)}>
+                <form onSubmit={handleSubmit(onSubmitSignUp)}>
                   <Grid container justifyContent="center" alignItems="center">
                     <Grid item sm={11} xs={12}>
                       <Grid
@@ -206,4 +206,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUp;
