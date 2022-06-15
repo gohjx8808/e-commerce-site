@@ -75,3 +75,9 @@ export const routeMap: { [key: string]: string } = {
   [routeNames.productDescription]: "Product Description",
   [routeNames.forgotPassword]: "Forgot Password",
 };
+
+export enum socialMediaLinks {
+  FACEBOOK = "https://www.facebook.com/YJartjournal/",
+  INSTAGRAM = "https://www.instagram.com/yjartjournal/",
+  XHS = "https://www.xiaohongshu.com/user/profile/5cf791af000000000500c3eb?xhsshare=CopyLink&appuid=5cf791af000000000500c3eb&apptime=1642396244",
+}

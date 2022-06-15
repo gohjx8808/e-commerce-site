@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { socialMediaLinks } from '@utils/constants';
 import React from 'react';
 import { useXsDownMediaQuery } from '../hooks';
 import EmailIcon from '../svg/EmailIcon';
@@ -20,13 +21,13 @@ const Footer = () => {
         <Toolbar disableGutters>
           {isSmView && (
             <>
-              <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yjartjournal/">
+              <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href={socialMediaLinks.INSTAGRAM}>
                 <InstagramIcon />
               </IconButton>
-              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal/">
+              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href={socialMediaLinks.FACEBOOK}>
                 <FBIcon />
               </IconButton>
-              <IconButton aria-label="xiaohongshu" color="inherit" target="_blank" rel="noreferrer" href="https://www.xiaohongshu.com/user/profile/5cf791af000000000500c3eb?xhsshare=CopyLink&appuid=5cf791af000000000500c3eb&apptime=1642396244">
+              <IconButton aria-label="xiaohongshu" color="inherit" target="_blank" rel="noreferrer" href={socialMediaLinks.XHS}>
                 <XhsIcon />
               </IconButton>
             </>
@@ -37,13 +38,13 @@ const Footer = () => {
           <Box flexGrow={1} />
           {!isSmView && (
             <>
-              <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href="https://www.instagram.com/yjartjournal">
+              <IconButton aria-label="instagram" color="inherit" target="_blank" rel="noreferrer" href={socialMediaLinks.INSTAGRAM}>
                 <InstagramIcon />
               </IconButton>
-              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href="https://www.facebook.com/YJartjournal/">
+              <IconButton aria-label="facebook" color="inherit" target="_blank" rel="noreferrer" href={socialMediaLinks.FACEBOOK}>
                 <FBIcon />
               </IconButton>
-              <IconButton aria-label="xiaohongshu" color="inherit" target="_blank" rel="noreferrer" href="https://www.xiaohongshu.com/user/profile/5cf791af000000000500c3eb?xhsshare=CopyLink&appuid=5cf791af000000000500c3eb&apptime=1642396244">
+              <IconButton aria-label="xiaohongshu" color="inherit" target="_blank" rel="noreferrer" href={socialMediaLinks.XHS}>
                 <XhsIcon />
               </IconButton>
               <IconButton aria-label="email" color="inherit" target="_blank" rel="noreferrer" href="mailto:hello@yjartjournal.com">

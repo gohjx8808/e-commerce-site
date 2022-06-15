@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import { socialMediaLinks } from '@utils/constants';
 import React from 'react';
 import MainLayout from '../layouts/MainLayout';
 import BoldItalicFont from '../styledComponents/BoldItalicFont';
@@ -38,7 +39,7 @@ const LearnMore = () => (
         <Typography variant="h6" textAlign="justify">
           Every custom order is welcomed! Please kindly drop me a DMs in Instagram
           {' '}
-          <Link variant="inherit" href="https://www.instagram.com/yj_artjournal/" target="_blank" rel="noopener" color="secondary">
+          <Link variant="inherit" href={socialMediaLinks.INSTAGRAM} target="_blank" rel="noopener" color="secondary">
             @yj_artjournal
           </Link>
           {' '}

@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import { socialMediaLinks } from "@utils/constants";
 import { graphql, useStaticQuery } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import React, { useCallback, useContext, useEffect, useState } from "react";
@@ -264,13 +265,15 @@ const Products = () => {
         justifyContent="center"
         alignItems="center"
         direction="column"
-        mt={5}
+        py={3}
         spacing={5}
       >
-        <Typography variant="h5">Custom Order?</Typography>
+        <Grid item xs={12}>
+          <Typography variant="h5">Custom Order?</Typography>
+        </Grid>
         <Grid item xs={12}>
           <Button
-            href="https://www.instagram.com/yj_artjournal/"
+            href={socialMediaLinks.INSTAGRAM}
             variant="contained"
             color="secondary"
           >
