@@ -22,7 +22,7 @@ import { navigate } from "gatsby";
 import React, { useContext, useEffect, useState } from "react";
 import { usePathname, useXsDownMediaQuery } from "../hooks";
 import ElevationScroll from "../sharedComponents/ElevationScroll";
-import StyledAppBar from "../styledComponents/drawer/StyledAppBarr";
+import StyledAppBar from "../styledComponents/drawer/StyledAppBar";
 import {
   SearchContainer,
   SearchIconWrapper,
