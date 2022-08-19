@@ -1,5 +1,6 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import { useAllProducts } from "@hooks";
+import { useProductList } from "@modules/products/src/productQueries";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
@@ -21,7 +22,7 @@ interface categoryAmountData {
 
 const Products = () => {
   const { filterKeyword } = useContext(ProductContext);
-  const allProducts = useAllProducts();
+  // const allProducts = useAllProducts();
 
   const [categories, setCategories] = useState<string[]>([]);
   const [categoryProductAmount, setCategoryProductAmount] =
@@ -45,29 +46,10 @@ const Products = () => {
     [filterKeyword]
   );
 
-  useEffect(() => {
-    const categoryList = [] as string[];
-    const categoryAmount = {} as categoryAmountData;
-    allProducts.map((product) => {
-      const productCategory = product.node.category;
-      if (productCategory) {
-        if (filterProductKeyword(product.node.name)) {
-          if (categoryAmount[productCategory]) {
-            categoryAmount[productCategory] += 1;
-          } else {
-            categoryAmount[productCategory] = 1;
-          }
-        }
-        if (!categoryList.includes(productCategory)) {
-          categoryList.push(productCategory);
-        }
-      }
-      return null;
-    });
-    setCategoryProductAmount(categoryAmount);
-    categoryList.sort((a, b) => compareString(a, b));
-    setCategories(categoryList);
-  }, [allProducts, filterProductKeyword]);
+  const { data: allProducts } = useProductList();
+
+  const availableCategories = allProducts?.availableCategories;
+  const allCategories = allProducts?.allCategories;
 
   const selectedSortBy = watch("sortBy") && watch("sortBy").value;
 
@@ -174,7 +156,7 @@ const Products = () => {
             alignItems="center"
             rowSpacing={2}
           >
-            {categories.map((category) => (
+            {allCategories?.map((category) => (
               <Grid
                 item
                 container
@@ -188,6 +170,7 @@ const Products = () => {
                   color="whiteButton"
                   sx={{ width: "80%" }}
                   onClick={() => scrollTo(category)}
+                  disabled={!availableCategories?.includes(category)}
                 >
                   <Typography>{category}</Typography>
                 </Button>
@@ -216,7 +199,7 @@ const Products = () => {
           </Grid>
         </Grid>
       </Grid>
-      {categories.map((category) => (
+      {availableCategories?.map((category) => (
         <Grid
           container
           justifyContent="center"
@@ -224,19 +207,17 @@ const Products = () => {
           direction="column"
           key={category}
         >
-          {categoryProductAmount[category] && (
-            <Grid
-              container
-              justifyContent="flex-start"
-              alignItems="center"
-              marginBottom={3}
-              marginTop={5}
-            >
-              <Typography variant="h5" id={category} marginY={3}>
-                {category}
-              </Typography>
-            </Grid>
-          )}
+          <Grid
+            container
+            justifyContent="flex-start"
+            alignItems="center"
+            marginBottom={3}
+            marginTop={5}
+          >
+            <Typography variant="h5" id={category} marginY={3}>
+              {category}
+            </Typography>
+          </Grid>
           <Grid
             container
             justifyContent="center"
@@ -245,17 +226,14 @@ const Products = () => {
             spacing={2}
             key={category}
           >
-            {allProducts
-              .filter((product: products.innerProductQueryData) =>
-                filterProduct(product, category)
-              )
-              .sort(sortProduct)
-              .map((product: products.innerProductQueryData) => (
+            {allProducts?.products[category].map(
+              (product) => (
                 <ProductCard
-                  key={product.node.contentful_id}
-                  product={product.node}
+                  key={product.id}
+                  product={product}
                 />
-              ))}
+              )
+            )}
           </Grid>
         </Grid>
       ))}

@@ -9,15 +9,15 @@ declare namespace products {
     node: productData;
   }
 
-  interface productData {
-    category: string;
-    contentful_id: string;
-    name: string;
-    price: number;
-    contentDescription?: productContentDescription;
-    productImage: import("gatsby-plugin-image").ImageDataLike[];
-    discountedPrice: number;
-  }
+  // interface productData {
+  //   category: string;
+  //   contentful_id: string;
+  //   name: string;
+  //   price: number;
+  //   contentDescription?: productContentDescription;
+  //   productImage: import("gatsby-plugin-image").ImageDataLike[];
+  //   discountedPrice: number;
+  // }
 
   interface productContentDescription {
     raw: string;
@@ -30,7 +30,7 @@ declare namespace products {
   interface shoppingCartItemData {
     id: string;
     quantity: number;
-    img?: import("gatsby-plugin-image").IGatsbyImageData;
+    img?: productImageData;
     name: string;
     price: number;
     itemPrice: number;
@@ -82,12 +82,32 @@ declare namespace products {
   }
 
   interface enlargedImageCarouselData {
-    imageList: import("gatsby-plugin-image").ImageDataLike[];
+    imageList: productImageData[];
     clickedIndex: number;
   }
 
   interface saveOrderPayload extends sendPaymentEmailPayload {
     status: "Pending Payment";
     createdAt: string;
+  }
+
+  interface allProducts {
+    allCategories: string[];
+    availableCategories: string[];
+    products: { [x: string]: productData[] };
+  }
+
+  interface productData {
+    category: string;
+    discountedPrice?: number;
+    id: string;
+    images: productImageData[];
+    name: string;
+    price: number;
+  }
+
+  interface productImageData {
+    filename: string;
+    url: string;
   }
 }

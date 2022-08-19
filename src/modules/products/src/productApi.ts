@@ -1,6 +1,8 @@
 import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import "firebase/database";
 import firebase from "gatsby-plugin-firebase";
+import axios from "axios";
+import { postRequest } from "@utils/apiUtils";
 
 export const getOrderCount = () =>
   firebase.database().ref("orderCount").once("value");
@@ -41,3 +43,6 @@ export const updateOrderHistory = (payload: products.saveOrderPayload[]) => {
   const uid = localStorage.getItem(accountLocalStorageKeys.UID);
   return firebase.database().ref(`orderHistory/${uid}`).set(payload);
 };
+
+export const getAllProducts = () =>
+  postRequest<products.allProducts>("products", { nameSearch: "", sortBy: 1 });

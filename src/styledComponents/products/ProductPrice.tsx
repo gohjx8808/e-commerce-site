@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 interface ProductPriceProps{
-  discountprice:number
+  discountprice?:number
 }
 
 const ProductPrice = styled(Typography)<ProductPriceProps>(({ discountprice }) => ({

@@ -1,6 +1,5 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import Dialog from "@mui/material/Dialog";
-import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import React, { useContext } from "react";
 import { Carousel } from "react-responsive-carousel";
 
@@ -25,16 +24,9 @@ const EnlargedProductImageCarouselModal = () => {
         infiniteLoop
         transitionTime={800}
       >
-        {enlargedImageCarouselData.imageList.map((image) => {
-          const imageData = getImage(image)!;
-          return (
-            <GatsbyImage
-              key={imageData.images.fallback?.src}
-              image={imageData}
-              alt={imageData.images.fallback?.src!}
-            />
-          );
-        })}
+        {enlargedImageCarouselData.imageList.map((image) => (
+            <img key={image.filename} src={image.url} alt={image.filename} />
+        ))}
       </Carousel>
     </Dialog>
   );

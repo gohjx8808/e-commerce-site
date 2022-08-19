@@ -1,5 +1,4 @@
 import { styled } from "@mui/material/styles";
-import { GatsbyImage } from "gatsby-plugin-image";
 
 interface ProductImageProps {
   cart?: boolean;
@@ -8,7 +7,7 @@ interface ProductImageProps {
 
 const excludedProps: PropertyKey[] = ["cart", "card"];
 
-const ProductImage = styled(GatsbyImage, {
+const ProductImage = styled("img", {
   shouldForwardProp: (prop) => !excludedProps.includes(prop),
 })<ProductImageProps>(({ cart, card }) => ({
   borderRadius: card ? 0 : 5,

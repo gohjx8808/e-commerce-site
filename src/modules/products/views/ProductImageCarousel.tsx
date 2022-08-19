@@ -6,7 +6,7 @@ import { ProductContext } from "@contextProvider/ProductContextProvider";
 import ProductImage from "@styledComponents/products/ProductImage";
 
 interface ProductImageCarouselProps {
-  imageList: ImageDataLike[];
+  imageList: products.productImageData[];
   productName: string;
   autoPlay?: boolean;
   card?: boolean;
@@ -42,14 +42,11 @@ const ProductImageCarousel = (props: ProductImageCarouselProps) => {
       autoPlay={autoPlay}
       onChange={onChangeIndex}
     >
-      {imageList.map((image) => {
-        const imageData = getImage(image)!;
-        return (
-          <Box sx={{ cursor: "zoom-in" }} key={imageData.images.fallback?.src}>
-            <ProductImage image={imageData} alt={productName} card={card} />
-          </Box>
-        );
-      })}
+      {imageList.map((image) => (
+        <Box sx={{ cursor: "zoom-in" }} key={image.filename}>
+          <ProductImage src={image.url} alt={image.filename} card={card} />
+        </Box>
+      ))}
     </Carousel>
   );
 };

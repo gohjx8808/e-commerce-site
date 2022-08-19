@@ -68,7 +68,7 @@ const ProductCard = (props: ProductCardOwnProps) => {
     <Grid item lg={3} md={6} sm={6} xs={6}>
       <Link
         component={GatsbyLink}
-        to={`/products/${product.contentful_id}`}
+        to={`/products/${product.id}`}
         color="secondary"
         underline="hover"
       >
@@ -79,7 +79,7 @@ const ProductCard = (props: ProductCardOwnProps) => {
           />
           <Box onClick={(event) => event.preventDefault()}>
             <ProductImageCarousel
-              imageList={product.productImage}
+              imageList={product.images}
               productName={product.name}
               card
             />

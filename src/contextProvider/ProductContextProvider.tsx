@@ -4,7 +4,6 @@ import {
   roundTo2Dp,
 } from "@utils/helper";
 import { productLocalStorageKeys } from "@utils/localStorageKeys";
-import { getImage } from "gatsby-plugin-image";
 import React, { createContext, useEffect, useState } from "react";
 
 interface productContextState {
@@ -85,9 +84,9 @@ const ProductContextProvider = (props: parentComponent) => {
     );
     const productName = productData.name + variationSuffix;
     const formattedData = {
-      id: productData.contentful_id + variationSuffix,
+      id: productData.id + variationSuffix,
       name: productName,
-      img: getImage(productData.productImage[0]),
+      img: productData.images[0],
       price: productData.discountedPrice
         ? roundTo2Dp(productData.discountedPrice)
         : roundTo2Dp(productData.price),
