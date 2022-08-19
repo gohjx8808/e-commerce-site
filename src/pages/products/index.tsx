@@ -1,6 +1,9 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
-import { useAllProducts } from "@hooks";
-import { useProductList } from "@modules/products/src/productQueries";
+import useDebounce from "@hooks/useDebounce";
+import {
+  useProductList,
+  useSortOptions,
+} from "@modules/products/src/productQueries";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
@@ -8,108 +11,30 @@ import Typography from "@mui/material/Typography";
 import { socialMediaLinks } from "@utils/constants";
 import { graphql, useStaticQuery } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { scroller } from "react-scroll";
 import MainLayout from "../../layouts/MainLayout";
 import ProductCard from "../../modules/products/views/ProductCard";
 import ControlledPicker from "../../sharedComponents/inputs/ControlledPicker";
-import { compareString } from "../../utils/helper";
-
-interface categoryAmountData {
-  [key: string]: number;
-}
 
 const Products = () => {
   const { filterKeyword } = useContext(ProductContext);
-  // const allProducts = useAllProducts();
-
-  const [categories, setCategories] = useState<string[]>([]);
-  const [categoryProductAmount, setCategoryProductAmount] =
-    useState<categoryAmountData>({});
   const { control, watch } = useForm();
 
-  const sortByOptions = [
-    { label: "Name: A to Z", value: "a2z" },
-    { label: "Name: Z to A", value: "z2a" },
-    { label: "Price: Low to High", value: "l2h" },
-    { label: "Price: High to Low", value: "h2l" },
-  ];
+  const selectedSortBy = watch("sortBy") && watch("sortBy").value;
 
-  const filterProductKeyword = useCallback(
-    (productName: string) => {
-      if (filterKeyword) {
-        return productName.toLowerCase().includes(filterKeyword.toLowerCase());
-      }
-      return true;
-    },
-    [filterKeyword]
-  );
+  const { data: allProducts, refetch } = useProductList({
+    sortBy: selectedSortBy || 1,
+    nameSearch: filterKeyword,
+  });
 
-  const { data: allProducts } = useProductList();
+  const { data: sortByOptions } = useSortOptions();
 
   const availableCategories = allProducts?.availableCategories;
   const allCategories = allProducts?.allCategories;
 
-  const selectedSortBy = watch("sortBy") && watch("sortBy").value;
-
-  const sortProduct = (
-    productA: products.innerProductQueryData,
-    productB: products.innerProductQueryData
-  ) => {
-    const ProductAName = productA.node.name.toLowerCase();
-    const ProductBName = productB.node.name.toLowerCase();
-    const ProductAPrice = productA.node.price;
-    const ProductBPrice = productB.node.price;
-    let sortVarA;
-    let sortVarB;
-    switch (selectedSortBy) {
-      case "a2z":
-      case "z2a":
-      default:
-        sortVarA = ProductAName;
-        sortVarB = ProductBName;
-        break;
-      case "l2h":
-      case "h2l":
-        sortVarA = ProductAPrice;
-        sortVarB = ProductBPrice;
-        break;
-    }
-    switch (selectedSortBy) {
-      case "a2z":
-      case "l2h":
-      default:
-        if (sortVarA > sortVarB) {
-          return 1;
-        }
-        if (sortVarA < sortVarB) {
-          return -1;
-        }
-        return 0;
-      case "z2a":
-      case "h2l":
-        if (sortVarA > sortVarB) {
-          return -1;
-        }
-        if (sortVarA < sortVarB) {
-          return 1;
-        }
-        return 0;
-    }
-  };
-
-  const filterProduct = (
-    product: products.innerProductQueryData,
-    category: string
-  ) => {
-    const isProductInFilter = filterProductKeyword(product.node.name);
-    let isProductInCategory = true;
-    if (product.node.category) {
-      isProductInCategory = product.node.category === category;
-    }
-    return isProductInFilter && isProductInCategory;
-  };
+  useDebounce(filterKeyword, refetch);
 
   const productCategoryBanner = useStaticQuery(graphql`
     query {
@@ -185,19 +110,21 @@ const Products = () => {
         alignItems="center"
         marginTop={5}
       >
-        <Grid item xs={12} sm={5} lg={3}>
-          <Grid container justifyContent="flex-end" alignItems="center">
-            <ControlledPicker
-              control={control}
-              name="sortBy"
-              options={sortByOptions}
-              label="Sort By"
-              lightbg={1}
-              disableClearable
-              defaultcheck="a2z"
-            />
+        {sortByOptions && (
+          <Grid item xs={12} sm={5} lg={3}>
+            <Grid container justifyContent="flex-end" alignItems="center">
+              <ControlledPicker
+                control={control}
+                name="sortBy"
+                options={sortByOptions}
+                label="Sort By"
+                lightbg={1}
+                disableClearable
+                defaultcheck={1}
+              />
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </Grid>
       {availableCategories?.map((category) => (
         <Grid
@@ -226,14 +153,9 @@ const Products = () => {
             spacing={2}
             key={category}
           >
-            {allProducts?.products[category].map(
-              (product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                />
-              )
-            )}
+            {allProducts?.products[category].map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
           </Grid>
         </Grid>
       ))}

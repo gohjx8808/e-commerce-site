@@ -18,6 +18,7 @@ import {
   getAvailablePromoCodes,
   getOrderCount,
   getOrderHistory,
+  getSortOptions,
   sendPaymentEmailApi,
   updateOrderCount,
   updateOrderHistory,
@@ -163,5 +164,11 @@ export const useOrderHistory = () => {
 export const useUpdateOrderHistory = () =>
   useMutation("updateOrderHistory", updateOrderHistory);
 
-export const useProductList = () =>
-  useQuery("getAllProducts", async () => (await getAllProducts()).data);
+export const useProductList = (payload: products.getAllProductPayload) =>
+  useQuery(
+    ["getAllProducts", payload.sortBy],
+    async () => (await getAllProducts(payload)).data
+  );
+
+export const useSortOptions = () =>
+  useQuery("getSortOptions", async () => (await getSortOptions()).data);

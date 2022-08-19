@@ -34,7 +34,7 @@
                 "src/styledComponents"
             ],
             "@hooks": [
-                "src/hooks.ts"
+                "src/hooks"
             ]
         }
     },

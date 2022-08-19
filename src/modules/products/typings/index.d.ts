@@ -91,6 +91,11 @@ declare namespace products {
     createdAt: string;
   }
 
+  interface getAllProductPayload {
+    nameSearch: string;
+    sortBy: number;
+  }
+
   interface allProducts {
     allCategories: string[];
     availableCategories: string[];
