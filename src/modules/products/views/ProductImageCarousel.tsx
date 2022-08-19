@@ -1,19 +1,17 @@
-import { getImage, ImageDataLike } from "gatsby-plugin-image";
-import { Carousel } from "react-responsive-carousel";
-import React, { useContext, useState } from "react";
-import Box from "@mui/material/Box";
 import { ProductContext } from "@contextProvider/ProductContextProvider";
+import Box from "@mui/material/Box";
 import ProductImage from "@styledComponents/products/ProductImage";
+import React, { useContext, useState } from "react";
+import { Carousel } from "react-responsive-carousel";
 
 interface ProductImageCarouselProps {
   imageList: products.productImageData[];
-  productName: string;
   autoPlay?: boolean;
   card?: boolean;
 }
 
 const ProductImageCarousel = (props: ProductImageCarouselProps) => {
-  const { imageList, productName, autoPlay, card } = props;
+  const { imageList, autoPlay, card } = props;
   const [clickedIndex, setClickedIndex] = useState<number>(0);
 
   const { updateEnlargedImageCarouselData } = useContext(ProductContext);

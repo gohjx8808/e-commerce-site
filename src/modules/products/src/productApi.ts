@@ -1,8 +1,7 @@
+import { getRequest, postRequest } from "@utils/apiUtils";
 import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import "firebase/database";
 import firebase from "gatsby-plugin-firebase";
-import axios from "axios";
-import { getRequest, postRequest } from "@utils/apiUtils";
 
 export const getOrderCount = () =>
   firebase.database().ref("orderCount").once("value");
