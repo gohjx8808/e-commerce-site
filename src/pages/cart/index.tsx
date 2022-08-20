@@ -220,8 +220,8 @@ const Cart = () => {
                           >
                             <Typography>{cartItem.name}</Typography>
                             <ProductImage
-                              image={cartItem.img!}
-                              alt={cartItem.id}
+                              src={cartItem.img?.url}
+                              alt={cartItem.img?.filename}
                               cart
                             />
                           </Grid>
@@ -313,8 +313,8 @@ const Cart = () => {
                             >
                               <Grid item xs={8}>
                                 <ProductImage
-                                  image={cartItem.img!}
-                                  alt={cartItem.id}
+                                  src={cartItem.img?.url}
+                                  alt={cartItem.img?.filename}
                                 />
                               </Grid>
                               <Grid
