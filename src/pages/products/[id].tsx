@@ -57,13 +57,13 @@ const ProductDescription: FC<PageProps> = (props) => {
     if (allProducts) {
       const { products } = allProducts;
       const categories = Object.keys(products);
-      const centralizedProducts = categories.map(
-        (category) => products[category]
+      const flattenProducts = categories.reduce(
+        (carry: products.productData[], category) => [
+          ...carry,
+          ...products[category],
+        ],
+        []
       );
-      const flattenProducts = centralizedProducts.reduce((arr, item) => [
-        ...arr,
-        ...item,
-      ]);
 
       const otherProducts = flattenProducts
         .filter((product) => product.id !== id)
