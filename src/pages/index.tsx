@@ -1,60 +1,35 @@
+import useFlattenProducts from "@hooks/useFlattenProducts";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import ImageListItem from "@mui/material/ImageListItem";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import { productLocalStorageKeys } from "@utils/localStorageKeys";
-import { graphql, Link as GatsbyLink, navigate, useStaticQuery } from "gatsby";
-import { GatsbyImage, getImage, ImageDataLike } from "gatsby-plugin-image";
-import React, { useEffect, useState } from "react";
+import { Link as GatsbyLink, navigate } from "gatsby";
+import { useEffect, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
 import HomeImageList from "../styledComponents/home/HomeImageList";
 import routeNames from "../utils/routeNames";
 
 const HomeScreen = () => {
-  const [productImages, setProductImages] = useState<ImageDataLike[]>([]);
-  const homeQuery = useStaticQuery(graphql`
-    query {
-      products: allContentfulProducts(
-        filter: { node_locale: { eq: "en-US" } }
-      ) {
-        edges {
-          node {
-            name
-            contentful_id
-            category
-            productImage {
-              gatsbyImageData(placeholder: BLURRED)
-            }
-            price
-            contentDescription {
-              raw
-            }
-            discountedPrice
-          }
-        }
-      }
-    }
-  `);
+  const [productImages, setProductImages] = useState<
+    products.productImageData[]
+  >([]);
+
+  const flattenProducts = useFlattenProducts();
 
   useEffect(() => {
-    const extractedProducts: products.innerProductQueryData[] =
-      homeQuery.products.edges;
-    localStorage.setItem(
-      productLocalStorageKeys.PRODUCTS,
-      JSON.stringify(extractedProducts)
+    const tempProduct = flattenProducts?.reduce(
+      (carry: products.productImageData[], product) => {
+        if (carry.length < 25) {
+          carry.push(product.images[0]);
+        }
+        return carry;
+      },
+      []
     );
-    const tempProduct: ImageDataLike[] = [];
-    extractedProducts.every((product) => {
-      if (tempProduct.length < 25) {
-        tempProduct.push(product.node.productImage[0]);
-        return true;
-      }
-      return false;
-    });
-    setProductImages(tempProduct);
-  }, [homeQuery.products.edges]);
+    setProductImages(tempProduct || []);
+  }, [flattenProducts]);
 
   return (
     <MainLayout homeCarouselBanner>
@@ -102,17 +77,11 @@ const HomeScreen = () => {
           </Typography>
         </Grid>
         <HomeImageList rowHeight="auto" cols={5}>
-          {productImages.map((image) => {
-            const productImagesData = getImage(image)!;
-            return (
-              <ImageListItem key={productImagesData.images.fallback?.src}>
-                <GatsbyImage
-                  image={productImagesData}
-                  alt={productImagesData.images.fallback?.src!}
-                />
-              </ImageListItem>
-            );
-          })}
+          {productImages.map((image) => (
+            <ImageListItem key={image.filename}>
+              <img src={image.url} alt={image.filename} />
+            </ImageListItem>
+          ))}
         </HomeImageList>
         <IconButton
           aria-label="more product images"
