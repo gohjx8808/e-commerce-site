@@ -1,12 +1,10 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import {
-  Block,
-  BLOCKS,
-  Document,
-  Inline,
-  MARKS,
-} from "@contentful/rich-text-types";
+import { Block, BLOCKS, Inline, MARKS } from "@contentful/rich-text-types";
 import { ProductContext } from "@contextProvider/ProductContextProvider";
+import {
+  useProductDetails,
+  useProductList,
+} from "@modules/products/src/productQueries";
 import ProductImageCarousel from "@modules/products/views/ProductImageCarousel";
 import AddIcon from "@mui/icons-material/Add";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
@@ -20,11 +18,10 @@ import Link from "@mui/material/Link";
 import ToggleButton from "@mui/material/ToggleButton";
 import Typography from "@mui/material/Typography";
 import { Link as GatsbyLink, PageProps } from "gatsby";
-import { getImage } from "gatsby-plugin-image";
 import { useSnackbar } from "notistack";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
-import { useAllProducts, useXsDownMediaQuery } from "../../hooks";
+import { useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import ProductErrorSnackbar from "../../modules/products/views/ProductErrorSnackbar";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
@@ -33,10 +30,7 @@ import ItemVariationToggleButton from "../../styledComponents/products/ItemVaria
 import ModifyQuantityButton from "../../styledComponents/products/ModifyQuantityButton";
 import ProductImage from "../../styledComponents/products/ProductImage";
 import ProductPrice from "../../styledComponents/products/ProductPrice";
-import {
-  defaultProductData,
-  itemVariationOptions,
-} from "../../utils/constants";
+import { itemVariationOptions } from "../../utils/constants";
 import { formatPrice, getProductVariationSuffix } from "../../utils/helper";
 import routeNames from "../../utils/routeNames";
 
@@ -45,10 +39,9 @@ const ProductDescription: FC<PageProps> = (props) => {
   const { id } = params;
   const isXsView = useXsDownMediaQuery();
   const { addToCart } = useContext(ProductContext);
-  const allProducts = useAllProducts();
-  const selectedProduct =
-    allProducts.find((product) => product.node.contentful_id === id)?.node ||
-    defaultProductData;
+
+  const { data: productDetails } = useProductDetails({ productId: id });
+  const { data: allProducts } = useProductList({ sortBy: 1, nameSearch: "" });
 
   const [itemQuantity, setItemQuantity] = useState(1);
   const [selectedItemVariation, setSelectedItemVariation] = useState("");
@@ -57,34 +50,45 @@ const ProductDescription: FC<PageProps> = (props) => {
     products.productData[][]
   >([]);
   const { enqueueSnackbar } = useSnackbar();
-  const isKeyChainSeries = selectedProduct.category === "Keychain Series";
+  const isKeyChainSeries = productDetails?.category === "Keychain Series";
 
   useEffect(() => {
     const productRecommendationAmount = isXsView ? 4 : 10;
-    const otherProducts = allProducts
-      .filter((product) => product.node.contentful_id !== id)
-      .sort(() => Math.random() - 0.5)
-      .slice(0, productRecommendationAmount);
-    const overallProductArray: products.productData[][] = [];
-    let innerProductArray: products.productData[] = [];
-    let counter = 0;
+    if (allProducts) {
+      const { products } = allProducts;
+      const categories = Object.keys(products);
+      const centralizedProducts = categories.map(
+        (category) => products[category]
+      );
+      const flattenProducts = centralizedProducts.reduce((arr, item) => [
+        ...arr,
+        ...item,
+      ]);
 
-    otherProducts.map((product) => {
-      if (counter !== 0 && counter % (productRecommendationAmount / 2) === 0) {
-        overallProductArray.push(innerProductArray);
-        innerProductArray = [];
-      }
-      innerProductArray.push(product.node);
-      counter += 1;
-      return null;
-    });
-    overallProductArray.push(innerProductArray);
-    setProductRecommendation(overallProductArray);
+      const otherProducts = flattenProducts
+        .filter((product) => product.id !== id)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, productRecommendationAmount);
+      const overallProductArray: products.productData[][] = [];
+      let innerProductArray: products.productData[] = [];
+      let counter = 0;
+
+      otherProducts.map((product) => {
+        if (
+          counter !== 0 &&
+          counter % (productRecommendationAmount / 2) === 0
+        ) {
+          overallProductArray.push(innerProductArray);
+          innerProductArray = [];
+        }
+        innerProductArray.push(product);
+        counter += 1;
+        return null;
+      });
+      overallProductArray.push(innerProductArray);
+      setProductRecommendation(overallProductArray);
+    }
   }, [allProducts, id, isXsView]);
-
-  const jsonContentDescription: Document =
-    selectedProduct.contentDescription &&
-    JSON.parse(selectedProduct.contentDescription.raw);
 
   const increaseItemQuantity = () => {
     setItemQuantity(itemQuantity + 1);
@@ -108,9 +112,12 @@ const ProductDescription: FC<PageProps> = (props) => {
   };
 
   const onAddToCart = () => {
-    if ((selectedItemVariation && isKeyChainSeries) || !isKeyChainSeries) {
+    if (
+      productDetails &&
+      ((selectedItemVariation && isKeyChainSeries) || !isKeyChainSeries)
+    ) {
       addToCart(
-        selectedProduct,
+        productDetails,
         isKeyChainSeries,
         itemQuantity,
         selectedItemVariation
@@ -119,7 +126,7 @@ const ProductDescription: FC<PageProps> = (props) => {
         isKeyChainSeries,
         selectedItemVariation
       );
-      const productName = selectedProduct.name + variationSuffix;
+      const productName = productDetails?.name + variationSuffix;
       enqueueSnackbar(`${productName} had been added to your cart!`);
     } else {
       toggleErrorSnackbar();
@@ -146,157 +153,162 @@ const ProductDescription: FC<PageProps> = (props) => {
     },
   };
 
-  return (
-    <MainLayout>
-      <Grid container spacing={4}>
-        <Grid item xs={12}>
-          <CustomBreadcrumbs customActiveName={selectedProduct.name} />
-          <Typography variant="h4">{selectedProduct.name}</Typography>
-        </Grid>
-        <Grid item lg={4} sm={12}>
-          <Grid container justifyContent="center">
-            <Grid item lg={12} sm={6} xs={12}>
-              <ProductImageCarousel
-                imageList={selectedProduct.productImage}
-                productName={selectedProduct.name}
-                autoPlay
-              />
+  if (productDetails) {
+    return (
+      <MainLayout>
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <CustomBreadcrumbs customActiveName={productDetails.name} />
+            <Typography variant="h4">{productDetails.name}</Typography>
+          </Grid>
+          <Grid item lg={4} sm={12}>
+            <Grid container justifyContent="center">
+              <Grid item lg={12} sm={6} xs={12}>
+                <ProductImageCarousel
+                  imageList={productDetails.images}
+                  autoPlay
+                />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item lg={8} xs={12}>
-          <Grid container direction="column">
-            <Typography variant="h5" fontWeight="bold" marginBottom={3}>
-              Description
-            </Typography>
-            {documentToReactComponents(jsonContentDescription, options)}
-          </Grid>
-          {isKeyChainSeries && (
-            <>
-              <Typography variant="h6" fontWeight="bold">
-                Variations
+          <Grid item lg={8} xs={12}>
+            <Grid container direction="column">
+              <Typography variant="h5" fontWeight="bold" marginBottom={3}>
+                Description
               </Typography>
-              <ItemVariationToggleButton
-                value={selectedItemVariation}
-                exclusive
-                onChange={(
-                  _event: React.MouseEvent<HTMLElement>,
-                  newValue: string
-                ) => {
-                  setSelectedItemVariation(newValue);
-                }}
-                color="secondary"
-                aria-label="variation"
-              >
-                {itemVariationOptions.map((option) => (
-                  <ToggleButton
-                    key={option.value}
-                    value={option.value}
-                    aria-label={option.label}
-                  >
-                    <Typography>{option.label}</Typography>
-                  </ToggleButton>
-                ))}
-              </ItemVariationToggleButton>
-            </>
-          )}
-          <Grid container spacing={2} alignItems="center" marginTop={5}>
-            <Grid item md={6} sm={5} xs={12}>
-              <Grid container spacing={2}>
-                <Grid item>
-                  <ProductPrice
-                    discountprice={selectedProduct.discountedPrice}
-                    variant="h5"
-                  >
-                    {formatPrice(selectedProduct.price, "MYR")}
-                  </ProductPrice>
+              {documentToReactComponents(productDetails.description, options)}
+            </Grid>
+            {isKeyChainSeries && (
+              <>
+                <Typography variant="h6" fontWeight="bold">
+                  Variations
+                </Typography>
+                <ItemVariationToggleButton
+                  value={selectedItemVariation}
+                  exclusive
+                  onChange={(
+                    _event: React.MouseEvent<HTMLElement>,
+                    newValue: string
+                  ) => {
+                    setSelectedItemVariation(newValue);
+                  }}
+                  color="secondary"
+                  aria-label="variation"
+                >
+                  {itemVariationOptions.map((option) => (
+                    <ToggleButton
+                      key={option.value}
+                      value={option.value}
+                      aria-label={option.label}
+                    >
+                      <Typography>{option.label}</Typography>
+                    </ToggleButton>
+                  ))}
+                </ItemVariationToggleButton>
+              </>
+            )}
+            <Grid container spacing={2} alignItems="center" marginTop={5}>
+              <Grid item md={6} sm={5} xs={12}>
+                <Grid container spacing={2}>
+                  <Grid item>
+                    <ProductPrice
+                      discountprice={productDetails.discountedPrice}
+                      variant="h5"
+                    >
+                      {formatPrice(productDetails.price, "MYR")}
+                    </ProductPrice>
+                  </Grid>
+                  <Grid item>
+                    {productDetails.discountedPrice && (
+                      <Typography variant="h5" fontWeight="bold">
+                        {formatPrice(productDetails.discountedPrice, "MYR")}
+                      </Typography>
+                    )}
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  {selectedProduct.discountedPrice && (
-                    <Typography variant="h5" fontWeight="bold">
-                      {formatPrice(selectedProduct.discountedPrice, "MYR")}
-                    </Typography>
+              </Grid>
+              <Grid item md={2} sm={3} xs={9}>
+                <Grid container justifyContent="flex-end">
+                  <ModifyQuantityButton
+                    actiontype="minus"
+                    onClick={reduceItemQuantity}
+                  >
+                    <RemoveIcon />
+                  </ModifyQuantityButton>
+                  <Grid item xs={4}>
+                    <ItemQuantityInput
+                      hiddenLabel
+                      variant="filled"
+                      size="small"
+                    >
+                      <FilledInput
+                        disableUnderline
+                        value={itemQuantity}
+                        onChange={handleItemQuantityChange}
+                      />
+                    </ItemQuantityInput>
+                  </Grid>
+                  <ModifyQuantityButton
+                    actiontype="add"
+                    onClick={increaseItemQuantity}
+                  >
+                    <AddIcon />
+                  </ModifyQuantityButton>
+                </Grid>
+              </Grid>
+              <Grid item md={3} sm={4} xs={3}>
+                <Grid
+                  container
+                  justifyContent={isXsView ? "center" : "flex-end"}
+                >
+                  {isXsView ? (
+                    <IconButton onClick={onAddToCart} color="secondary">
+                      <AddShoppingCartIcon />
+                    </IconButton>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      endIcon={<AddShoppingCartIcon />}
+                      size="large"
+                      onClick={onAddToCart}
+                    >
+                      Add to cart
+                    </Button>
                   )}
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item md={2} sm={3} xs={9}>
-              <Grid container justifyContent="flex-end">
-                <ModifyQuantityButton
-                  actiontype="minus"
-                  onClick={reduceItemQuantity}
-                >
-                  <RemoveIcon />
-                </ModifyQuantityButton>
-                <Grid item xs={4}>
-                  <ItemQuantityInput hiddenLabel variant="filled" size="small">
-                    <FilledInput
-                      disableUnderline
-                      value={itemQuantity}
-                      onChange={handleItemQuantityChange}
-                    />
-                  </ItemQuantityInput>
-                </Grid>
-                <ModifyQuantityButton
-                  actiontype="add"
-                  onClick={increaseItemQuantity}
-                >
-                  <AddIcon />
-                </ModifyQuantityButton>
-              </Grid>
-            </Grid>
-            <Grid item md={3} sm={4} xs={3}>
-              <Grid container justifyContent={isXsView ? "center" : "flex-end"}>
-                {isXsView ? (
-                  <IconButton onClick={onAddToCart} color="secondary">
-                    <AddShoppingCartIcon />
-                  </IconButton>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    endIcon={<AddShoppingCartIcon />}
-                    size="large"
-                    onClick={onAddToCart}
-                  >
-                    Add to cart
-                  </Button>
-                )}
-              </Grid>
-            </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h6" marginBottom={1}>
-            You may also like...
-          </Typography>
-          <Carousel
-            showThumbs={false}
-            showIndicators={false}
-            transitionTime={800}
-            showStatus={false}
-            infiniteLoop
-          >
-            {productRecommendation.map((productArray) => (
-              <Grid
-                container
-                spacing={2}
-                justifyContent="center"
-                key={productArray.toString()}
-              >
-                {productArray.map((product) => {
-                  const imageData = getImage(product.productImage[0])!;
-                  return (
-                    <Grid item xs={6} sm={2} key={product.contentful_id}>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h6" marginBottom={1}>
+              You may also like...
+            </Typography>
+            <Carousel
+              showThumbs={false}
+              showIndicators={false}
+              transitionTime={800}
+              showStatus={false}
+              infiniteLoop
+            >
+              {productRecommendation.map((productArray) => (
+                <Grid
+                  container
+                  spacing={2}
+                  justifyContent="center"
+                  key={productArray.toString()}
+                >
+                  {productArray.map((product) => (
+                    <Grid item xs={6} sm={2} key={product.id}>
                       <Link
                         component={GatsbyLink}
                         underline="hover"
                         target="_blank"
                         rel="noreferrer"
-                        to={`/products/${product.contentful_id}`}
+                        to={`/products/${product.id}`}
                       >
                         <Grid
                           container
@@ -312,34 +324,39 @@ const ProductDescription: FC<PageProps> = (props) => {
                             {product.name}
                           </Typography>
                         </Grid>
-                        <ProductImage image={imageData} alt={product.name} />
+                        <ProductImage
+                          src={product.images[0].url}
+                          alt={product.name}
+                        />
                       </Link>
                     </Grid>
-                  );
-                })}
-              </Grid>
-            ))}
-          </Carousel>
-          <Grid container justifyContent="flex-end">
-            <Link
-              target="_blank"
-              component={GatsbyLink}
-              rel="noreferrer"
-              to={routeNames.products}
-              color="textPrimary"
-            >
-              <Typography variant="body1">View All Products</Typography>
-            </Link>
+                  ))}
+                </Grid>
+              ))}
+            </Carousel>
+            <Grid container justifyContent="flex-end">
+              <Link
+                target="_blank"
+                component={GatsbyLink}
+                rel="noreferrer"
+                to={routeNames.products}
+                color="textPrimary"
+              >
+                <Typography variant="body1">View All Products</Typography>
+              </Link>
+            </Grid>
           </Grid>
+          <ProductErrorSnackbar
+            isSnackbarOpen={isErrorSnackbarOpen}
+            toggleSnackbar={toggleErrorSnackbar}
+            msg="Please select one variation to proceed!"
+          />
         </Grid>
-        <ProductErrorSnackbar
-          isSnackbarOpen={isErrorSnackbarOpen}
-          toggleSnackbar={toggleErrorSnackbar}
-          msg="Please select one variation to proceed!"
-        />
-      </Grid>
-    </MainLayout>
-  );
+      </MainLayout>
+    );
+  }
+
+  return <div />;
 };
 
 export default ProductDescription;

@@ -115,4 +115,12 @@ declare namespace products {
     filename: string;
     url: string;
   }
+
+  interface getProductDetailsPayload {
+    productId: string;
+  }
+
+  interface productDetailsData extends productData {
+    description: import("@contentful/rich-text-types").Document;
+  }
 }

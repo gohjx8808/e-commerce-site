@@ -18,6 +18,7 @@ import {
   getAvailablePromoCodes,
   getOrderCount,
   getOrderHistory,
+  getProductDetails,
   getSortOptions,
   sendPaymentEmailApi,
   updateOrderCount,
@@ -172,3 +173,9 @@ export const useProductList = (payload: products.getAllProductPayload) =>
 
 export const useSortOptions = () =>
   useQuery("getSortOptions", async () => (await getSortOptions()).data);
+
+export const useProductDetails = (payload: products.getProductDetailsPayload) =>
+  useQuery(
+    ["getProductDetails", payload.productId],
+    async () => (await getProductDetails(payload)).data
+  );
