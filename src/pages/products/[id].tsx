@@ -1,10 +1,8 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { Block, BLOCKS, Inline, MARKS } from "@contentful/rich-text-types";
 import { ProductContext } from "@contextProvider/ProductContextProvider";
-import {
-  useProductDetails,
-  useProductList,
-} from "@modules/products/src/productQueries";
+import useFlattenProducts from "@hooks/useFlattenProducts";
+import { useProductDetails } from "@modules/products/src/productQueries";
 import ProductImageCarousel from "@modules/products/views/ProductImageCarousel";
 import AddIcon from "@mui/icons-material/Add";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
@@ -40,8 +38,9 @@ const ProductDescription: FC<PageProps> = (props) => {
   const isXsView = useXsDownMediaQuery();
   const { addToCart } = useContext(ProductContext);
 
+  const flattenProducts = useFlattenProducts();
+
   const { data: productDetails } = useProductDetails({ productId: id });
-  const { data: allProducts } = useProductList({ sortBy: 1, nameSearch: "" });
 
   const [itemQuantity, setItemQuantity] = useState(1);
   const [selectedItemVariation, setSelectedItemVariation] = useState("");
@@ -54,41 +53,26 @@ const ProductDescription: FC<PageProps> = (props) => {
 
   useEffect(() => {
     const productRecommendationAmount = isXsView ? 4 : 10;
-    if (allProducts) {
-      const { products } = allProducts;
-      const categories = Object.keys(products);
-      const flattenProducts = categories.reduce(
-        (carry: products.productData[], category) => [
-          ...carry,
-          ...products[category],
-        ],
-        []
-      );
+    const otherProducts = flattenProducts
+      ?.filter((product) => product.id !== id)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, productRecommendationAmount);
+    const overallProductArray: products.productData[][] = [];
+    let innerProductArray: products.productData[] = [];
+    let counter = 0;
 
-      const otherProducts = flattenProducts
-        .filter((product) => product.id !== id)
-        .sort(() => Math.random() - 0.5)
-        .slice(0, productRecommendationAmount);
-      const overallProductArray: products.productData[][] = [];
-      let innerProductArray: products.productData[] = [];
-      let counter = 0;
-
-      otherProducts.map((product) => {
-        if (
-          counter !== 0 &&
-          counter % (productRecommendationAmount / 2) === 0
-        ) {
-          overallProductArray.push(innerProductArray);
-          innerProductArray = [];
-        }
-        innerProductArray.push(product);
-        counter += 1;
-        return null;
-      });
-      overallProductArray.push(innerProductArray);
-      setProductRecommendation(overallProductArray);
-    }
-  }, [allProducts, id, isXsView]);
+    otherProducts?.map((product) => {
+      if (counter !== 0 && counter % (productRecommendationAmount / 2) === 0) {
+        overallProductArray.push(innerProductArray);
+        innerProductArray = [];
+      }
+      innerProductArray.push(product);
+      counter += 1;
+      return null;
+    });
+    overallProductArray.push(innerProductArray);
+    setProductRecommendation(overallProductArray);
+  }, [flattenProducts, id, isXsView]);
 
   const increaseItemQuantity = () => {
     setItemQuantity(itemQuantity + 1);

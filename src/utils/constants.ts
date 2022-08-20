@@ -52,15 +52,6 @@ export const emptyShippingInfo: products.submitShippingInfoPayload = {
   paymentOptions: "",
 };
 
-export const defaultProductData: products.productData = {
-  category: "",
-  contentful_id: "",
-  name: "",
-  price: 0,
-  productImage: [],
-  discountedPrice: 0,
-};
-
 export const routeMap: { [key: string]: string } = {
   [routeNames.login]: "Login",
   [routeNames.signUp]: "Sign Up",

@@ -1,3 +1,4 @@
+import { defaultProductListPayload } from "@modules/products/src/productConstants";
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import { useUID } from "@hooks";
 import {
@@ -165,7 +166,9 @@ export const useOrderHistory = () => {
 export const useUpdateOrderHistory = () =>
   useMutation("updateOrderHistory", updateOrderHistory);
 
-export const useProductList = (payload: products.getAllProductPayload) =>
+export const useProductList = (
+  payload: products.getAllProductPayload = defaultProductListPayload
+) =>
   useQuery(
     ["getAllProducts", payload.sortBy],
     async () => (await getAllProducts(payload)).data
