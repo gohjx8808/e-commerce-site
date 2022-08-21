@@ -12,18 +12,6 @@ const theme = useTheme;
 export const useXsDownMediaQuery = () =>
   useMediaQuery(theme().breakpoints.only("xs"));
 
-export const useAllProducts = () => {
-  const [allProducts, setAllProducts] = useState<
-    products.innerProductQueryData[]
-  >([]);
-
-  useEffect(() => {
-    setAllProducts(getLocalStorageItem(productLocalStorageKeys.PRODUCTS));
-  }, []);
-
-  return allProducts;
-};
-
 export const useUID = () => {
   const [uid, setUid] = useState<string>("");
 

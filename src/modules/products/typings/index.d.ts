@@ -1,31 +1,4 @@
 declare namespace products {
-  interface rawProductQueryData {
-    allContentfulProducts: {
-      edges: innerProductQueryData[];
-    };
-  }
-
-  interface innerProductQueryData {
-    node: productData;
-  }
-
-  // interface productData {
-  //   category: string;
-  //   contentful_id: string;
-  //   name: string;
-  //   price: number;
-  //   contentDescription?: productContentDescription;
-  //   productImage: import("gatsby-plugin-image").ImageDataLike[];
-  //   discountedPrice: number;
-  // }
-
-  interface productContentDescription {
-    raw: string;
-  }
-
-  interface submitCheckoutPayload {
-    priceID: string;
-  }
 
   interface shoppingCartItemData {
     id: string;
@@ -34,11 +7,6 @@ declare namespace products {
     name: string;
     price: number;
     itemPrice: number;
-  }
-
-  interface checkoutData {
-    price: string;
-    quantity: number;
   }
 
   interface submitShippingInfoPayload {
