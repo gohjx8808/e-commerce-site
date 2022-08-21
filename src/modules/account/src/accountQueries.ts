@@ -1,12 +1,16 @@
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import { useContext } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   getCurrentUserDetailsKey,
   useUserDetails,
 } from "../../auth/src/authQueries";
-import { submitEditAccDetail, updateAddress } from "./accountApi";
+import {
+  getAccountOptions,
+  submitEditAccDetail,
+  updateAddress,
+} from "./accountApi";
 import { addressStatus } from "./accountConstants";
 import { removeDefaultAddress, sameAddressDetector } from "./accountUtils";
 
@@ -139,3 +143,6 @@ export const useDeleteAddress = (toggleModal: () => void) => {
     onSettled: () => updateTitle("Delete Address"),
   });
 };
+
+export const useAccountOptions = () =>
+  useQuery("getAccountOptions", async () => (await getAccountOptions()).data);

@@ -1,5 +1,6 @@
 import firebase from "gatsby-plugin-firebase";
 import "firebase/database";
+import { getRequest } from "@utils/apiUtils";
 
 export const submitEditAccDetail = (
   payload: account.submitEditAccDetailPayload
@@ -10,3 +11,6 @@ export const updateAddress = (payload: account.submitAddEditAddressPayload) =>
     .database()
     .ref(`/users/${payload.uid}/addressBook`)
     .set(payload.addressData);
+
+export const getAccountOptions = () =>
+  getRequest<account.accountOptionsData>("account-options");

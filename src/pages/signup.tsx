@@ -1,4 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAccountOptions } from "@modules/account/src/accountQueries";
+import { InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
@@ -34,6 +36,8 @@ const SignUp = () => {
 
   const { mutate: submitSignUp } = useSignUp();
 
+  const { data: accountOptions } = useAccountOptions();
+
   const image = getImage(data.file);
 
   const {
@@ -45,14 +49,11 @@ const SignUp = () => {
     resolver: yupResolver(signUpSchema),
   });
 
-  const onSubmitSignUp: SubmitHandler<auth.submitSignUpPayload> = (hookData) => {
+  const onSubmitSignUp: SubmitHandler<auth.submitSignUpPayload> = (
+    hookData
+  ) => {
     submitSignUp(hookData);
   };
-
-  const genderOptions = [
-    { value: "M", label: "Male" },
-    { value: "F", label: "Female" },
-  ];
 
   return (
     <AuthLayout>
@@ -119,6 +120,19 @@ const SignUp = () => {
                             label="Phone Number"
                             formerror={errors.phoneNumber}
                             type="tel"
+                            startAdornment={
+                              <InputAdornment position="start">
+                                <ControlledPicker
+                                  control={control}
+                                  name="gender"
+                                  label=""
+                                  error={errors.gender?.value}
+                                  options={accountOptions?.genders || []}
+                                  adornment
+                                  customInputProps={{ disableUnderline: true }}
+                                />
+                              </InputAdornment>
+                            }
                           />
                         </Grid>
                         <Grid item sm={6} xs={12}>
@@ -166,15 +180,17 @@ const SignUp = () => {
                             formerror={errors.dob}
                           />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <ControlledPicker
-                            control={control}
-                            name="gender"
-                            label="Gender"
-                            error={errors.gender?.value}
-                            options={genderOptions}
-                          />
-                        </Grid>
+                        {accountOptions && (
+                          <Grid item xs={12} sm={6}>
+                            <ControlledPicker
+                              control={control}
+                              name="gender"
+                              label="Gender"
+                              error={errors.gender?.value}
+                              options={accountOptions.genders}
+                            />
+                          </Grid>
+                        )}
                       </Grid>
                     </Grid>
                     <Grid

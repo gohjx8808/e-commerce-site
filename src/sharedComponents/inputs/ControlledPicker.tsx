@@ -1,3 +1,4 @@
+import { InputProps } from "@mui/material";
 import Autocomplete, { AutocompleteProps } from "@mui/material/Autocomplete";
 import FormHelperText from "@mui/material/FormHelperText";
 import TextField from "@mui/material/TextField";
@@ -24,12 +25,24 @@ interface ControlledPickerOwnProps<T extends FieldValues>
   error?: FieldError;
   lightbg?: booleanInteger;
   defaultcheck?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  adornment?: boolean;
+  customInputProps?: InputProps;
 }
 
 const ControlledPicker = <T extends FieldValues>(
   props: ControlledPickerOwnProps<T>
 ) => {
-  const { control, label, name, defaultcheck, error, lightbg, options } = props;
+  const {
+    control,
+    label,
+    name,
+    defaultcheck,
+    error,
+    lightbg,
+    options,
+    adornment,
+    customInputProps,
+  } = props;
 
   return (
     <Controller
@@ -44,8 +57,9 @@ const ControlledPicker = <T extends FieldValues>(
               <TextField
                 {...params}
                 label={label}
-                variant="outlined"
+                variant={adornment ? "standard" : "outlined"}
                 error={!!error}
+                InputProps={{ ...params.InputProps, ...customInputProps }}
               />
             )}
             blurOnSelect
@@ -72,6 +86,8 @@ ControlledPicker.defaultProps = {
   error: null,
   lightbg: 0,
   defaultcheck: null,
+  adornment: false,
+  customInputProps: {},
 };
 
 export default ControlledPicker;

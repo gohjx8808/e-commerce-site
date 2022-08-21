@@ -10,6 +10,7 @@ declare namespace auth {
     confirmPassword: string;
     gender: optionsData;
     password: string;
+    countryCode: string;
     phoneNumber: string;
     fullName: string;
   }

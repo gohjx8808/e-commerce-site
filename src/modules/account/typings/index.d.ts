@@ -33,4 +33,9 @@ declare namespace account {
     isModalOpen: boolean;
     selectedAddress: auth.addressData | null;
   }
+
+  interface accountOptionsData {
+    countryCode: optionsData[];
+    genders: optionsData[];
+  }
 }
