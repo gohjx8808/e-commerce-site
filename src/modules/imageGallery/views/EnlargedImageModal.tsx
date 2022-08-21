@@ -1,10 +1,8 @@
 import Dialog from "@mui/material/Dialog";
-import { GatsbyImage, IGatsbyImageData } from "gatsby-plugin-image";
-import React from "react";
 
 interface enlargedImageModalProps {
-  selectedProductImage: IGatsbyImageData | null;
-  setSelectedProductImage: (value: IGatsbyImageData | null) => void;
+  selectedProductImage: products.productImageData | null;
+  setSelectedProductImage: (value: products.productImageData | null) => void;
 }
 
 const EnlargedImageModal = (props: enlargedImageModalProps) => {
@@ -16,7 +14,10 @@ const EnlargedImageModal = (props: enlargedImageModalProps) => {
       onClose={() => setSelectedProductImage(null)}
     >
       {selectedProductImage && (
-        <GatsbyImage image={selectedProductImage} alt="" />
+        <img
+          src={selectedProductImage.url}
+          alt={selectedProductImage.filename}
+        />
       )}
     </Dialog>
   );

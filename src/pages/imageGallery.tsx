@@ -1,104 +1,36 @@
+import { useImageGalleryImages } from "@modules/imageGallery/src/imageGalleryQueries";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { graphql, useStaticQuery } from "gatsby";
-import {
-  GatsbyImage,
-  getImage,
-  IGatsbyImageData,
-  ImageDataLike,
-} from "gatsby-plugin-image";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
 import EnlargedImageModal from "../modules/imageGallery/views/EnlargedImageModal";
 
-interface productImagesContentfulStructure {
-  allContentfulGallery: {
-    edges: productImageCategoryData[];
-  };
-}
-
-interface productImageCategoryData {
-  node: {
-    column: number;
-    row: number;
-    productPhoto1: imageData[];
-  };
-}
-
-interface imageData {
-  id: string;
-  gatsbyImageData: ImageDataLike;
-}
-
-interface targetImage {
-  image: ImageDataLike;
-  id: string;
-  row: number;
-  col: number;
-}
-
 const ImageGallery = () => {
-  const [allProductImages, setAllProductImages] = useState<targetImage[]>([]);
+  const [allProductImages, setAllProductImages] = useState<
+    imageGallery.imageGalleryData[]
+  >([]);
   const [selectedProductImage, setSelectedProductImage] =
-    useState<IGatsbyImageData | null>(null);
+    useState<products.productImageData | null>(null);
 
-  const images: productImagesContentfulStructure = useStaticQuery(graphql`
-    query ProductImages {
-      allContentfulGallery(filter: { node_locale: { eq: "en-US" } }) {
-        edges {
-          node {
-            row
-            column
-            productPhoto1 {
-              gatsbyImageData(placeholder: BLURRED)
-              id
-            }
-          }
-        }
-      }
-    }
-  `);
+  const { data: contentfulImages } = useImageGalleryImages();
 
   useEffect(() => {
-    const contentfulImages = images.allContentfulGallery.edges;
-    const tempRegularProductImages: targetImage[] = [];
-    const tempLargeProductImages: targetImage[] = [];
-    const tempProductImages: targetImage[] = [];
+    const tempRegularProductImages: imageGallery.imageGalleryData[] = [];
+    const tempLargeProductImages: imageGallery.imageGalleryData[] = [];
+    const tempProductImages: imageGallery.imageGalleryData[] = [];
 
-    contentfulImages.map((imageCategory) => {
-      const imageCategoryData = imageCategory.node;
-      imageCategoryData.productPhoto1.map((image) => {
-        if (imageCategoryData.row === 1) {
-          const sameImageFound = tempRegularProductImages.some(
-            (tempImage) => tempImage.id === image.id
-          );
-          if (!sameImageFound) {
-            tempRegularProductImages.push({
-              image: image.gatsbyImageData,
-              id: image.id,
-              row: imageCategoryData.row,
-              col: imageCategoryData.column,
-            });
-          }
+    if (contentfulImages) {
+      contentfulImages.map((imageDetails) => {
+        if (imageDetails.row === 1) {
+          tempRegularProductImages.push(imageDetails);
         } else {
-          const sameImageFound = tempLargeProductImages.some(
-            (tempImage) => tempImage.id === image.id
-          );
-          if (!sameImageFound) {
-            tempLargeProductImages.push({
-              image: image.gatsbyImageData,
-              id: image.id,
-              row: imageCategoryData.row,
-              col: imageCategoryData.column,
-            });
-          }
+          tempLargeProductImages.push(imageDetails);
         }
         return null;
       });
-      return null;
-    });
+    }
     tempLargeProductImages.sort(() => Math.random() - 0.5);
     tempRegularProductImages.sort(() => Math.random() - 0.5);
     while (
@@ -122,9 +54,9 @@ const ImageGallery = () => {
       tempProductImages.push(...tempArr);
     }
     setAllProductImages(tempProductImages);
-  }, [images.allContentfulGallery.edges]);
+  }, [contentfulImages]);
 
-  const handleImageClick = (image: IGatsbyImageData) => {
+  const handleImageClick = (image: products.productImageData) => {
     setSelectedProductImage(image);
   };
 
@@ -133,23 +65,20 @@ const ImageGallery = () => {
       <Grid item xs={12}>
         <Box paddingTop={1}>
           <ImageList rowHeight="auto" cols={5} variant="quilted">
-            {allProductImages.map((image) => {
-              const productImagesData = getImage(image.image)!;
-              return (
-                <ImageListItem
-                  key={image.id}
-                  sx={{ cursor: "zoom-in" }}
-                  rows={image.row}
-                  cols={image.col}
-                >
-                  <GatsbyImage
-                    onClick={() => handleImageClick(productImagesData)}
-                    image={productImagesData}
-                    alt={image.id}
-                  />
-                </ImageListItem>
-              );
-            })}
+            {allProductImages.map((imageDetails) => (
+              <ImageListItem
+                key={imageDetails.image.filename}
+                sx={{ cursor: "zoom-in" }}
+                rows={imageDetails.row}
+                cols={imageDetails.col}
+                onClick={() => handleImageClick(imageDetails.image)}
+              >
+                <img
+                  src={imageDetails.image.url}
+                  alt={imageDetails.image.filename}
+                />
+              </ImageListItem>
+            ))}
           </ImageList>
         </Box>
         <EnlargedImageModal
