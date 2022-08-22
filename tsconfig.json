@@ -33,6 +33,9 @@
             "@styledComponents": [
                 "src/styledComponents"
             ],
+            "@sharedComponents": [
+                "src/sharedComponents"
+            ],
             "@hooks": [
                 "src/hooks"
             ]

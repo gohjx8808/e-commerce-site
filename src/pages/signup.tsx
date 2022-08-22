@@ -7,9 +7,9 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+import ControlledCountryCodePicker from "@sharedComponents/inputs/ControlledCountryCodePicker";
 import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
-import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AuthLayout from "../layouts/AuthLayout";
 import { useSignUp } from "../modules/auth/src/authQueries";
@@ -121,15 +121,15 @@ const SignUp = () => {
                             formerror={errors.phoneNumber}
                             type="tel"
                             startAdornment={
-                              <InputAdornment position="start">
-                                <ControlledPicker
+                              <InputAdornment
+                                position="start"
+                                style={{ width: 250 }}
+                              >
+                                <ControlledCountryCodePicker
                                   control={control}
-                                  name="gender"
-                                  label=""
-                                  error={errors.gender?.value}
-                                  options={accountOptions?.genders || []}
-                                  adornment
-                                  customInputProps={{ disableUnderline: true }}
+                                  name="countryCode"
+                                  error={errors.countryCode?.id}
+                                  options={accountOptions?.countryCodes || []}
                                 />
                               </InputAdornment>
                             }

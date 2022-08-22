@@ -1,5 +1,5 @@
 interface optionsData {
-  value: string;
+  value: string | number;
   label: string;
 }
 

@@ -35,7 +35,14 @@ declare namespace account {
   }
 
   interface accountOptionsData {
-    countryCode: optionsData[];
+    countryCodes: countryCodeData[];
     genders: optionsData[];
+  }
+
+  interface countryCodeData {
+    id: number;
+    countryCode: string;
+    iso2: string;
+    name: string;
   }
 }

@@ -115,6 +115,7 @@ module.exports = {
           "@modules": "src/modules",
           "@contextProvider": "src/contextProvider",
           "@styledComponents": "src/styledComponents",
+          "@sharedComponents": "src/sharedComponents",
           "@hooks": "src/hooks",
         },
         extensions: ["ts"],
