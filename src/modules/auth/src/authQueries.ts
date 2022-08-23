@@ -1,6 +1,7 @@
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import { useUID } from "@hooks";
 import { accountLocalStorageKeys } from "@utils/localStorageKeys";
+import { AxiosError } from "axios";
 import { navigate } from "gatsby";
 import firebase from "gatsby-plugin-firebase";
 import { useContext } from "react";
@@ -13,6 +14,7 @@ import {
   saveUserDetails,
   signIn,
   signOut,
+  signUp,
 } from "./authApis";
 
 export const getCurrentUserDetailsKey = "getCurrentUserDetails";
@@ -122,33 +124,12 @@ export const useForgotPassword = () => {
   });
 };
 
-const useSaveUserDetails = () =>
-  useMutation("saveUserDetails", saveUserDetails);
-
 export const useSignUp = () => {
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);
 
-  const { mutate: saveUserData } = useSaveUserDetails();
-
-  return useMutation("submitSignUp", registerUser, {
-    onSuccess: (response, variables) => {
-      const userID = response.user?.uid!;
-      const userDetails = {
-        uid: userID,
-        userData: {
-          email: variables.email,
-          dob: variables.dob,
-          gender: variables.gender.value,
-          fullName: variables.fullName,
-          phoneNumber: variables.phoneNumber,
-          roles: {
-            admin: false,
-            customer: true,
-          },
-        },
-      };
-      saveUserData(userDetails);
+  return useMutation("submitSignUp", signUp, {
+    onSuccess: () => {
       toggleSuccess(true);
       updateMsg(
         "Your registration is successful! Please login using your credentials."
@@ -156,18 +137,17 @@ export const useSignUp = () => {
       toggleVisible(true);
       navigate(routeNames.login);
     },
-    onError: (error: firebase.auth.Error) => {
-      const errorCode = error.code;
-      if (errorCode === "auth/email-already-in-use") {
-        updateMsg(
+    onError: (error: AxiosError<auth.signUpErrorData>) => {
+      const errResponse = error.response?.data;
+      let errorMsg = "";
+      if (errResponse?.email) {
+        errorMsg =
           "The provided email is already in use by an existing user. " +
-            "Please register using another email or login using the correct credentials."
-        );
-      } else if (errorCode === "auth/invalid-email") {
-        updateMsg("Invalid email! Please try again.");
+          "Please register using another email or login using the correct credentials.";
       } else {
-        updateMsg("Your registration has failed! Please try again.");
+        errorMsg = "Your registration has failed! Please try again.";
       }
+      updateMsg(errorMsg);
       toggleSuccess(false);
       toggleVisible(true);
     },

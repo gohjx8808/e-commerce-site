@@ -45,14 +45,19 @@ const SignUp = () => {
     formState: { errors },
     handleSubmit,
     watch,
-  } = useForm<auth.submitSignUpPayload>({
+  } = useForm<auth.signUpFormData>({
     resolver: yupResolver(signUpSchema),
   });
 
-  const onSubmitSignUp: SubmitHandler<auth.submitSignUpPayload> = (
-    hookData
-  ) => {
-    submitSignUp(hookData);
+  const onSubmitSignUp: SubmitHandler<auth.signUpFormData> = (hookData) => {
+    const submitData: auth.submitSignUpPayload = {
+      ...hookData,
+      name: hookData.fullName,
+      countryCodeId: hookData.countryCode.id,
+      phoneNo: hookData.phoneNumber,
+      gender: hookData.gender.value,
+    };
+    submitSignUp(submitData);
   };
 
   return (

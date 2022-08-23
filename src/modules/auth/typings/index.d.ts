@@ -6,13 +6,27 @@ declare namespace auth {
 
   interface submitSignUpPayload {
     email: string;
-    dob: string;
+    dob: Date;
+    gender: string;
+    password: string;
+    countryCodeId: number;
+    phoneNo: string;
+    name: string;
+  }
+
+  interface signUpFormData {
+    email: string;
+    dob: Date;
     confirmPassword: string;
     gender: optionsData;
     password: string;
     countryCode: account.countryCodeData;
     phoneNumber: string;
     fullName: string;
+  }
+
+  interface signUpErrorData {
+    email: string[];
   }
 
   interface registerUserPayload {
