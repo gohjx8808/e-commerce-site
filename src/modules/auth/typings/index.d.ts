@@ -1,7 +1,13 @@
 declare namespace auth {
-  interface submitSignInPayload {
+  interface signInPayload {
     email: string;
     password: string;
+  }
+
+  interface signInResponse {
+    data: {
+      token: string;
+    };
   }
 
   interface submitSignUpPayload {

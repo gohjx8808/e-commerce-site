@@ -26,12 +26,12 @@ import StyledAppBar from "../styledComponents/drawer/StyledAppBar";
 import {
   SearchContainer,
   SearchIconWrapper,
-  SearchInputBase
+  SearchInputBase,
 } from "../styledComponents/search";
 import StyledMenuItem from "../styledComponents/StyledListItem";
 import DarkModeContext from "../utils/DarkModeContext";
 import routeNames from "../utils/routeNames";
-import { useUserDetails } from "./auth/src/authQueries";
+import { useAccountDetails } from "./account/src/accountQueries";
 import SignOutConfirmationModal from "./auth/views/SignOutConfirmationModal";
 import CustomDesktopDrawer from "./drawer/CustomDesktopDrawer";
 import CustomMobileDrawer from "./drawer/CustomMobileDrawer";
@@ -48,7 +48,7 @@ const MenuBar = () => {
     setSignOutModal(!isSignOutModalOpen);
   };
 
-  const { data: currentUserDetail } = useUserDetails();
+  const { data: accountDetails } = useAccountDetails();
 
   const { shoppingCart, updateFilterKeyword } = useContext(ProductContext);
 
@@ -86,11 +86,11 @@ const MenuBar = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {currentUserDetail ? (
+      {accountDetails ? (
         <StyledMenuItem disableRipple>
           <Grid container justifyContent="center" alignItems="center">
             <Typography>{`Welcome, ${
-              currentUserDetail.fullName.split(" ")[0]
+              accountDetails.name.split(" ")[0]
             }`}</Typography>
           </Grid>
         </StyledMenuItem>
@@ -104,7 +104,7 @@ const MenuBar = () => {
           </StyledMenuItem>
         </div>
       )}
-      {currentUserDetail && (
+      {accountDetails && (
         <div>
           <StyledMenuItem
             onClick={() => navigate(routeNames.account)}
@@ -201,10 +201,10 @@ const MenuBar = () => {
               </Tooltip>
             )}
             <Box display={{ xs: "none", md: "flex" }} alignItems="center">
-              {currentUserDetail ? (
+              {accountDetails ? (
                 <Box marginRight={2}>
                   <Typography>{`Welcome, ${
-                    currentUserDetail.fullName.split(" ")[0]
+                    accountDetails.name.split(" ")[0]
                   }`}</Typography>
                 </Box>
               ) : (
@@ -232,7 +232,7 @@ const MenuBar = () => {
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-              {currentUserDetail && (
+              {accountDetails && (
                 <>
                   <IconButton
                     aria-label="account"

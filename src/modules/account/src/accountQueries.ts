@@ -7,6 +7,7 @@ import {
   useUserDetails,
 } from "../../auth/src/authQueries";
 import {
+  getAccountDetails,
   getAccountOptions,
   submitEditAccDetail,
   updateAddress,
@@ -146,3 +147,8 @@ export const useDeleteAddress = (toggleModal: () => void) => {
 
 export const useAccountOptions = () =>
   useQuery("getAccountOptions", async () => (await getAccountOptions()).data);
+
+export const useAccountDetails = () =>
+  useQuery("getAccountDetails", async () => (await getAccountDetails()).data, {
+    enabled: !!localStorage.getItem("token"),
+  });

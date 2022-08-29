@@ -9,38 +9,13 @@ import { useMutation, useQuery } from "react-query";
 import routeNames from "../../../utils/routeNames";
 import {
   getCurrentUserDetails,
-  registerUser,
   resetPassword,
-  saveUserDetails,
   signIn,
   signOut,
   signUp,
 } from "./authApis";
 
 export const getCurrentUserDetailsKey = "getCurrentUserDetails";
-
-export const useLogin = () => {
-  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
-    useContext(StatusModalContext);
-
-  return useMutation("login", signIn, {
-    onSuccess: (response) => {
-      localStorage.setItem(
-        accountLocalStorageKeys.UID,
-        response.user?.uid || ""
-      );
-      navigate("/");
-    },
-    onError: () => {
-      updateTitle("Login");
-      updateMsg(
-        "Your credentials are invalid! Please login with a valid username and password."
-      );
-      toggleSuccess(false);
-      toggleVisible(true);
-    },
-  });
-};
 
 export const useLogout = (toggleModal?: () => void) =>
   useMutation("signOut", signOut, {
@@ -152,5 +127,25 @@ export const useSignUp = () => {
       toggleVisible(true);
     },
     onSettled: () => updateTitle("Registration"),
+  });
+};
+
+export const useSignIn = () => {
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
+
+  return useMutation("signIn", signIn, {
+    onSuccess: (response) => {
+      localStorage.setItem("token", response.data.data.token);
+      navigate(routeNames.home);
+    },
+    onError: () => {
+      updateTitle("Login");
+      updateMsg(
+        "Your credentials are invalid! Please login with a valid username and password."
+      );
+      toggleSuccess(false);
+      toggleVisible(true);
+    },
   });
 };

@@ -1,4 +1,5 @@
 export default {
+  home: "/",
   login: "/login/",
   signUp: "/signup/",
   forgotPassword: "/forgotPassword/",

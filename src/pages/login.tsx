@@ -7,10 +7,9 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
-import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AuthLayout from "../layouts/AuthLayout";
-import { useLogin } from "../modules/auth/src/authQueries";
+import { useSignIn } from "../modules/auth/src/authQueries";
 import { loginSchema } from "../modules/auth/src/authSchema";
 import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
 import ControlledPasswordInput from "../sharedComponents/inputs/ControlledPasswordInput";
@@ -35,14 +34,14 @@ const Login = () => {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<auth.submitSignInPayload>({
+  } = useForm<auth.signInPayload>({
     resolver: yupResolver(loginSchema),
   });
 
-  const { mutate: loginIn, isLoading: loginLoading } = useLogin();
+  const { mutate: signIn, isLoading: signInLoading } = useSignIn();
 
-  const submitLogin: SubmitHandler<auth.submitSignInPayload> = (hookData) => {
-    loginIn(hookData);
+  const submitLogin: SubmitHandler<auth.signInPayload> = (hookData) => {
+    signIn(hookData);
   };
 
   return (
@@ -130,7 +129,7 @@ const Login = () => {
                         color="primaryButton"
                         type="submit"
                         fullWidth
-                        loading={loginLoading}
+                        loading={signInLoading}
                       >
                         Log In
                       </LoadingButton>

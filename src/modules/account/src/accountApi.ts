@@ -14,3 +14,6 @@ export const updateAddress = (payload: account.submitAddEditAddressPayload) =>
 
 export const getAccountOptions = () =>
   getRequest<account.accountOptionsData>("account-options");
+
+export const getAccountDetails = () =>
+  getRequest<account.accDetailsData>("account/details", {}, true);

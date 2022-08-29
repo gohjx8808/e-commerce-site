@@ -45,4 +45,13 @@ declare namespace account {
     iso2: string;
     name: string;
   }
+
+  interface accDetailsData {
+    id: number;
+    name: string;
+    dob: string;
+    email: string;
+    gender: string;
+    phoneNo: string;
+  }
 }

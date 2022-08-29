@@ -11,9 +11,6 @@ export const registerUser = (payload: auth.submitSignUpPayload) =>
 export const saveUserDetails = (userDetails: auth.saveUserDetailsPayload) =>
   firebase.database().ref(`users/${userDetails.uid}`).set(userDetails.userData);
 
-export const signIn = (payload: auth.submitSignInPayload) =>
-  firebase.auth().signInWithEmailAndPassword(payload.email, payload.password);
-
 export const getCurrentUserDetails = (uid: string) =>
   firebase.database().ref(`users/${uid}`).once("value");
 
@@ -24,3 +21,6 @@ export const resetPassword = (payload: auth.submitForgotPasswordPayload) =>
 
 export const signUp = (payload: auth.submitSignUpPayload) =>
   postRequest("sign-up", payload);
+
+export const signIn = (payload: auth.signInPayload) =>
+  postRequest<auth.signInResponse>("sign-in", payload);
