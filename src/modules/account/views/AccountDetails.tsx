@@ -6,44 +6,23 @@ import WcIcon from "@mui/icons-material/Wc";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
-import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import dayjs from "dayjs";
-import React, { useState } from "react";
-import { SubmitHandler } from "react-hook-form";
-import { useUserDetails } from "../../auth/src/authQueries";
-import { useEditAccDetails } from "../src/accountQueries";
+import { useState } from "react";
+import { useAccountDetails } from "../src/accountQueries";
 import EditAccDetailModal from "./EditAccDetailModal";
 import SingleAccData from "./SingleAccData";
 
-interface stringDict {
-  [key: string]: string;
-}
-
 const AccountDetails = () => {
   const [isEditAccDetailModalOpen, setEditAccDetailModalOpen] = useState(false);
-  const genderMap: stringDict = { F: "Female", M: "Male" };
 
   const toggleEditAccDetailModal = () => {
     setEditAccDetailModalOpen(!isEditAccDetailModalOpen);
   };
 
-  const { data: currentUserDetails, isLoading: currentUserDetailsLoading } =
-    useUserDetails();
+  const { data: accountDetails, isLoading: accountDetailsLoading } =
+    useAccountDetails();
 
-  const { mutate: submitEditAccDetail, isLoading: editAccDetailModalLoading } =
-    useEditAccDetails(toggleEditAccDetailModal);
-
-  const onEditSubmit: SubmitHandler<account.rawSubmitEditAccDetailPayload> = (
-    hookData
-  ) => {
-    const processedPayload = {
-      uid: localStorage.getItem(accountLocalStorageKeys.UID)!,
-      details: { ...hookData, gender: hookData.gender.value },
-    };
-    submitEditAccDetail(processedPayload);
-  };
-
-  if (currentUserDetailsLoading || !currentUserDetails) {
+  if (!accountDetails || accountDetailsLoading) {
     return <Skeleton variant="rectangular" width="100%" height={200} />;
   }
 
@@ -53,27 +32,27 @@ const AccountDetails = () => {
         <Grid container justifyContent="center" alignItems="center" spacing={4}>
           <SingleAccData
             label="Full Name"
-            data={currentUserDetails.fullName}
+            data={accountDetails.name}
             Icon={<PersonIcon />}
           />
           <SingleAccData
             label="Gender"
-            data={genderMap[currentUserDetails.gender]}
+            data={accountDetails.gender}
             Icon={<WcIcon />}
           />
           <SingleAccData
             label="Email"
-            data={currentUserDetails.email}
+            data={accountDetails.email}
             Icon={<EmailIcon />}
           />
           <SingleAccData
             label="Phone No"
-            data={currentUserDetails.phoneNumber}
+            data={accountDetails.phoneNo}
             Icon={<PhoneIphoneIcon />}
           />
           <SingleAccData
             label="Date of Birth"
-            data={dayjs(currentUserDetails.dob).format("DD MMMM YYYY")}
+            data={dayjs(accountDetails.dob).format("DD MMMM YYYY")}
             Icon={<CakeIcon />}
           />
           <Grid item xs={6} />
@@ -91,8 +70,6 @@ const AccountDetails = () => {
           open={isEditAccDetailModalOpen}
           onClose={toggleEditAccDetailModal}
           toggleModal={toggleEditAccDetailModal}
-          onFormSubmit={onEditSubmit}
-          isLoading={editAccDetailModalLoading}
         />
       </Grid>
     </Grid>

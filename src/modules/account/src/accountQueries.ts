@@ -9,35 +9,12 @@ import {
 import {
   getAccountDetails,
   getAccountOptions,
-  submitEditAccDetail,
+  getEditDetails,
+  updateAccDetails,
   updateAddress,
 } from "./accountApi";
 import { addressStatus } from "./accountConstants";
 import { removeDefaultAddress, sameAddressDetector } from "./accountUtils";
-
-export const useEditAccDetails = (toggleModal?: () => void) => {
-  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
-    useContext(StatusModalContext);
-  const queryClient = useQueryClient();
-
-  return useMutation("submitEditAccDetails", submitEditAccDetail, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(getCurrentUserDetailsKey);
-      if (toggleModal) {
-        toggleModal();
-      }
-      toggleSuccess(true);
-      updateMsg("Your profile has been successfully updated!");
-      toggleVisible(true);
-    },
-    onError: () => {
-      toggleSuccess(false);
-      updateMsg("Your profile has failed to be update!");
-      toggleVisible(true);
-    },
-    onSettled: () => updateTitle("Edit Account Details"),
-  });
-};
 
 export const useAddEditAddress = (
   modalData: account.addEditAddressModalData,
@@ -152,3 +129,33 @@ export const useAccountDetails = () =>
   useQuery("getAccountDetails", async () => (await getAccountDetails()).data, {
     enabled: !!localStorage.getItem("token"),
   });
+
+export const useGetEditDetails = () =>
+  useQuery("getEditDetails", async () => (await getEditDetails()).data, {
+    enabled: !!localStorage.getItem("token"),
+  });
+
+export const useUpdateAccDetails = (toggleModal: () => void) => {
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
+
+  const queryClient = useQueryClient();
+
+  return useMutation("postUpdateAccDetails", updateAccDetails, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("getAccountDetails");
+      toggleSuccess(true);
+      updateMsg("Your profile had been updated successfully!");
+      toggleModal();
+      toggleVisible(true);
+    },
+    onError: () => {
+      toggleSuccess(false);
+      updateMsg("Your profile had failed to update. Please try again later.");
+      toggleVisible(true);
+    },
+    onSettled: () => {
+      updateTitle("Update Profile");
+    },
+  });
+};

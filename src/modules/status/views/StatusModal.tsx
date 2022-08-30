@@ -71,7 +71,7 @@ const StatusModal = () => {
   return (
     <Backdrop
       open={isVisible}
-      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      sx={{ zIndex: (theme) => theme.zIndex.modal + 1 }}
     >
       <Box width={{ xs: "100%", sm: "90%", lg: "50%" }}>
         <GatsbyImage image={isSuccess ? successImg! : failImg!} alt="fail" />

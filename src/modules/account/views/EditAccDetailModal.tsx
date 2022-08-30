@@ -8,36 +8,49 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
-import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import ControlledCountryCodePicker from "@sharedComponents/inputs/ControlledCountryCodePicker";
+import { useForm } from "react-hook-form";
 import ControlledDatePicker from "../../../sharedComponents/inputs/ControlledDatePicker";
 import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker";
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
 import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
-import { useUserDetails } from "../../auth/src/authQueries";
+import {
+  useAccountOptions,
+  useGetEditDetails,
+  useUpdateAccDetails,
+} from "../src/accountQueries";
 import { editAccountSchema } from "../src/accountScheme";
 
 interface editAccDetailModalProps extends DialogProps {
   toggleModal: () => void;
-  onFormSubmit: SubmitHandler<account.rawSubmitEditAccDetailPayload>;
-  isLoading: boolean;
 }
 
 const EditAccDetailModal = (props: editAccDetailModalProps) => {
-  const { toggleModal, onFormSubmit, isLoading, ...dialogProps } = props;
-  const { data: currentUserDetails } = useUserDetails();
+  const { toggleModal, ...dialogProps } = props;
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<account.rawSubmitEditAccDetailPayload>({
+  } = useForm<account.updateAccDetailsFormData>({
     resolver: yupResolver(editAccountSchema),
   });
 
-  const genderOptions = [
-    { value: "M", label: "Male" },
-    { value: "F", label: "Female" },
-  ];
+  const { data: accountOptions } = useAccountOptions();
+
+  const { data: editDetails } = useGetEditDetails();
+
+  const {
+    mutate: submitUpdateAccDetails,
+    isLoading: submitUpdateAccDetailsLoading,
+  } = useUpdateAccDetails(toggleModal);
+
+  const onSubmit = (hookData: account.updateAccDetailsFormData) => {
+    submitUpdateAccDetails({
+      ...hookData,
+      countryCodeId: hookData.countryCode.id,
+      gender: hookData.gender.value,
+    });
+  };
 
   return (
     <Dialog
@@ -49,7 +62,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
       <Grid container justifyContent="center">
         <DialogTitle id="editAccDetail">Edit Account Details</DialogTitle>
       </Grid>
-      <form onSubmit={handleSubmit(onFormSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           <Grid
             container
@@ -60,16 +73,16 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
             <Grid item xs={12}>
               <ControlledTextInput
                 control={control}
-                name="fullName"
+                name="name"
                 lightbg={1}
                 label="Full Name"
-                defaultinput={currentUserDetails?.fullName}
+                defaultinput={editDetails?.name}
                 startAdornment={
                   <InputAdornment position="start">
                     <PersonIcon />
                   </InputAdornment>
                 }
-                formerror={errors.fullName}
+                formerror={errors.name}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -79,7 +92,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 name="email"
                 lightbg={1}
                 label="Email"
-                defaultinput={currentUserDetails?.email}
+                defaultinput={editDetails?.email}
                 startAdornment={
                   <InputAdornment position="start">
                     <EmailIcon />
@@ -91,16 +104,27 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
             <Grid item sm={6} xs={12}>
               <ControlledTextInput
                 control={control}
-                name="phoneNumber"
+                name="phoneNo"
                 lightbg={1}
                 label="Phone Number"
-                defaultinput={currentUserDetails?.phoneNumber}
+                type="tel"
+                defaultinput={editDetails?.phoneNo}
                 startAdornment={
-                  <InputAdornment position="start">
-                    <PhoneIphoneIcon />
-                  </InputAdornment>
+                  <>
+                    <InputAdornment position="start">
+                      <PhoneIphoneIcon />
+                    </InputAdornment>
+                    <InputAdornment position="start" style={{ width: 250 }}>
+                      <ControlledCountryCodePicker
+                        control={control}
+                        name="countryCode"
+                        error={errors.countryCode?.id}
+                        options={accountOptions?.countryCodes || []}
+                      />
+                    </InputAdornment>
+                  </>
                 }
-                formerror={errors.phoneNumber}
+                formerror={errors.phoneNo}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -109,8 +133,8 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 name="gender"
                 lightbg={1}
                 label="Gender"
-                options={genderOptions}
-                defaultcheck={currentUserDetails?.gender}
+                options={accountOptions?.genders || []}
+                defaultcheck={editDetails?.gender}
                 error={errors.gender?.value}
               />
             </Grid>
@@ -120,7 +144,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 name="dob"
                 lightbg={1}
                 label="Date of Birth"
-                defaultdate={currentUserDetails?.dob}
+                defaultdate={editDetails?.dob}
                 formerror={errors.dob}
               />
             </Grid>
@@ -130,7 +154,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
           <LoadingButton
             onClick={toggleModal}
             color="secondary"
-            loading={isLoading}
+            loading={submitUpdateAccDetailsLoading}
           >
             Cancel
           </LoadingButton>
@@ -138,7 +162,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
             color="secondary"
             variant="contained"
             type="submit"
-            loading={isLoading}
+            loading={submitUpdateAccDetailsLoading}
           >
             Submit
           </LoadingButton>

@@ -1,21 +1,4 @@
 declare namespace account {
-  interface rawSubmitEditAccDetailPayload extends accDetailsFormData {
-    gender: optionsData;
-  }
-
-  interface submitEditAccDetailPayload {
-    uid: string;
-    details: accDetailsFormData;
-  }
-
-  interface accDetailsFormData {
-    fullName: string;
-    gender: string;
-    email: string;
-    phoneNumber: string;
-    dob: string;
-  }
-
   interface rawSubmitAddEditAddressPayload extends auth.addressData {
     state: optionsData;
   }
@@ -52,6 +35,24 @@ declare namespace account {
     dob: string;
     email: string;
     gender: string;
+    phoneNo: string;
+  }
+
+  interface editAccDetailsData extends accDetailsData {
+    countryCodeId: number;
+  }
+
+  interface updateAccDetailsFormData extends updateAccDetailsPayload{
+    gender: optionsData;
+    countryCode: countryCodeData;
+  }
+
+  interface updateAccDetailsPayload {
+    name: string;
+    dob: string;
+    email: string;
+    gender: string;
+    countryCodeId: number;
     phoneNo: string;
   }
 }
