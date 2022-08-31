@@ -9,8 +9,8 @@ import {
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { SnackbarProvider } from "notistack";
-import * as React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import EnlargedProductImageCarouselModal from "../modules/products/views/EnlargedProductImageCarouselModal";
@@ -176,6 +176,7 @@ const RootLayout = (props: parentComponent) => {
                   {children}
                   <StatusModal />
                   <EnlargedProductImageCarouselModal />
+                  <ReactQueryDevtools />
                 </StatusModalContextProvider>
               </ProductContextProvider>
             </QueryClientProvider>

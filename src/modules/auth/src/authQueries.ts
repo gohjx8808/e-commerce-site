@@ -143,10 +143,13 @@ export const useLogOut = (toggleModal: () => void) => {
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);
 
+  const queryClient = useQueryClient();
+
   return useMutation("submitLogOut", logOut, {
     onSuccess: () => {
       toggleSuccess(true);
       updateMsg("You have been logged-out!");
+      queryClient.resetQueries("getAccountDetails");
       localStorage.removeItem("token");
       toggleModal();
       toggleVisible(true);
