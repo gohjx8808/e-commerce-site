@@ -126,17 +126,19 @@ const SignUp = () => {
                             formerror={errors.phoneNumber}
                             type="tel"
                             startAdornment={
-                              <InputAdornment
-                                position="start"
-                                style={{ width: 250 }}
-                              >
-                                <ControlledCountryCodePicker
-                                  control={control}
-                                  name="countryCode"
-                                  error={errors.countryCode?.id}
-                                  options={accountOptions?.countryCodes || []}
-                                />
-                              </InputAdornment>
+                              accountOptions && (
+                                <InputAdornment
+                                  position="start"
+                                  style={{ width: 250 }}
+                                >
+                                  <ControlledCountryCodePicker
+                                    control={control}
+                                    name="countryCode"
+                                    error={errors.countryCode?.id}
+                                    options={accountOptions.countryCodes || []}
+                                  />
+                                </InputAdornment>
+                              )
                             }
                           />
                         </Grid>

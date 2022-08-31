@@ -15,6 +15,7 @@ import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker"
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
 import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
 import {
+  useAccountDetails,
   useAccountOptions,
   useGetEditDetails,
   useUpdateAccDetails,
@@ -39,10 +40,12 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
 
   const { data: editDetails } = useGetEditDetails();
 
+  const { refetch } = useAccountDetails();
+
   const {
     mutate: submitUpdateAccDetails,
     isLoading: submitUpdateAccDetailsLoading,
-  } = useUpdateAccDetails(toggleModal);
+  } = useUpdateAccDetails(toggleModal, refetch);
 
   const onSubmit = (hookData: account.updateAccDetailsFormData) => {
     submitUpdateAccDetails({
@@ -117,6 +120,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                     <InputAdornment position="start" style={{ width: 250 }}>
                       <ControlledCountryCodePicker
                         control={control}
+                        lightbg={1}
                         name="countryCode"
                         error={errors.countryCode?.id}
                         options={accountOptions?.countryCodes || []}

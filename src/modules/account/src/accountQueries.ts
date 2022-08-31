@@ -135,15 +135,13 @@ export const useGetEditDetails = () =>
     enabled: !!localStorage.getItem("token"),
   });
 
-export const useUpdateAccDetails = (toggleModal: () => void) => {
+export const useUpdateAccDetails = (toggleModal: () => void,refetch:()=>void) => {
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);
 
-  const queryClient = useQueryClient();
-
   return useMutation("postUpdateAccDetails", updateAccDetails, {
     onSuccess: () => {
-      queryClient.invalidateQueries("getAccountDetails");
+      refetch();
       toggleSuccess(true);
       updateMsg("Your profile had been updated successfully!");
       toggleModal();

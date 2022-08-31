@@ -24,12 +24,13 @@ interface ControlledCountryCodePickerOwnProps<T extends FieldValues>
   name: Path<T>;
   error?: FieldError;
   lightbg?: booleanInteger;
+  defaultpicked?: number;
 }
 
 const ControlledCountryCodePicker = <T extends FieldValues>(
   props: ControlledCountryCodePickerOwnProps<T>
 ) => {
-  const { control, name, error, lightbg } = props;
+  const { control, name, error, lightbg, defaultpicked, options } = props;
 
   return (
     <Controller
@@ -80,7 +81,11 @@ const ControlledCountryCodePicker = <T extends FieldValues>(
           <FormHelperText error>{error?.message}</FormHelperText>
         </StyledAutocompleteFormControl>
       )}
-      defaultValue={{id: 127, iso2: 'MY', countryCode: '+60', name: 'Malaysia'}as UnpackNestedValue<PathValue<T, Path<T>>>}
+      defaultValue={
+        options.find(
+          (option) => option.id === defaultpicked
+        ) as UnpackNestedValue<PathValue<T, Path<T>>>
+      }
     />
   );
 };
@@ -88,6 +93,7 @@ const ControlledCountryCodePicker = <T extends FieldValues>(
 ControlledCountryCodePicker.defaultProps = {
   error: null,
   lightbg: 0,
+  defaultpicked: 127,
 };
 
 export default ControlledCountryCodePicker;
