@@ -1,4 +1,5 @@
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
+import { Dayjs } from "dayjs";
 import React from "react";
 import {
   Control,
@@ -12,7 +13,7 @@ import {
 import StyledTextField from "../../styledComponents/inputs/StyledTextField";
 
 interface ControlledDatePickerOwnProps<T>
-  extends Omit<DatePickerProps<Date>, "renderInput" | "onChange" | "value"> {
+  extends Omit<DatePickerProps<Dayjs>, "renderInput" | "onChange" | "value"> {
   control: Control<T>;
   defaultdate?: UnpackNestedValue<PathValue<T, Path<T>>>;
   formerror?: FieldError;
@@ -32,9 +33,9 @@ const ControlledDatePicker = <T extends FieldValues>(
       render={({ field: { onChange, value } }) => (
         <DatePicker
           inputFormat="DD/MM/YYYY"
-          value={value || null}
+          value={value}
           onChange={(selectedDate) =>
-            onChange(selectedDate ? selectedDate.toString() : "")
+            onChange(selectedDate ? selectedDate?.format("YYYY-MM-DD") : "")
           }
           renderInput={(params) => (
             <StyledTextField
@@ -42,6 +43,7 @@ const ControlledDatePicker = <T extends FieldValues>(
               error={!!formerror}
               lightbg={lightbg}
               helperText={formerror?.message}
+              type="date"
             />
           )}
           disableFuture
