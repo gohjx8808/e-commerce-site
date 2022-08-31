@@ -124,6 +124,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                         name="countryCode"
                         error={errors.countryCode?.id}
                         options={accountOptions?.countryCodes || []}
+                        defaultpicked={editDetails?.countryCodeId}
                       />
                     </InputAdornment>
                   </>
