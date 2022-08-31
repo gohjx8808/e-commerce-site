@@ -5,7 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import React from "react";
-import { useLogout } from "../src/authQueries";
+import { useLogOut } from "../src/authQueries";
 
 interface SignOutConfirmationModalProps {
   toggleModal: () => void;
@@ -15,7 +15,7 @@ interface SignOutConfirmationModalProps {
 const SignOutConfirmationModal = (props: SignOutConfirmationModalProps) => {
   const { toggleModal, isOpen } = props;
 
-  const { mutate: logout } = useLogout(toggleModal);
+  const { mutate: logout } = useLogOut(toggleModal);
 
   return (
     <Dialog

@@ -5,33 +5,22 @@ import { AxiosError } from "axios";
 import { navigate } from "gatsby";
 import firebase from "gatsby-plugin-firebase";
 import { useContext } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import routeNames from "../../../utils/routeNames";
 import {
   getCurrentUserDetails,
   resetPassword,
-  signIn,
-  signOut,
+  logIn,
+  logOut,
   signUp,
 } from "./authApis";
 
 export const getCurrentUserDetailsKey = "getCurrentUserDetails";
 
-export const useLogout = (toggleModal?: () => void) =>
-  useMutation("signOut", signOut, {
-    onSuccess: () => {
-      if (toggleModal) {
-        toggleModal();
-      }
-      window.location.reload();
-      localStorage.removeItem(accountLocalStorageKeys.UID);
-    },
-  });
-
 export const useUserDetails = (onAdditionalSuccess?: () => void) => {
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);
-  const { mutate: logout } = useLogout();
+  // const { mutate: logout } = useLogout();
 
   const isLoggedIn = useUID();
 
@@ -53,7 +42,7 @@ export const useUserDetails = (onAdditionalSuccess?: () => void) => {
               onAdditionalSuccess();
             }
           } else {
-            logout();
+            // logout();
             throw new Error("No permission");
           }
         } catch (error) {
@@ -130,22 +119,44 @@ export const useSignUp = () => {
   });
 };
 
-export const useSignIn = () => {
+export const useLogIn = () => {
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);
 
-  return useMutation("signIn", signIn, {
+  return useMutation("logIn", logIn, {
     onSuccess: (response) => {
       localStorage.setItem("token", response.data.data.token);
       navigate(routeNames.home);
     },
     onError: () => {
-      updateTitle("Login");
+      updateTitle("Log In");
       updateMsg(
         "Your credentials are invalid! Please login with a valid username and password."
       );
       toggleSuccess(false);
       toggleVisible(true);
     },
+  });
+};
+
+export const useLogOut = (toggleModal: () => void) => {
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
+
+  return useMutation("submitLogOut", logOut, {
+    onSuccess: () => {
+      toggleSuccess(true);
+      updateMsg("You have been logged-out!");
+      localStorage.removeItem("token");
+      toggleModal();
+      toggleVisible(true);
+      navigate(routeNames.home);
+    },
+    onError: () => {
+      updateMsg("Your log out request had failed. Please try again later.");
+      toggleSuccess(false);
+      toggleVisible(true);
+    },
+    onSettled: () => updateTitle("Log Out"),
   });
 };

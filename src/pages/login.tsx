@@ -9,7 +9,7 @@ import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AuthLayout from "../layouts/AuthLayout";
-import { useSignIn } from "../modules/auth/src/authQueries";
+import { useLogIn } from "../modules/auth/src/authQueries";
 import { loginSchema } from "../modules/auth/src/authSchema";
 import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
 import ControlledPasswordInput from "../sharedComponents/inputs/ControlledPasswordInput";
@@ -34,14 +34,14 @@ const Login = () => {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<auth.signInPayload>({
+  } = useForm<auth.logInPayload>({
     resolver: yupResolver(loginSchema),
   });
 
-  const { mutate: signIn, isLoading: signInLoading } = useSignIn();
+  const { mutate: logIn, isLoading: logInLoading } = useLogIn();
 
-  const submitLogin: SubmitHandler<auth.signInPayload> = (hookData) => {
-    signIn(hookData);
+  const submitLogin: SubmitHandler<auth.logInPayload> = (hookData) => {
+    logIn(hookData);
   };
 
   return (
@@ -129,7 +129,7 @@ const Login = () => {
                         color="primaryButton"
                         type="submit"
                         fullWidth
-                        loading={signInLoading}
+                        loading={logInLoading}
                       >
                         Log In
                       </LoadingButton>

@@ -5,7 +5,6 @@ import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { accountLocalStorageKeys } from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
 import React, { FC, ReactNode, Suspense, useEffect } from "react";
 import Footer from "../modules/Footer";
