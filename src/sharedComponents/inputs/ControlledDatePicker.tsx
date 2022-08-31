@@ -32,7 +32,7 @@ const ControlledDatePicker = <T extends FieldValues>(
       render={({ field: { onChange, value } }) => (
         <DatePicker
           inputFormat="DD/MM/YYYY"
-          value={value ? new Date(value) : null}
+          value={value || null}
           onChange={(selectedDate) =>
             onChange(selectedDate ? selectedDate.toString() : "")
           }
