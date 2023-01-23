@@ -175,7 +175,7 @@ export const useProductList = (
   );
 
 export const useSortOptions = () =>
-  useQuery("getSortOptions", async () => (await getSortOptions()).data);
+  useQuery("getSortOptions", async () => (await getSortOptions()).data.data);
 
 export const useProductDetails = (payload: products.getProductDetailsPayload) =>
   useQuery(

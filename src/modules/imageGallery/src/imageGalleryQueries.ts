@@ -5,5 +5,5 @@ import { getImageGalleryImages } from "./imageGalleryApis";
 export const useImageGalleryImages = () =>
   useQuery(
     "getImageGalleryImages",
-    async () => (await getImageGalleryImages()).data
+    async () => (await getImageGalleryImages()).data.data
   );

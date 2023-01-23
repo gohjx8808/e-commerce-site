@@ -1,7 +1,7 @@
 declare namespace imageGallery {
-  interface imageGalleryData {
+  interface imageGalleryData  {
     row: number;
-    col: number;
+    column: number;
     image: products.productImageData;
   }
 }

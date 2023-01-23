@@ -1,3 +1,7 @@
+interface Response<T>{
+  data:T
+}
+
 interface optionsData {
   value: string;
   label: string;
