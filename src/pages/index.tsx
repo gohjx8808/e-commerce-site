@@ -1,4 +1,4 @@
-import useFlattenProducts from "@hooks/useFlattenProducts";
+import { useImageGalleryImages } from "@modules/imageGallery/src/imageGalleryQueries";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
@@ -6,30 +6,12 @@ import ImageListItem from "@mui/material/ImageListItem";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { Link as GatsbyLink, navigate } from "gatsby";
-import { useEffect, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
 import HomeImageList from "../styledComponents/home/HomeImageList";
 import routeNames from "../utils/routeNames";
 
 const HomeScreen = () => {
-  const [productImages, setProductImages] = useState<
-    products.productImageData[]
-  >([]);
-
-  const flattenProducts = useFlattenProducts();
-
-  useEffect(() => {
-    const tempProduct = flattenProducts?.reduce(
-      (carry: products.productImageData[], product) => {
-        if (carry.length < 25) {
-          carry.push(product.images[0]);
-        }
-        return carry;
-      },
-      []
-    );
-    setProductImages(tempProduct || []);
-  }, [flattenProducts]);
+  const { data: contentfulImages } = useImageGalleryImages();
 
   return (
     <MainLayout homeCarouselBanner>
@@ -76,13 +58,15 @@ const HomeScreen = () => {
             Product Gallery
           </Typography>
         </Grid>
-        <HomeImageList rowHeight="auto" cols={5}>
-          {productImages.map((image) => (
-            <ImageListItem key={image.filename}>
-              <img src={image.url} alt={image.filename} />
-            </ImageListItem>
-          ))}
-        </HomeImageList>
+        {contentfulImages && (
+          <HomeImageList rowHeight="auto" cols={5}>
+            {contentfulImages.slice(0, 25).map((image) => (
+              <ImageListItem key={image.image.filename}>
+                <img src={image.image.url} alt={image.image.filename} />
+              </ImageListItem>
+            ))}
+          </HomeImageList>
+        )}
         <IconButton
           aria-label="more product images"
           onClick={() => navigate(routeNames.imageGallery)}
