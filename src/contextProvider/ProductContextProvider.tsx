@@ -9,7 +9,7 @@ import React, { createContext, useEffect, useState } from "react";
 interface productContextState {
   shoppingCart: products.shoppingCartItemData[];
   addToCart: (
-    productData: products.productData | products.productDetailsData,
+    productData: products.productData,
     isKeyChainSeries: boolean,
     quantity: number,
     variation?: string

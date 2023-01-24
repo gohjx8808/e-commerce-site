@@ -1,6 +1,6 @@
-import { defaultProductListPayload } from "@modules/products/src/productConstants";
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import { useUID } from "@hooks";
+import { defaultProductListPayload } from "@modules/products/src/productConstants";
 import {
   accountLocalStorageKeys,
   productLocalStorageKeys,
@@ -20,7 +20,6 @@ import {
   getOrderCount,
   getOrderHistory,
   getProductCategories,
-  getProductDetails,
   getSortOptions,
   sendPaymentEmailApi,
   updateOrderCount,
@@ -178,11 +177,8 @@ export const useProductList = (
 export const useSortOptions = () =>
   useQuery("getSortOptions", async () => (await getSortOptions()).data.data);
 
-  export const useProductCategories = () =>
-  useQuery("getProductCategories", async () => (await getProductCategories()).data.data);
-
-export const useProductDetails = (payload: products.getProductDetailsPayload) =>
+export const useProductCategories = () =>
   useQuery(
-    ["getProductDetails", payload.productId],
-    async () => (await getProductDetails(payload)).data
+    "getProductCategories",
+    async () => (await getProductCategories()).data.data
   );

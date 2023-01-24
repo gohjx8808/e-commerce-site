@@ -78,13 +78,5 @@ declare namespace products {
     url: string;
   }
 
-  interface getProductDetailsPayload {
-    productId: string;
-  }
-
-  interface productDetailsData extends productData {
-    description: import("@contentful/rich-text-types").Document;
-  }
-
   type groupedProductData={[x: string]: productData[]}
 }
