@@ -139,7 +139,7 @@ const ProductDescription: FC<PageProps> = (props) => {
       ) => <Typography variant="h6">{children}</Typography>,
     },
   };
-
+ 
   if (selectedProduct) {
     return (
       <MainLayout>
