@@ -1,14 +1,14 @@
-import useFlattenProducts from "@hooks/useFlattenProducts";
 import { graphql, PageProps, useStaticQuery } from "gatsby";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { routeMap } from "../utils/constants";
 import routeNames from "../utils/routeNames";
+import { useProductList } from "./products/src/productQueries";
 
 const SEO = (props: PageProps) => {
   const { location, params } = props;
 
-  const flattenProducts = useFlattenProducts();
+  const {data:allProducts} = useProductList();
 
   const [customTitle, setCustomTitle] = useState("");
   const { site } = useStaticQuery(graphql`
@@ -31,7 +31,7 @@ const SEO = (props: PageProps) => {
 
   useEffect(() => {
     const pathname = location.pathname.replace(params.id, ":id") || "";
-    const productName = flattenProducts?.find(
+    const productName = allProducts?.find(
       (product) => product.id === params.id
     )?.name;
     if (!params.id) {
@@ -43,7 +43,7 @@ const SEO = (props: PageProps) => {
     } else if (pathname === routeNames.productDescription) {
       setCustomTitle(`%s | ${productName}`);
     }
-  }, [flattenProducts, location.pathname, params.id, titleTemplate]);
+  }, [allProducts, location.pathname, params.id, titleTemplate]);
 
   return (
     <Helmet

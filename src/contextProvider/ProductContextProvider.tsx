@@ -86,7 +86,7 @@ const ProductContextProvider = (props: parentComponent) => {
     const formattedData = {
       id: productData.id + variationSuffix,
       name: productName,
-      img: productData.images[0],
+      img: productData.productImages[0],
       price: productData.discountedPrice
         ? roundTo2Dp(productData.discountedPrice)
         : roundTo2Dp(productData.price),

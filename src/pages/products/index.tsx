@@ -1,6 +1,7 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import useDebounce from "@hooks/useDebounce";
 import {
+  useProductCategories,
   useProductList,
   useSortOptions,
 } from "@modules/products/src/productQueries";
@@ -11,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import { socialMediaLinks } from "@utils/constants";
 import { graphql, useStaticQuery } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { scroller } from "react-scroll";
 import MainLayout from "../../layouts/MainLayout";
@@ -22,17 +23,36 @@ const Products = () => {
   const { filterKeyword } = useContext(ProductContext);
   const { control, watch } = useForm();
 
+  const [groupedProducts, setGroupedProducts] =
+    useState<products.groupedProductData>({});
+  const [availableCategories, setAvailableCategories] = useState<string[]>([]);
+
   const selectedSortBy = watch("sortBy") && watch("sortBy").value;
 
   const { data: allProducts, refetch } = useProductList({
-    sortBy: selectedSortBy || 1,
-    nameSearch: filterKeyword,
+    sortId: selectedSortBy || 1,
+    search: filterKeyword,
   });
 
   const { data: sortByOptions } = useSortOptions();
+  const { data: allCategories } = useProductCategories();
 
-  const availableCategories = allProducts?.availableCategories;
-  const allCategories = allProducts?.allCategories;
+  useEffect(() => {
+    if (allProducts) {
+      const groupedProductData: products.groupedProductData =
+        allProducts.reduce((accumulator, object) => {
+          const { category } = object;
+          // eslint-disable-next-line no-param-reassign
+          accumulator[category] = accumulator[category] || [];
+          accumulator[category].push(object);
+
+          return accumulator;
+        }, Object.create({}));
+
+      setGroupedProducts(groupedProductData);
+      setAvailableCategories(Object.keys(groupedProductData));
+    }
+  }, [allProducts]);
 
   useDebounce(filterKeyword, refetch);
 
@@ -153,7 +173,7 @@ const Products = () => {
             spacing={2}
             key={category}
           >
-            {allProducts?.products[category].map((product) => (
+            {groupedProducts[category].map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </Grid>

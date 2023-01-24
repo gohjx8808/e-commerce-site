@@ -1,5 +1,4 @@
 declare namespace products {
-
   interface shoppingCartItemData {
     id: string;
     quantity: number;
@@ -60,23 +59,18 @@ declare namespace products {
   }
 
   interface getAllProductPayload {
-    nameSearch: string;
-    sortBy: number;
-  }
-
-  interface allProducts {
-    allCategories: string[];
-    availableCategories: string[];
-    products: { [x: string]: productData[] };
+    search: string;
+    sortId: number;
   }
 
   interface productData {
+    name: string;
+    productImages: productImageData[];
+    price: number;
+    contentDescription: string;
     category: string;
     discountedPrice?: number;
     id: string;
-    images: productImageData[];
-    name: string;
-    price: number;
   }
 
   interface productImageData {
@@ -91,4 +85,6 @@ declare namespace products {
   interface productDetailsData extends productData {
     description: import("@contentful/rich-text-types").Document;
   }
+
+  type groupedProductData={[x: string]: productData[]}
 }

@@ -79,7 +79,7 @@ const ProductCard = (props: ProductCardOwnProps) => {
           />
           <Box onClick={(event) => event.preventDefault()}>
             <ProductImageCarousel
-              imageList={product.images}
+              imageList={product.productImages}
               card
             />
           </Box>

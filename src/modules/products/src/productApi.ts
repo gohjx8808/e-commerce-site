@@ -43,8 +43,11 @@ export const updateOrderHistory = (payload: products.saveOrderPayload[]) => {
   return firebase.database().ref(`orderHistory/${uid}`).set(payload);
 };
 
+export const getProductCategories = () =>
+  getRequest<Response<string[]>>("products/categories");
+
 export const getAllProducts = (payload: products.getAllProductPayload) =>
-  postRequest<products.allProducts>("products", payload);
+  postRequest<Response<products.productData[]>>("products", payload);
 
 export const getSortOptions = () =>
   getRequest<Response<optionsData[]>>("products/sort-options");
