@@ -1,8 +1,7 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { Block, BLOCKS, Inline, MARKS } from "@contentful/rich-text-types";
 import { ProductContext } from "@contextProvider/ProductContextProvider";
-import useFlattenProducts from "@hooks/useFlattenProducts";
-import { useProductDetails } from "@modules/products/src/productQueries";
+import { useProductList } from "@modules/products/src/productQueries";
 import ProductImageCarousel from "@modules/products/views/ProductImageCarousel";
 import AddIcon from "@mui/icons-material/Add";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
@@ -38,9 +37,10 @@ const ProductDescription: FC<PageProps> = (props) => {
   const isXsView = useXsDownMediaQuery();
   const { addToCart } = useContext(ProductContext);
 
-  const flattenProducts = useFlattenProducts();
+  const [selectedProduct, setSelectedProduct] =
+    useState<products.productData>();
 
-  const { data: productDetails } = useProductDetails({ productId: id });
+  const { data: allProducts } = useProductList();
 
   const [itemQuantity, setItemQuantity] = useState(1);
   const [selectedItemVariation, setSelectedItemVariation] = useState("");
@@ -49,11 +49,14 @@ const ProductDescription: FC<PageProps> = (props) => {
     products.productData[][]
   >([]);
   const { enqueueSnackbar } = useSnackbar();
-  const isKeyChainSeries = productDetails?.category === "Keychain Series";
+  const isKeyChainSeries = selectedProduct?.category === "Keychain Series";
+
+  console.log(productRecommendation);
 
   useEffect(() => {
     const productRecommendationAmount = isXsView ? 4 : 10;
-    const otherProducts = flattenProducts
+    setSelectedProduct(allProducts?.find((product) => product.id === id));
+    const otherProducts = allProducts
       ?.filter((product) => product.id !== id)
       .sort(() => Math.random() - 0.5)
       .slice(0, productRecommendationAmount);
@@ -72,7 +75,7 @@ const ProductDescription: FC<PageProps> = (props) => {
     });
     overallProductArray.push(innerProductArray);
     setProductRecommendation(overallProductArray);
-  }, [flattenProducts, id, isXsView]);
+  }, [allProducts, id, isXsView]);
 
   const increaseItemQuantity = () => {
     setItemQuantity(itemQuantity + 1);
@@ -97,11 +100,11 @@ const ProductDescription: FC<PageProps> = (props) => {
 
   const onAddToCart = () => {
     if (
-      productDetails &&
+      selectedProduct &&
       ((selectedItemVariation && isKeyChainSeries) || !isKeyChainSeries)
     ) {
       addToCart(
-        productDetails,
+        selectedProduct,
         isKeyChainSeries,
         itemQuantity,
         selectedItemVariation
@@ -110,7 +113,7 @@ const ProductDescription: FC<PageProps> = (props) => {
         isKeyChainSeries,
         selectedItemVariation
       );
-      const productName = productDetails?.name + variationSuffix;
+      const productName = selectedProduct?.name + variationSuffix;
       enqueueSnackbar(`${productName} had been added to your cart!`);
     } else {
       toggleErrorSnackbar();
@@ -137,19 +140,19 @@ const ProductDescription: FC<PageProps> = (props) => {
     },
   };
 
-  if (productDetails) {
+  if (selectedProduct) {
     return (
       <MainLayout>
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <CustomBreadcrumbs customActiveName={productDetails.name} />
-            <Typography variant="h4">{productDetails.name}</Typography>
+            <CustomBreadcrumbs customActiveName={selectedProduct.name} />
+            <Typography variant="h4">{selectedProduct.name}</Typography>
           </Grid>
           <Grid item lg={4} sm={12}>
             <Grid container justifyContent="center">
               <Grid item lg={12} sm={6} xs={12}>
                 <ProductImageCarousel
-                  imageList={productDetails.images}
+                  imageList={selectedProduct.productImages}
                   autoPlay
                 />
               </Grid>
@@ -160,7 +163,10 @@ const ProductDescription: FC<PageProps> = (props) => {
               <Typography variant="h5" fontWeight="bold" marginBottom={3}>
                 Description
               </Typography>
-              {documentToReactComponents(productDetails.description, options)}
+              {documentToReactComponents(
+                selectedProduct.contentDescription,
+                options
+              )}
             </Grid>
             {isKeyChainSeries && (
               <>
@@ -196,16 +202,16 @@ const ProductDescription: FC<PageProps> = (props) => {
                 <Grid container spacing={2}>
                   <Grid item>
                     <ProductPrice
-                      discountprice={productDetails.discountedPrice}
+                      discountprice={selectedProduct.discountedPrice}
                       variant="h5"
                     >
-                      {formatPrice(productDetails.price, "MYR")}
+                      {formatPrice(selectedProduct.price, "MYR")}
                     </ProductPrice>
                   </Grid>
                   <Grid item>
-                    {productDetails.discountedPrice && (
+                    {selectedProduct.discountedPrice && (
                       <Typography variant="h5" fontWeight="bold">
-                        {formatPrice(productDetails.discountedPrice, "MYR")}
+                        {formatPrice(selectedProduct.discountedPrice, "MYR")}
                       </Typography>
                     )}
                   </Grid>
@@ -309,7 +315,7 @@ const ProductDescription: FC<PageProps> = (props) => {
                           </Typography>
                         </Grid>
                         <ProductImage
-                          src={product.images[0].url}
+                          src={product.productImages[0].url}
                           alt={product.name}
                         />
                       </Link>

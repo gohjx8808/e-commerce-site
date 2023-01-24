@@ -67,7 +67,7 @@ declare namespace products {
     name: string;
     productImages: productImageData[];
     price: number;
-    contentDescription: string;
+    contentDescription: import('@contentful/rich-text-types').Document;
     category: string;
     discountedPrice?: number;
     id: string;
