@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-const API_URL= "https://yjartjournal-api.vercel.app"
+const API_URL= "http://localhost:3000"
 
 export const postRequest = <T>(
   url: string,

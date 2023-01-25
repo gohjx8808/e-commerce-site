@@ -3,10 +3,9 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
-import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MainLayout from "../layouts/MainLayout";
-import { useSubmitFeedback } from "../modules/feedback/src/feedbackQueries";
+import { useSubmitFeedback } from "../modules/feedback/src/feedbackMutations";
 import { feedbackFormSchema } from "../modules/feedback/src/feedbackSchema";
 import ControlledTextInput from "../sharedComponents/inputs/ControlledTextInput";
 
@@ -43,10 +42,10 @@ const FeedbackForm = () => {
                 <Grid item xs={12}>
                   <ControlledTextInput
                     control={control}
-                    name="nickname"
+                    name="name"
                     lightbg={1}
                     label="Nickname"
-                    formerror={errors.nickname}
+                    formerror={errors.name}
                     infotext="How should we address you."
                   />
                 </Grid>
