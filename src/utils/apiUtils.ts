@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
+console.log(process.env.NODE_ENV)
 const API_URL =
   process.env.NODE_ENV === "PRODUCTION"
     ? "https://yjartjournal-api.vercel.app"
