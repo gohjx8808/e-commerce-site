@@ -62,7 +62,11 @@ const HomeScreen = () => {
           <HomeImageList rowHeight="auto" cols={5}>
             {contentfulImages.slice(0, 25).map((image) => (
               <ImageListItem key={image.image.filename}>
-                <img src={image.image.url} alt={image.image.filename} />
+                <img
+                  src={image.image.url}
+                  alt={image.image.filename}
+                  loading="lazy"
+                />
               </ImageListItem>
             ))}
           </HomeImageList>

@@ -45,6 +45,7 @@ const ImageGallery = () => {
                   <img
                     src={imageDetails.image.url}
                     alt={imageDetails.image.filename}
+                    loading="lazy"
                   />
                 </ImageListItem>
               ))}
