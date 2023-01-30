@@ -1,3 +1,4 @@
+import { genderOptions } from "@constants";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAccountOptions } from "@modules/account/src/accountQueries";
 import { InputAdornment } from "@mui/material";
@@ -187,17 +188,15 @@ const SignUp = () => {
                             formerror={errors.dob}
                           />
                         </Grid>
-                        {accountOptions && (
-                          <Grid item xs={12} sm={6}>
-                            <ControlledPicker
-                              control={control}
-                              name="gender"
-                              label="Gender"
-                              error={errors.gender?.value}
-                              options={accountOptions.genders}
-                            />
-                          </Grid>
-                        )}
+                        <Grid item xs={12} sm={6}>
+                          <ControlledPicker
+                            control={control}
+                            name="gender"
+                            label="Gender"
+                            error={errors.gender?.value}
+                            options={genderOptions}
+                          />
+                        </Grid>
                       </Grid>
                     </Grid>
                     <Grid

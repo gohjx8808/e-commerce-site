@@ -51,13 +51,6 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-source-contentful",
-      options: {
-        spaceId: 'r3a2vbpk4nlk',
-        accessToken: 'NEQnoryRJxmSWVc4a9KTINLOxZclPvtTfyS4nE6x3ws',
-      },
-    },
-    {
       resolve: "gatsby-plugin-manifest",
       options: {
         name: "YJ Art Journal",
@@ -121,6 +114,7 @@ module.exports = {
           "@styledComponents": "src/styledComponents",
           "@sharedComponents": "src/sharedComponents",
           "@hooks": "src/hooks",
+          "@constants": "src/constants.ts",
         },
         extensions: ["ts"],
       },
