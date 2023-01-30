@@ -1,4 +1,5 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
+import SEO from "@modules/SEO";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Box from "@mui/material/Box";
@@ -18,7 +19,7 @@ import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
 import CartCard from "../../styledComponents/products/CartCard";
 import CartItemGrid from "../../styledComponents/products/CartItemGrid";
 import ProductImage from "../../styledComponents/products/ProductImage";
-import { formatPrice } from "../../utils/helper";
+import { formatPrice, generateHeader } from "../../utils/helper";
 import routeNames from "../../utils/routeNames";
 
 type CartItemCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -430,3 +431,5 @@ const Cart = () => {
 };
 
 export default Cart;
+
+export const Head = () => <SEO title={generateHeader("Shopping Cart")} />;

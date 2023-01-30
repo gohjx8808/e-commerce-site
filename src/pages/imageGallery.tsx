@@ -1,9 +1,11 @@
 import { useImageGalleryImages } from "@modules/imageGallery/src/imageGalleryQueries";
+import SEO from "@modules/SEO";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import { generateHeader } from "@utils/helper";
 import { useState } from "react";
 import MainLayout from "../layouts/MainLayout";
 import EnlargedImageModal from "../modules/imageGallery/views/EnlargedImageModal";
@@ -62,3 +64,5 @@ const ImageGallery = () => {
 };
 
 export default ImageGallery;
+
+export const Head = () => <SEO title={generateHeader("Image Gallery")} />;

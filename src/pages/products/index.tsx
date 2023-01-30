@@ -5,11 +5,13 @@ import {
   useProductList,
   useSortOptions,
 } from "@modules/products/src/productQueries";
+import SEO from "@modules/SEO";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { socialMediaLinks } from "@utils/constants";
+import { generateHeader } from "@utils/helper";
 import { graphql, useStaticQuery } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import React, { useContext, useEffect, useState } from "react";
@@ -206,3 +208,5 @@ const Products = () => {
 };
 
 export default Products;
+
+export const Head = () => <SEO title={generateHeader("Products")} />;

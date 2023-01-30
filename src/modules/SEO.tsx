@@ -1,22 +1,15 @@
-import { graphql, PageProps, useStaticQuery } from "gatsby";
-import { useEffect, useState } from "react";
-import { Helmet } from "react-helmet";
-import { routeMap } from "../utils/constants";
-import routeNames from "../utils/routeNames";
-import { useProductList } from "./products/src/productQueries";
+import { graphql, useStaticQuery } from "gatsby";
 
-const SEO = (props: PageProps) => {
-  const { location, params } = props;
+interface SEOProps {
+  title: string;
+}
 
-  const {data:allProducts} = useProductList();
-
-  const [customTitle, setCustomTitle] = useState("");
+const SEO = (props: SEOProps) => {
+  const { title } = props;
   const { site } = useStaticQuery(graphql`
     query SEO {
       site {
         siteMetadata {
-          title
-          titleTemplate
           description
           lang
           keywords
@@ -26,69 +19,20 @@ const SEO = (props: PageProps) => {
     }
   `);
 
-  const { title, titleTemplate, description, lang, keywords, author } =
-    site.siteMetadata;
-
-  useEffect(() => {
-    const pathname = location.pathname.replace(params.id, ":id") || "";
-    const productName = allProducts?.find(
-      (product) => product.id === params.id
-    )?.name;
-    if (!params.id) {
-      if (pathname === "/") {
-        setCustomTitle(titleTemplate);
-      } else if (routeMap[pathname]) {
-        setCustomTitle(`%s | ${routeMap[pathname]}`);
-      }
-    } else if (pathname === routeNames.productDescription) {
-      setCustomTitle(`%s | ${productName}`);
-    }
-  }, [allProducts, location.pathname, params.id, titleTemplate]);
+  const { description, lang, keywords, author } = site.siteMetadata;
 
   return (
-    <Helmet
-      title={title}
-      titleTemplate={customTitle}
-      htmlAttributes={{ lang }}
-      meta={[
-        {
-          name: "description",
-          content: description,
-        },
-        {
-          name: "keywords",
-          content: keywords,
-        },
-        {
-          property: "og:title",
-          content: title,
-        },
-        {
-          property: "og:description",
-          content: description,
-        },
-        {
-          property: "og:type",
-          content: "website",
-        },
-        {
-          name: "twitter:card",
-          content: "summary",
-        },
-        {
-          name: "twitter:creator",
-          content: author || "",
-        },
-        {
-          name: "twitter:title",
-          content: title,
-        },
-        {
-          name: "twitter:description",
-          content: description,
-        },
-      ]}
-    >
+    <>
+      <title lang={lang}>{title}</title>
+      <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
+      <meta property="og:title" content={title} />
+      <meta property="og:type" content="website" />
+      <meta property="og:description" content={description} />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:creator" content={author} />
       <script
         async
         defer
@@ -100,7 +44,7 @@ const SEO = (props: PageProps) => {
           margin: 0;
         }`}
       </style>
-    </Helmet>
+    </>
   );
 };
 

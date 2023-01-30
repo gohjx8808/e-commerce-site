@@ -1,10 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import SEO from "@modules/SEO";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+import { generateHeader } from "@utils/helper";
 import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -146,3 +148,5 @@ const Login = () => {
 };
 
 export default Login;
+
+export const Head = () => <SEO title={generateHeader("Login")} />;

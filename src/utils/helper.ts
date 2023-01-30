@@ -50,3 +50,5 @@ export const getLocalStorageItem = (key: string) => {
     return localStorage.getItem(key);
   }
 };
+
+export const generateHeader = (title: string) => `yjArtJournal | ${title}`;

@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import SEO from "@modules/SEO";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
@@ -6,6 +7,7 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+import { generateHeader } from "@utils/helper";
 import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import React from "react";
@@ -130,3 +132,5 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
+
+export const Head = () => <SEO title={generateHeader("Forgot Password")} />;

@@ -51,8 +51,6 @@ const ProductDescription: FC<PageProps> = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const isKeyChainSeries = selectedProduct?.category === "Keychain Series";
 
-  console.log(productRecommendation);
-
   useEffect(() => {
     const productRecommendationAmount = isXsView ? 4 : 10;
     setSelectedProduct(allProducts?.find((product) => product.id === id));
@@ -350,3 +348,5 @@ const ProductDescription: FC<PageProps> = (props) => {
 };
 
 export default ProductDescription;
+
+// export const Head = () => <SEO title={generateHeader("Sign Up")} />;

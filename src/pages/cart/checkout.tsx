@@ -1,5 +1,6 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
+import SEO from "@modules/SEO";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -42,7 +43,7 @@ import ControlledRadioButton from "../../sharedComponents/inputs/ControlledRadio
 import ControlledTextInput from "../../sharedComponents/inputs/ControlledTextInput";
 import CheckoutCard from "../../styledComponents/products/CheckoutCard";
 import { stateOptions } from "../../utils/constants";
-import { formatPrice, roundTo2Dp } from "../../utils/helper";
+import { formatPrice, generateHeader, roundTo2Dp } from "../../utils/helper";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
@@ -796,3 +797,5 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+export const Head = () => <SEO title={generateHeader("Checkout")} />;

@@ -1,8 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import SEO from "@modules/SEO";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
+import { generateHeader } from "@utils/helper";
 import { SubmitHandler, useForm } from "react-hook-form";
 import MainLayout from "../layouts/MainLayout";
 import { useSubmitFeedback } from "../modules/feedback/src/feedbackMutations";
@@ -93,3 +95,5 @@ const FeedbackForm = () => {
 };
 
 export default FeedbackForm;
+
+export const Head = () => <SEO title={generateHeader("Feedback")} />;

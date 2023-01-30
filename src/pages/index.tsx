@@ -1,10 +1,12 @@
 import { useImageGalleryImages } from "@modules/imageGallery/src/imageGalleryQueries";
+import SEO from "@modules/SEO";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import ImageListItem from "@mui/material/ImageListItem";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+import { generateHeader } from "@utils/helper";
 import { Link as GatsbyLink, navigate } from "gatsby";
 import MainLayout from "../layouts/MainLayout";
 import HomeImageList from "../styledComponents/home/HomeImageList";
@@ -83,3 +85,7 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
+
+export const Head = () => (
+  <SEO title={generateHeader("The Handmade Cottage")} />
+);
