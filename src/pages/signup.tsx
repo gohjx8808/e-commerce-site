@@ -1,4 +1,3 @@
-import { genderOptions } from "@constants";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAccountOptions } from "@modules/account/src/accountQueries";
 import SEO from "@modules/SEO";
@@ -10,6 +9,7 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import ControlledCountryCodePicker from "@sharedComponents/inputs/ControlledCountryCodePicker";
+import { genderOptions } from "@utils/constants";
 import { generateHeader } from "@utils/helper";
 import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";

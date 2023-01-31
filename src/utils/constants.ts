@@ -72,3 +72,8 @@ export enum socialMediaLinks {
   INSTAGRAM = "https://www.instagram.com/yjartjournal/",
   XHS = "https://www.xiaohongshu.com/user/profile/5cf791af000000000500c3eb?xhsshare=CopyLink&appuid=5cf791af000000000500c3eb&apptime=1642396244",
 }
+
+export const genderOptions: optionsData[] = [
+  { label: "Male", value: "M" },
+  { label: "Female", value: "F" },
+];

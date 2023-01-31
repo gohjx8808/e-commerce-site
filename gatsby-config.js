@@ -16,7 +16,6 @@ module.exports = {
   plugins: [
     "gatsby-plugin-gatsby-cloud",
     "gatsby-plugin-material-ui",
-    "gatsby-plugin-react-helmet",
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -114,7 +113,6 @@ module.exports = {
           "@styledComponents": "src/styledComponents",
           "@sharedComponents": "src/sharedComponents",
           "@hooks": "src/hooks",
-          "@constants": "src/constants.ts",
         },
         extensions: ["ts"],
       },
