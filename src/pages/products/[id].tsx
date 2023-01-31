@@ -3,6 +3,7 @@ import { Block, BLOCKS, Inline, MARKS } from "@contentful/rich-text-types";
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import { useProductList } from "@modules/products/src/productQueries";
 import ProductImageCarousel from "@modules/products/views/ProductImageCarousel";
+import SEO from "@modules/SEO";
 import AddIcon from "@mui/icons-material/Add";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -14,9 +15,9 @@ import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import ToggleButton from "@mui/material/ToggleButton";
 import Typography from "@mui/material/Typography";
-import { Link as GatsbyLink, PageProps } from "gatsby";
+import { HeadProps, Link as GatsbyLink, PageProps } from "gatsby";
 import { useSnackbar } from "notistack";
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
@@ -28,7 +29,11 @@ import ModifyQuantityButton from "../../styledComponents/products/ModifyQuantity
 import ProductImage from "../../styledComponents/products/ProductImage";
 import ProductPrice from "../../styledComponents/products/ProductPrice";
 import { itemVariationOptions } from "../../utils/constants";
-import { formatPrice, getProductVariationSuffix } from "../../utils/helper";
+import {
+  formatPrice,
+  generateHeader,
+  getProductVariationSuffix,
+} from "../../utils/helper";
 import routeNames from "../../utils/routeNames";
 
 const ProductDescription: FC<PageProps> = (props) => {
@@ -137,7 +142,7 @@ const ProductDescription: FC<PageProps> = (props) => {
       ) => <Typography variant="h6">{children}</Typography>,
     },
   };
- 
+
   if (selectedProduct) {
     return (
       <MainLayout>
@@ -315,6 +320,7 @@ const ProductDescription: FC<PageProps> = (props) => {
                         <ProductImage
                           src={product.productImages[0].url}
                           alt={product.name}
+                          loading="lazy"
                         />
                       </Link>
                     </Grid>
@@ -349,4 +355,4 @@ const ProductDescription: FC<PageProps> = (props) => {
 
 export default ProductDescription;
 
-// export const Head = () => <SEO title={generateHeader("Sign Up")} />;
+export const Head = () => <SEO title={generateHeader("Product Details")} />;

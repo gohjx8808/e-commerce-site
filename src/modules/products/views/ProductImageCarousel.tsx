@@ -42,7 +42,12 @@ const ProductImageCarousel = (props: ProductImageCarouselProps) => {
     >
       {imageList.map((image) => (
         <Box sx={{ cursor: "zoom-in" }} key={image.filename}>
-          <ProductImage src={image.url} alt={image.filename} card={card} />
+          <ProductImage
+            src={image.url}
+            alt={image.filename}
+            card={card}
+            loading="lazy"
+          />
         </Box>
       ))}
     </Carousel>

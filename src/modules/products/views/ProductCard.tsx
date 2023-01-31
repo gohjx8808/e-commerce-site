@@ -78,10 +78,7 @@ const ProductCard = (props: ProductCardOwnProps) => {
             sx={{ minHeight: { sm: 95, xs: 105 } }}
           />
           <Box onClick={(event) => event.preventDefault()}>
-            <ProductImageCarousel
-              imageList={product.productImages}
-              card
-            />
+            <ProductImageCarousel imageList={product.productImages} card />
           </Box>
           <CardContent sx={{ paddingBottom: "16px!important" }}>
             <Grid container justifyContent="space-between" alignItems="center">
