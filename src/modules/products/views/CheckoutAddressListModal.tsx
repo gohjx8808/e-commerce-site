@@ -6,9 +6,9 @@ import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import StyledListItem from "../../../styledComponents/StyledListItem";
-import { useUserDetails } from "../../auth/src/authQueries";
+import { useUserDetails } from "../../auth/src/authMutations";
 
 interface CheckoutAddressListModalOwnProps {
   isVisible: boolean;

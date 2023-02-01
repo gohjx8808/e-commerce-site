@@ -103,12 +103,8 @@ export const useSignUp = () => {
     },
     onError: (error: AxiosError<auth.signUpErrorData>) => {
       const errResponse = error.response?.data;
-      let errorMsg = "";
-      if (errResponse?.email) {
-        errorMsg =
-          "The provided email is already in use by an existing user. " +
-          "Please register using another email or login using the correct credentials.";
-      } else {
+      let errorMsg = errResponse?.message || "";
+      if (!errResponse?.message) {
         errorMsg = "Your registration has failed! Please try again.";
       }
       updateMsg(errorMsg);

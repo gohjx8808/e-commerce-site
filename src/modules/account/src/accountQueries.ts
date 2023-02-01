@@ -4,14 +4,14 @@ import { useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   getCurrentUserDetailsKey,
-  useUserDetails,
-} from "../../auth/src/authQueries";
+  useUserDetails
+} from "../../auth/src/authMutations";
 import {
   getAccountDetails,
   getAccountOptions,
   getEditDetails,
   updateAccDetails,
-  updateAddress,
+  updateAddress
 } from "./accountApi";
 import { addressStatus } from "./accountConstants";
 import { removeDefaultAddress, sameAddressDetector } from "./accountUtils";

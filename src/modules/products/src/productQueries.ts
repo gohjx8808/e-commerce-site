@@ -3,7 +3,7 @@ import { useUID } from "@hooks";
 import { defaultProductListPayload } from "@modules/products/src/productConstants";
 import {
   accountLocalStorageKeys,
-  productLocalStorageKeys,
+  productLocalStorageKeys
 } from "@utils/localStorageKeys";
 import dayjs from "dayjs";
 import { navigate } from "gatsby";
@@ -12,8 +12,8 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useAddEditAddress } from "../../account/src/accountQueries";
 import {
   getCurrentUserDetailsKey,
-  useUserDetails,
-} from "../../auth/src/authQueries";
+  useUserDetails
+} from "../../auth/src/authMutations";
 import {
   getAllProducts,
   getAvailablePromoCodes,
@@ -24,7 +24,7 @@ import {
   sendPaymentEmailApi,
   updateOrderCount,
   updateOrderHistory,
-  updatePromoCodeUsed,
+  updatePromoCodeUsed
 } from "./productApi";
 
 export const productQueriesKeys = {

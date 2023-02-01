@@ -15,7 +15,7 @@ import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AuthLayout from "../layouts/AuthLayout";
-import { useSignUp } from "../modules/auth/src/authQueries";
+import { useSignUp } from "../modules/auth/src/authMutations";
 import { signUpSchema } from "../modules/auth/src/authSchema";
 import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
 import ControlledDatePicker from "../sharedComponents/inputs/ControlledDatePicker";
@@ -119,6 +119,15 @@ const SignUp = () => {
                             label="Full Name"
                             formerror={errors.fullName}
                             type="text"
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <ControlledTextInput
+                            control={control}
+                            name="preferredName"
+                            label="Preferred Name"
+                            type="text"
+                            infotext="How you wish us to address you. (Full name is used if blank)"
                           />
                         </Grid>
                         <Grid item sm={6} xs={12}>

@@ -11,12 +11,12 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import AddressChip from "../../../styledComponents/AddressChip";
 import SmUpDivider from "../../../styledComponents/SmUpDivider";
 import { homeColor, workColor } from "../../../utils/constants";
 import { internationalPhoneNumberFormatter } from "../../../utils/helper";
-import { useUserDetails } from "../../auth/src/authQueries";
+import { useUserDetails } from "../../auth/src/authMutations";
 import AddressModal from "./AddressModal";
 import DeleteAddressConfirmationModal from "./DeleteAddressConfirmationModal";
 

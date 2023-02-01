@@ -18,6 +18,7 @@ declare namespace auth {
     countryCodeId: number;
     phoneNo: string;
     name: string;
+    preferredName?: string;
   }
 
   interface signUpFormData {
@@ -29,10 +30,11 @@ declare namespace auth {
     countryCode: account.countryCodeData;
     phoneNumber: string;
     fullName: string;
+    preferredName?: string;
   }
 
   interface signUpErrorData {
-    email: string[];
+    message: string;
   }
 
   interface registerUserPayload {

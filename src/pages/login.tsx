@@ -11,7 +11,7 @@ import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AuthLayout from "../layouts/AuthLayout";
-import { useLogIn } from "../modules/auth/src/authQueries";
+import { useLogIn } from "../modules/auth/src/authMutations";
 import { loginSchema } from "../modules/auth/src/authSchema";
 import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
 import ControlledPasswordInput from "../sharedComponents/inputs/ControlledPasswordInput";

@@ -16,21 +16,21 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isBetween from "dayjs/plugin/isBetween";
-import React, {
+import {
   useCallback,
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useState
 } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { usePrevShippingInfo, useUID, useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
-import { useUserDetails } from "../../modules/auth/src/authQueries";
+import { useUserDetails } from "../../modules/auth/src/authMutations";
 import {
   useAvailablePromoCodes,
   useOrderCount,
-  useSubmitOrder,
+  useSubmitOrder
 } from "../../modules/products/src/productQueries";
 import productSchema from "../../modules/products/src/productSchema";
 import CheckoutAddressListModal from "../../modules/products/views/CheckoutAddressListModal";
