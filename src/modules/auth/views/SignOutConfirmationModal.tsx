@@ -1,10 +1,14 @@
+import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useLogOut } from "../src/authMutations";
+import { authLocalStorageKeys } from "@utils/localStorageKeys";
+import routeNames from "@utils/routeNames";
+import { navigate } from "gatsby";
+import { useContext } from "react";
 
 interface SignOutConfirmationModalProps {
   toggleModal: () => void;
@@ -14,7 +18,19 @@ interface SignOutConfirmationModalProps {
 const SignOutConfirmationModal = (props: SignOutConfirmationModalProps) => {
   const { toggleModal, isOpen } = props;
 
-  const { mutate: logout } = useLogOut(toggleModal);
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
+
+  const logout = () => {
+    localStorage.removeItem(authLocalStorageKeys.TOKEN);
+    localStorage.removeItem(authLocalStorageKeys.USER);
+    toggleSuccess(true);
+    updateMsg("You have been logged-out!");
+    toggleModal();
+    toggleVisible(true);
+    navigate(routeNames.home);
+    updateTitle("Log Out");
+  };
 
   return (
     <Dialog

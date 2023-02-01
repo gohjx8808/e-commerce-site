@@ -8,12 +8,11 @@ import { AxiosError } from "axios";
 import { navigate } from "gatsby";
 import firebase from "gatsby-plugin-firebase";
 import { useContext } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import routeNames from "../../../utils/routeNames";
 import {
   getCurrentUserDetails,
   logIn,
-  logOut,
   resetPassword,
   signUp,
 } from "./authApis";
@@ -145,30 +144,5 @@ export const useLogIn = () => {
       toggleSuccess(false);
       toggleVisible(true);
     },
-  });
-};
-
-export const useLogOut = (toggleModal: () => void) => {
-  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
-    useContext(StatusModalContext);
-
-  const queryClient = useQueryClient();
-
-  return useMutation("submitLogOut", logOut, {
-    onSuccess: () => {
-      toggleSuccess(true);
-      updateMsg("You have been logged-out!");
-      queryClient.resetQueries("getAccountDetails");
-      localStorage.removeItem("token");
-      toggleModal();
-      toggleVisible(true);
-      navigate(routeNames.home);
-    },
-    onError: () => {
-      updateMsg("Your log out request had failed. Please try again later.");
-      toggleSuccess(false);
-      toggleVisible(true);
-    },
-    onSettled: () => updateTitle("Log Out"),
   });
 };
