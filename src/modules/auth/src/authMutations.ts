@@ -1,6 +1,9 @@
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import { useUID } from "@hooks";
-import { accountLocalStorageKeys } from "@utils/localStorageKeys";
+import {
+  accountLocalStorageKeys,
+  authLocalStorageKeys,
+} from "@utils/localStorageKeys";
 import { AxiosError } from "axios";
 import { navigate } from "gatsby";
 import firebase from "gatsby-plugin-firebase";
@@ -9,9 +12,9 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import routeNames from "../../../utils/routeNames";
 import {
   getCurrentUserDetails,
-  resetPassword,
   logIn,
   logOut,
+  resetPassword,
   signUp,
 } from "./authApis";
 
@@ -101,7 +104,7 @@ export const useSignUp = () => {
       toggleVisible(true);
       navigate(routeNames.login);
     },
-    onError: (error: AxiosError<auth.signUpErrorData>) => {
+    onError: (error: AxiosError<auth.authErrorData>) => {
       const errResponse = error.response?.data;
       let errorMsg = errResponse?.message || "";
       if (!errResponse?.message) {
@@ -121,14 +124,24 @@ export const useLogIn = () => {
 
   return useMutation("logIn", logIn, {
     onSuccess: (response) => {
-      localStorage.setItem("token", response.data.data.token);
+      localStorage.setItem(
+        authLocalStorageKeys.TOKEN,
+        response.data.data.accessToken
+      );
+      localStorage.setItem(
+        authLocalStorageKeys.USER,
+        JSON.stringify(response.data.data.user)
+      );
       navigate(routeNames.home);
     },
-    onError: () => {
+    onError: (error: AxiosError<auth.authErrorData>) => {
       updateTitle("Log In");
-      updateMsg(
-        "Your credentials are invalid! Please login with a valid username and password."
-      );
+      const errResponse = error.response?.data;
+      let errorMsg = errResponse?.message || "";
+      if (!errResponse?.message) {
+        errorMsg = "Network error occur. Please contact administrator.";
+      }
+      updateMsg(errorMsg);
       toggleSuccess(false);
       toggleVisible(true);
     },

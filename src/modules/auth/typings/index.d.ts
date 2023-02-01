@@ -5,12 +5,11 @@ declare namespace auth {
   }
 
   interface logInResponse {
-    data: {
-      token: string;
-    };
+    accessToken: string;
+    user: submitSignUpPayload;
   }
 
-  interface submitSignUpPayload extends signUpFormData  {
+  interface submitSignUpPayload extends signUpFormData {
     gender: string;
   }
 
@@ -26,7 +25,7 @@ declare namespace auth {
     preferredName?: string;
   }
 
-  interface signUpErrorData {
+  interface authErrorData {
     message: string;
   }
 

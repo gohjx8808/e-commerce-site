@@ -13,6 +13,6 @@ export const signUp = (payload: auth.submitSignUpPayload) =>
   postRequest("users/sign-up", payload);
 
 export const logIn = (payload: auth.logInPayload) =>
-  postRequest<auth.logInResponse>("log-in", payload);
+  postRequest<Response<auth.logInResponse>>("users/sign-in", payload);
 
 export const logOut = () => postRequest("log-out", {}, true);

@@ -18,6 +18,7 @@ import Menu from "@mui/material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import { authLocalStorageKeys } from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
 import React, { useContext, useEffect, useState } from "react";
 import { usePathname, useXsDownMediaQuery } from "../hooks";
@@ -26,12 +27,11 @@ import StyledAppBar from "../styledComponents/drawer/StyledAppBar";
 import {
   SearchContainer,
   SearchIconWrapper,
-  SearchInputBase,
+  SearchInputBase
 } from "../styledComponents/search";
 import StyledMenuItem from "../styledComponents/StyledListItem";
 import DarkModeContext from "../utils/DarkModeContext";
 import routeNames from "../utils/routeNames";
-import { useAccountDetails } from "./account/src/accountQueries";
 import SignOutConfirmationModal from "./auth/views/SignOutConfirmationModal";
 import CustomDesktopDrawer from "./drawer/CustomDesktopDrawer";
 import CustomMobileDrawer from "./drawer/CustomMobileDrawer";
@@ -43,18 +43,29 @@ const MenuBar = () => {
     null
   );
   const [isSignOutModalOpen, setSignOutModal] = useState(false);
+  const [greetingName, setGreetingName] = useState("");
 
   const toggleSignOutModal = () => {
     setSignOutModal(!isSignOutModalOpen);
   };
-
-  const { data: accountDetails } = useAccountDetails();
 
   const { shoppingCart, updateFilterKeyword } = useContext(ProductContext);
 
   const [totalQuantity, setTotalQuantity] = useState(0);
   const isXsView = useXsDownMediaQuery();
   const { toggleTheme, displayTheme } = useContext(DarkModeContext);
+
+  useEffect(() => {
+    const userDetails: auth.submitSignUpPayload = JSON.parse(
+      localStorage.getItem(authLocalStorageKeys.USER) || ""
+    );
+
+    if (userDetails.preferredName) {
+      setGreetingName(userDetails.preferredName);
+    } else {
+      setGreetingName(userDetails.name.split(" ")[0]);
+    }
+  }, []);
 
   useEffect(() => {
     let total = 0;
@@ -64,6 +75,8 @@ const MenuBar = () => {
     });
     setTotalQuantity(total);
   }, [shoppingCart]);
+
+  const isSignedIn = localStorage.getItem(authLocalStorageKeys.TOKEN);
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchor);
 
@@ -86,12 +99,10 @@ const MenuBar = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {accountDetails ? (
+      {isSignedIn ? (
         <StyledMenuItem disableRipple>
           <Grid container justifyContent="center" alignItems="center">
-            <Typography>{`Welcome, ${
-              accountDetails.name.split(" ")[0]
-            }`}</Typography>
+            <Typography>{`Welcome, ${greetingName}`}</Typography>
           </Grid>
         </StyledMenuItem>
       ) : (
@@ -104,7 +115,7 @@ const MenuBar = () => {
           </StyledMenuItem>
         </div>
       )}
-      {accountDetails && (
+      {isSignedIn && (
         <div>
           <StyledMenuItem
             onClick={() => navigate(routeNames.account)}
@@ -201,11 +212,9 @@ const MenuBar = () => {
               </Tooltip>
             )}
             <Box display={{ xs: "none", md: "flex" }} alignItems="center">
-              {accountDetails ? (
+              {isSignedIn ? (
                 <Box marginRight={2}>
-                  <Typography>{`Welcome, ${
-                    accountDetails.name.split(" ")[0]
-                  }`}</Typography>
+                  <Typography>{`Welcome, ${greetingName}`}</Typography>
                 </Box>
               ) : (
                 <>
@@ -232,7 +241,7 @@ const MenuBar = () => {
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-              {accountDetails && (
+              {isSignedIn && (
                 <>
                   <IconButton
                     aria-label="account"
