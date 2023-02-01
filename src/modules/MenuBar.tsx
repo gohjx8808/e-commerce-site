@@ -27,7 +27,7 @@ import StyledAppBar from "../styledComponents/drawer/StyledAppBar";
 import {
   SearchContainer,
   SearchIconWrapper,
-  SearchInputBase
+  SearchInputBase,
 } from "../styledComponents/search";
 import StyledMenuItem from "../styledComponents/StyledListItem";
 import DarkModeContext from "../utils/DarkModeContext";
@@ -57,12 +57,12 @@ const MenuBar = () => {
 
   useEffect(() => {
     const userDetails: auth.submitSignUpPayload = JSON.parse(
-      localStorage.getItem(authLocalStorageKeys.USER) || ""
+      localStorage.getItem(authLocalStorageKeys.USER) || "{}"
     );
 
     if (userDetails.preferredName) {
       setGreetingName(userDetails.preferredName);
-    } else {
+    } else if (userDetails.name) {
       setGreetingName(userDetails.name.split(" ")[0]);
     }
   }, []);
