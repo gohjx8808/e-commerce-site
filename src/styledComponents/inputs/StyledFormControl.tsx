@@ -43,6 +43,9 @@ const StyledFormControl = styled(FormControl)<StyledFormControlProps>(
           fontFamily: "Sitka Display Semibold",
           fontSize: "1rem",
         },
+        "::-ms-reveal": {
+          display: "none",
+        },
       },
     },
     "& .MuiFormHelperText-root": {

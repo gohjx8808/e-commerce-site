@@ -10,26 +10,19 @@ declare namespace auth {
     };
   }
 
-  interface submitSignUpPayload {
-    email: string;
-    dob: Date;
+  interface submitSignUpPayload extends signUpFormData  {
     gender: string;
-    password: string;
-    countryCodeId: number;
-    phoneNo: string;
-    name: string;
-    preferredName?: string;
   }
 
   interface signUpFormData {
     email: string;
-    dob: Date;
+    dob: string;
     confirmPassword: string;
     gender: optionsData;
     password: string;
-    countryCode: account.countryCodeData;
+    countryCode: number;
     phoneNumber: string;
-    fullName: string;
+    name: string;
     preferredName?: string;
   }
 

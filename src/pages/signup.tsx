@@ -1,14 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAccountOptions } from "@modules/account/src/accountQueries";
 import SEO from "@modules/SEO";
-import { InputAdornment } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import ControlledCountryCodePicker from "@sharedComponents/inputs/ControlledCountryCodePicker";
 import { genderOptions } from "@utils/constants";
 import { generateHeader } from "@utils/helper";
 import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
@@ -37,9 +34,7 @@ const SignUp = () => {
     }
   `);
 
-  const { mutate: submitSignUp } = useSignUp();
-
-  const { data: accountOptions } = useAccountOptions();
+  const { mutate: submitSignUp, isLoading } = useSignUp();
 
   const image = getImage(data.file);
 
@@ -55,9 +50,6 @@ const SignUp = () => {
   const onSubmitSignUp: SubmitHandler<auth.signUpFormData> = (hookData) => {
     const submitData: auth.submitSignUpPayload = {
       ...hookData,
-      name: hookData.fullName,
-      countryCodeId: hookData.countryCode.id,
-      phoneNo: hookData.phoneNumber,
       gender: hookData.gender.value,
     };
     submitSignUp(submitData);
@@ -115,9 +107,9 @@ const SignUp = () => {
                         <Grid item xs={12}>
                           <ControlledTextInput
                             control={control}
-                            name="fullName"
+                            name="name"
                             label="Full Name"
-                            formerror={errors.fullName}
+                            formerror={errors.name}
                             type="text"
                           />
                         </Grid>
@@ -131,28 +123,27 @@ const SignUp = () => {
                           />
                         </Grid>
                         <Grid item sm={6} xs={12}>
-                          <ControlledTextInput
-                            control={control}
-                            name="phoneNumber"
-                            label="Phone Number"
-                            formerror={errors.phoneNumber}
-                            type="tel"
-                            startAdornment={
-                              accountOptions && (
-                                <InputAdornment
-                                  position="start"
-                                  style={{ width: 250 }}
-                                >
-                                  <ControlledCountryCodePicker
-                                    control={control}
-                                    name="countryCode"
-                                    error={errors.countryCode?.id}
-                                    options={accountOptions.countryCodes || []}
-                                  />
-                                </InputAdornment>
-                              )
-                            }
-                          />
+                          <Grid container flexDirection="row" columnSpacing={1}>
+                            <Grid item xs={4}>
+                              <ControlledTextInput
+                                control={control}
+                                name="countryCode"
+                                label="Country Code"
+                                formerror={errors.countryCode}
+                                type="number"
+                                defaultinput="60"
+                              />
+                            </Grid>
+                            <Grid item xs={8}>
+                              <ControlledTextInput
+                                control={control}
+                                name="phoneNumber"
+                                label="Phone Number"
+                                formerror={errors.phoneNumber}
+                                type="tel"
+                              />
+                            </Grid>
+                          </Grid>
                         </Grid>
                         <Grid item sm={6} xs={12}>
                           <ControlledTextInput
@@ -218,14 +209,15 @@ const SignUp = () => {
                       marginBottom={2}
                     >
                       <Grid item xs={6} sm={3} lg={2}>
-                        <Button
+                        <LoadingButton
                           variant="contained"
                           color="primaryButton"
                           type="submit"
                           fullWidth
+                          loading={isLoading}
                         >
                           Submit
-                        </Button>
+                        </LoadingButton>
                       </Grid>
                     </Grid>
                   </Grid>

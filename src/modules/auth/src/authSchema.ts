@@ -23,8 +23,9 @@ export const signUpSchema = yup.object().shape({
     value: yup.string().required('Gender is required'),
     label: yup.string().required('Gender is required'),
   }).typeError('Gender is required'),
+  countryCode: yup.number().required('Country code is required').typeError('Invalid country code'),
   phoneNumber: yup.number().required('Phone number is required').typeError('Invalid phone number'),
-  fullName: yup.string().required('Full name is required'),
+  name: yup.string().required('Full name is required'),
 });
 
 export const forgotPasswordSchema = yup.object().shape({

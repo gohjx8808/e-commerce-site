@@ -10,7 +10,7 @@ export const resetPassword = (payload: auth.submitForgotPasswordPayload) =>
   firebase.auth().sendPasswordResetEmail(payload.email);
 
 export const signUp = (payload: auth.submitSignUpPayload) =>
-  postRequest("sign-up", payload);
+  postRequest("users/sign-up", payload);
 
 export const logIn = (payload: auth.logInPayload) =>
   postRequest<auth.logInResponse>("log-in", payload);
