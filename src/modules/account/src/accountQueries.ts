@@ -1,5 +1,5 @@
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
-import { accountLocalStorageKeys } from "@utils/localStorageKeys";
+import { accountLocalStorageKeys, authLocalStorageKeys } from "@utils/localStorageKeys";
 import { useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
@@ -126,8 +126,8 @@ export const useAccountOptions = () =>
   useQuery("getAccountOptions", async () => (await getAccountOptions()).data);
 
 export const useAccountDetails = () =>
-  useQuery("getAccountDetails", async () => (await getAccountDetails()).data, {
-    enabled: !!localStorage.getItem("token"),
+  useQuery("getAccountDetails", async () => (await getAccountDetails()).data.data, {
+    enabled: !!localStorage.getItem(authLocalStorageKeys.TOKEN),
   });
 
 export const useGetEditDetails = () =>

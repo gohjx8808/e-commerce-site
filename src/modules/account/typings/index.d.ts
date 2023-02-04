@@ -32,17 +32,19 @@ declare namespace account {
   interface accDetailsData {
     id: number;
     name: string;
-    dob: string;
+    preferredName: string;
     email: string;
-    gender: string;
-    phoneNo: string;
+    countryCode: string;
+    phoneNumber: string;
+    gender: "M" | "F";
+    dob: string;
   }
 
   interface editAccDetailsData extends accDetailsData {
     countryCodeId: number;
   }
 
-  interface updateAccDetailsFormData extends updateAccDetailsPayload{
+  interface updateAccDetailsFormData extends updateAccDetailsPayload {
     gender: optionsData;
     countryCode: countryCodeData;
   }

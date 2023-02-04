@@ -9,6 +9,7 @@ import Skeleton from "@mui/material/Skeleton";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useAccountDetails } from "../src/accountQueries";
+import { formatGender } from "../src/accountUtils";
 import EditAccDetailModal from "./EditAccDetailModal";
 import SingleAccData from "./SingleAccData";
 
@@ -37,7 +38,7 @@ const AccountDetails = () => {
           />
           <SingleAccData
             label="Gender"
-            data={accountDetails.gender}
+            data={formatGender(accountDetails.gender)}
             Icon={<WcIcon />}
           />
           <SingleAccData
@@ -47,7 +48,7 @@ const AccountDetails = () => {
           />
           <SingleAccData
             label="Phone No"
-            data={accountDetails.phoneNo}
+            data={`+${accountDetails.countryCode} ${accountDetails.phoneNumber}`}
             Icon={<PhoneIphoneIcon />}
           />
           <SingleAccData

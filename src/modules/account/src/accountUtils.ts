@@ -38,3 +38,14 @@ export const removeDefaultAddress = (addressList: auth.addressData[]) => {
   });
   return removedDefault;
 };
+
+export const formatGender = (genderId: "M" | "F") => {
+  switch (genderId) {
+    case "M":
+      return "Male";
+    case "F":
+      return "Female";
+    default:
+      return "";
+  }
+};

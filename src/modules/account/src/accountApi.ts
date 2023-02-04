@@ -12,7 +12,7 @@ export const getAccountOptions = () =>
   getRequest<account.accountOptionsData>("account-options");
 
 export const getAccountDetails = () =>
-  getRequest<account.accDetailsData>("account/details", {}, true);
+  getRequest<Response<account.accDetailsData>>("account/details", {}, true);
 
 export const getEditDetails = () =>
   getRequest<account.editAccDetailsData>("account/details/edit", {}, true);
