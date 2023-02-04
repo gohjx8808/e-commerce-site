@@ -1,33 +1,33 @@
+/* eslint-disable react/jsx-no-undef */
 import { yupResolver } from "@hookform/resolvers/yup";
 import EmailIcon from "@mui/icons-material/Email";
 import PersonIcon from "@mui/icons-material/Person";
-import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Dialog, { DialogProps } from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
-import ControlledCountryCodePicker from "@sharedComponents/inputs/ControlledCountryCodePicker";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import ControlledCountryCodePhoneInput from "@sharedComponents/inputs/ControlledCountryCodePhoneInput";
+import StyledFormControl from "@styledComponents/inputs/StyledFormControl";
+import { genderOptions } from "@utils/constants";
 import { useForm } from "react-hook-form";
 import ControlledDatePicker from "../../../sharedComponents/inputs/ControlledDatePicker";
 import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker";
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
 import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
-import {
-  useAccountDetails,
-  useAccountOptions,
-  useGetEditDetails,
-  useUpdateAccDetails,
-} from "../src/accountQueries";
+import { useAccountDetails, useUpdateAccDetails } from "../src/accountQueries";
 import { editAccountSchema } from "../src/accountScheme";
 
 interface editAccDetailModalProps extends DialogProps {
   toggleModal: () => void;
+  accountDetails: account.accDetailsData;
 }
 
 const EditAccDetailModal = (props: editAccDetailModalProps) => {
-  const { toggleModal, ...dialogProps } = props;
+  const { toggleModal, accountDetails, ...dialogProps } = props;
   const {
     control,
     handleSubmit,
@@ -35,10 +35,6 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
   } = useForm<account.updateAccDetailsFormData>({
     resolver: yupResolver(editAccountSchema),
   });
-
-  const { data: accountOptions } = useAccountOptions();
-
-  const { data: editDetails } = useGetEditDetails();
 
   const { refetch } = useAccountDetails();
 
@@ -48,11 +44,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
   } = useUpdateAccDetails(toggleModal, refetch);
 
   const onSubmit = (hookData: account.updateAccDetailsFormData) => {
-    submitUpdateAccDetails({
-      ...hookData,
-      countryCodeId: hookData.countryCode.id,
-      gender: hookData.gender.value,
-    });
+    submitUpdateAccDetails({ ...hookData, gender: hookData.gender.value });
   };
 
   return (
@@ -79,7 +71,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 name="name"
                 lightbg={1}
                 label="Full Name"
-                defaultinput={editDetails?.name}
+                defaultinput={accountDetails.name}
                 startAdornment={
                   <InputAdornment position="start">
                     <PersonIcon />
@@ -89,57 +81,34 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
               />
             </Grid>
             <Grid item sm={6} xs={12}>
-              <ControlledTextInput
-                control={control}
-                disabled
-                name="email"
-                lightbg={1}
-                label="Email"
-                defaultinput={editDetails?.email}
-                startAdornment={
-                  <InputAdornment position="start">
-                    <EmailIcon />
-                  </InputAdornment>
-                }
-                formerror={errors.email}
-              />
-            </Grid>
-            <Grid item sm={6} xs={12}>
-              <ControlledTextInput
-                control={control}
-                name="phoneNo"
-                lightbg={1}
-                label="Phone Number"
-                type="tel"
-                defaultinput={editDetails?.phoneNo}
-                startAdornment={
-                  <>
+              <StyledFormControl disabled lightbg={1}>
+                <InputLabel>Email</InputLabel>
+                <OutlinedInput
+                  value={accountDetails.email}
+                  startAdornment={
                     <InputAdornment position="start">
-                      <PhoneIphoneIcon />
+                      <EmailIcon />
                     </InputAdornment>
-                    <InputAdornment position="start" style={{ width: 250 }}>
-                      <ControlledCountryCodePicker
-                        control={control}
-                        lightbg={1}
-                        name="countryCode"
-                        error={errors.countryCode?.id}
-                        options={accountOptions?.countryCodes || []}
-                        defaultpicked={editDetails?.countryCodeId}
-                      />
-                    </InputAdornment>
-                  </>
-                }
-                formerror={errors.phoneNo}
-              />
+                  }
+                />
+              </StyledFormControl>
             </Grid>
+            <ControlledCountryCodePhoneInput
+              control={control}
+              lightbg={1}
+              defaultcountrycode={accountDetails.countryCode}
+              defaultphonenumber={accountDetails.phoneNumber}
+              countrycodeformerror={errors.countryCode}
+              phonenumberformerror={errors.phoneNo}
+            />
             <Grid item sm={6} xs={12}>
               <ControlledPicker
                 control={control}
                 name="gender"
                 lightbg={1}
                 label="Gender"
-                options={accountOptions?.genders || []}
-                defaultcheck={editDetails?.gender}
+                options={genderOptions}
+                defaultcheck={accountDetails.gender}
                 error={errors.gender?.value}
               />
             </Grid>
@@ -149,7 +118,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 name="dob"
                 lightbg={1}
                 label="Date of Birth"
-                defaultdate={editDetails?.dob}
+                defaultdate={accountDetails.dob}
                 formerror={errors.dob}
               />
             </Grid>

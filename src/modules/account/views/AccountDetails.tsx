@@ -71,6 +71,7 @@ const AccountDetails = () => {
           open={isEditAccDetailModalOpen}
           onClose={toggleEditAccDetailModal}
           toggleModal={toggleEditAccDetailModal}
+          accountDetails={accountDetails}
         />
       </Grid>
     </Grid>

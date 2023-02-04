@@ -17,18 +17,6 @@ declare namespace account {
     selectedAddress: auth.addressData | null;
   }
 
-  interface accountOptionsData {
-    countryCodes: countryCodeData[];
-    genders: optionsData[];
-  }
-
-  interface countryCodeData {
-    id: number;
-    countryCode: string;
-    iso2: string;
-    name: string;
-  }
-
   interface accDetailsData {
     id: number;
     name: string;
@@ -40,21 +28,15 @@ declare namespace account {
     dob: string;
   }
 
-  interface editAccDetailsData extends accDetailsData {
-    countryCodeId: number;
-  }
-
   interface updateAccDetailsFormData extends updateAccDetailsPayload {
     gender: optionsData;
-    countryCode: countryCodeData;
   }
-
   interface updateAccDetailsPayload {
     name: string;
+    preferredName:string
     dob: string;
-    email: string;
     gender: string;
-    countryCodeId: number;
+    countryCode: string;
     phoneNo: string;
   }
 }

@@ -1,17 +1,18 @@
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
-import { accountLocalStorageKeys, authLocalStorageKeys } from "@utils/localStorageKeys";
+import {
+  accountLocalStorageKeys,
+  authLocalStorageKeys,
+} from "@utils/localStorageKeys";
 import { useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   getCurrentUserDetailsKey,
-  useUserDetails
+  useUserDetails,
 } from "../../auth/src/authMutations";
 import {
   getAccountDetails,
-  getAccountOptions,
-  getEditDetails,
   updateAccDetails,
-  updateAddress
+  updateAddress,
 } from "./accountApi";
 import { addressStatus } from "./accountConstants";
 import { removeDefaultAddress, sameAddressDetector } from "./accountUtils";
@@ -122,20 +123,19 @@ export const useDeleteAddress = (toggleModal: () => void) => {
   });
 };
 
-export const useAccountOptions = () =>
-  useQuery("getAccountOptions", async () => (await getAccountOptions()).data);
-
 export const useAccountDetails = () =>
-  useQuery("getAccountDetails", async () => (await getAccountDetails()).data.data, {
-    enabled: !!localStorage.getItem(authLocalStorageKeys.TOKEN),
-  });
+  useQuery(
+    "getAccountDetails",
+    async () => (await getAccountDetails()).data.data,
+    {
+      enabled: !!localStorage.getItem(authLocalStorageKeys.TOKEN),
+    }
+  );
 
-export const useGetEditDetails = () =>
-  useQuery("getEditDetails", async () => (await getEditDetails()).data, {
-    enabled: !!localStorage.getItem("token"),
-  });
-
-export const useUpdateAccDetails = (toggleModal: () => void,refetch:()=>void) => {
+export const useUpdateAccDetails = (
+  toggleModal: () => void,
+  refetch: () => void
+) => {
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);
 
