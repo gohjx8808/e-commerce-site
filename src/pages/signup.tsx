@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+import ControlledCountryCodePhoneInput from "@sharedComponents/inputs/ControlledCountryCodePhoneInput";
 import { genderOptions } from "@utils/constants";
 import { generateHeader } from "@utils/helper";
 import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
@@ -122,29 +123,11 @@ const SignUp = () => {
                             infotext="How you wish us to address you. (Full name is used if blank)"
                           />
                         </Grid>
-                        <Grid item sm={6} xs={12}>
-                          <Grid container flexDirection="row" columnSpacing={1}>
-                            <Grid item xs={4}>
-                              <ControlledTextInput
-                                control={control}
-                                name="countryCode"
-                                label="Country Code"
-                                formerror={errors.countryCode}
-                                type="number"
-                                defaultinput="60"
-                              />
-                            </Grid>
-                            <Grid item xs={8}>
-                              <ControlledTextInput
-                                control={control}
-                                name="phoneNumber"
-                                label="Phone Number"
-                                formerror={errors.phoneNumber}
-                                type="tel"
-                              />
-                            </Grid>
-                          </Grid>
-                        </Grid>
+                        <ControlledCountryCodePhoneInput
+                          control={control}
+                          countrycodeformerror={errors.countryCode}
+                          phonenumberformerror={errors.phoneNumber}
+                        />
                         <Grid item sm={6} xs={12}>
                           <ControlledTextInput
                             control={control}
