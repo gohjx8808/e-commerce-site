@@ -2,7 +2,7 @@ import { StatusModalContext } from "@contextProvider/StatusModalContextProvider"
 import { AxiosError } from "axios";
 import { useContext } from "react";
 import { useMutation } from "react-query";
-import { addAddress, deleteAddress } from "./addressApis";
+import { addAddress, deleteAddress, updateAddress } from "./addressApis";
 import { useAddressList } from "./addressQueries";
 
 /* eslint-disable import/prefer-default-export */
@@ -48,5 +48,28 @@ export const useAddAddress = (closeModal: () => void) => {
       toggleVisible(true);
     },
     onSettled: () => updateTitle("Add Address"),
+  });
+};
+
+export const useUpdateAddress = (closeModal: () => void) => {
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
+  const { refetch } = useAddressList();
+
+  return useMutation("updateAddress", updateAddress, {
+    onSuccess: () => {
+      refetch();
+      toggleSuccess(true);
+      updateMsg("Your address has been successfully updated!");
+      closeModal();
+      toggleVisible(true);
+    },
+    onError: (err: AxiosError<customErrorData>) => {
+      const errMsg = err.response?.data.message;
+      toggleSuccess(false);
+      updateMsg(errMsg || "Your address has failed to update!");
+      toggleVisible(true);
+    },
+    onSettled: () => updateTitle("Update Address"),
   });
 };

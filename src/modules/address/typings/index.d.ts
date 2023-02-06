@@ -29,4 +29,8 @@ declare namespace address {
   interface deleteAddressPayload {
     addressId: number;
   }
+
+  interface updateAddressPayload extends addAddressPayload{
+    addressId: number;
+  }
 }

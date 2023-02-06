@@ -9,3 +9,6 @@ export const deleteAddress = (payload: address.deleteAddressPayload) =>
 
 export const addAddress = (payload: address.addAddressPayload) =>
   postRequest("addresses/add", payload, true);
+
+export const updateAddress = (payload: address.updateAddressPayload) =>
+  postRequest("addresses/update", payload, true);

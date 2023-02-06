@@ -16,7 +16,7 @@ import ControlledToggleButton from "../../../sharedComponents/inputs/ControlledT
 import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
 import { booleanOptions, homeColor, workColor } from "../../../utils/constants";
 import { defaultAddressData } from "../src/addressConstants";
-import { useAddAddress } from "../src/addressMutations";
+import { useAddAddress, useUpdateAddress } from "../src/addressMutations";
 import { addressSchema } from "../src/addressSchemas";
 
 const addressTag: toggleButtonOptionData[] = [
@@ -51,8 +51,11 @@ const AddressModal = (props: AddressModalProps) => {
     toggleModal();
   };
 
-  const { mutate: submitAddAddress, isLoading: submitAddressLoading } =
+  const { mutate: submitAddAddress, isLoading: submitAddAddressLoading } =
     useAddAddress(onCloseModal);
+
+  const { mutate: submitUpdateAddress, isLoading: submitUpdateAddressLoading } =
+    useUpdateAddress(onCloseModal);
 
   const {
     control,
@@ -64,8 +67,18 @@ const AddressModal = (props: AddressModalProps) => {
   });
 
   const onSubmitForm: SubmitHandler<address.addAddressPayload> = (hookData) => {
-    if (modalData.actionType === "Add") {
-      submitAddAddress(hookData);
+    switch (modalData.actionType) {
+      case "Add":
+        submitAddAddress(hookData);
+        break;
+      case "Edit":
+        submitUpdateAddress({
+          ...hookData,
+          addressId: selectedAddress?.id || 0,
+        });
+        break;
+      default:
+        break;
     }
   };
 
@@ -211,7 +224,7 @@ const AddressModal = (props: AddressModalProps) => {
             color="secondary"
             variant="contained"
             type="submit"
-            loading={submitAddressLoading}
+            loading={submitAddAddressLoading || submitUpdateAddressLoading}
           >
             Submit
           </LoadingButton>
