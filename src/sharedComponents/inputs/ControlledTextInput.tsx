@@ -2,6 +2,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput, { OutlinedInputProps } from "@mui/material/OutlinedInput";
+import { capitalize } from "@mui/material/utils";
 import React from "react";
 import {
   Control,
@@ -25,6 +26,7 @@ interface ControlledTextInputOwnProps<T extends FieldValues>
   readOnly?: boolean;
   infotext?: string;
   name: Path<T>;
+  isCapitalize?: boolean;
 }
 
 const ControlledTextInput = <T extends FieldValues>(
@@ -41,6 +43,7 @@ const ControlledTextInput = <T extends FieldValues>(
     readOnly,
     infotext,
     disabled,
+    isCapitalize,
   } = props;
 
   return (
@@ -55,7 +58,13 @@ const ControlledTextInput = <T extends FieldValues>(
           <OutlinedInput
             id={name}
             value={value}
-            onChange={onChange}
+            onChange={(event) =>
+              onChange(
+                isCapitalize
+                  ? capitalize(event.target.value)
+                  : event.target.value
+              )
+            }
             error={!!formerror}
             endAdornment={
               formerror && (
@@ -67,6 +76,7 @@ const ControlledTextInput = <T extends FieldValues>(
             inputProps={{
               maxLength,
               readOnly,
+              style: { textTransform: isCapitalize ? "capitalize" : "none" },
             }}
             {...props}
           />
@@ -86,6 +96,7 @@ ControlledTextInput.defaultProps = {
   maxLength: null,
   readOnly: false,
   infotext: "",
+  isCapitalize: true,
 };
 
 export default ControlledTextInput;

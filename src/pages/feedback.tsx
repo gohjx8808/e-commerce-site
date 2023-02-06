@@ -59,6 +59,7 @@ const FeedbackForm = () => {
                     label="Email"
                     formerror={errors.email}
                     infotext="Email is solely for the purpose of replying your feedback."
+                    isCapitalize={false}
                   />
                 </Grid>
                 <Grid item xs={12}>

@@ -96,6 +96,7 @@ const Login = () => {
                         label="Email"
                         formerror={errors.email}
                         type="email"
+                        isCapitalize={false}
                       />
                     </Grid>
                     <Grid item xs={12} sm={10}>
