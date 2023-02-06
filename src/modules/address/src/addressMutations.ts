@@ -45,7 +45,6 @@ export const useAddAddress = (closeModal: () => void) => {
       const errMsg = err.response?.data.message;
       toggleSuccess(false);
       updateMsg(errMsg || "Your address has failed to add!");
-      closeModal();
       toggleVisible(true);
     },
     onSettled: () => updateTitle("Add Address"),

@@ -8,7 +8,7 @@ export const defaultAddressData: address.addAddressPayload = {
   postcode: "",
   city: "",
   state: "",
-  country: "",
+  country: "Malaysia",
   isDefault: false,
   tag: "",
 };
