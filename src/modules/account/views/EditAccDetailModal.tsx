@@ -19,7 +19,7 @@ import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker"
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
 import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
 import { useAccountDetails, useUpdateAccDetails } from "../src/accountQueries";
-import { editAccountSchema } from "../src/accountScheme";
+import { editAccountSchema } from "../src/accountSchemas";
 
 interface editAccDetailModalProps extends DialogProps {
   toggleModal: () => void;

@@ -64,21 +64,6 @@ declare namespace auth {
     customer: boolean;
   }
 
-  interface addressData {
-    fullName: string;
-    phoneNumber: string;
-    email: string;
-    addressLine1: string;
-    addressLine2: string;
-    postcode: string;
-    city: string;
-    state: string;
-    outsideMalaysiaState: string;
-    country: string;
-    defaultOption: "0" | "1" | "";
-    tag: string;
-  }
-
   interface submitForgotPasswordPayload {
     email: string;
   }

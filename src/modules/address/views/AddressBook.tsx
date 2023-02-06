@@ -1,7 +1,6 @@
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import EmailIcon from "@mui/icons-material/Email";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
@@ -11,44 +10,36 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import AddressChip from "../../../styledComponents/AddressChip";
 import SmUpDivider from "../../../styledComponents/SmUpDivider";
 import { homeColor, workColor } from "../../../utils/constants";
 import { internationalPhoneNumberFormatter } from "../../../utils/helper";
-import { useUserDetails } from "../../auth/src/authMutations";
+import { useAddressList } from "../src/addressQueries";
 import AddressModal from "./AddressModal";
 import DeleteAddressConfirmationModal from "./DeleteAddressConfirmationModal";
 
 const AddressBook = () => {
   const [addEditModalData, setAddEditModalData] =
-    useState<account.addEditAddressModalData>({
+    useState<address.addEditAddressModalData>({
       isModalOpen: false,
       actionType: "",
-      selectedAddress: null,
     });
   const [deleteModalData, setDeleteModalData] =
-    useState<account.deleteAddressModalData>({
+    useState<address.deleteAddressModalData>({
       isModalOpen: false,
-      selectedAddress: null,
     });
 
-  const { data: currentUserDetails } = useUserDetails();
-
-  const addressList = useMemo(
-    () => currentUserDetails?.addressBook,
-    [currentUserDetails?.addressBook]
-  );
+  const { data: addressList } = useAddressList();
 
   const onAddAddress = () => {
     setAddEditModalData({
       isModalOpen: true,
       actionType: "Add",
-      selectedAddress: null,
     });
   };
 
-  const onEditAddress = (selectedAddress: auth.addressData) => {
+  const onEditAddress = (selectedAddress: address.addressData) => {
     setAddEditModalData({
       isModalOpen: true,
       actionType: "Edit",
@@ -60,11 +51,10 @@ const AddressBook = () => {
     setAddEditModalData({
       isModalOpen: false,
       actionType: "",
-      selectedAddress: null,
     });
   };
 
-  const onDeleteAddress = (selectedAddress: auth.addressData) => {
+  const onDeleteAddress = (selectedAddress: address.addressData) => {
     setDeleteModalData({
       selectedAddress,
       isModalOpen: true,
@@ -73,7 +63,6 @@ const AddressBook = () => {
 
   const toggleDeleteAddressModal = () => {
     setDeleteModalData({
-      selectedAddress: null,
       isModalOpen: false,
     });
   };
@@ -99,9 +88,9 @@ const AddressBook = () => {
         <Grid container justifyContent="center" alignItems="center">
           <Grid item xs={12}>
             {addressList.map((address) => {
-              const noTag = address.defaultOption === "0" && !address.tag;
+              const noTag = address.isDefault && !address.tag;
               return (
-                <Grid key={address.addressLine1}>
+                <Grid key={address.addressLineOne}>
                   <Divider />
                   <Grid item xs={12} marginTop={3}>
                     <Grid
@@ -118,7 +107,7 @@ const AddressBook = () => {
                               </Grid>
                               <Grid item>
                                 <Typography fontWeight="bold">
-                                  {address.fullName}
+                                  {address.receiverName}
                                 </Typography>
                               </Grid>
                             </Grid>
@@ -136,7 +125,8 @@ const AddressBook = () => {
                               <Grid item>
                                 <Typography fontWeight="bold">
                                   {internationalPhoneNumberFormatter(
-                                    address.phoneNumber
+                                    address.receiverCountryCode,
+                                    address.receiverPhoneNumber
                                   )}
                                 </Typography>
                               </Grid>
@@ -147,18 +137,6 @@ const AddressBook = () => {
                             flexItem
                             variant="middle"
                           />
-                          <Grid item>
-                            <Grid container spacing={1}>
-                              <Grid item>
-                                <EmailIcon />
-                              </Grid>
-                              <Grid item>
-                                <Typography fontWeight="bold">
-                                  {address.email}
-                                </Typography>
-                              </Grid>
-                            </Grid>
-                          </Grid>
                           {address.tag && (
                             <Grid
                               item
@@ -181,7 +159,7 @@ const AddressBook = () => {
                               />
                             </Grid>
                           )}
-                          {address.defaultOption === "1" && (
+                          {address.isDefault && (
                             <Grid
                               item
                               marginLeft={1}
@@ -218,15 +196,13 @@ const AddressBook = () => {
                     </Grid>
                     <Grid item>
                       <Typography>
-                        {address.addressLine1} {address.addressLine2}
+                        {address.addressLineOne} {address.addressLineTwo}
                       </Typography>
                       <Typography>
                         {address.postcode} {address.city}
                       </Typography>
                       <Typography>
-                        {address.state === "Outside Malaysia"
-                          ? address.outsideMalaysiaState
-                          : address.state}
+                        {address.state}
                         {", "}
                         {address.country}
                       </Typography>
@@ -260,7 +236,7 @@ const AddressBook = () => {
                             />
                           </Grid>
                         )}
-                        {address.defaultOption === "1" && (
+                        {address.isDefault && (
                           <Grid item marginLeft={1}>
                             <AddressChip
                               customcolor="red"
@@ -306,10 +282,10 @@ const AddressBook = () => {
           <Typography>No address added yet!</Typography>
         </Grid>
       )}
-      <AddressModal
+      {/* <AddressModal
         modalData={addEditModalData}
         toggleModal={toggleAddEditAddressModal}
-      />
+      /> */}
       <DeleteAddressConfirmationModal
         modalData={deleteModalData}
         toggleModal={toggleDeleteAddressModal}

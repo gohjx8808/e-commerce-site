@@ -3,12 +3,11 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import React from "react";
 import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
-import { useDeleteAddress } from "../src/accountQueries";
+import { useDeleteAddress } from "../src/addressMutations";
 
 interface DeleteAddressConfirmationModalProps {
-  modalData: account.deleteAddressModalData;
+  modalData: address.deleteAddressModalData;
   toggleModal: () => void;
 }
 
@@ -20,7 +19,7 @@ const DeleteAddressConfirmationModal = (
   const { mutate: deleteAddress } = useDeleteAddress(toggleModal);
 
   const confirmDelete = () => {
-    deleteAddress(modalData.selectedAddress!);
+    deleteAddress({ addressId: modalData.selectedAddress?.id || 0 });
   };
 
   return (
@@ -32,7 +31,7 @@ const DeleteAddressConfirmationModal = (
       <DialogTitle id="deleteAddressConfirmation">
         Delete Confirmation
       </DialogTitle>
-      <DialogContent>
+      <DialogContent dividers>
         <DialogContentText>
           Are you sure you wish to delete this address? This cannot be undone.
         </DialogContentText>

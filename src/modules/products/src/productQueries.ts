@@ -25,7 +25,7 @@ import {
   updateOrderCount,
   updateOrderHistory,
   updatePromoCodeUsed
-} from "./productApi";
+} from "./productApis";
 
 export const productQueriesKeys = {
   getOrderCount: "getOrderCount",

@@ -2,7 +2,7 @@ import { StatusModalContext } from "@contextProvider/StatusModalContextProvider"
 import { navigate } from "gatsby";
 import { useContext } from "react";
 import { useMutation } from "react-query";
-import { submitFeedback } from "./feedbackApi";
+import { submitFeedback } from "./feedbackApis";
 
 // eslint-disable-next-line import/prefer-default-export
 export const useSubmitFeedback = () => {

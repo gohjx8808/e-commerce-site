@@ -6,6 +6,7 @@ import WcIcon from "@mui/icons-material/Wc";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Skeleton from "@mui/material/Skeleton";
+import { internationalPhoneNumberFormatter } from "@utils/helper";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useAccountDetails } from "../src/accountQueries";
@@ -48,7 +49,10 @@ const AccountDetails = () => {
           />
           <SingleAccData
             label="Phone No"
-            data={`+${accountDetails.countryCode} ${accountDetails.phoneNumber}`}
+            data={internationalPhoneNumberFormatter(
+              accountDetails.countryCode,
+              accountDetails.phoneNumber
+            )}
             Icon={<PhoneIphoneIcon />}
           />
           <SingleAccData

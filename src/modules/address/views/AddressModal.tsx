@@ -22,7 +22,7 @@ import {
 } from "../../../utils/constants";
 import { defaultAddressData } from "../src/accountConstants";
 import { useAddEditAddress } from "../src/accountQueries";
-import { addressSchema } from "../src/accountScheme";
+import { addressSchema } from "../src/addressSchemas";
 
 const addressTag: toggleButtonOptionData[] = [
   {
@@ -40,7 +40,7 @@ const addressTag: toggleButtonOptionData[] = [
 ];
 
 interface AddressModalProps {
-  modalData: account.addEditAddressModalData;
+  modalData: address.addEditAddressModalData;
   toggleModal: () => void;
 }
 
@@ -63,11 +63,11 @@ const AddressModal = (props: AddressModalProps) => {
     watch,
     setValue,
     reset,
-  } = useForm<account.rawSubmitAddEditAddressPayload>({
+  } = useForm<address.rawSubmitAddEditAddressPayload>({
     resolver: yupResolver(addressSchema),
   });
 
-  const onSubmitForm: SubmitHandler<account.rawSubmitAddEditAddressPayload> = (
+  const onSubmitForm: SubmitHandler<address.rawSubmitAddEditAddressPayload> = (
     hookData
   ) => {
     const parsedFormData = { ...hookData, state: hookData.state.value };

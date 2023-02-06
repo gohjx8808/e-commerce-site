@@ -1,3 +1,4 @@
+import SEO from "@modules/SEO";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -5,13 +6,12 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Tab from "@mui/material/Tab";
 import { TabsActions } from "@mui/material/Tabs";
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import SEO from "@modules/SEO";
 import { generateHeader } from "@utils/helper";
-import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
-import AccountDetails from "../modules/account/views/AccountDetails";
-import AddressBook from "../modules/account/views/AddressBook";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
+import AccountDetails from "../modules/account/views/AccountDetails";
+import AddressBook from "../modules/address/views/AddressBook";
+import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
 
 const Account = () => {
   const [value, setValue] = useState("accDetails");
