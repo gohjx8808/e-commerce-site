@@ -11,17 +11,4 @@ export const addressStatus: customObject = {
   },
 };
 
-export const defaultAddressData:account.rawSubmitAddEditAddressPayload = {
-  fullName: "",
-  phoneNumber: "60",
-  addressLine1: "",
-  addressLine2: "",
-  postcode: "",
-  city: "",
-  state: null as unknown as optionsData,
-  outsideMalaysiaState: "",
-  country: "",
-  defaultOption: "",
-  tag: "",
-  email: "",
-};
+

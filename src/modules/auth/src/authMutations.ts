@@ -103,7 +103,7 @@ export const useSignUp = () => {
       toggleVisible(true);
       navigate(routeNames.login);
     },
-    onError: (error: AxiosError<auth.authErrorData>) => {
+    onError: (error: AxiosError<customErrorData>) => {
       const errResponse = error.response?.data;
       let errorMsg = errResponse?.message || "";
       if (!errResponse?.message) {
@@ -133,7 +133,7 @@ export const useLogIn = () => {
       );
       navigate(routeNames.home);
     },
-    onError: (error: AxiosError<auth.authErrorData>) => {
+    onError: (error: AxiosError<customErrorData>) => {
       updateTitle("Log In");
       const errResponse = error.response?.data;
       let errorMsg = errResponse?.message || "";

@@ -1,5 +1,5 @@
-interface Response<T>{
-  data:T
+interface Response<T> {
+  data: T;
 }
 
 interface optionsData {
@@ -22,4 +22,13 @@ type booleanInteger = 1 | 0;
 
 interface parentComponent {
   children?: React.ReactNode;
+}
+
+interface radioOptionData {
+  value: boolean;
+  label: string;
+}
+
+interface customErrorData {
+  message: string;
 }

@@ -20,7 +20,7 @@ interface ControlledRadioButtonOwnProps<T extends FieldValues>
   control: Control<T>;
   label?: string;
   error?: FieldError;
-  options: optionsData[];
+  options: radioOptionData[];
   name: Path<T>;
   defaultselect?: UnpackNestedValue<PathValue<T, NonNullable<Path<T>>>>;
 }
@@ -60,7 +60,7 @@ const ControlledRadioButton = <T extends FieldValues>(
                   control={<Radio color="secondary" />}
                   label={option.label}
                   sx={{ paddingRight: 3 }}
-                  key={option.value}
+                  key={String(option.value)}
                 />
               ))}
             </RadioGroup>

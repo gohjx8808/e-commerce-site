@@ -25,9 +25,7 @@ declare namespace auth {
     preferredName?: string;
   }
 
-  interface authErrorData {
-    message: string;
-  }
+  
 
   interface registerUserPayload {
     email: string;

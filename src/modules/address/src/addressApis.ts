@@ -6,3 +6,6 @@ export const getAddressList = () =>
 
 export const deleteAddress = (payload: address.deleteAddressPayload) =>
   postRequest("addresses/delete", payload, true);
+
+export const addAddress = (payload: address.addAddressPayload) =>
+  postRequest("addresses/add", payload, true);

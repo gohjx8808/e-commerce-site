@@ -21,8 +21,8 @@ export const stateOptions = [
 ];
 
 export const booleanOptions = [
-  { value: "0", label: "No" },
-  { value: "1", label: "Yes" },
+  { value: false, label: "No" },
+  { value: true, label: "Yes" },
 ];
 
 export const homeColor = "orange";

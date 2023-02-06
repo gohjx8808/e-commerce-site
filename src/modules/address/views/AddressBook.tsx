@@ -282,10 +282,10 @@ const AddressBook = () => {
           <Typography>No address added yet!</Typography>
         </Grid>
       )}
-      {/* <AddressModal
+      <AddressModal
         modalData={addEditModalData}
         toggleModal={toggleAddEditAddressModal}
-      /> */}
+      />
       <DeleteAddressConfirmationModal
         modalData={deleteModalData}
         toggleModal={toggleDeleteAddressModal}

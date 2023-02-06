@@ -17,6 +17,8 @@ interface ControlledCountryCodePhoneInputOwnProps<T extends FieldValues>
   defaultphonenumber?: UnpackNestedValue<PathValue<T, Path<T>>>;
   countrycodeformerror?: FieldError;
   phonenumberformerror?: FieldError;
+  countrycodename?: Path<T>;
+  phonenumbername?: Path<T>;
   lightbg?: booleanInteger;
 }
 
@@ -29,6 +31,8 @@ const ControlledCountryCodePhoneInput = <T extends FieldValues>(
     defaultphonenumber,
     countrycodeformerror,
     phonenumberformerror,
+    countrycodename,
+    phonenumbername,
     lightbg,
   } = props;
 
@@ -38,7 +42,7 @@ const ControlledCountryCodePhoneInput = <T extends FieldValues>(
         <Grid item xs={4}>
           <ControlledTextInput
             control={control}
-            name={"countryCode" as Path<T>}
+            name={countrycodename || ("countryCode" as Path<T>)}
             label="Country Code"
             formerror={countrycodeformerror}
             type="number"
@@ -49,7 +53,7 @@ const ControlledCountryCodePhoneInput = <T extends FieldValues>(
         <Grid item xs={8}>
           <ControlledTextInput
             control={control}
-            name={"phoneNumber" as Path<T>}
+            name={phonenumbername || ("phoneNumber" as Path<T>)}
             label="Phone Number"
             formerror={phonenumberformerror}
             type="tel"
@@ -67,6 +71,8 @@ ControlledCountryCodePhoneInput.defaultProps = {
   defaultphonenumber: "",
   countrycodeformerror: null,
   phonenumberformerror: null,
+  countrycodename: "",
+  phonenumbername: "",
   lightbg: 0,
 };
 
