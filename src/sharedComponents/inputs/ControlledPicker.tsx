@@ -53,14 +53,17 @@ const ControlledPicker = <T extends FieldValues>(
             }}
             autoComplete
             isOptionEqualToValue={(option, selectedValue) =>
-              option.value === selectedValue.value
+              option.id === selectedValue.id
+            }
+            getOptionLabel={(option) =>
+              typeof option !== "string" ? option.name : option
             }
           />
           <FormHelperText error>{error?.message}</FormHelperText>
         </StyledAutocompleteFormControl>
       )}
       defaultValue={
-        (options.find((option) => option.value === defaultcheck) ||
+        (options.find((option) => option.id === defaultcheck) ||
           null) as UnpackNestedValue<PathValue<T, Path<T>>>
       }
     />

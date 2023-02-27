@@ -202,7 +202,7 @@ const AddressBook = () => {
                         {address.postcode} {address.city}
                       </Typography>
                       <Typography>
-                        {address.state}
+                        {address.state.name}
                         {", "}
                         {address.country}
                       </Typography>

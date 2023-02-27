@@ -1,6 +1,9 @@
 import { getRequest, postRequest } from "@utils/apiUtils";
 
 // eslint-disable-next-line import/prefer-default-export
+export const getStateOptions = () =>
+  getRequest<Response<optionsData[]>>("/addresses/state-options");
+
 export const getAddressList = () =>
   getRequest<Response<address.addressData[]>>("/addresses/list", {}, true);
 

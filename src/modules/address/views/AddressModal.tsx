@@ -8,6 +8,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import ControlledCountryCodePhoneInput from "@sharedComponents/inputs/ControlledCountryCodePhoneInput";
+import ControlledPicker from "@sharedComponents/inputs/ControlledPicker";
 import { useEffect, useMemo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ControlledRadioButton from "../../../sharedComponents/inputs/ControlledRadioButton";
@@ -17,6 +18,7 @@ import DialogActionButtonsContainer from "../../../styledComponents/DialogAction
 import { booleanOptions, homeColor, workColor } from "../../../utils/constants";
 import { defaultAddressData } from "../src/addressConstants";
 import { useAddAddress, useUpdateAddress } from "../src/addressMutations";
+import { useStateOptions } from "../src/addressQueries";
 import { addressSchema } from "../src/addressSchemas";
 
 const addressTag: toggleButtonOptionData[] = [
@@ -50,6 +52,8 @@ const AddressModal = (props: AddressModalProps) => {
     reset(defaultAddressData);
     toggleModal();
   };
+
+  const { data: stateOptions } = useStateOptions();
 
   const { mutate: submitAddAddress, isLoading: submitAddAddressLoading } =
     useAddAddress(onCloseModal);
@@ -92,7 +96,10 @@ const AddressModal = (props: AddressModalProps) => {
         addressLineTwo: selectedAddress.addressLineTwo,
         postcode: selectedAddress.postcode,
         city: selectedAddress.city,
-        state: selectedAddress.state,
+        state: {
+          id: selectedAddress.state.id.toString(),
+          name: selectedAddress.state.name,
+        },
         country: selectedAddress.country,
         isDefault: selectedAddress.isDefault,
         tag: selectedAddress.tag,
@@ -176,12 +183,13 @@ const AddressModal = (props: AddressModalProps) => {
               />
             </Grid>
             <Grid item sm={6} xs={12}>
-              <ControlledTextInput
+              <ControlledPicker
                 control={control}
+                options={stateOptions || []}
                 name="state"
                 lightbg={1}
                 label="State"
-                formerror={errors.state}
+                error={errors.state?.id}
               />
             </Grid>
             <Grid item sm={6} xs={12}>

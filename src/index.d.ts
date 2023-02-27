@@ -3,8 +3,8 @@ interface Response<T> {
 }
 
 interface optionsData {
-  value: string;
-  label: string;
+  id: string;
+  name: string;
 }
 
 interface toggleButtonOptionData {

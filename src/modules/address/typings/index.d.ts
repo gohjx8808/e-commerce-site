@@ -1,6 +1,7 @@
 declare namespace address {
   interface addressData extends addAddressPayload {
     id: number;
+    state: { id: number; name: string };
   }
 
   interface addAddressPayload {
@@ -11,7 +12,7 @@ declare namespace address {
     addressLineTwo: string;
     postcode: string;
     city: string;
-    state: string;
+    state: optionsData;
     country: string;
     isDefault: boolean;
     tag: string;
@@ -30,7 +31,7 @@ declare namespace address {
     addressId: number;
   }
 
-  interface updateAddressPayload extends addAddressPayload{
+  interface updateAddressPayload extends addAddressPayload {
     addressId: number;
   }
 }
