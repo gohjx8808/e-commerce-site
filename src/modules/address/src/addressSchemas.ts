@@ -11,7 +11,7 @@ export const addressSchema = object().shape({
     state: object().shape({
       id: string().required('State is required'),
       name: string().required('State is required'),
-    }).typeError('Invalid state'),
+    }).typeError('State is required'),
     country: string().required('Country is required'),
     isDefault: boolean().typeError('Invalid default option').required('Default option is required'),
   });

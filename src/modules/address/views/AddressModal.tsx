@@ -190,7 +190,8 @@ const AddressModal = (props: AddressModalProps) => {
                 name="state"
                 lightbg={1}
                 label="State"
-                error={errors.state?.id}
+                // @ts-ignore
+                error={errors.state}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -200,6 +201,7 @@ const AddressModal = (props: AddressModalProps) => {
                 label="Country"
                 lightbg={1}
                 formerror={errors.country}
+                disabled
                 defaultinput="Malaysia"
               />
             </Grid>
