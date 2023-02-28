@@ -11,11 +11,10 @@ import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import ControlledCountryCodePhoneInput from "@sharedComponents/inputs/ControlledCountryCodePhoneInput";
+import ControlledGenderPicker from "@sharedComponents/inputs/ControlledGenderPicker";
 import StyledFormControl from "@styledComponents/inputs/StyledFormControl";
-import { genderOptions } from "@utils/constants";
 import { useForm } from "react-hook-form";
 import ControlledDatePicker from "../../../sharedComponents/inputs/ControlledDatePicker";
-import ControlledPicker from "../../../sharedComponents/inputs/ControlledPicker";
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
 import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
 import { useAccountDetails, useUpdateAccDetails } from "../src/accountQueries";
@@ -44,7 +43,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
   } = useUpdateAccDetails(toggleModal, refetch);
 
   const onSubmit = (hookData: account.updateAccDetailsFormData) => {
-    submitUpdateAccDetails({ ...hookData, gender: hookData.gender.value });
+    submitUpdateAccDetails({ ...hookData, gender: hookData.gender.id });
   };
 
   return (
@@ -102,14 +101,13 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
               phonenumberformerror={errors.phoneNo}
             />
             <Grid item sm={6} xs={12}>
-              <ControlledPicker
+              <ControlledGenderPicker
                 control={control}
                 name="gender"
                 lightbg={1}
-                label="Gender"
-                options={genderOptions}
-                defaultcheck={accountDetails.gender}
-                error={errors.gender?.value}
+                // @ts-ignore
+                error={errors.gender}
+                defaultGender={accountDetails.gender}
               />
             </Grid>
             <Grid item sm={6} xs={12}>

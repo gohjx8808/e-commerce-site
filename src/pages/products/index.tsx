@@ -29,7 +29,7 @@ const Products = () => {
     useState<products.groupedProductData>({});
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
 
-  const selectedSortBy = watch("sortBy") && watch("sortBy").value;
+  const selectedSortBy = watch("sortBy") && watch("sortBy").id;
 
   const { data: allProducts, refetch } = useProductList({
     sortId: selectedSortBy || 1,
@@ -142,7 +142,7 @@ const Products = () => {
                 label="Sort By"
                 lightbg={1}
                 disableClearable
-                defaultcheck={1}
+                defaultcheck={{id: 1,name: "Name: A to Z"}}
               />
             </Grid>
           </Grid>

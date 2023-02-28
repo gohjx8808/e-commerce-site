@@ -12,7 +12,7 @@ import {
 } from "react-hook-form";
 import StyledAutocompleteFormControl from "../../styledComponents/inputs/StyledAutocompleteFormControl";
 
-interface ControlledPickerOwnProps<T extends FieldValues>
+export interface ControlledPickerProps<T extends FieldValues>
   extends Omit<
     AutocompleteProps<optionsData, boolean, boolean, boolean>,
     "renderInput"
@@ -26,9 +26,9 @@ interface ControlledPickerOwnProps<T extends FieldValues>
 }
 
 const ControlledPicker = <T extends FieldValues>(
-  props: ControlledPickerOwnProps<T>
+  props: ControlledPickerProps<T>
 ) => {
-  const { control, label, name, defaultcheck, error, lightbg, options } = props;
+  const { control, label, name, defaultcheck, error, lightbg } = props;
 
   return (
     <Controller
@@ -62,10 +62,7 @@ const ControlledPicker = <T extends FieldValues>(
           <FormHelperText error>{error?.message}</FormHelperText>
         </StyledAutocompleteFormControl>
       )}
-      defaultValue={
-        (options.find((option) => option.id === defaultcheck) ||
-          null) as UnpackNestedValue<PathValue<T, Path<T>>>
-      }
+      defaultValue={defaultcheck}
     />
   );
 };

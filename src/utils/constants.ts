@@ -1,25 +1,5 @@
 import routeNames from "./routeNames";
 
-export const stateOptions = [
-  { value: "Johor", label: "Johor" },
-  { value: "Kedah", label: "Kedah" },
-  { value: "Kelantan", label: "Kelantan" },
-  { value: "Kuala Lumpur", label: "Kuala Lumpur" },
-  { value: "Labuan", label: "Labuan" },
-  { value: "Melaka", label: "Melaka" },
-  { value: "Negeri Sembilan", label: "Negeri Sembilan" },
-  { value: "Pahang", label: "Pahang" },
-  { value: "Perak", label: "Perak" },
-  { value: "Perlis", label: "Perlis" },
-  { value: "Pulau Pinang", label: "Pulau Pinang" },
-  { value: "Putrajaya", label: "Putrajaya" },
-  { value: "Sabah", label: "Sabah" },
-  { value: "Sarawak", label: "Sarawak" },
-  { value: "Selangor", label: "Selangor" },
-  { value: "Terengganu", label: "Terengganu" },
-  { value: "Outside Malaysia", label: "Outside Malaysia" },
-];
-
 export const booleanOptions = [
   { value: false, label: "No" },
   { value: true, label: "Yes" },
@@ -74,6 +54,6 @@ export enum socialMediaLinks {
 }
 
 export const genderOptions: optionsData[] = [
-  { label: "Male", value: "M" },
-  { label: "Female", value: "F" },
+  { id: "M", name: "Male" },
+  { id: "F", name: "Female" },
 ];

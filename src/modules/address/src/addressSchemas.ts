@@ -8,7 +8,10 @@ export const addressSchema = object().shape({
     addressLineOne: string().required('Address line one is required'),
     postcode: number().typeError('Invalid postcode'),
     city: string().required('City is required'),
-    state: string().required('State is required'),
+    state: object().shape({
+      id: string().required('State is required'),
+      name: string().required('State is required'),
+    }).typeError('Invalid state'),
     country: string().required('Country is required'),
     isDefault: boolean().typeError('Invalid default option').required('Default option is required'),
   });

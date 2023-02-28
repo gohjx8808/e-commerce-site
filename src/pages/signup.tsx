@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import ControlledCountryCodePhoneInput from "@sharedComponents/inputs/ControlledCountryCodePhoneInput";
-import { genderOptions } from "@utils/constants";
+import ControlledGenderPicker from "@sharedComponents/inputs/ControlledGenderPicker";
 import { generateHeader } from "@utils/helper";
 import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
@@ -18,7 +18,6 @@ import { signUpSchema } from "../modules/auth/src/authSchema";
 import CustomBreadcrumbs from "../sharedComponents/CustomBreadcrumbs";
 import ControlledDatePicker from "../sharedComponents/inputs/ControlledDatePicker";
 import ControlledPasswordInput from "../sharedComponents/inputs/ControlledPasswordInput";
-import ControlledPicker from "../sharedComponents/inputs/ControlledPicker";
 import ControlledTextInput from "../sharedComponents/inputs/ControlledTextInput";
 import PasswordRequirements from "../sharedComponents/PasswordRequirements";
 import { AuthCard, AuthCardHeader, AuthIcon } from "../styledComponents/auth";
@@ -51,7 +50,7 @@ const SignUp = () => {
   const onSubmitSignUp: SubmitHandler<auth.signUpFormData> = (hookData) => {
     const submitData: auth.submitSignUpPayload = {
       ...hookData,
-      gender: hookData.gender.value,
+      gender: hookData.gender.id,
     };
     submitSignUp(submitData);
   };
@@ -175,12 +174,11 @@ const SignUp = () => {
                           />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          <ControlledPicker
+                          <ControlledGenderPicker
                             control={control}
                             name="gender"
-                            label="Gender"
-                            error={errors.gender?.value}
-                            options={genderOptions}
+                            // @ts-ignore
+                            error={errors.gender}
                           />
                         </Grid>
                       </Grid>

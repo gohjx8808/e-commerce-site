@@ -97,7 +97,8 @@ const AddressModal = (props: AddressModalProps) => {
         postcode: selectedAddress.postcode,
         city: selectedAddress.city,
         state: {
-          id: selectedAddress.state.id.toString(),
+          // @ts-ignore
+          id: selectedAddress.state.id,
           name: selectedAddress.state.name,
         },
         country: selectedAddress.country,
