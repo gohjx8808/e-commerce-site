@@ -1,3 +1,4 @@
+import { useAddressList } from "@modules/address/src/addressQueries";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -6,20 +7,19 @@ import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
-import { useMemo } from "react";
 import StyledListItem from "../../../styledComponents/StyledListItem";
 
 interface CheckoutAddressListModalOwnProps {
   isVisible: boolean;
   toggleModal: () => void;
-  selectedAddress?: auth.addressData | null;
-  updateSelectedAddress: (address: auth.addressData | null) => void;
+  selectedAddress?: address.addressData | null;
+  updateSelectedAddress: (address: address.addressData | null) => void;
 }
 
 const CheckoutAddressListModal = (props: CheckoutAddressListModalOwnProps) => {
   const { isVisible, toggleModal, selectedAddress, updateSelectedAddress } =
     props;
-  const addressList = useMemo(() => [], []);
+  const { data: addressList } = useAddressList();
 
   return (
     <Dialog
@@ -48,7 +48,7 @@ const CheckoutAddressListModal = (props: CheckoutAddressListModalOwnProps) => {
             <StyledListItem
               selected={address === selectedAddress}
               onClick={() => updateSelectedAddress(address)}
-              key={address.addressLine1}
+              key={address.addressLineOne}
             >
               <ListItemText
                 primary={
@@ -56,7 +56,7 @@ const CheckoutAddressListModal = (props: CheckoutAddressListModalOwnProps) => {
                     <Grid container>
                       <Grid item xs={5}>
                         <Typography fontWeight="bold">
-                          {address.fullName}
+                          {address.receiverName}
                         </Typography>
                       </Grid>
                       <Divider
@@ -66,21 +66,19 @@ const CheckoutAddressListModal = (props: CheckoutAddressListModalOwnProps) => {
                       />
                       <Grid item xs={5}>
                         <Typography fontWeight="bold">
-                          {address.phoneNumber}
+                          {address.receiverCountryCode}{" "}
+                          {address.receiverPhoneNumber}
                         </Typography>
                       </Grid>
                     </Grid>
-                    <Typography fontWeight="bold">{address.email}</Typography>
                     <Typography>
-                      {address.addressLine1} {address.addressLine2}
+                      {address.addressLineOne} {address.addressLineTwo}
                     </Typography>
                     <Typography>
                       {address.postcode} {address.city}
                     </Typography>
                     <Typography>
-                      {address.outsideMalaysiaState
-                        ? address.outsideMalaysiaState
-                        : address.state}
+                      {address.state.name}
                       {", "}
                       {address.country}
                     </Typography>

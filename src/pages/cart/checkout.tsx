@@ -119,7 +119,6 @@ const Checkout = () => {
   const {
     control,
     watch,
-    setValue,
     handleSubmit,
     formState: { errors },
     reset,
@@ -215,6 +214,7 @@ const Checkout = () => {
   useEffect(() => {
     if (selectedAddress) {
       reset({
+        buyerEmail: userDetails?.email,
         receiverName: selectedAddress.receiverName,
         receiverCountryCode: selectedAddress.receiverCountryCode,
         receiverPhoneNumber: selectedAddress.receiverPhoneNumber,
@@ -227,8 +227,10 @@ const Checkout = () => {
         paymentMethod: "",
         promoCode: inputPromoCode || "",
       });
+    } else {
+      reset({});
     }
-  }, [reset, selectedAddress, inputPromoCode]);
+  }, [reset, selectedAddress, inputPromoCode, userDetails?.email]);
 
   const validatePromoCode = useCallback(() => {
     let rawPromoObject: promoCodeObject = defaultPromoObject;
@@ -497,7 +499,7 @@ const Checkout = () => {
                         label="Receiver Name"
                         lightbg={1}
                         formerror={errors.receiverName}
-                        readOnly={!!selectedAddress?.receiverName}
+                        readOnly={!!selectedAddress}
                       />
                     </Grid>
                     <Grid item sm={6} xs={12}>
@@ -506,7 +508,9 @@ const Checkout = () => {
                         name="buyerEmail"
                         label="Buyer Email Address"
                         lightbg={1}
+                        isCapitalize={false}
                         formerror={errors.buyerEmail}
+                        readOnly={!!selectedAddress}
                       />
                     </Grid>
                     <ControlledCountryCodePhoneInput
@@ -517,10 +521,7 @@ const Checkout = () => {
                       countrycodename="receiverCountryCode"
                       phonenumbername="receiverPhoneNumber"
                       lightbg={1}
-                      readOnly={
-                        !!selectedAddress?.receiverCountryCode &&
-                        !!selectedAddress?.receiverPhoneNumber
-                      }
+                      readOnly={!!selectedAddress}
                     />
                     <Grid item xs={12}>
                       <ControlledTextInput
@@ -529,7 +530,7 @@ const Checkout = () => {
                         label="Address Line 1"
                         lightbg={1}
                         formerror={errors.addressLineOne}
-                        readOnly={!!selectedAddress?.addressLineOne}
+                        readOnly={!!selectedAddress}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -538,7 +539,7 @@ const Checkout = () => {
                         name="addressLineTwo"
                         label="Address Line 2"
                         lightbg={1}
-                        readOnly={!!selectedAddress?.addressLineTwo}
+                        readOnly={!!selectedAddress}
                       />
                     </Grid>
                     <Grid item sm={6} xs={12}>
@@ -549,7 +550,7 @@ const Checkout = () => {
                         lightbg={1}
                         maxLength={10}
                         formerror={errors.postcode}
-                        readOnly={!!selectedAddress?.postcode}
+                        readOnly={!!selectedAddress}
                       />
                     </Grid>
                     <Grid item sm={6} xs={12}>
@@ -559,7 +560,7 @@ const Checkout = () => {
                         label="City"
                         lightbg={1}
                         formerror={errors.city}
-                        readOnly={!!selectedAddress?.city}
+                        readOnly={!!selectedAddress}
                       />
                     </Grid>
                     {stateOptions && (
@@ -572,7 +573,7 @@ const Checkout = () => {
                           label="State"
                           // @ts-ignore
                           error={errors.state}
-                          readOnly={!!selectedAddress?.state}
+                          readOnly={!!selectedAddress}
                         />
                       </Grid>
                     )}
