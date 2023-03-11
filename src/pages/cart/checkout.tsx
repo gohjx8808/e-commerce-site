@@ -1,11 +1,15 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
+import useDebounce from "@hooks/useDebounce";
 import { useAccountDetails } from "@modules/account/src/accountQueries";
 import {
   useAddressList,
   useStateOptions,
 } from "@modules/address/src/addressQueries";
-import { useCalculateShippingFee } from "@modules/products/src/productMutations";
+import {
+  useCalculateShippingFee,
+  useVerifyPromoCode,
+} from "@modules/products/src/productMutations";
 import SEO from "@modules/SEO";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
@@ -86,10 +90,17 @@ const Checkout = () => {
   const [shippingFee, setShippingFee] = useState<number | "-">("-");
   const [isCheckoutAddressListModalOpen, setIsCheckoutAddressListModalOpen] =
     useState(false);
+  const [promoCodeApplied, setPromoCodeApplied] =
+    useState<products.promoCodeData | null>(null);
+
+  const [promoCodeError, setPromoCodeError] = useState<string>("");
 
   const { data: stateOptions } = useStateOptions();
 
   const { data: userDetails } = useAccountDetails();
+
+  const { mutate: verifyPromoCode, isLoading: verifyPromoCodeLoading } =
+    useVerifyPromoCode(setPromoCodeApplied, setPromoCodeError);
 
   const {
     mutate: calculateShippingFee,
@@ -99,7 +110,6 @@ const Checkout = () => {
   const { data: orderCount } = useOrderCount();
   const { mutate: submitOrder, isLoading: submitOrderLoading } =
     useSubmitOrder(onSuccessOrder);
-  const { data: availablePromoCodes } = useAvailablePromoCodes();
 
   const defaultPromoObject: promoCodeObject = useMemo(
     () => ({
@@ -219,7 +229,7 @@ const Checkout = () => {
   );
 
   useEffect(() => {
-    if (stateSelected) {
+    if (stateSelected?.id) {
       onCalculateShippingFee(stateSelected);
     } else {
       setShippingFee("-");
@@ -238,6 +248,7 @@ const Checkout = () => {
         postcode: selectedAddress.postcode,
         city: selectedAddress.city,
         state: selectedAddress.state,
+        promoCode: promoCodeApplied?.name,
       });
     } else {
       reset({
@@ -250,69 +261,24 @@ const Checkout = () => {
         postcode: "",
         city: "",
         state: { id: "", name: "" },
+        promoCode: promoCodeApplied?.name,
       });
     }
-  }, [reset, selectedAddress, userDetails?.email, isLoggedIn]);
+  }, [
+    reset,
+    selectedAddress,
+    userDetails?.email,
+    isLoggedIn,
+    promoCodeApplied,
+  ]);
 
-  const validatePromoCode = useCallback(() => {
-    let rawPromoObject: promoCodeObject = defaultPromoObject;
-    let discountedPrice = totalAmount;
-    if (true) {
-      const today = dayjs();
-      const targetPromoCode = availablePromoCodes?.find(
-        (promoCode) => promoCode.code === inputPromoCode
-      );
-      if (targetPromoCode) {
-        const isPromoCodeValid = today.isBetween(
-          dayjs(targetPromoCode.startDate, "DD/MM/YYYY"),
-          dayjs(targetPromoCode.endDate, "DD/MM/YYYY"),
-          null,
-          "[]"
-        );
-        if (isPromoCodeValid) {
-          switch (targetPromoCode.discountType) {
-            case "percentage": {
-              discountedPrice =
-                totalAmount *
-                (1 - parseFloat(targetPromoCode.discountValue) / 100);
-              break;
-            }
-            case "number": {
-              discountedPrice = totalAmount - +targetPromoCode.discountValue;
-              break;
-            }
-            default:
-          }
-          rawPromoObject = {
-            ...rawPromoObject,
-            code: targetPromoCode.code,
-            discountType: targetPromoCode.discountType,
-            discountValue: targetPromoCode.discountValue,
-            success: "Promo code applied!",
-            discountedPrice,
-          };
-        } else {
-          rawPromoObject = {
-            ...rawPromoObject,
-            error: "Promo code is expired!",
-          };
-        }
-      } else if (inputPromoCode) {
-        rawPromoObject = { ...rawPromoObject, error: "Invalid promo code!" };
-      }
-    } else {
-      rawPromoObject = {
-        ...rawPromoObject,
-        error: "You have exceeded the redemption limit!",
-      };
+  const onVerifyPromoCode = () => {
+    if (inputPromoCode) {
+      verifyPromoCode({ promoCode: inputPromoCode });
     }
-    setAppliedPromo(rawPromoObject);
-    return rawPromoObject.error;
-  }, [availablePromoCodes, inputPromoCode, totalAmount, defaultPromoObject]);
+  };
 
-  useEffect(() => {
-    validatePromoCode();
-  }, [inputPromoCode, validatePromoCode]);
+  useDebounce(inputPromoCode, onVerifyPromoCode);
 
   const proceedToPayment: SubmitHandler<products.checkoutFormPayload> = async (
     hookData
@@ -360,6 +326,16 @@ const Checkout = () => {
       return formatPrice(shippingFee, "MYR");
     }
     return "-";
+  };
+
+  const getPromoValue = () => {
+    if (promoCodeApplied) {
+      if (promoCodeApplied.promoType === "value") {
+        return promoCodeApplied.promoValue;
+      }
+      return totalAmount * (promoCodeApplied.promoValue / 100);
+    }
+    return 0;
   };
 
   return (
@@ -411,14 +387,16 @@ const Checkout = () => {
                   <Typography
                     variant="subtitle1"
                     textAlign="right"
-                    color={appliedPromo.code && "green"}
+                    color={promoCodeApplied ? "green" : ""}
                   >
                     {`Total Discount ${
-                      appliedPromo.code
+                      promoCodeApplied?.name
                         ? `(${
-                            appliedPromo.discountType === "value" ? "RM " : ""
-                          }${appliedPromo.discountValue}${
-                            appliedPromo.discountType === "percentage"
+                            promoCodeApplied.promoType === "value"
+                              ? formatPrice(promoCodeApplied.promoValue, "MYR")
+                              : promoCodeApplied.promoValue
+                          }${
+                            promoCodeApplied.promoType === "percentage"
                               ? "%"
                               : ""
                           })`
@@ -429,19 +407,20 @@ const Checkout = () => {
               </Grid>
               <Grid item lg={3} sm={2} xs={5}>
                 <Grid container justifyContent="flex-end">
-                  <Typography
-                    variant="subtitle1"
-                    textAlign="right"
-                    color={appliedPromo.code && "green"}
-                  >
-                    -{" "}
-                    {appliedPromo.code
-                      ? formatPrice(
-                          totalAmount - appliedPromo.discountedPrice,
-                          "MYR"
-                        )
-                      : ""}
-                  </Typography>
+                  {verifyPromoCodeLoading ? (
+                    <CircularProgress size={25} color="secondary" />
+                  ) : (
+                    <Typography
+                      variant="subtitle1"
+                      textAlign="right"
+                      color={promoCodeApplied ? "green" : ""}
+                    >
+                      -{" "}
+                      {getPromoValue() === 0
+                        ? ""
+                        : formatPrice(getPromoValue(), "MYR")}
+                    </Typography>
+                  )}
                 </Grid>
               </Grid>
               <Grid item lg={9} sm={10} xs={7}>
@@ -480,11 +459,12 @@ const Checkout = () => {
                     textAlign="right"
                     fontWeight="bold"
                   >
-                    {formatPrice(
-                      appliedPromo.discountedPrice +
-                        (shippingFee === "-" ? 0 : shippingFee),
-                      "MYR"
-                    )}
+                    {shippingFee === "-"
+                      ? "-"
+                      : formatPrice(
+                          totalAmount - +getPromoValue() + shippingFee,
+                          "MYR"
+                        )}
                   </Typography>
                 </Grid>
               </Grid>
@@ -633,13 +613,14 @@ const Checkout = () => {
                         formerror={errors.promoCode}
                         lightbg={1}
                         disabled={!isLoggedIn}
+                        isCapitalize={false}
                       />
                       <FormHelperText error sx={{ marginLeft: 2 }}>
-                        {appliedPromo.error}
+                        {promoCodeError}
                       </FormHelperText>
-                      {appliedPromo.success && (
+                      {promoCodeApplied && (
                         <FormHelperText sx={{ marginLeft: 2, color: "green" }}>
-                          {appliedPromo.success}
+                          Promo successfully applied!
                         </FormHelperText>
                       )}
                       {!isLoggedIn && (

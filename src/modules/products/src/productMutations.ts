@@ -2,7 +2,8 @@
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
 import { useMutation } from "react-query";
 import { useContext } from "react";
-import { postCalculateShippingFee } from "./productApis";
+import { AxiosError } from "axios";
+import { postCalculateShippingFee, postVerifyPromoCode } from "./productApis";
 
 export const useCalculateShippingFee = (
   setShippingFee: (value: number) => void
@@ -24,3 +25,21 @@ export const useCalculateShippingFee = (
     },
   });
 };
+
+export const useVerifyPromoCode = (
+  setPromoCodeApplied: (value: products.promoCodeData | null) => void,
+  setPromoCodeError: (value: string) => void
+) =>
+  useMutation("verifyPromoCode", postVerifyPromoCode, {
+    onSuccess: (response) => {
+      setPromoCodeApplied(response.data.data);
+      setPromoCodeError("");
+    },
+    onError: (error: AxiosError<customErrorData>) => {
+      setPromoCodeError(
+        error.response?.data.message ||
+          "Please check your internet connection or contact us at hello@yjartjournal.com for assistance."
+      );
+      setPromoCodeApplied(null);
+    },
+  });

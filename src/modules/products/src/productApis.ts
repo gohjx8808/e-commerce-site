@@ -59,3 +59,10 @@ export const postCalculateShippingFee = (
     "orders/calculate-shipping-fee",
     payload
   );
+
+export const postVerifyPromoCode = (payload: products.verifyPromoCodePayload) =>
+  postRequest<Response<products.promoCodeData>>(
+    "orders/verify-promo-code",
+    payload,
+    true
+  );

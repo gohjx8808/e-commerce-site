@@ -84,4 +84,15 @@ declare namespace products {
     state: optionsData;
     totalAmount: number;
   }
+
+  interface verifyPromoCodePayload {
+    promoCode: string;
+  }
+
+  interface promoCodeData {
+    id: number;
+    name: string;
+    promoType: string;
+    promoValue: number;
+  }
 }
