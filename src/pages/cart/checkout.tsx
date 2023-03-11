@@ -83,7 +83,7 @@ const Checkout = () => {
     products.shoppingCartItemData[]
   >([]);
   const [pageSize, setPageSize] = useState<number>(5);
-  const [shippingFee, setShippingFee] = useState<number>(0);
+  const [shippingFee, setShippingFee] = useState<number | "-">("-");
   const [isCheckoutAddressListModalOpen, setIsCheckoutAddressListModalOpen] =
     useState(false);
 
@@ -218,22 +218,27 @@ const Checkout = () => {
   );
 
   useEffect(() => {
-    if (isLoggedIn && selectedAddress) {
-      reset({
-        buyerEmail: userDetails?.email,
-        receiverName: selectedAddress.receiverName,
-        receiverCountryCode: selectedAddress.receiverCountryCode,
-        receiverPhoneNumber: selectedAddress.receiverPhoneNumber,
-        addressLineOne: selectedAddress.addressLineOne,
-        addressLineTwo: selectedAddress.addressLineTwo,
-        postcode: selectedAddress.postcode,
-        city: selectedAddress.city,
-        state: selectedAddress.state,
-        addToAddressBook: false,
-        paymentMethod: "",
-        promoCode: inputPromoCode || "",
-      });
-      onCalculateShippingFee(selectedAddress.state);
+    if (isLoggedIn) {
+      if (selectedAddress) {
+        reset({
+          buyerEmail: userDetails?.email,
+          receiverName: selectedAddress.receiverName,
+          receiverCountryCode: selectedAddress.receiverCountryCode,
+          receiverPhoneNumber: selectedAddress.receiverPhoneNumber,
+          addressLineOne: selectedAddress.addressLineOne,
+          addressLineTwo: selectedAddress.addressLineTwo,
+          postcode: selectedAddress.postcode,
+          city: selectedAddress.city,
+          state: selectedAddress.state,
+          addToAddressBook: false,
+          paymentMethod: "",
+          promoCode: inputPromoCode || "",
+        });
+        onCalculateShippingFee(selectedAddress.state);
+      } else {
+        reset({});
+        setShippingFee("-");
+      }
     } else {
       reset({});
     }
@@ -344,6 +349,16 @@ const Checkout = () => {
     toggleCheckoutAddressListModal();
   };
 
+  const formatShippingFee = () => {
+    if (shippingFee !== "-") {
+      if (shippingFee === 0) {
+        return "Free";
+      }
+      return formatPrice(shippingFee, "MYR");
+    }
+    return "-";
+  };
+
   return (
     <MainLayout>
       <Grid container justifyContent="center" spacing={3}>
@@ -439,9 +454,7 @@ const Checkout = () => {
                     <CircularProgress color="secondary" size={20} />
                   ) : (
                     <Typography variant="subtitle1" textAlign="right">
-                      {shippingFee === 0
-                        ? "Free"
-                        : formatPrice(shippingFee, "MYR")}
+                      {formatShippingFee()}
                     </Typography>
                   )}
                 </Grid>
@@ -465,7 +478,8 @@ const Checkout = () => {
                     fontWeight="bold"
                   >
                     {formatPrice(
-                      appliedPromo.discountedPrice + shippingFee,
+                      appliedPromo.discountedPrice +
+                        (shippingFee === "-" ? 0 : shippingFee),
                       "MYR"
                     )}
                   </Typography>
@@ -697,6 +711,7 @@ const Checkout = () => {
                       size="medium"
                       type="submit"
                       loading={submitOrderLoading}
+                      disabled={shippingFee === "-"}
                     >
                       Proceed To Payment
                     </LoadingButton>
