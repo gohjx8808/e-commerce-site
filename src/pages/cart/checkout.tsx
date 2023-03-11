@@ -6,13 +6,13 @@ import {
   useStateOptions,
 } from "@modules/address/src/addressQueries";
 import { useCalculateShippingFee } from "@modules/products/src/productMutations";
-import CircularProgress from "@mui/material/CircularProgress";
 import SEO from "@modules/SEO";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
 import FormHelperText from "@mui/material/FormHelperText";
 import Grid from "@mui/material/Grid";
@@ -209,6 +209,7 @@ const Checkout = () => {
   };
 
   const inputPromoCode = watch("promoCode");
+  const stateSelected = watch("state");
 
   const onCalculateShippingFee = useCallback(
     (state: optionsData) => {
@@ -218,38 +219,40 @@ const Checkout = () => {
   );
 
   useEffect(() => {
-    if (isLoggedIn) {
-      if (selectedAddress) {
-        reset({
-          buyerEmail: userDetails?.email,
-          receiverName: selectedAddress.receiverName,
-          receiverCountryCode: selectedAddress.receiverCountryCode,
-          receiverPhoneNumber: selectedAddress.receiverPhoneNumber,
-          addressLineOne: selectedAddress.addressLineOne,
-          addressLineTwo: selectedAddress.addressLineTwo,
-          postcode: selectedAddress.postcode,
-          city: selectedAddress.city,
-          state: selectedAddress.state,
-          addToAddressBook: false,
-          paymentMethod: "",
-          promoCode: inputPromoCode || "",
-        });
-        onCalculateShippingFee(selectedAddress.state);
-      } else {
-        reset({});
-        setShippingFee("-");
-      }
+    if (stateSelected) {
+      onCalculateShippingFee(stateSelected);
     } else {
-      reset({});
+      setShippingFee("-");
     }
-  }, [
-    reset,
-    selectedAddress,
-    inputPromoCode,
-    userDetails?.email,
-    isLoggedIn,
-    onCalculateShippingFee,
-  ]);
+  }, [onCalculateShippingFee, stateSelected]);
+
+  useEffect(() => {
+    if (isLoggedIn && selectedAddress) {
+      reset({
+        buyerEmail: userDetails?.email,
+        receiverName: selectedAddress.receiverName,
+        receiverCountryCode: selectedAddress.receiverCountryCode,
+        receiverPhoneNumber: selectedAddress.receiverPhoneNumber,
+        addressLineOne: selectedAddress.addressLineOne,
+        addressLineTwo: selectedAddress.addressLineTwo,
+        postcode: selectedAddress.postcode,
+        city: selectedAddress.city,
+        state: selectedAddress.state,
+      });
+    } else {
+      reset({
+        buyerEmail: "",
+        receiverName: "",
+        receiverCountryCode: "",
+        receiverPhoneNumber: "",
+        addressLineOne: "",
+        addressLineTwo: "",
+        postcode: "",
+        city: "",
+        state: { id: "", name: "" },
+      });
+    }
+  }, [reset, selectedAddress, userDetails?.email, isLoggedIn]);
 
   const validatePromoCode = useCallback(() => {
     let rawPromoObject: promoCodeObject = defaultPromoObject;
