@@ -1,19 +1,10 @@
 import { StatusModalContext } from "@contextProvider/StatusModalContextProvider";
-import { useUID } from "@hooks";
 import { defaultProductListPayload } from "@modules/products/src/productConstants";
-import {
-  accountLocalStorageKeys,
-  productLocalStorageKeys
-} from "@utils/localStorageKeys";
+import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import dayjs from "dayjs";
 import { navigate } from "gatsby";
 import { useContext } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useAddEditAddress } from "../../account/src/accountQueries";
-import {
-  getCurrentUserDetailsKey,
-  useUserDetails
-} from "../../auth/src/authMutations";
 import {
   getAllProducts,
   getAvailablePromoCodes,
@@ -24,7 +15,6 @@ import {
   sendPaymentEmailApi,
   updateOrderCount,
   updateOrderHistory,
-  updatePromoCodeUsed
 } from "./productApis";
 
 export const productQueriesKeys = {
@@ -40,15 +30,8 @@ export const useOrderCount = () =>
 
 export const useSubmitOrder = (onSuccessOrder: () => void) => {
   const { data: orderCount } = useOrderCount();
-  const { data: userDetails } = useUserDetails();
   const { data: orderHistory } = useOrderHistory();
-  const uid = useUID();
 
-  const { mutate: addAddress } = useAddEditAddress(
-    { actionType: "Add", selectedAddress: null, isModalOpen: false },
-    () => {},
-    false
-  );
   const { mutate: saveOrder } = useUpdateOrderHistory();
 
   const queryClient = useQueryClient();
@@ -59,12 +42,6 @@ export const useSubmitOrder = (onSuccessOrder: () => void) => {
     // update order count
     await updateOrderCount(orderCount + 1);
     // update promo code used for the user
-    if (payload.promoCode) {
-      const usedPromoCode = [...(userDetails?.usedPromoCodes || [])];
-      usedPromoCode.push(payload.promoCode);
-      await updatePromoCodeUsed(usedPromoCode);
-      queryClient.invalidateQueries(getCurrentUserDetailsKey);
-    }
     if (payload.saveShippingInfo) {
       const addressData = {
         fullName: payload.fullName,
@@ -78,42 +55,19 @@ export const useSubmitOrder = (onSuccessOrder: () => void) => {
         outsideMalaysiaState: payload.outsideMalaysiaState || "",
         country: payload.country,
       };
-      const saveAddressData: auth.addressData = {
-        ...addressData,
-        defaultOption: "0",
-        tag: "",
-      };
-      const shippingInfo: products.submitShippingInfoPayload = {
-        ...addressData,
-        promoCode: "",
-        note: "",
-        saveShippingInfo: payload.saveShippingInfo,
-        paymentOptions: payload.paymentOptions,
-      };
-      // add address to user's address book if authorized
-      if (localStorage.getItem(accountLocalStorageKeys.UID)) {
-        addAddress(saveAddressData);
-      } else {
-        // save to local storage for unauthorized user
-        localStorage.setItem(
-          productLocalStorageKeys.SHIPPING_INFO,
-          JSON.stringify(shippingInfo)
-        );
-      }
     } else {
       localStorage.removeItem(productLocalStorageKeys.SHIPPING_INFO);
     }
     // save order to db if logged in
-    if (uid) {
-      const orderData: products.saveOrderPayload = {
-        ...payload,
-        createdAt: dayjs().format("DD/MM/YYYY"),
-        status: "Pending Payment",
-      };
-      const currentOrderHistory = [...(orderHistory || []), orderData];
+    const orderData: products.saveOrderPayload = {
+      ...payload,
+      createdAt: dayjs().format("DD/MM/YYYY"),
+      status: "Pending Payment",
+    };
+    const currentOrderHistory = [...(orderHistory || []), orderData];
 
-      saveOrder(currentOrderHistory);
-    }
+    saveOrder(currentOrderHistory);
+
     onSuccessOrder();
     return sendPaymentEmailApi(payload);
   };
@@ -147,21 +101,14 @@ export const useAvailablePromoCodes = () =>
     return response;
   });
 
-export const useOrderHistory = () => {
-  const uid = useUID();
+export const useOrderHistory = () =>
+  useQuery("getOrderHistory", async () => {
+    const orderHistory: products.saveOrderPayload[] = (
+      await getOrderHistory()
+    ).val();
 
-  return useQuery(
-    "getOrderHistory",
-    async () => {
-      const orderHistory: products.saveOrderPayload[] = (
-        await getOrderHistory()
-      ).val();
-
-      return orderHistory;
-    },
-    { enabled: !!uid }
-  );
-};
+    return orderHistory;
+  });
 
 export const useUpdateOrderHistory = () =>
   useMutation("updateOrderHistory", updateOrderHistory);

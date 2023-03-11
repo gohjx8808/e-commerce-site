@@ -8,10 +8,12 @@ import {
   PathValue,
   UnpackNestedValue,
 } from "react-hook-form";
-import ControlledTextInput from "./ControlledTextInput";
+import ControlledTextInput, {
+  ControlledTextInputProps,
+} from "./ControlledTextInput";
 
 interface ControlledCountryCodePhoneInputOwnProps<T extends FieldValues>
-  extends Omit<OutlinedInputProps, "defaultValue" | "name"> {
+  extends ControlledTextInputProps<T> {
   control: Control<T>;
   defaultcountrycode?: UnpackNestedValue<PathValue<T, Path<T>>>;
   defaultphonenumber?: UnpackNestedValue<PathValue<T, Path<T>>>;
@@ -19,21 +21,18 @@ interface ControlledCountryCodePhoneInputOwnProps<T extends FieldValues>
   phonenumberformerror?: FieldError;
   countrycodename?: Path<T>;
   phonenumbername?: Path<T>;
-  lightbg?: booleanInteger;
 }
 
 const ControlledCountryCodePhoneInput = <T extends FieldValues>(
-  props: ControlledCountryCodePhoneInputOwnProps<T>
+  props: Omit<ControlledCountryCodePhoneInputOwnProps<T>, "name">
 ) => {
   const {
-    control,
     defaultcountrycode,
     defaultphonenumber,
     countrycodeformerror,
     phonenumberformerror,
     countrycodename,
     phonenumbername,
-    lightbg,
   } = props;
 
   return (
@@ -41,24 +40,22 @@ const ControlledCountryCodePhoneInput = <T extends FieldValues>(
       <Grid container flexDirection="row" columnSpacing={1}>
         <Grid item xs={4}>
           <ControlledTextInput
-            control={control}
             name={countrycodename || ("countryCode" as Path<T>)}
             label="Country Code"
             formerror={countrycodeformerror}
             type="number"
             defaultinput={defaultcountrycode}
-            lightbg={lightbg}
+            {...props}
           />
         </Grid>
         <Grid item xs={8}>
           <ControlledTextInput
-            control={control}
             name={phonenumbername || ("phoneNumber" as Path<T>)}
             label="Phone Number"
             formerror={phonenumberformerror}
             type="tel"
             defaultinput={defaultphonenumber}
-            lightbg={lightbg}
+            {...props}
           />
         </Grid>
       </Grid>

@@ -1,15 +1,15 @@
-import { useUID } from "@hooks";
+import { useIsLoggedIn } from "@hooks";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import { navigate } from "gatsby";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import Footer from "../modules/Footer";
 
 const AuthLayout = (props: parentComponent) => {
   const { children } = props;
 
-  const isLoggedIn = useUID();
+  const isLoggedIn = useIsLoggedIn();
 
   if (isLoggedIn) {
     navigate("/");

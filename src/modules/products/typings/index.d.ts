@@ -9,20 +9,20 @@ declare namespace products {
   }
 
   interface submitShippingInfoPayload {
-    fullName: string;
-    email: string;
-    phoneNumber: string;
-    addressLine1: string;
-    addressLine2: string;
+    receiverName: string;
+    buyerEmail: string;
+    receiverCountryCode: string;
+    receiverPhoneNumber: string;
+    addressLineOne: string;
+    addressLineTwo: string;
     postcode: string;
     city: string;
-    state: string;
-    outsideMalaysiaState: string;
+    state: optionsData;
     country: string;
     promoCode: string;
     note: string;
-    saveShippingInfo: boolean;
-    paymentOptions: string;
+    addToAddressBook: boolean;
+    paymentMethod: string;
   }
 
   interface checkoutFormPayload extends submitShippingInfoPayload {
@@ -67,7 +67,7 @@ declare namespace products {
     name: string;
     productImages: productImageData[];
     price: number;
-    contentDescription: import('@contentful/rich-text-types').Document;
+    contentDescription: import("@contentful/rich-text-types").Document;
     category: string;
     discountedPrice?: number;
     id: string;
@@ -78,5 +78,5 @@ declare namespace products {
     url: string;
   }
 
-  type groupedProductData={[x: string]: productData[]}
+  type groupedProductData = { [x: string]: productData[] };
 }

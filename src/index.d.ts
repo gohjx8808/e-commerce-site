@@ -3,7 +3,7 @@ interface Response<T> {
 }
 
 interface optionsData {
-  id: string;
+  id: number | string | boolean;
   name: string;
 }
 
@@ -22,11 +22,6 @@ type booleanInteger = 1 | 0;
 
 interface parentComponent {
   children?: React.ReactNode;
-}
-
-interface radioOptionData {
-  value: boolean;
-  label: string;
 }
 
 interface customErrorData {

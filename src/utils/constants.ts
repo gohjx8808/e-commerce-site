@@ -1,8 +1,8 @@
 import routeNames from "./routeNames";
 
-export const booleanOptions = [
-  { value: false, label: "No" },
-  { value: true, label: "Yes" },
+export const booleanOptions: optionsData[] = [
+  { id: false, name: "No" },
+  { id: true, name: "Yes" },
 ];
 
 export const homeColor = "orange";
@@ -14,23 +14,6 @@ export const itemVariationOptions = [
 ];
 
 export const drawerWidth = 210;
-
-export const emptyShippingInfo: products.submitShippingInfoPayload = {
-  fullName: "",
-  email: "",
-  phoneNumber: "60",
-  addressLine1: "",
-  addressLine2: "",
-  postcode: "",
-  city: "",
-  state: "",
-  outsideMalaysiaState: "",
-  country: "",
-  promoCode: "",
-  note: "",
-  saveShippingInfo: false,
-  paymentOptions: "",
-};
 
 export const routeMap: { [key: string]: string } = {
   [routeNames.login]: "Login",
@@ -56,4 +39,9 @@ export enum socialMediaLinks {
 export const genderOptions: optionsData[] = [
   { id: "M", name: "Male" },
   { id: "F", name: "Female" },
+];
+
+export const paymentMethods: optionsData[] = [
+  { id: "TNG", name: "TNG E-Wallet" },
+  { id: "Bank Transfer", name: "Bank Transfer" },
 ];

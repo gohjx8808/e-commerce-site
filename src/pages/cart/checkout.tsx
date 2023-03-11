@@ -1,5 +1,10 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAccountDetails } from "@modules/account/src/accountQueries";
+import {
+  useAddressList,
+  useStateOptions,
+} from "@modules/address/src/addressQueries";
 import SEO from "@modules/SEO";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
@@ -9,28 +14,22 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import FormHelperText from "@mui/material/FormHelperText";
 import Grid from "@mui/material/Grid";
-import InputAdornment from "@mui/material/InputAdornment";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import ControlledCountryCodePhoneInput from "@sharedComponents/inputs/ControlledCountryCodePhoneInput";
+import { paymentMethods } from "@utils/constants";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isBetween from "dayjs/plugin/isBetween";
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { usePrevShippingInfo, useUID, useXsDownMediaQuery } from "../../hooks";
+import { useIsLoggedIn, useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
-import { useUserDetails } from "../../modules/auth/src/authMutations";
 import {
   useAvailablePromoCodes,
   useOrderCount,
-  useSubmitOrder
+  useSubmitOrder,
 } from "../../modules/products/src/productQueries";
 import productSchema from "../../modules/products/src/productSchema";
 import CheckoutAddressListModal from "../../modules/products/views/CheckoutAddressListModal";
@@ -42,7 +41,6 @@ import ControlledPicker from "../../sharedComponents/inputs/ControlledPicker";
 import ControlledRadioButton from "../../sharedComponents/inputs/ControlledRadioButton";
 import ControlledTextInput from "../../sharedComponents/inputs/ControlledTextInput";
 import CheckoutCard from "../../styledComponents/products/CheckoutCard";
-import { stateOptions } from "../../utils/constants";
 import { formatPrice, generateHeader, roundTo2Dp } from "../../utils/helper";
 
 dayjs.extend(isBetween);
@@ -65,7 +63,9 @@ interface shippingFeeData {
 const Checkout = () => {
   const isXsView = useXsDownMediaQuery();
   const [selectedAddress, setSelectedAddress] =
-    useState<auth.addressData | null>();
+    useState<address.addressData | null>();
+
+  const { data: addressList } = useAddressList();
 
   const {
     shoppingCart,
@@ -79,14 +79,16 @@ const Checkout = () => {
     clearSelectedCheckoutItem();
   };
 
-  const { data: currentUserDetails } = useUserDetails();
+  const { data: stateOptions } = useStateOptions();
+
+  const { data: userDetails } = useAccountDetails();
+
   const { data: orderCount } = useOrderCount();
   const { mutate: submitOrder, isLoading: submitOrderLoading } =
     useSubmitOrder(onSuccessOrder);
   const { data: availablePromoCodes } = useAvailablePromoCodes();
 
-  const isLoggedIn = !!useUID();
-  const prevShippingInfo = usePrevShippingInfo();
+  const isLoggedIn = useIsLoggedIn();
 
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [extractedCartItem, setExtractedCartItem] = useState<
@@ -140,14 +142,11 @@ const Checkout = () => {
   }, [shoppingCart, selectedCheckoutItem]);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      const addressBook = currentUserDetails?.addressBook;
-      const defaultAddress = addressBook?.find(
-        (address) => address.defaultOption === "1"
-      );
+    if (addressList) {
+      const defaultAddress = addressList?.find((address) => address.isDefault);
       setSelectedAddress(defaultAddress);
     }
-  }, [currentUserDetails?.addressBook, isLoggedIn]);
+  }, [addressList]);
 
   const columns: GridColDef[] = [
     {
@@ -207,111 +206,34 @@ const Checkout = () => {
     },
   ];
 
-  const paymentOptions = [
-    { value: "TNG", label: "TNG E-Wallet" },
-    { value: "bankTransfer", label: "Bank Transfer" },
-  ];
-
   const handlePageSizeChange = (tablePageSize: number) => {
     setPageSize(tablePageSize);
   };
-
-  const selectedState = watch("state");
-  const outsideMalaysiaState =
-    selectedState && selectedState.value === "Outside Malaysia";
-
-  useEffect(() => {
-    if (!outsideMalaysiaState) {
-      setValue("country", "Malaysia");
-    } else {
-      setValue("country", "");
-    }
-  }, [setValue, outsideMalaysiaState]);
-
-  useEffect(() => {
-    const eastMalaysia =
-      selectedState &&
-      (selectedState.value === "Sabah" ||
-        selectedState.value === "Sarawak" ||
-        selectedState.value === "Labuan");
-    let intShipping = 0;
-    let strShipping = "-";
-    if (selectedState && selectedState.value !== "Outside Malaysia") {
-      if (eastMalaysia) {
-        if (totalAmount >= 150) {
-          strShipping = "Free";
-        } else {
-          intShipping = 15;
-          strShipping = formatPrice(15, "MYR");
-        }
-      } else if (totalAmount >= 80) {
-        strShipping = "Free";
-      } else {
-        intShipping = 8;
-        strShipping = formatPrice(8, "MYR");
-      }
-    }
-    setShippingFee({
-      realShipping: intShipping,
-      displayShipping: strShipping,
-    });
-  }, [selectedState, totalAmount]);
 
   const inputPromoCode = watch("promoCode");
 
   useEffect(() => {
     if (selectedAddress) {
       reset({
-        fullName: selectedAddress?.fullName,
-        email: selectedAddress?.email,
-        phoneNumber: selectedAddress?.phoneNumber
-          ? selectedAddress?.phoneNumber
-          : "60",
-        addressLine1: selectedAddress?.addressLine1,
-        addressLine2: selectedAddress?.addressLine2,
-        postcode: selectedAddress?.postcode,
-        city: selectedAddress?.city,
-        state: selectedAddress?.state
-          ? { label: selectedAddress?.state, value: selectedAddress?.state }
-          : { label: "", value: "" },
-        outsideMalaysiaState: selectedAddress?.outsideMalaysiaState,
-        country: selectedAddress?.country,
-        saveShippingInfo: false,
-        paymentOptions: "",
-        promoCode: inputPromoCode || "",
-      });
-    } else {
-      reset({
-        fullName: prevShippingInfo?.fullName,
-        email: prevShippingInfo?.email,
-        phoneNumber: prevShippingInfo?.phoneNumber
-          ? prevShippingInfo?.phoneNumber
-          : "60",
-        addressLine1: prevShippingInfo?.addressLine1,
-        addressLine2: prevShippingInfo?.addressLine2,
-        postcode: prevShippingInfo?.postcode,
-        city: prevShippingInfo?.city,
-        state: prevShippingInfo?.state
-          ? { label: prevShippingInfo?.state, value: prevShippingInfo?.state }
-          : { label: "", value: "" },
-        outsideMalaysiaState: prevShippingInfo?.outsideMalaysiaState,
-        country: prevShippingInfo?.country,
-        saveShippingInfo: prevShippingInfo?.saveShippingInfo,
-        paymentOptions: prevShippingInfo?.paymentOptions,
+        receiverName: selectedAddress.receiverName,
+        receiverCountryCode: selectedAddress.receiverCountryCode,
+        receiverPhoneNumber: selectedAddress.receiverPhoneNumber,
+        addressLineOne: selectedAddress.addressLineOne,
+        addressLineTwo: selectedAddress.addressLineTwo,
+        postcode: selectedAddress.postcode,
+        city: selectedAddress.city,
+        state: selectedAddress.state,
+        addToAddressBook: false,
+        paymentMethod: "",
         promoCode: inputPromoCode || "",
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, selectedAddress, inputPromoCode]);
 
   const validatePromoCode = useCallback(() => {
-    const isPromoCodeUsed =
-      currentUserDetails?.usedPromoCodes &&
-      currentUserDetails.usedPromoCodes.includes(inputPromoCode) &&
-      !!currentUserDetails.usedPromoCodes;
     let rawPromoObject: promoCodeObject = defaultPromoObject;
     let discountedPrice = totalAmount;
-    if (!isPromoCodeUsed) {
+    if (true) {
       const today = dayjs();
       const targetPromoCode = availablePromoCodes?.find(
         (promoCode) => promoCode.code === inputPromoCode
@@ -362,13 +284,7 @@ const Checkout = () => {
     }
     setAppliedPromo(rawPromoObject);
     return rawPromoObject.error;
-  }, [
-    availablePromoCodes,
-    currentUserDetails?.usedPromoCodes,
-    inputPromoCode,
-    totalAmount,
-    defaultPromoObject,
-  ]);
+  }, [availablePromoCodes, inputPromoCode, totalAmount, defaultPromoObject]);
 
   useEffect(() => {
     validatePromoCode();
@@ -407,7 +323,7 @@ const Checkout = () => {
     setIsCheckoutAddressListModalOpen(!isCheckoutAddressListModalOpen);
   };
 
-  const updateSelectedAddress = (address: auth.addressData | null) => {
+  const updateSelectedAddress = (address: address.addressData | null) => {
     setSelectedAddress(address);
     toggleCheckoutAddressListModal();
   };
@@ -420,15 +336,12 @@ const Checkout = () => {
         </Grid>
         <Grid item lg={4} xs={11}>
           <Typography variant="h6">Your Order</Typography>
-          <CheckoutCard
-            variant="outlined"
-            outsidemalaysiastate={outsideMalaysiaState}
-          >
+          <CheckoutCard variant="outlined">
             <Box
               height={{
                 xs: 300,
                 sm: 330,
-                lg: outsideMalaysiaState ? 770 : 690,
+                lg: 690,
               }}
             >
               <DataGrid
@@ -580,53 +493,52 @@ const Checkout = () => {
                     <Grid item xs={12}>
                       <ControlledTextInput
                         control={control}
-                        name="fullName"
-                        label="Full Name"
+                        name="receiverName"
+                        label="Receiver Name"
                         lightbg={1}
-                        formerror={errors.fullName}
-                        readOnly={!!selectedAddress?.fullName}
+                        formerror={errors.receiverName}
+                        readOnly={!!selectedAddress?.receiverName}
                       />
                     </Grid>
                     <Grid item sm={6} xs={12}>
                       <ControlledTextInput
                         control={control}
-                        name="email"
-                        label="Email Address"
+                        name="buyerEmail"
+                        label="Buyer Email Address"
                         lightbg={1}
-                        formerror={errors.email}
-                        readOnly={!!selectedAddress?.email}
+                        formerror={errors.buyerEmail}
                       />
                     </Grid>
-                    <Grid item sm={6} xs={12}>
-                      <ControlledTextInput
-                        control={control}
-                        name="phoneNumber"
-                        label="Phone Number"
-                        lightbg={1}
-                        startAdornment={
-                          <InputAdornment position="start">+</InputAdornment>
-                        }
-                        formerror={errors.phoneNumber}
-                        readOnly={!!selectedAddress?.email}
-                      />
-                    </Grid>
+                    <ControlledCountryCodePhoneInput
+                      control={control}
+                      countrycodeformerror={errors.receiverCountryCode}
+                      phonenumberformerror={errors.receiverPhoneNumber}
+                      defaultcountrycode="60"
+                      countrycodename="receiverCountryCode"
+                      phonenumbername="receiverPhoneNumber"
+                      lightbg={1}
+                      readOnly={
+                        !!selectedAddress?.receiverCountryCode &&
+                        !!selectedAddress?.receiverPhoneNumber
+                      }
+                    />
                     <Grid item xs={12}>
                       <ControlledTextInput
                         control={control}
-                        name="addressLine1"
+                        name="addressLineOne"
                         label="Address Line 1"
                         lightbg={1}
-                        formerror={errors.addressLine1}
-                        readOnly={!!selectedAddress?.addressLine1}
+                        formerror={errors.addressLineOne}
+                        readOnly={!!selectedAddress?.addressLineOne}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <ControlledTextInput
                         control={control}
-                        name="addressLine2"
+                        name="addressLineTwo"
                         label="Address Line 2"
                         lightbg={1}
-                        readOnly={!!selectedAddress?.addressLine1}
+                        readOnly={!!selectedAddress?.addressLineTwo}
                       />
                     </Grid>
                     <Grid item sm={6} xs={12}>
@@ -650,37 +562,29 @@ const Checkout = () => {
                         readOnly={!!selectedAddress?.city}
                       />
                     </Grid>
-                    <Grid item sm={6} xs={12}>
-                      <ControlledPicker
-                        control={control}
-                        options={stateOptions}
-                        name="state"
-                        lightbg={1}
-                        label="State"
-                        error={errors.state?.value}
-                        disabled={!!selectedAddress?.state}
-                      />
-                    </Grid>
-                    {outsideMalaysiaState && (
+                    {stateOptions && (
                       <Grid item sm={6} xs={12}>
-                        <ControlledTextInput
+                        <ControlledPicker
                           control={control}
-                          name="outsideMalaysiaState"
-                          label="Foreign Country State"
+                          options={stateOptions}
+                          name="state"
                           lightbg={1}
-                          formerror={errors.outsideMalaysiaState}
-                          readOnly={!!selectedAddress?.outsideMalaysiaState}
+                          label="State"
+                          // @ts-ignore
+                          error={errors.state}
+                          readOnly={!!selectedAddress?.state}
                         />
                       </Grid>
                     )}
-                    <Grid item sm={outsideMalaysiaState ? 12 : 6} xs={12}>
+                    <Grid item sm={6} xs={12}>
                       <ControlledTextInput
                         control={control}
                         name="country"
                         label="Country"
                         lightbg={1}
                         formerror={errors.country}
-                        readOnly={!!selectedAddress?.country}
+                        value="Malaysia"
+                        readOnly
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -716,7 +620,7 @@ const Checkout = () => {
                         rows={4}
                       />
                     </Grid>
-                    {!selectedAddress?.addressLine1 && (
+                    {isLoggedIn && !selectedAddress && (
                       <Grid
                         container
                         justifyContent="flex-start"
@@ -724,14 +628,10 @@ const Checkout = () => {
                         marginLeft={2.5}
                       >
                         <ControlledCheckbox
-                          name="saveShippingInfo"
+                          name="addToAddressBook"
                           control={control}
                           color="secondary"
-                          label={
-                            !isLoggedIn
-                              ? "Use this shipping information for the next time"
-                              : "Save to address book"
-                          }
+                          label="Save to address book"
                         />
                       </Grid>
                     )}
@@ -755,10 +655,10 @@ const Checkout = () => {
                   >
                     <ControlledRadioButton
                       control={control}
-                      name="paymentOptions"
-                      label="Payment Options:"
-                      options={paymentOptions}
-                      error={errors.paymentOptions}
+                      name="paymentMethod"
+                      label="Payment Methods"
+                      options={paymentMethods}
+                      error={errors.paymentMethod}
                       row={!isXsView}
                     />
                   </Grid>

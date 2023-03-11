@@ -8,7 +8,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import { useMemo } from "react";
 import StyledListItem from "../../../styledComponents/StyledListItem";
-import { useUserDetails } from "../../auth/src/authMutations";
 
 interface CheckoutAddressListModalOwnProps {
   isVisible: boolean;
@@ -20,11 +19,7 @@ interface CheckoutAddressListModalOwnProps {
 const CheckoutAddressListModal = (props: CheckoutAddressListModalOwnProps) => {
   const { isVisible, toggleModal, selectedAddress, updateSelectedAddress } =
     props;
-  const { data: userDetails } = useUserDetails();
-  const addressList = useMemo(
-    () => userDetails?.addressBook,
-    [userDetails?.addressBook]
-  );
+  const addressList = useMemo(() => [], []);
 
   return (
     <Dialog

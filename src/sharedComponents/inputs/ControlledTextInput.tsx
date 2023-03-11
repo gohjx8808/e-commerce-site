@@ -16,7 +16,7 @@ import {
 import StyledFormControl from "../../styledComponents/inputs/StyledFormControl";
 import CustomInputErrorIcon from "./CustomInputErrorIcon";
 
-interface ControlledTextInputOwnProps<T extends FieldValues>
+export interface ControlledTextInputProps<T extends FieldValues>
   extends Omit<OutlinedInputProps, "defaultValue" | "name"> {
   control: Control<T>;
   defaultinput?: UnpackNestedValue<PathValue<T, Path<T>>>;
@@ -30,7 +30,7 @@ interface ControlledTextInputOwnProps<T extends FieldValues>
 }
 
 const ControlledTextInput = <T extends FieldValues>(
-  props: ControlledTextInputOwnProps<T>
+  props: ControlledTextInputProps<T>
 ) => {
   const {
     control,
