@@ -212,7 +212,7 @@ const Checkout = () => {
   const inputPromoCode = watch("promoCode");
 
   useEffect(() => {
-    if (selectedAddress) {
+    if (isLoggedIn && selectedAddress) {
       reset({
         buyerEmail: userDetails?.email,
         receiverName: selectedAddress.receiverName,
