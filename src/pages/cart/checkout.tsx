@@ -5,6 +5,7 @@ import {
   useAddressList,
   useStateOptions,
 } from "@modules/address/src/addressQueries";
+import { useCalculateShippingFee } from "@modules/products/src/productMutations";
 import SEO from "@modules/SEO";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
@@ -55,11 +56,6 @@ interface promoCodeObject {
   discountedPrice: number;
 }
 
-interface shippingFeeData {
-  realShipping: number;
-  displayShipping: string;
-}
-
 const Checkout = () => {
   const isXsView = useXsDownMediaQuery();
   const [selectedAddress, setSelectedAddress] =
@@ -79,15 +75,6 @@ const Checkout = () => {
     clearSelectedCheckoutItem();
   };
 
-  const { data: stateOptions } = useStateOptions();
-
-  const { data: userDetails } = useAccountDetails();
-
-  const { data: orderCount } = useOrderCount();
-  const { mutate: submitOrder, isLoading: submitOrderLoading } =
-    useSubmitOrder(onSuccessOrder);
-  const { data: availablePromoCodes } = useAvailablePromoCodes();
-
   const isLoggedIn = useIsLoggedIn();
 
   const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -95,12 +82,21 @@ const Checkout = () => {
     products.shoppingCartItemData[]
   >([]);
   const [pageSize, setPageSize] = useState<number>(5);
-  const [shippingFee, setShippingFee] = useState<shippingFeeData>({
-    realShipping: 0,
-    displayShipping: "-",
-  });
+  const [shippingFee, setShippingFee] = useState<number>(0);
   const [isCheckoutAddressListModalOpen, setIsCheckoutAddressListModalOpen] =
     useState(false);
+
+  const { data: stateOptions } = useStateOptions();
+
+  const { data: userDetails } = useAccountDetails();
+
+  const { mutate: calculateShippingFee } =
+    useCalculateShippingFee(setShippingFee);
+
+  const { data: orderCount } = useOrderCount();
+  const { mutate: submitOrder, isLoading: submitOrderLoading } =
+    useSubmitOrder(onSuccessOrder);
+  const { data: availablePromoCodes } = useAvailablePromoCodes();
 
   const defaultPromoObject: promoCodeObject = useMemo(
     () => ({
@@ -211,6 +207,13 @@ const Checkout = () => {
 
   const inputPromoCode = watch("promoCode");
 
+  const onCalculateShippingFee = useCallback(
+    (state: optionsData) => {
+      calculateShippingFee({ state, totalAmount });
+    },
+    [calculateShippingFee, totalAmount]
+  );
+
   useEffect(() => {
     if (isLoggedIn && selectedAddress) {
       reset({
@@ -227,10 +230,18 @@ const Checkout = () => {
         paymentMethod: "",
         promoCode: inputPromoCode || "",
       });
+      onCalculateShippingFee(selectedAddress.state);
     } else {
       reset({});
     }
-  }, [reset, selectedAddress, inputPromoCode, userDetails?.email]);
+  }, [
+    reset,
+    selectedAddress,
+    inputPromoCode,
+    userDetails?.email,
+    isLoggedIn,
+    onCalculateShippingFee,
+  ]);
 
   const validatePromoCode = useCallback(() => {
     let rawPromoObject: promoCodeObject = defaultPromoObject;
@@ -422,7 +433,9 @@ const Checkout = () => {
               <Grid item lg={3} sm={2} xs={5}>
                 <Grid container justifyContent="flex-end">
                   <Typography variant="subtitle1" textAlign="right">
-                    {shippingFee.displayShipping}
+                    {shippingFee === 0
+                      ? "Free"
+                      : formatPrice(shippingFee, "MYR")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -445,7 +458,7 @@ const Checkout = () => {
                     fontWeight="bold"
                   >
                     {formatPrice(
-                      appliedPromo.discountedPrice + shippingFee.realShipping,
+                      appliedPromo.discountedPrice + shippingFee,
                       "MYR"
                     )}
                   </Typography>

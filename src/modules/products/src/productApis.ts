@@ -52,3 +52,10 @@ export const getAllProducts = (payload: products.getAllProductPayload) =>
 export const getSortOptions = () =>
   getRequest<Response<optionsData[]>>("products/sort-options");
 
+export const postCalculateShippingFee = (
+  payload: products.calculateShippingFeePayload
+) =>
+  postRequest<Response<{ shippingFee: number }>>(
+    "orders/calculate-shipping-fee",
+    payload
+  );

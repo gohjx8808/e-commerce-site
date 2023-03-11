@@ -79,4 +79,9 @@ declare namespace products {
   }
 
   type groupedProductData = { [x: string]: productData[] };
+
+  interface calculateShippingFeePayload {
+    state: optionsData;
+    totalAmount: number;
+  }
 }
