@@ -6,6 +6,7 @@ import {
   useStateOptions,
 } from "@modules/address/src/addressQueries";
 import { useCalculateShippingFee } from "@modules/products/src/productMutations";
+import CircularProgress from "@mui/material/CircularProgress";
 import SEO from "@modules/SEO";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
@@ -90,8 +91,10 @@ const Checkout = () => {
 
   const { data: userDetails } = useAccountDetails();
 
-  const { mutate: calculateShippingFee } =
-    useCalculateShippingFee(setShippingFee);
+  const {
+    mutate: calculateShippingFee,
+    isLoading: calculateShippingFeeLoading,
+  } = useCalculateShippingFee(setShippingFee);
 
   const { data: orderCount } = useOrderCount();
   const { mutate: submitOrder, isLoading: submitOrderLoading } =
@@ -432,11 +435,15 @@ const Checkout = () => {
               </Grid>
               <Grid item lg={3} sm={2} xs={5}>
                 <Grid container justifyContent="flex-end">
-                  <Typography variant="subtitle1" textAlign="right">
-                    {shippingFee === 0
-                      ? "Free"
-                      : formatPrice(shippingFee, "MYR")}
-                  </Typography>
+                  {calculateShippingFeeLoading ? (
+                    <CircularProgress color="secondary" size={20} />
+                  ) : (
+                    <Typography variant="subtitle1" textAlign="right">
+                      {shippingFee === 0
+                        ? "Free"
+                        : formatPrice(shippingFee, "MYR")}
+                    </Typography>
+                  )}
                 </Grid>
               </Grid>
               <Grid item lg={9} sm={10} xs={7}>
