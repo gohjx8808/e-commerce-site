@@ -248,7 +248,9 @@ const Checkout = () => {
         postcode: selectedAddress.postcode,
         city: selectedAddress.city,
         state: selectedAddress.state,
-        promoCode: promoCodeApplied?.name,
+        promoCode: watch("promoCode"),
+        note: watch("note"),
+        paymentMethod: watch("paymentMethod"),
       });
     } else {
       reset({
@@ -261,7 +263,9 @@ const Checkout = () => {
         postcode: "",
         city: "",
         state: { id: "", name: "" },
-        promoCode: promoCodeApplied?.name,
+        promoCode: watch("promoCode"),
+        note: watch("note"),
+        paymentMethod: watch("paymentMethod"),
       });
     }
   }, [
@@ -270,6 +274,7 @@ const Checkout = () => {
     userDetails?.email,
     isLoggedIn,
     promoCodeApplied,
+    watch,
   ]);
 
   const onVerifyPromoCode = () => {
