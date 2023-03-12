@@ -6,14 +6,17 @@ import { AxiosError } from "axios";
 import { postCalculateShippingFee, postVerifyPromoCode } from "./productApis";
 
 export const useCalculateShippingFee = (
-  setShippingFee: (value: number) => void
+  setShippingFee: (value: products.shippingFeeData) => void
 ) => {
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);
 
   return useMutation("calculateShippingFee", postCalculateShippingFee, {
     onSuccess: (response) => {
-      setShippingFee(response.data.data.shippingFee);
+      setShippingFee({
+        shippingFee: response.data.data.shippingFee,
+        valid: true,
+      });
     },
     onError: () => {
       toggleSuccess(false);

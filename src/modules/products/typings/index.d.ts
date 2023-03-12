@@ -95,4 +95,38 @@ declare namespace products {
     promoType: string;
     promoValue: number;
   }
+
+  interface checkoutProduct {
+    productId: string;
+    name: string;
+    pricePerItem: number;
+    quantity: number;
+    totalPrice: number;
+  }
+
+  interface checkoutPayload {
+    products: checkoutProduct[];
+    addressId?: number;
+    buyerEmail: string;
+    receiverName?: string;
+    receiverCountryCode?: number;
+    receiverPhoneNumber?: number;
+    addressLineOne?: string;
+    addressLineTwo?: string;
+    postcode?: number;
+    city?: string;
+    state?: optionsData;
+    country?: "Malaysia";
+    promoCodeUsed: promoCodeData;
+    paymentMethod: string;
+    note?: string;
+    addToAddressBook: boolean;
+    totalAmount: number;
+    shippingFee: number;
+  }
+
+  interface shippingFeeData {
+    shippingFee: number;
+    valid: boolean;
+  }
 }

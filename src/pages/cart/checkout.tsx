@@ -28,15 +28,11 @@ import { paymentMethods } from "@utils/constants";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isBetween from "dayjs/plugin/isBetween";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useIsLoggedIn, useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
-import {
-  useAvailablePromoCodes,
-  useOrderCount,
-  useSubmitOrder,
-} from "../../modules/products/src/productQueries";
+import { useSubmitOrder } from "../../modules/products/src/productQueries";
 import productSchema from "../../modules/products/src/productSchema";
 import CheckoutAddressListModal from "../../modules/products/views/CheckoutAddressListModal";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
@@ -51,15 +47,6 @@ import { formatPrice, generateHeader, roundTo2Dp } from "../../utils/helper";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
-
-interface promoCodeObject {
-  code: string;
-  discountType: string;
-  discountValue: string;
-  error: string;
-  success: string;
-  discountedPrice: number;
-}
 
 const Checkout = () => {
   const isXsView = useXsDownMediaQuery();
@@ -87,7 +74,10 @@ const Checkout = () => {
     products.shoppingCartItemData[]
   >([]);
   const [pageSize, setPageSize] = useState<number>(5);
-  const [shippingFee, setShippingFee] = useState<number | "-">("-");
+  const [shippingFee, setShippingFee] = useState<products.shippingFeeData>({
+    shippingFee: 0,
+    valid: false,
+  });
   const [isCheckoutAddressListModalOpen, setIsCheckoutAddressListModalOpen] =
     useState(false);
   const [promoCodeApplied, setPromoCodeApplied] =
@@ -107,23 +97,8 @@ const Checkout = () => {
     isLoading: calculateShippingFeeLoading,
   } = useCalculateShippingFee(setShippingFee);
 
-  const { data: orderCount } = useOrderCount();
   const { mutate: submitOrder, isLoading: submitOrderLoading } =
     useSubmitOrder(onSuccessOrder);
-
-  const defaultPromoObject: promoCodeObject = useMemo(
-    () => ({
-      code: "",
-      error: "",
-      success: "",
-      discountValue: "",
-      discountType: "",
-      discountedPrice: totalAmount,
-    }),
-    [totalAmount]
-  );
-  const [appliedPromo, setAppliedPromo] =
-    useState<promoCodeObject>(defaultPromoObject);
 
   const {
     control,
@@ -232,7 +207,7 @@ const Checkout = () => {
     if (stateSelected?.id) {
       onCalculateShippingFee(stateSelected);
     } else {
-      setShippingFee("-");
+      setShippingFee({ shippingFee: 0, valid: false });
     }
   }, [onCalculateShippingFee, stateSelected]);
 
@@ -288,30 +263,14 @@ const Checkout = () => {
   const proceedToPayment: SubmitHandler<products.checkoutFormPayload> = async (
     hookData
   ) => {
-    const emailData: products.sendPaymentEmailPayload = {
+    const checkoutData: products.checkoutPayload = {
       ...hookData,
-      state: hookData.state.value,
-      accUserName: currentUserDetails?.fullName
-        ? currentUserDetails.fullName
-        : hookData.fullName,
-      currentOrderCount: orderCount + 1,
       totalAmount,
-      discountMargin: `${
-        appliedPromo.code
-          ? `${appliedPromo.discountType === "value" ? "RM " : ""}${
-              appliedPromo.discountValue
-            }${appliedPromo.discountType === "percentage" ? "%" : ""}`
-          : ""
-      }`,
-      discount: totalAmount - appliedPromo.discountedPrice,
-      discountedAmount: appliedPromo.discountedPrice + shippingFee.realShipping,
-      shippingFee: shippingFee.realShipping,
+      shippingFee: shippingFee.shippingFee,
       selectedCheckoutItems: extractedCartItem,
     };
 
-    if (!validatePromoCode()) {
-      submitOrder(emailData);
-    }
+    submitOrder(checkoutData);
   };
 
   const toggleCheckoutAddressListModal = () => {
@@ -324,11 +283,11 @@ const Checkout = () => {
   };
 
   const formatShippingFee = () => {
-    if (shippingFee !== "-") {
-      if (shippingFee === 0) {
+    if (shippingFee.valid) {
+      if (shippingFee.shippingFee === 0) {
         return "Free";
       }
-      return formatPrice(shippingFee, "MYR");
+      return formatPrice(shippingFee.shippingFee, "MYR");
     }
     return "-";
   };
@@ -464,10 +423,12 @@ const Checkout = () => {
                     textAlign="right"
                     fontWeight="bold"
                   >
-                    {shippingFee === "-"
+                    {!shippingFee.valid
                       ? "-"
                       : formatPrice(
-                          totalAmount - +getPromoValue() + shippingFee,
+                          totalAmount -
+                            +getPromoValue() +
+                            shippingFee.shippingFee,
                           "MYR"
                         )}
                   </Typography>
@@ -700,7 +661,7 @@ const Checkout = () => {
                       size="medium"
                       type="submit"
                       loading={submitOrderLoading}
-                      disabled={shippingFee === "-"}
+                      disabled={!shippingFee.valid}
                     >
                       Proceed To Payment
                     </LoadingButton>
