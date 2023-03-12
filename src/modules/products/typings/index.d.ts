@@ -1,13 +1,4 @@
 declare namespace products {
-  interface shoppingCartItemData {
-    id: string;
-    quantity: number;
-    img?: productImageData;
-    name: string;
-    price: number;
-    itemPrice: number;
-  }
-
   interface submitShippingInfoPayload {
     receiverName: string;
     buyerEmail: string;
@@ -18,9 +9,9 @@ declare namespace products {
     postcode: string;
     city: string;
     state: optionsData;
-    country: string;
-    promoCode: string;
-    note: string;
+    country: "Malaysia";
+    promoCode?: string;
+    note?: string;
     addToAddressBook: boolean;
     paymentMethod: string;
   }
@@ -102,6 +93,7 @@ declare namespace products {
     pricePerItem: number;
     quantity: number;
     totalPrice: number;
+    img?: productImageData;
   }
 
   interface checkoutPayload {
@@ -109,15 +101,15 @@ declare namespace products {
     addressId?: number;
     buyerEmail: string;
     receiverName?: string;
-    receiverCountryCode?: number;
-    receiverPhoneNumber?: number;
+    receiverCountryCode?: string;
+    receiverPhoneNumber?: string;
     addressLineOne?: string;
     addressLineTwo?: string;
-    postcode?: number;
+    postcode?: string;
     city?: string;
     state?: optionsData;
     country?: "Malaysia";
-    promoCodeUsed: promoCodeData;
+    promoCodeUsed?: promoCodeData;
     paymentMethod: string;
     note?: string;
     addToAddressBook: boolean;

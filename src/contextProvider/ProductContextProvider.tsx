@@ -7,7 +7,7 @@ import { productLocalStorageKeys } from "@utils/localStorageKeys";
 import React, { createContext, useEffect, useState } from "react";
 
 interface productContextState {
-  shoppingCart: products.shoppingCartItemData[];
+  shoppingCart: products.checkoutProduct[];
   addToCart: (
     productData: products.productData,
     isKeyChainSeries: boolean,
@@ -49,9 +49,9 @@ export const ProductContext = createContext(initialState);
 const ProductContextProvider = (props: parentComponent) => {
   const { children } = props;
 
-  const [shoppingCart, setShoppingCart] = useState<
-    products.shoppingCartItemData[]
-  >([]);
+  const [shoppingCart, setShoppingCart] = useState<products.checkoutProduct[]>(
+    []
+  );
   // only store item ID
   const [selectedCheckoutItem, setSelectedCheckoutItem] = useState<string[]>(
     []
@@ -83,28 +83,33 @@ const ProductContextProvider = (props: parentComponent) => {
       variation
     );
     const productName = productData.name + variationSuffix;
+
+    const price = productData.discountedPrice
+      ? roundTo2Dp(productData.discountedPrice)
+      : roundTo2Dp(productData.price);
+
     const formattedData = {
-      id: productData.id + variationSuffix,
+      productId: productData.id + variationSuffix,
       name: productName,
       img: productData.productImages[0],
-      price: productData.discountedPrice
-        ? roundTo2Dp(productData.discountedPrice)
-        : roundTo2Dp(productData.price),
+      pricePerItem: price,
       quantity,
-    } as products.shoppingCartItemData;
+      totalPrice: 0,
+    } as products.checkoutProduct;
+
     const targetIndex = shoppingCartItems.findIndex(
-      (item) => item.id === formattedData.id
+      (item) => item.productId === formattedData.productId
     );
     // no same item in cart storage
     if (targetIndex === -1) {
-      formattedData.itemPrice = roundTo2Dp(
-        formattedData.price * formattedData.quantity
+      formattedData.totalPrice = roundTo2Dp(
+        formattedData.pricePerItem * formattedData.quantity
       );
       shoppingCartItems.push(formattedData);
     } else {
       shoppingCartItems[targetIndex].quantity += formattedData.quantity;
-      shoppingCartItems[targetIndex].itemPrice +=
-        formattedData.price * formattedData.quantity;
+      shoppingCartItems[targetIndex].totalPrice +=
+        formattedData.pricePerItem * formattedData.quantity;
     }
     localStorage.setItem(
       productLocalStorageKeys.SHOPPING_CART,
@@ -119,16 +124,16 @@ const ProductContextProvider = (props: parentComponent) => {
   ) => {
     const shoppingCartItems = [...shoppingCart];
     const targetIndex = shoppingCartItems.findIndex(
-      (item) => item.id === itemId
+      (item) => item.productId === itemId
     );
     if (mode === "increase") {
       shoppingCartItems[targetIndex].quantity += 1;
-      shoppingCartItems[targetIndex].itemPrice +=
-        shoppingCartItems[targetIndex].price;
+      shoppingCartItems[targetIndex].totalPrice +=
+        shoppingCartItems[targetIndex].pricePerItem;
     } else if (mode === "reduce") {
       shoppingCartItems[targetIndex].quantity -= 1;
-      shoppingCartItems[targetIndex].itemPrice -=
-        shoppingCartItems[targetIndex].price;
+      shoppingCartItems[targetIndex].totalPrice -=
+        shoppingCartItems[targetIndex].pricePerItem;
     } else {
       shoppingCartItems.splice(targetIndex, 1);
     }
@@ -158,7 +163,7 @@ const ProductContextProvider = (props: parentComponent) => {
   const removeCartItem = () => {
     let cartItem = [...shoppingCart];
     cartItem = cartItem.filter(
-      (item) => !selectedCheckoutItem.includes(item.id)
+      (item) => !selectedCheckoutItem.includes(item.productId)
     );
     setShoppingCart(cartItem);
     localStorage.setItem(

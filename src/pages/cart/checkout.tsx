@@ -70,8 +70,8 @@ const Checkout = () => {
   const isLoggedIn = useIsLoggedIn();
 
   const [totalAmount, setTotalAmount] = useState<number>(0);
-  const [extractedCartItem, setExtractedCartItem] = useState<
-    products.shoppingCartItemData[]
+  const [checkoutProduct, setCheckoutProduct] = useState<
+    products.checkoutProduct[]
   >([]);
   const [pageSize, setPageSize] = useState<number>(5);
   const [shippingFee, setShippingFee] = useState<products.shippingFeeData>({
@@ -112,24 +112,24 @@ const Checkout = () => {
 
   useEffect(() => {
     const filteredItems = shoppingCart.filter((item) => {
-      if (selectedCheckoutItem.includes(item.id)) {
-        const itemPrice = +item.price * +item.quantity;
+      if (selectedCheckoutItem.includes(item.productId)) {
+        const itemPrice = +item.pricePerItem * +item.quantity;
         // eslint-disable-next-line no-param-reassign
-        item = { ...item, itemPrice: roundTo2Dp(itemPrice) };
+        item = { ...item, totalPrice: roundTo2Dp(itemPrice) };
         setTotalAmount((prevTotalAmount) => prevTotalAmount + itemPrice);
         return true;
       }
       return false;
     });
-    setExtractedCartItem(filteredItems);
+    setCheckoutProduct(filteredItems);
   }, [shoppingCart, selectedCheckoutItem]);
 
   useEffect(() => {
-    if (addressList) {
+    if (isLoggedIn && addressList) {
       const defaultAddress = addressList?.find((address) => address.isDefault);
       setSelectedAddress(defaultAddress);
     }
-  }, [addressList]);
+  }, [addressList, isLoggedIn]);
 
   const columns: GridColDef[] = [
     {
@@ -139,7 +139,7 @@ const Checkout = () => {
       renderCell: ExpandedCell,
     },
     {
-      field: "price",
+      field: "pricePerItem",
       headerName: "Price per Unit",
       flex: 1,
       align: "center",
@@ -155,7 +155,7 @@ const Checkout = () => {
       sortable: false,
     },
     {
-      field: "itemPrice",
+      field: "totalPrice",
       headerName: "Total Price",
       sortable: false,
       flex: 1,
@@ -180,7 +180,7 @@ const Checkout = () => {
       sortable: false,
     },
     {
-      field: "itemPrice",
+      field: "totalPrice",
       headerName: "Total Price",
       sortable: false,
       flex: 1,
@@ -226,6 +226,7 @@ const Checkout = () => {
         promoCode: watch("promoCode"),
         note: watch("note"),
         paymentMethod: watch("paymentMethod"),
+        country: "Malaysia",
       });
     } else {
       reset({
@@ -241,6 +242,7 @@ const Checkout = () => {
         promoCode: watch("promoCode"),
         note: watch("note"),
         paymentMethod: watch("paymentMethod"),
+        country: "Malaysia",
       });
     }
   }, [
@@ -258,19 +260,22 @@ const Checkout = () => {
     }
   };
 
-  useDebounce(inputPromoCode, onVerifyPromoCode);
+  useDebounce(inputPromoCode || "", onVerifyPromoCode);
 
   const proceedToPayment: SubmitHandler<products.checkoutFormPayload> = async (
     hookData
   ) => {
     const checkoutData: products.checkoutPayload = {
       ...hookData,
+      addressId: selectedAddress?.id,
       totalAmount,
       shippingFee: shippingFee.shippingFee,
-      selectedCheckoutItems: extractedCartItem,
+      products: checkoutProduct,
     };
 
-    submitOrder(checkoutData);
+    console.log(checkoutData);
+
+    // submitOrder(checkoutData);
   };
 
   const toggleCheckoutAddressListModal = () => {
@@ -318,8 +323,9 @@ const Checkout = () => {
                 lg: 690,
               }}
             >
-              <DataGrid
-                rows={extractedCartItem}
+              <DataGrid<products.checkoutProduct>
+                getRowId={(row) => row.productId}
+                rows={checkoutProduct}
                 columns={isXsView ? xsColumns : columns}
                 disableColumnMenu
                 pageSize={pageSize}
@@ -567,7 +573,6 @@ const Checkout = () => {
                         label="Country"
                         lightbg={1}
                         formerror={errors.country}
-                        value="Malaysia"
                         readOnly
                       />
                     </Grid>

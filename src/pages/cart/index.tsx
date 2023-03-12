@@ -30,12 +30,12 @@ const Cart = () => {
   const cartTitle = ["Item", "Price (RM)", "Quantity", "Total (RM)"];
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [toBeRemovedItem, setToBeRemovedItem] =
-    useState<products.shoppingCartItemData>({
-      id: "",
+    useState<products.checkoutProduct>({
+      productId: "",
       name: "",
       quantity: 0,
-      price: 0,
-      itemPrice: 0,
+      pricePerItem: 0,
+      totalPrice: 0,
     });
   const [removeConfirmModalDisplay, setRemoveConfirmModalDisplay] =
     useState<boolean>(false);
@@ -50,8 +50,8 @@ const Cart = () => {
   useEffect(() => {
     let currentTotal = 0;
     shoppingCart.map((item) => {
-      if (selectedCheckoutItem.includes(item.id)) {
-        currentTotal += +item.itemPrice;
+      if (selectedCheckoutItem.includes(item.productId)) {
+        currentTotal += +item.totalPrice;
       }
       return null;
     });
@@ -63,7 +63,7 @@ const Cart = () => {
       if (event.target.checked) {
         const allIds = [] as string[];
         shoppingCart.map((item) => {
-          allIds.push(item.id);
+          allIds.push(item.productId);
           return null;
         });
         updateSelectedCheckoutItem(allIds);
@@ -84,17 +84,17 @@ const Cart = () => {
     setRemoveConfirmModalDisplay(!removeConfirmModalDisplay);
   };
 
-  const onReduceItemQuantity = (cartItem: products.shoppingCartItemData) => {
+  const onReduceItemQuantity = (cartItem: products.checkoutProduct) => {
     if (cartItem.quantity - 1 === 0) {
       setToBeRemovedItem(cartItem);
       toggleRemoveConfirmModalDisplay();
     } else {
-      modifyItemQuantity(cartItem.id, "reduce");
+      modifyItemQuantity(cartItem.productId, "reduce");
     }
   };
 
   const confirmItemRemove = () => {
-    modifyItemQuantity(toBeRemovedItem.id, "delete");
+    modifyItemQuantity(toBeRemovedItem.productId, "delete");
     toggleRemoveConfirmModalDisplay();
   };
 
@@ -184,7 +184,7 @@ const Cart = () => {
               <CartCard>
                 <CardContent>
                   {shoppingCart.map((cartItem, index) => (
-                    <Grid key={cartItem.id}>
+                    <Grid key={cartItem.productId}>
                       <CartItemGrid
                         container
                         display={{ xs: "none", sm: "flex" }}
@@ -198,15 +198,15 @@ const Cart = () => {
                           >
                             <Checkbox
                               checked={selectedCheckoutItem.includes(
-                                cartItem.id
+                                cartItem.productId
                               )}
                               color="secondary"
                               onChange={onChangeSelect}
-                              id={cartItem.id}
+                              id={cartItem.productId}
                               inputProps={
                                 {
-                                  "aria-label": cartItem.id,
-                                  "data-price": +cartItem.itemPrice,
+                                  "aria-label": cartItem.productId,
+                                  "data-price": +cartItem.totalPrice,
                                 } as CartItemCheckboxProps
                               }
                             />
@@ -233,7 +233,7 @@ const Cart = () => {
                             justifyContent="center"
                             alignItems="center"
                           >
-                            <Typography>{cartItem.price}</Typography>
+                            <Typography>{cartItem.pricePerItem}</Typography>
                           </Grid>
                         </Grid>
                         <Grid item sm={3} md={2}>
@@ -250,7 +250,7 @@ const Cart = () => {
                             <Typography>{cartItem.quantity}</Typography>
                             <IconButton
                               onClick={() =>
-                                onIncreaseItemQuantity(cartItem.id)
+                                onIncreaseItemQuantity(cartItem.productId)
                               }
                             >
                               <AddIcon />
@@ -263,7 +263,7 @@ const Cart = () => {
                             justifyContent="center"
                             alignItems="center"
                           >
-                            <Typography>{cartItem.itemPrice}</Typography>
+                            <Typography>{cartItem.totalPrice}</Typography>
                           </Grid>
                         </Grid>
                       </CartItemGrid>
@@ -280,15 +280,15 @@ const Cart = () => {
                           >
                             <Checkbox
                               checked={selectedCheckoutItem.includes(
-                                cartItem.id
+                                cartItem.productId
                               )}
                               color="secondary"
                               onChange={onChangeSelect}
-                              id={cartItem.id}
+                              id={cartItem.productId}
                               inputProps={
                                 {
-                                  "aria-label": cartItem.id,
-                                  "data-price": +cartItem.itemPrice,
+                                  "aria-label": cartItem.productId,
+                                  "data-price": +cartItem.totalPrice,
                                 } as CartItemCheckboxProps
                               }
                             />
@@ -331,14 +331,14 @@ const Cart = () => {
                                 <Typography>{cartItem.quantity}</Typography>
                                 <IconButton
                                   onClick={() =>
-                                    onIncreaseItemQuantity(cartItem.id)
+                                    onIncreaseItemQuantity(cartItem.productId)
                                   }
                                 >
                                   <AddIcon />
                                 </IconButton>
                               </Grid>
                               <Typography>
-                                {formatPrice(+cartItem.itemPrice, "MYR")}
+                                {formatPrice(+cartItem.totalPrice, "MYR")}
                               </Typography>
                             </Grid>
                           </Grid>
