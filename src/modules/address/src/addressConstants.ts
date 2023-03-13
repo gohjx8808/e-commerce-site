@@ -7,7 +7,7 @@ export const defaultAddressData: address.addAddressPayload = {
   addressLineTwo: "",
   postcode: "",
   city: "",
-  state: "",
+  state: { id: "", name: "" },
   country: "Malaysia",
   isDefault: false,
   tag: "",

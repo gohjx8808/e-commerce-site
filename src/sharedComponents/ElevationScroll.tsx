@@ -1,5 +1,5 @@
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import { cloneElement } from 'react';
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import { cloneElement } from "react";
 
 interface Props {
   children: React.ReactElement;

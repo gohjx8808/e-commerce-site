@@ -50,7 +50,7 @@ const SignUp = () => {
   const onSubmitSignUp: SubmitHandler<auth.signUpFormData> = (hookData) => {
     const submitData: auth.submitSignUpPayload = {
       ...hookData,
-      gender: hookData.gender.id,
+      gender: hookData.gender.id as string,
     };
     submitSignUp(submitData);
   };

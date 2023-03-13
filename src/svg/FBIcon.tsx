@@ -1,5 +1,5 @@
-import SvgIcon from '@mui/material/SvgIcon';
-import React from 'react';
+import SvgIcon from "@mui/material/SvgIcon";
+import React from "react";
 
 const FBIcon = () => (
   <SvgIcon
@@ -14,7 +14,8 @@ const FBIcon = () => (
       transform="translate(0.000000,531.000000) scale(0.100000,-0.100000)"
       stroke="none"
     >
-      <path d="M2435 5299 c-902 -74 -1709 -611 -2134 -1419 -295 -564 -377 -1256
+      <path
+        d="M2435 5299 c-902 -74 -1709 -611 -2134 -1419 -295 -564 -377 -1256
         -220 -1874 232 -914 936 -1641 1838 -1901 159 -45 366 -84 498 -92 l103 -6 0
         1021 0 1022 -347 2 -348 3 0 400 0 400 348 3 347 2 0 368 c0 398 7 479 55 627
         82 250 243 438 470 546 205 98 369 119 768 100 144 -6 283 -15 310 -18 l47 -6

@@ -1,10 +1,10 @@
-import Box from '@mui/material/Box';
-import React, { useEffect } from 'react';
+import Box from "@mui/material/Box";
+import React, { useEffect } from "react";
 
 declare global {
   interface Window {
-      FB:any;
-      fbAsyncInit:()=>void
+    FB: any;
+    fbAsyncInit: () => void;
   }
 }
 
@@ -12,10 +12,10 @@ function MessengerChat() {
   useEffect(() => {
     window.fbAsyncInit = function () {
       window.FB.init({
-        appId: '1214227789043974',
+        appId: "1214227789043974",
         autoLogAppEvents: true,
         xfbml: true,
-        version: 'v12.0',
+        version: "v12.0",
       });
     };
     (function (d, s, id) {
@@ -26,13 +26,13 @@ function MessengerChat() {
       js = d.createElement(s);
       js.id = id;
       // @ts-ignore
-      js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+      js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
       fjs.parentNode!.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    })(document, "script", "facebook-jssdk");
   });
 
   return (
-    <Box display={{ xs: 'none', sm: 'flex' }}>
+    <Box display={{ xs: "none", sm: "flex" }}>
       <div id="fb-root" />
       <div
         className="fb-customerchat"

@@ -17,7 +17,8 @@ import { useForm } from "react-hook-form";
 import ControlledDatePicker from "../../../sharedComponents/inputs/ControlledDatePicker";
 import ControlledTextInput from "../../../sharedComponents/inputs/ControlledTextInput";
 import DialogActionButtonsContainer from "../../../styledComponents/DialogActionButtonsContainer";
-import { useAccountDetails, useUpdateAccDetails } from "../src/accountQueries";
+import { useUpdateAccDetails } from "../src/accountMutations";
+import { useAccountDetails } from "../src/accountQueries";
 import { editAccountSchema } from "../src/accountSchemas";
 
 interface editAccDetailModalProps extends DialogProps {
@@ -43,7 +44,10 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
   } = useUpdateAccDetails(toggleModal, refetch);
 
   const onSubmit = (hookData: account.updateAccDetailsFormData) => {
-    submitUpdateAccDetails({ ...hookData, gender: hookData.gender.id });
+    submitUpdateAccDetails({
+      ...hookData,
+      gender: hookData.gender.id as string,
+    });
   };
 
   return (

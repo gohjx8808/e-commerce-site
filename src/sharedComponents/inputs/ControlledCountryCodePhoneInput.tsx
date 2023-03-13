@@ -1,5 +1,4 @@
 import Grid from "@mui/material/Grid";
-import { OutlinedInputProps } from "@mui/material/OutlinedInput";
 import {
   Control,
   FieldError,

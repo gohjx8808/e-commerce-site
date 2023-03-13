@@ -12,7 +12,8 @@ import {
   UnpackNestedValue,
 } from "react-hook-form";
 
-interface ControlledCheckboxOwnProps<T> extends Omit<CheckboxProps, "name"> {
+interface ControlledCheckboxOwnProps<T extends FieldValues>
+  extends Omit<CheckboxProps, "name"> {
   control: Control<T>;
   label: string;
   error?: FieldError;

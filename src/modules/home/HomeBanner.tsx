@@ -1,21 +1,21 @@
-import { graphql, useStaticQuery } from 'gatsby';
-import { getImage, ImageDataLike } from 'gatsby-plugin-image';
-import React from 'react';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import HomeCarousel from '../../styledComponents/home/HomeCarousel';
-import HomeCarouselImage from '../../styledComponents/home/HomeCarouselImage';
+import { graphql, useStaticQuery } from "gatsby";
+import { getImage, ImageDataLike } from "gatsby-plugin-image";
+import React from "react";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import HomeCarousel from "../../styledComponents/home/HomeCarousel";
+import HomeCarouselImage from "../../styledComponents/home/HomeCarouselImage";
 
 interface imageInnerStructure {
   node: {
-    childImageSharp: ImageDataLike
-    id: string
-  }
+    childImageSharp: ImageDataLike;
+    id: string;
+  };
 }
 
 const HomeBanner = () => {
   const homeBannerQuery = useStaticQuery(graphql`
     query {
-      allFile(filter: {relativeDirectory: {eq: "banner"}}) {
+      allFile(filter: { relativeDirectory: { eq: "banner" } }) {
         edges {
           node {
             childImageSharp {

@@ -8,8 +8,6 @@ import { useMutation } from "react-query";
 import routeNames from "../../../utils/routeNames";
 import { logIn, resetPassword, signUp } from "./authApis";
 
-export const getCurrentUserDetailsKey = "getCurrentUserDetails";
-
 export const useForgotPassword = () => {
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);

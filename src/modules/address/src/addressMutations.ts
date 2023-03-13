@@ -5,7 +5,6 @@ import { useMutation } from "react-query";
 import { addAddress, deleteAddress, updateAddress } from "./addressApis";
 import { useAddressList } from "./addressQueries";
 
-/* eslint-disable import/prefer-default-export */
 export const useDeleteAddress = (toggleModal: () => void) => {
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);

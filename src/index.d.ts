@@ -14,10 +14,6 @@ interface toggleButtonOptionData {
   activeColor: string;
 }
 
-interface customObject {
-  [key: string]: any;
-}
-
 type booleanInteger = 1 | 0;
 
 interface parentComponent {

@@ -25,7 +25,7 @@ const EnlargedProductImageCarouselModal = () => {
         transitionTime={800}
       >
         {enlargedImageCarouselData.imageList.map((image) => (
-            <img key={image.filename} src={image.url} alt={image.filename} />
+          <img key={image.filename} src={image.url} alt={image.filename} />
         ))}
       </Carousel>
     </Dialog>

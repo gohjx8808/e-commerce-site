@@ -1,8 +1,8 @@
-import { styled } from '@mui/material/styles';
-import { GatsbyImage } from 'gatsby-plugin-image';
+import { styled } from "@mui/material/styles";
+import { GatsbyImage } from "gatsby-plugin-image";
 
 const HomeCarouselImage = styled(GatsbyImage)(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up("sm")]: {
     borderRadius: 10,
   },
 }));

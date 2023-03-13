@@ -12,7 +12,7 @@ import {
 } from "react-hook-form";
 import StyledTextField from "../../styledComponents/inputs/StyledTextField";
 
-interface ControlledDatePickerOwnProps<T>
+interface ControlledDatePickerOwnProps<T extends FieldValues>
   extends Omit<DatePickerProps<Dayjs>, "renderInput" | "onChange" | "value"> {
   control: Control<T>;
   defaultdate?: UnpackNestedValue<PathValue<T, Path<T>>>;

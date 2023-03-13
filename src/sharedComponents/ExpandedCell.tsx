@@ -1,11 +1,9 @@
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import { GridCellParams } from '@mui/x-data-grid';
-import React, {
-  memo, useRef, useState,
-} from 'react';
-import ExpandedCellPopper from '../styledComponents/ExpandedCellPopper';
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { GridCellParams } from "@mui/x-data-grid";
+import React, { memo, useRef, useState } from "react";
+import ExpandedCellPopper from "../styledComponents/ExpandedCellPopper";
 
 interface CellExpandProps {
   value: string;
@@ -23,7 +21,8 @@ const CellExpand = memo((props: CellExpandProps) => {
 
   const handleMouseEnter = () => {
     const currentCellValue = cellValue.current!;
-    const isCurrentlyOverflown = currentCellValue.clientWidth < currentCellValue.scrollWidth;
+    const isCurrentlyOverflown =
+      currentCellValue.clientWidth < currentCellValue.scrollWidth;
     setShowPopper(isCurrentlyOverflown);
     setAnchorEl(cellDiv.current);
     setShowFullCell(true);
@@ -41,12 +40,7 @@ const CellExpand = memo((props: CellExpandProps) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Box
-        ref={cellDiv}
-        width={width}
-        position="absolute"
-        top={0}
-      />
+      <Box ref={cellDiv} width={width} position="absolute" top={0} />
       <Box ref={cellValue} overflow="hidden" textOverflow="ellipsis">
         {value}
       </Box>
@@ -56,9 +50,7 @@ const CellExpand = memo((props: CellExpandProps) => {
           anchorEl={anchorEl}
           width={width}
         >
-          <Paper
-            elevation={1}
-          >
+          <Paper elevation={1}>
             <Typography variant="body2" padding={1}>
               {value}
             </Typography>
@@ -73,10 +65,7 @@ const ExpandedCell = (params: GridCellParams) => {
   const { value, colDef } = params;
 
   return (
-    <CellExpand
-      value={value ? value.toString() : ''}
-      width={colDef.width!}
-    />
+    <CellExpand value={value ? value.toString() : ""} width={colDef.width!} />
   );
 };
 

@@ -2,11 +2,11 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-filename-extension */
-import React from 'react';
-import PropTypes from 'prop-types';
-import CircularProgress from '@mui/material/CircularProgress';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
+import React from "react";
+import PropTypes from "prop-types";
+import CircularProgress from "@mui/material/CircularProgress";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
 
 export default function HTML(props) {
   return (
@@ -26,11 +26,11 @@ export default function HTML(props) {
           key="loader"
           id="___loader"
           style={{
-            alignItems: 'center',
-            backgroundColor: '#F2F2F2',
-            display: 'flex',
-            justifyContent: 'center',
-            position: 'absolute',
+            alignItems: "center",
+            backgroundColor: "#F2F2F2",
+            display: "flex",
+            justifyContent: "center",
+            position: "absolute",
             left: 0,
             top: 0,
             right: 0,
@@ -38,7 +38,7 @@ export default function HTML(props) {
             zIndex: 100,
           }}
         >
-          <CircularProgress style={{ color: '#B67B5E' }} />
+          <CircularProgress style={{ color: "#B67B5E" }} />
         </div>
         <div
           key="body"

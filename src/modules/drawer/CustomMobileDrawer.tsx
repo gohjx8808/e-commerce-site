@@ -1,23 +1,19 @@
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import React from 'react';
-import { drawerWidth } from '../../utils/constants';
-import CustomDrawerItems from './CustomDrawerItems';
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import React from "react";
+import { drawerWidth } from "../../utils/constants";
+import CustomDrawerItems from "./CustomDrawerItems";
 
-interface CustomMobileDrawerOwnProps{
-  drawerOpen:boolean
-  toggleDrawer:()=>void
+interface CustomMobileDrawerOwnProps {
+  drawerOpen: boolean;
+  toggleDrawer: () => void;
 }
 
-const CustomMobileDrawer = (props:CustomMobileDrawerOwnProps) => {
+const CustomMobileDrawer = (props: CustomMobileDrawerOwnProps) => {
   const { drawerOpen, toggleDrawer } = props;
 
   return (
-    <Drawer
-      anchor="left"
-      open={drawerOpen}
-      onClose={toggleDrawer}
-    >
+    <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
       <Box
         width={drawerWidth}
         role="presentation"

@@ -1,5 +1,5 @@
-import SvgIcon from '@mui/material/SvgIcon';
-import React from 'react';
+import SvgIcon from "@mui/material/SvgIcon";
+import React from "react";
 
 const XhsIcon = () => (
   <SvgIcon
@@ -14,7 +14,8 @@ const XhsIcon = () => (
       transform="translate(0.000000,531.000000) scale(0.100000,-0.100000)"
       stroke="none"
     >
-      <path d="M2465 5304 c-791 -66 -1487 -452 -1952 -1084 -252 -343 -417 -744
+      <path
+        d="M2465 5304 c-791 -66 -1487 -452 -1952 -1084 -252 -343 -417 -744
           -485 -1185 -31 -201 -31 -559 0 -760 120 -774 535 -1421 1187 -1848 320 -209
           684 -344 1090 -403 167 -25 533 -25 700 0 737 107 1358 477 1792 1066 253 343
           417 744 485 1185 29 187 31 549 4 730 -116 792 -530 1444 -1191 1878 -318 208

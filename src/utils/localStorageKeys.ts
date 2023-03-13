@@ -5,11 +5,6 @@ export enum productLocalStorageKeys {
   SELECTED_CHECKOUT_ITEM = "selectedCheckoutItem",
 }
 
-export enum accountLocalStorageKeys {
-  CURRENT_USER = "currentUser",
-  UID = "uid",
-}
-
 export enum authLocalStorageKeys {
   TOKEN = "token",
   USER = "user",

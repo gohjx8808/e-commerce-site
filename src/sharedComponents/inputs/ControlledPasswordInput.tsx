@@ -6,15 +6,21 @@ import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput, { OutlinedInputProps } from "@mui/material/OutlinedInput";
 import React, { useState } from "react";
-import { Control, Controller, FieldError, FieldValues, Path } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldError,
+  FieldValues,
+  Path,
+} from "react-hook-form";
 import StyledFormControl from "../../styledComponents/inputs/StyledFormControl";
 import CustomInputErrorIcon from "./CustomInputErrorIcon";
 
 interface ControlledPasswordInputOwnProps<T extends FieldValues>
-  extends Omit<OutlinedInputProps,"name"> {
+  extends Omit<OutlinedInputProps, "name"> {
   control: Control<T>;
   formerror?: FieldError;
-  name:Path<T>
+  name: Path<T>;
 }
 
 const ControlledPasswordInput = <T extends FieldValues>(

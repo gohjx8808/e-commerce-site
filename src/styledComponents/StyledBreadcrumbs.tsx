@@ -1,5 +1,5 @@
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import { styled } from '@mui/material/styles';
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import { styled } from "@mui/material/styles";
 
 const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   marginTop: theme.spacing(2),
