@@ -8,6 +8,7 @@ import {
 } from "@modules/address/src/addressQueries";
 import {
   useCalculateShippingFee,
+  useCheckout,
   useVerifyPromoCode,
 } from "@modules/products/src/productMutations";
 import SEO from "@modules/SEO";
@@ -32,7 +33,6 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useIsLoggedIn, useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
-import { useSubmitOrder } from "../../modules/products/src/productQueries";
 import productSchema from "../../modules/products/src/productSchema";
 import CheckoutAddressListModal from "../../modules/products/views/CheckoutAddressListModal";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
@@ -55,17 +55,7 @@ const Checkout = () => {
 
   const { data: addressList } = useAddressList();
 
-  const {
-    shoppingCart,
-    selectedCheckoutItem,
-    clearSelectedCheckoutItem,
-    removeCartItem,
-  } = useContext(ProductContext);
-
-  const onSuccessOrder = () => {
-    removeCartItem();
-    clearSelectedCheckoutItem();
-  };
+  const { shoppingCart, selectedCheckoutItem } = useContext(ProductContext);
 
   const isLoggedIn = useIsLoggedIn();
 
@@ -80,8 +70,9 @@ const Checkout = () => {
   });
   const [isCheckoutAddressListModalOpen, setIsCheckoutAddressListModalOpen] =
     useState(false);
-  const [promoCodeApplied, setPromoCodeApplied] =
-    useState<products.promoCodeData | null>(null);
+  const [promoCodeApplied, setPromoCodeApplied] = useState<
+    products.promoCodeData | undefined
+  >(undefined);
 
   const [promoCodeError, setPromoCodeError] = useState<string>("");
 
@@ -97,8 +88,7 @@ const Checkout = () => {
     isLoading: calculateShippingFeeLoading,
   } = useCalculateShippingFee(setShippingFee);
 
-  const { mutate: submitOrder, isLoading: submitOrderLoading } =
-    useSubmitOrder(onSuccessOrder);
+  const { mutate: checkout, isLoading: checkoutLoading } = useCheckout();
 
   const {
     control,
@@ -227,6 +217,7 @@ const Checkout = () => {
         note: watch("note"),
         paymentMethod: watch("paymentMethod"),
         country: "Malaysia",
+        addToAddressBook: watch("addToAddressBook"),
       });
     } else {
       reset({
@@ -243,6 +234,7 @@ const Checkout = () => {
         note: watch("note"),
         paymentMethod: watch("paymentMethod"),
         country: "Malaysia",
+        addToAddressBook: watch("addToAddressBook"),
       });
     }
   }, [
@@ -271,11 +263,11 @@ const Checkout = () => {
       totalAmount,
       shippingFee: shippingFee.shippingFee,
       products: checkoutProduct,
+      promoCodeUsed: promoCodeApplied,
+      addToAddressBook: hookData.addToAddressBook || false,
     };
 
-    console.log(checkoutData);
-
-    // submitOrder(checkoutData);
+    checkout(checkoutData);
   };
 
   const toggleCheckoutAddressListModal = () => {
@@ -665,7 +657,7 @@ const Checkout = () => {
                       color="secondary"
                       size="medium"
                       type="submit"
-                      loading={submitOrderLoading}
+                      loading={checkoutLoading}
                       disabled={!shippingFee.valid}
                     >
                       Proceed To Payment

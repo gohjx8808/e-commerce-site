@@ -3,7 +3,13 @@ import { StatusModalContext } from "@contextProvider/StatusModalContextProvider"
 import { useMutation } from "react-query";
 import { useContext } from "react";
 import { AxiosError } from "axios";
-import { postCalculateShippingFee, postVerifyPromoCode } from "./productApis";
+import { navigate } from "gatsby";
+import { ProductContext } from "@contextProvider/ProductContextProvider";
+import {
+  postCalculateShippingFee,
+  postCheckout,
+  postVerifyPromoCode,
+} from "./productApis";
 
 export const useCalculateShippingFee = (
   setShippingFee: (value: products.shippingFeeData) => void
@@ -30,7 +36,7 @@ export const useCalculateShippingFee = (
 };
 
 export const useVerifyPromoCode = (
-  setPromoCodeApplied: (value: products.promoCodeData | null) => void,
+  setPromoCodeApplied: (value?: products.promoCodeData) => void,
   setPromoCodeError: (value: string) => void
 ) =>
   useMutation("verifyPromoCode", postVerifyPromoCode, {
@@ -43,6 +49,36 @@ export const useVerifyPromoCode = (
         error.response?.data.message ||
           "Please check your internet connection or contact us at hello@yjartjournal.com for assistance."
       );
-      setPromoCodeApplied(null);
+      setPromoCodeApplied(undefined);
     },
   });
+
+export const useCheckout = () => {
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
+
+  const { clearSelectedCheckoutItem, removeCartItem } =
+    useContext(ProductContext);
+
+  return useMutation("submitOrder", postCheckout, {
+    onSuccess: () => {
+      toggleSuccess(true);
+      updateTitle("Your order is confirmed");
+      updateMsg(
+        "An email regarding payment details will be sent to your email shortly. Please kindly proceed your payment within 24 hours."
+      );
+      toggleVisible(true);
+      removeCartItem();
+      clearSelectedCheckoutItem();
+      navigate("/");
+    },
+    onError: () => {
+      toggleSuccess(false);
+      updateTitle("Order confirmation failed");
+      updateMsg(
+        "Please check your internet connection or contact us at hello@yjartjournal.com for assistance."
+      );
+      toggleVisible(true);
+    },
+  });
+};

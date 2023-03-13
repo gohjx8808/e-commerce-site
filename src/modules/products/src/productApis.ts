@@ -66,3 +66,6 @@ export const postVerifyPromoCode = (payload: products.verifyPromoCodePayload) =>
     payload,
     true
   );
+
+export const postCheckout = (payload: products.checkoutPayload) =>
+  postRequest("orders/checkout", payload, true);
