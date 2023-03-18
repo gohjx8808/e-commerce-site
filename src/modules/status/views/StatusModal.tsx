@@ -29,13 +29,6 @@ const defaultIGatsbyData: IGatsbyImageData = {
 };
 
 const StatusModal = () => {
-  const isXsView = useXsDownMediaQuery();
-  const { isSuccess, isVisible, title, msg, toggleVisible } =
-    useContext(StatusModalContext);
-  const [successImg, setSuccessImg] =
-    useState<IGatsbyImageData>(defaultIGatsbyData);
-  const [failImg, setFailImg] = useState<IGatsbyImageData>(defaultIGatsbyData);
-
   const statusQuery = useStaticQuery(graphql`
     query {
       allFile(filter: { relativeDirectory: { eq: "statusBanner" } }) {
@@ -50,6 +43,15 @@ const StatusModal = () => {
       }
     }
   `);
+
+  const isXsView = useXsDownMediaQuery();
+  const defaultImg = getImage(
+    statusQuery.allFile.edges[0].node.childImageSharp
+  );
+  const { isSuccess, isVisible, title, msg, toggleVisible } =
+    useContext(StatusModalContext);
+  const [successImg, setSuccessImg] = useState<IGatsbyImageData>(defaultImg!);
+  const [failImg, setFailImg] = useState<IGatsbyImageData>(defaultImg!);
 
   useEffect(() => {
     statusQuery.allFile.edges.map((imageData: statusQueryInnerData) => {

@@ -3,6 +3,9 @@ require("dotenv").config({
 });
 
 module.exports = {
+  flags: {
+    DEV_SSR: true
+  },
   siteMetadata: {
     title: "yjArtJournal",
     titleTemplate: "%s | The Handmade Cottage",
