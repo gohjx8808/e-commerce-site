@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import AuthLayout from "@layouts/AuthLayout";
+import { useResetPassword } from "@modules/auth/src/authMutations";
 import { resetPasswordSchema } from "@modules/auth/src/authSchema";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
@@ -39,8 +40,11 @@ const ResetPassword: FC<PageProps> = (props) => {
     resolver: yupResolver(resetPasswordSchema),
   });
 
+  const { mutate: submitResetPassword, isLoading: resetPasswordLoading } =
+    useResetPassword();
+
   const onSubmit: SubmitHandler<auth.resetPasswordFormData> = (hookData) => {
-    console.log(hookData);
+    submitResetPassword(hookData);
   };
 
   return (
@@ -114,6 +118,7 @@ const ResetPassword: FC<PageProps> = (props) => {
                         color="primary"
                         type="submit"
                         fullWidth
+                        loading={resetPasswordLoading}
                       >
                         Submit
                       </LoadingButton>

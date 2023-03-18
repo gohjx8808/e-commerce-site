@@ -5,7 +5,12 @@ import { navigate } from "gatsby";
 import { useContext } from "react";
 import { useMutation } from "react-query";
 import routeNames from "../../../utils/routeNames";
-import { logIn, postForgotPassword, signUp } from "./authApis";
+import {
+  logIn,
+  postForgotPassword,
+  postResetPassword,
+  signUp,
+} from "./authApis";
 
 export const useForgotPassword = () => {
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
@@ -16,6 +21,30 @@ export const useForgotPassword = () => {
       toggleSuccess(true);
       updateMsg(
         "An email to reset your password has been sent to your registered email address."
+      );
+      toggleVisible(true);
+      navigate(routeNames.login);
+    },
+    onError: (error: AxiosError<customErrorData>) => {
+      updateMsg(
+        error.response?.data.message || "Network error! Please try again."
+      );
+      toggleSuccess(false);
+      toggleVisible(true);
+    },
+    onSettled: () => updateTitle("Reset Password"),
+  });
+};
+
+export const useResetPassword = () => {
+  const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
+    useContext(StatusModalContext);
+
+  return useMutation("submitResetPassword", postResetPassword, {
+    onSuccess: () => {
+      toggleSuccess(true);
+      updateMsg(
+        "Your password had been reset. Please login using your new password."
       );
       toggleVisible(true);
       navigate(routeNames.login);

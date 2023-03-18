@@ -8,3 +8,6 @@ export const logIn = (payload: auth.logInPayload) =>
 
 export const postForgotPassword = (payload: auth.submitForgotPasswordPayload) =>
   postRequest("forgot-password", payload);
+
+export const postResetPassword = (payload: auth.resetPasswordPayload) =>
+  postRequest("forgot-password/reset-password", payload);
