@@ -93,6 +93,7 @@ const ForgotPassword = () => {
                     </Typography>
                     <Grid item xs={12} sm={10}>
                       <ControlledTextInput
+                        isCapitalize={false}
                         control={control}
                         name="email"
                         label="Email"

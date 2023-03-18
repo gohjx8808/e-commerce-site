@@ -2,17 +2,16 @@ import { StatusModalContext } from "@contextProvider/StatusModalContextProvider"
 import { authLocalStorageKeys } from "@utils/localStorageKeys";
 import { AxiosError } from "axios";
 import { navigate } from "gatsby";
-import firebase from "gatsby-plugin-firebase";
 import { useContext } from "react";
 import { useMutation } from "react-query";
 import routeNames from "../../../utils/routeNames";
-import { logIn, resetPassword, signUp } from "./authApis";
+import { logIn, postForgotPassword, signUp } from "./authApis";
 
 export const useForgotPassword = () => {
   const { toggleSuccess, toggleVisible, updateMsg, updateTitle } =
     useContext(StatusModalContext);
 
-  return useMutation("submitForgotPassword", resetPassword, {
+  return useMutation("submitForgotPassword", postForgotPassword, {
     onSuccess: () => {
       toggleSuccess(true);
       updateMsg(
@@ -21,14 +20,10 @@ export const useForgotPassword = () => {
       toggleVisible(true);
       navigate(routeNames.login);
     },
-    onError: (error: firebase.auth.Error) => {
-      if (error.code === "auth/user-not-found") {
-        updateMsg(
-          "The email address is not registered. Please insert a registered email address!"
-        );
-      } else {
-        updateMsg("Network error! Please try again.");
-      }
+    onError: (error: AxiosError<customErrorData>) => {
+      updateMsg(
+        error.response?.data.message || "Network error! Please try again."
+      );
       toggleSuccess(false);
       toggleVisible(true);
     },
