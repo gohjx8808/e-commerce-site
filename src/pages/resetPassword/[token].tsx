@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import ControlledPasswordInput from "@sharedComponents/inputs/ControlledPasswordInput";
 import ControlledTextInput from "@sharedComponents/inputs/ControlledTextInput";
 import { AuthCard, AuthCardHeader, AuthIcon } from "@styledComponents/auth";
-import { graphql, navigate, PageProps, useStaticQuery } from "gatsby";
+import { graphql, PageProps, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -42,10 +42,6 @@ const ResetPassword: FC<PageProps> = (props) => {
   const onSubmit: SubmitHandler<auth.resetPasswordFormData> = (hookData) => {
     console.log(hookData);
   };
-
-  if (!token) {
-    navigate("/");
-  }
 
   return (
     <AuthLayout>

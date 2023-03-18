@@ -21,7 +21,7 @@ import Typography from "@mui/material/Typography";
 import { authLocalStorageKeys } from "@utils/localStorageKeys";
 import { navigate } from "gatsby";
 import React, { useContext, useEffect, useState } from "react";
-import { usePathname, useXsDownMediaQuery } from "../hooks";
+import { useIsLoggedIn, usePathname, useXsDownMediaQuery } from "../hooks";
 import ElevationScroll from "../sharedComponents/ElevationScroll";
 import StyledAppBar from "../styledComponents/drawer/StyledAppBar";
 import {
@@ -76,7 +76,7 @@ const MenuBar = () => {
     setTotalQuantity(total);
   }, [shoppingCart]);
 
-  const isSignedIn = localStorage.getItem(authLocalStorageKeys.TOKEN);
+  const isLoggedIn = useIsLoggedIn();
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchor);
 
@@ -99,7 +99,7 @@ const MenuBar = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {isSignedIn ? (
+      {isLoggedIn ? (
         <StyledMenuItem disableRipple>
           <Grid container justifyContent="center" alignItems="center">
             <Typography>{`Welcome, ${greetingName}`}</Typography>
@@ -115,7 +115,7 @@ const MenuBar = () => {
           </StyledMenuItem>
         </div>
       )}
-      {isSignedIn && (
+      {isLoggedIn && (
         <div>
           <StyledMenuItem
             onClick={() => navigate(routeNames.account)}
@@ -212,7 +212,7 @@ const MenuBar = () => {
               </Tooltip>
             )}
             <Box display={{ xs: "none", md: "flex" }} alignItems="center">
-              {isSignedIn ? (
+              {isLoggedIn ? (
                 <Box marginRight={2}>
                   <Typography>{`Welcome, ${greetingName}`}</Typography>
                 </Box>
@@ -241,7 +241,7 @@ const MenuBar = () => {
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-              {isSignedIn && (
+              {isLoggedIn && (
                 <>
                   <IconButton
                     aria-label="account"

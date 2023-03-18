@@ -39,11 +39,14 @@ export const compareString = (a: string, b: string) => {
 export const roundTo2Dp = (value: number) => Number(value.toFixed(2));
 
 export const getLocalStorageItem = (key: string) => {
-  try {
-    return JSON.parse(String(localStorage.getItem(key)));
-  } catch (error) {
-    return localStorage.getItem(key);
+  if (typeof window !== "undefined") {
+    try {
+      return JSON.parse(String(localStorage.getItem(key)));
+    } catch (error) {
+      return localStorage.getItem(key);
+    }
   }
+  return null;
 };
 
 export const generateHeader = (title: string) => `${title} | YJ Art Journal`;
