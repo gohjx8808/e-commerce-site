@@ -113,6 +113,7 @@ module.exports = {
           "@styledComponents": "src/styledComponents",
           "@sharedComponents": "src/sharedComponents",
           "@hooks": "src/hooks",
+          "@layouts": "src/layouts",
         },
         extensions: ["ts"],
       },

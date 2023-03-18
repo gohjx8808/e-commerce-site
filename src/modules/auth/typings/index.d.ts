@@ -28,4 +28,13 @@ declare namespace auth {
   interface submitForgotPasswordPayload {
     email: string;
   }
+
+  interface resetPasswordPayload {
+    token: string;
+    password: string;
+  }
+
+  interface resetPasswordFormData extends resetPasswordPayload {
+    confirmPassword: string;
+  }
 }

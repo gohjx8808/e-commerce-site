@@ -21,6 +21,7 @@
       "@styledComponents": ["src/styledComponents"],
       "@sharedComponents": ["src/sharedComponents"],
       "@hooks": ["src/hooks"],
+      "@layouts": ["src/layouts"]
     }
   },
   "include": ["./src/**/*"]
