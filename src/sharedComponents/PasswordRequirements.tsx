@@ -48,7 +48,7 @@ const PasswordRequirements = (props: PasswordRequirementsOwnProps) => {
   );
 
   const validatePassword = useCallback(() => {
-    toggleMet("containsAC", /^[A-Za-z]/.test(password));
+    toggleMet("containsAC", /[A-Za-z]/.test(password));
     toggleMet("containsN", /\d/.test(password));
     toggleMet("contains8C", password ? password.length >= 8 : false);
     toggleMet(
