@@ -1,3 +1,4 @@
+import { useXsDownMediaQuery } from "@hooks";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 import { Dayjs } from "dayjs";
 import React from "react";
@@ -26,13 +27,15 @@ const ControlledDatePicker = <T extends FieldValues>(
 ) => {
   const { control, name, defaultdate, formerror, lightbg } = props;
 
+  const isXsView = useXsDownMediaQuery();
+
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange, value } }) => (
         <DatePicker
-          inputFormat="DD/MM/YYYY"
+          inputFormat={isXsView ? "YYYY-MM-DD" : "DD/MM/YYYY"}
           value={value}
           onChange={(selectedDate) =>
             onChange(selectedDate ? selectedDate?.format("YYYY-MM-DD") : "")
