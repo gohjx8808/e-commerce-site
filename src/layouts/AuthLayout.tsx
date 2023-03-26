@@ -1,7 +1,7 @@
 import { useIsLoggedIn } from "@hooks";
 import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
+import LoadingIndicator from "@sharedComponents/LoadingIndicator";
 import { navigate } from "gatsby";
 import { Suspense } from "react";
 import Footer from "../modules/Footer";
@@ -18,15 +18,7 @@ const AuthLayout = (props: parentComponent) => {
   return (
     <Suspense
       fallback={
-        <Grid
-          container
-          display="flex"
-          minHeight="100vh"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <CircularProgress color="primary" size={60} />
-        </Grid>
+        <LoadingIndicator />
       }
     >
       <Box display="flex" minHeight="100vh" bgcolor="customPrimary.main">

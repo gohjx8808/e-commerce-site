@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import LoadingIndicator from "@sharedComponents/LoadingIndicator";
 import { socialMediaLinks } from "@utils/constants";
 import { generateHeader } from "@utils/helper";
 import { graphql, useStaticQuery } from "gatsby";
@@ -37,7 +38,7 @@ const Products = () => {
   });
 
   const { data: sortByOptions } = useSortOptions();
-  const { data: allCategories } = useProductCategories();
+  const { data: allCategories, isLoading: categoryLoading } = useProductCategories();
 
   useEffect(() => {
     if (allProducts) {
@@ -148,7 +149,7 @@ const Products = () => {
           </Grid>
         )}
       </Grid>
-      {availableCategories?.map((category) => (
+      {categoryLoading ? <LoadingIndicator minHeight="50vh" /> : availableCategories?.map((category) => (
         <Grid
           container
           justifyContent="center"

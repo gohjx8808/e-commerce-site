@@ -1,10 +1,10 @@
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import LoadingIndicator from "@sharedComponents/LoadingIndicator";
 import { navigate } from "gatsby";
 import React, { FC, ReactNode, Suspense, useEffect } from "react";
 import Footer from "../modules/Footer";
@@ -35,15 +35,7 @@ const MainLayout: FC<MainLayoutOwnProps> = (props) => {
     <>
       <Suspense
         fallback={
-          <Grid
-            container
-            display="flex"
-            minHeight="100vh"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <CircularProgress color="primary" size={60} />
-          </Grid>
+          <LoadingIndicator />
         }
       >
         <Box display="flex" minHeight="100vh">

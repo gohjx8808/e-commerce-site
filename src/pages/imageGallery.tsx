@@ -1,10 +1,10 @@
 import { useImageGalleryImages } from "@modules/imageGallery/src/imageGalleryQueries";
 import SEO from "@modules/SEO";
 import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
+import LoadingIndicator from "@sharedComponents/LoadingIndicator";
 import { generateHeader } from "@utils/helper";
 import { useState } from "react";
 import MainLayout from "../layouts/MainLayout";
@@ -25,15 +25,7 @@ const ImageGallery = () => {
       <Grid item xs={12}>
         <Box paddingTop={1}>
           {!contentfulImages ? (
-            <Grid
-              container
-              display="flex"
-              minHeight="100vh"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <CircularProgress color="primary" size={60} />
-            </Grid>
+            <LoadingIndicator />
           ) : (
             <ImageList rowHeight="auto" cols={5} variant="quilted">
               {contentfulImages.map((imageDetails) => (
