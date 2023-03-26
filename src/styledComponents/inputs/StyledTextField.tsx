@@ -2,35 +2,37 @@ import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 
 interface StyledTextFieldProps {
-  lightbg?: booleanInteger;
+  lightBg?: boolean;
 }
 
-const StyledTextField = styled(TextField)<StyledTextFieldProps>(
-  ({ theme, lightbg }) => ({
+const StyledTextField = styled(TextField, {
+  shouldForwardProp: prop => prop !== "lightBg",
+})<StyledTextFieldProps>(
+  ({ theme, lightBg }) => ({
     width: "100%",
     "& label": {
-      color: !lightbg && theme.palette.common.white,
+      color: !lightBg && theme.palette.common.white,
       "&.Mui-focused": {
-        color: lightbg
+        color: lightBg
           ? theme.palette.secondary.main
           : theme.palette.primary.main,
       },
     },
     "& .MuiOutlinedInput-root": {
-      color: !lightbg && theme.palette.common.white,
+      color: !lightBg && theme.palette.common.white,
       "& fieldset": {
-        borderColor: !lightbg && theme.palette.common.white,
+        borderColor: !lightBg && theme.palette.common.white,
       },
       "&:hover fieldset": {
         borderColor: "lightgrey",
       },
       "&.Mui-focused fieldset": {
-        borderColor: lightbg
+        borderColor: lightBg
           ? theme.palette.secondary.main
           : theme.palette.primary.main,
       },
       "& .MuiInputAdornment-root button": {
-        color: !lightbg && theme.palette.common.white,
+        color: !lightBg && theme.palette.common.white,
       },
       "&.Mui-error .MuiInputAdornment-root button": {
         color: theme.palette.error.main,

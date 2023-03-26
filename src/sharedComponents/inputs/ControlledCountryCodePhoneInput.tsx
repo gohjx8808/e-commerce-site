@@ -32,6 +32,7 @@ const ControlledCountryCodePhoneInput = <T extends FieldValues>(
     phonenumberformerror,
     countrycodename,
     phonenumbername,
+    ...rest
   } = props;
 
   return (
@@ -44,7 +45,7 @@ const ControlledCountryCodePhoneInput = <T extends FieldValues>(
             formerror={countrycodeformerror}
             type="number"
             defaultinput={defaultcountrycode}
-            {...props}
+            {...rest}
           />
         </Grid>
         <Grid item xs={8}>
@@ -69,7 +70,7 @@ ControlledCountryCodePhoneInput.defaultProps = {
   phonenumberformerror: null,
   countrycodename: "",
   phonenumbername: "",
-  lightbg: 0,
+  lightBg: false,
 };
 
 export default ControlledCountryCodePhoneInput;

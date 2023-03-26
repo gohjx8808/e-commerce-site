@@ -18,14 +18,14 @@ interface ControlledDatePickerOwnProps<T extends FieldValues>
   control: Control<T>;
   defaultdate?: UnpackNestedValue<PathValue<T, Path<T>>>;
   formerror?: FieldError;
-  lightbg?: booleanInteger;
+  lightBg?: boolean;
   name: Path<T>;
 }
 
 const ControlledDatePicker = <T extends FieldValues>(
   props: ControlledDatePickerOwnProps<T>
 ) => {
-  const { control, name, defaultdate, formerror, lightbg } = props;
+  const { control, name, defaultdate, formerror, lightBg,...rest } = props;
 
   const isXsView = useXsDownMediaQuery();
 
@@ -44,13 +44,13 @@ const ControlledDatePicker = <T extends FieldValues>(
             <StyledTextField
               {...params}
               error={!!formerror}
-              lightbg={lightbg}
+              lightBg={lightBg}
               helperText={formerror?.message}
               type="date"
             />
           )}
           disableFuture
-          {...props}
+          {...rest}
         />
       )}
       defaultValue={defaultdate}
@@ -61,7 +61,7 @@ const ControlledDatePicker = <T extends FieldValues>(
 ControlledDatePicker.defaultProps = {
   defaultdate: "",
   formerror: null,
-  lightbg: 0,
+  lightBg: false,
 };
 
 export default ControlledDatePicker;

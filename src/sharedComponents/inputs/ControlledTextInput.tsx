@@ -21,7 +21,7 @@ export interface ControlledTextInputProps<T extends FieldValues>
   control: Control<T>;
   defaultinput?: UnpackNestedValue<PathValue<T, Path<T>>>;
   formerror?: FieldError;
-  lightbg?: booleanInteger;
+  lightBg?: boolean;
   maxLength?: number;
   readOnly?: boolean;
   infotext?: string;
@@ -38,12 +38,13 @@ const ControlledTextInput = <T extends FieldValues>(
     name,
     defaultinput,
     formerror,
-    lightbg,
+    lightBg,
     maxLength,
     readOnly,
     infotext,
     disabled,
     isCapitalize,
+    ...rest
   } = props;
 
   return (
@@ -51,7 +52,7 @@ const ControlledTextInput = <T extends FieldValues>(
       control={control}
       name={name!}
       render={({ field: { onChange, value } }) => (
-        <StyledFormControl disabled={disabled} lightbg={lightbg}>
+        <StyledFormControl disabled={disabled} lightBg={lightBg}>
           <InputLabel htmlFor={name} error={!!formerror}>
             {label}
           </InputLabel>
@@ -78,7 +79,7 @@ const ControlledTextInput = <T extends FieldValues>(
               readOnly,
               style: { textTransform: isCapitalize ? "capitalize" : "none" },
             }}
-            {...props}
+            {...rest}
           />
           <FormHelperText error>{formerror?.message}</FormHelperText>
           <FormHelperText>{infotext}</FormHelperText>
@@ -92,7 +93,7 @@ const ControlledTextInput = <T extends FieldValues>(
 ControlledTextInput.defaultProps = {
   defaultinput: "",
   formerror: null,
-  lightbg: 0,
+  lightBg: false,
   maxLength: null,
   readOnly: false,
   infotext: "",

@@ -2,31 +2,33 @@ import FormControl from "@mui/material/FormControl";
 import { styled } from "@mui/material/styles";
 
 interface StyledAutocompleteFormControlProps {
-  lightbg?: booleanInteger;
+  lightBg?: boolean;
 }
 
 const StyledAutocompleteFormControl = styled(
-  FormControl
-)<StyledAutocompleteFormControlProps>(({ theme, lightbg }) => ({
+  FormControl, {
+  shouldForwardProp: prop => prop !== "lightBg",
+}
+)<StyledAutocompleteFormControlProps>(({ theme, lightBg }) => ({
   width: "100%",
   "& label": {
-    color: !lightbg && theme.palette.common.white,
+    color: !lightBg && theme.palette.common.white,
     "&.Mui-focused": {
-      color: lightbg
+      color: lightBg
         ? theme.palette.secondary.main
         : theme.palette.primary.main,
     },
   },
   "& .MuiOutlinedInput-root": {
-    color: !lightbg && theme.palette.common.white,
+    color: !lightBg && theme.palette.common.white,
     "& fieldset": {
-      borderColor: !lightbg && theme.palette.common.white,
+      borderColor: !lightBg && theme.palette.common.white,
     },
     "&:hover fieldset": {
       borderColor: "lightgrey",
     },
     "&.Mui-focused fieldset": {
-      borderColor: lightbg
+      borderColor: lightBg
         ? theme.palette.secondary.main
         : theme.palette.primary.main,
     },
@@ -34,11 +36,11 @@ const StyledAutocompleteFormControl = styled(
       color: theme.palette.error.main,
     },
     "& .MuiAutocomplete-endAdornment button": {
-      color: !lightbg && theme.palette.common.white,
+      color: !lightBg && theme.palette.common.white,
     },
   },
   "& .MuiInput-root": {
-    color: !lightbg && theme.palette.common.white,
+    color: !lightBg && theme.palette.common.white,
   },
 }));
 

@@ -141,7 +141,7 @@ const Products = () => {
                 name="sortBy"
                 options={sortByOptions}
                 label="Sort By"
-                lightbg={1}
+                lightBg={true}
                 disableClearable
                 defaultcheck={{ id: 1, name: "Name: A to Z" }}
               />

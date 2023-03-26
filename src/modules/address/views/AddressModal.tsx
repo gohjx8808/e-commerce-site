@@ -133,7 +133,7 @@ const AddressModal = (props: AddressModalProps) => {
               <ControlledTextInput
                 control={control}
                 name="receiverName"
-                lightbg={1}
+                lightBg={true}
                 label="Receiver Name"
                 formerror={errors.receiverName}
               />
@@ -145,14 +145,14 @@ const AddressModal = (props: AddressModalProps) => {
               defaultcountrycode="60"
               countrycodename="receiverCountryCode"
               phonenumbername="receiverPhoneNumber"
-              lightbg={1}
+              lightBg={true}
             />
             <Grid item xs={12}>
               <ControlledTextInput
                 control={control}
                 name="addressLineOne"
                 label="Address Line 1"
-                lightbg={1}
+                lightBg={true}
                 formerror={errors.addressLineOne}
               />
             </Grid>
@@ -161,7 +161,7 @@ const AddressModal = (props: AddressModalProps) => {
                 control={control}
                 name="addressLineTwo"
                 label="Address Line 2"
-                lightbg={1}
+                lightBg={true}
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -169,7 +169,7 @@ const AddressModal = (props: AddressModalProps) => {
                 control={control}
                 name="postcode"
                 label="Postcode"
-                lightbg={1}
+                lightBg={true}
                 maxLength={10}
                 formerror={errors.postcode}
               />
@@ -179,7 +179,7 @@ const AddressModal = (props: AddressModalProps) => {
                 control={control}
                 name="city"
                 label="City"
-                lightbg={1}
+                lightBg={true}
                 formerror={errors.city}
               />
             </Grid>
@@ -188,7 +188,7 @@ const AddressModal = (props: AddressModalProps) => {
                 control={control}
                 options={stateOptions || []}
                 name="state"
-                lightbg={1}
+                lightBg={true}
                 label="State"
                 // @ts-ignore
                 error={errors.state}
@@ -199,7 +199,7 @@ const AddressModal = (props: AddressModalProps) => {
                 control={control}
                 name="country"
                 label="Country"
-                lightbg={1}
+                lightBg={true}
                 formerror={errors.country}
                 disabled
                 defaultinput="Malaysia"
@@ -212,7 +212,7 @@ const AddressModal = (props: AddressModalProps) => {
                 name="isDefault"
                 label="Default"
                 error={errors.isDefault}
-                defaultselect={false}
+                defaultSelect={false}
                 row
               />
             </Grid>

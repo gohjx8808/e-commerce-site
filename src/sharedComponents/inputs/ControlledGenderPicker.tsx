@@ -15,11 +15,11 @@ interface ControlledGenderPickerOwnProps<T extends FieldValues>
 const ControlledGenderPicker = <T extends FieldValues>(
   props: ControlledGenderPickerOwnProps<T>
 ) => {
-  const { defaultGender } = props;
+  const { defaultGender, ...rest } = props;
 
   return (
     <ControlledPicker
-      {...props}
+      {...rest}
       label="Gender"
       options={genderOptions}
       defaultcheck={

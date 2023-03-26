@@ -21,23 +21,23 @@ export interface ControlledPickerProps<T extends FieldValues>
   label: string;
   name: Path<T>;
   error?: FieldError;
-  lightbg?: booleanInteger;
+  lightBg?: boolean;
   defaultcheck?: UnpackNestedValue<PathValue<T, Path<T>>>;
 }
 
 const ControlledPicker = <T extends FieldValues>(
   props: ControlledPickerProps<T>
 ) => {
-  const { control, label, name, defaultcheck, error, lightbg } = props;
+  const { control, label, name, defaultcheck, error, lightBg, ...rest } = props;
 
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange, value } }) => (
-        <StyledAutocompleteFormControl lightbg={lightbg}>
+        <StyledAutocompleteFormControl lightBg={lightBg}>
           <Autocomplete
-            {...props}
+            {...rest}
             value={value}
             renderInput={(params) => (
               <TextField
@@ -69,7 +69,7 @@ const ControlledPicker = <T extends FieldValues>(
 
 ControlledPicker.defaultProps = {
   error: null,
-  lightbg: 0,
+  lightBg: false,
   defaultcheck: null,
 };
 

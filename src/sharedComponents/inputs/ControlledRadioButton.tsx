@@ -22,13 +22,13 @@ interface ControlledRadioButtonOwnProps<T extends FieldValues>
   error?: FieldError;
   options: optionsData[];
   name: Path<T>;
-  defaultselect?: UnpackNestedValue<PathValue<T, NonNullable<Path<T>>>>;
+  defaultSelect?: UnpackNestedValue<PathValue<T, NonNullable<Path<T>>>>;
 }
 
 const ControlledRadioButton = <T extends FieldValues>(
   props: ControlledRadioButtonOwnProps<T>
 ) => {
-  const { control, label, name, defaultselect, error, options } = props;
+  const { control, label, name, defaultSelect, error, options, ...rest } = props;
 
   return (
     <Controller
@@ -52,7 +52,7 @@ const ControlledRadioButton = <T extends FieldValues>(
               aria-label={label}
               value={value}
               onChange={(_event, radioValue) => onChange(radioValue)}
-              {...props}
+              {...rest}
             >
               {options.map((option) => (
                 <FormControlLabel
@@ -68,13 +68,13 @@ const ControlledRadioButton = <T extends FieldValues>(
           <FormHelperText error>{error?.message}</FormHelperText>
         </>
       )}
-      defaultValue={defaultselect}
+      defaultValue={defaultSelect}
     />
   );
 };
 
 ControlledRadioButton.defaultProps = {
-  defaultselect: "",
+  defaultSelect: "",
   label: "",
   error: null,
 };

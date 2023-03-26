@@ -14,8 +14,6 @@ interface toggleButtonOptionData {
   activeColor: string;
 }
 
-type booleanInteger = 1 | 0;
-
 interface parentComponent {
   children?: React.ReactNode;
 }

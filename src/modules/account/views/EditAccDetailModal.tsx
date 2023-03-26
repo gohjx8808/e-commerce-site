@@ -72,7 +72,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
               <ControlledTextInput
                 control={control}
                 name="name"
-                lightbg={1}
+                lightBg={true}
                 label="Full Name"
                 defaultinput={accountDetails.name}
                 startAdornment={
@@ -84,7 +84,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
               />
             </Grid>
             <Grid item sm={6} xs={12}>
-              <StyledFormControl disabled lightbg={1}>
+              <StyledFormControl disabled lightBg={true}>
                 <InputLabel>Email</InputLabel>
                 <OutlinedInput
                   value={accountDetails.email}
@@ -98,7 +98,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
             </Grid>
             <ControlledCountryCodePhoneInput
               control={control}
-              lightbg={1}
+              lightBg={true}
               defaultcountrycode={accountDetails.countryCode}
               defaultphonenumber={accountDetails.phoneNumber}
               countrycodeformerror={errors.countryCode}
@@ -108,7 +108,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
               <ControlledGenderPicker
                 control={control}
                 name="gender"
-                lightbg={1}
+                lightBg={true}
                 // @ts-ignore
                 error={errors.gender}
                 defaultGender={accountDetails.gender}
@@ -118,7 +118,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
               <ControlledDatePicker
                 control={control}
                 name="dob"
-                lightbg={1}
+                lightBg={true}
                 label="Date of Birth"
                 defaultdate={accountDetails.dob}
                 formerror={errors.dob}

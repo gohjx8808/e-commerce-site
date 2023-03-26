@@ -478,7 +478,7 @@ const Checkout = () => {
                         control={control}
                         name="receiverName"
                         label="Receiver Name"
-                        lightbg={1}
+                        lightBg={true}
                         formerror={errors.receiverName}
                         readOnly={!!selectedAddress}
                       />
@@ -488,7 +488,7 @@ const Checkout = () => {
                         control={control}
                         name="buyerEmail"
                         label="Buyer Email Address"
-                        lightbg={1}
+                        lightBg={true}
                         isCapitalize={false}
                         formerror={errors.buyerEmail}
                         readOnly={!!selectedAddress}
@@ -501,7 +501,7 @@ const Checkout = () => {
                       defaultcountrycode="60"
                       countrycodename="receiverCountryCode"
                       phonenumbername="receiverPhoneNumber"
-                      lightbg={1}
+                      lightBg={true}
                       readOnly={!!selectedAddress}
                     />
                     <Grid item xs={12}>
@@ -509,7 +509,7 @@ const Checkout = () => {
                         control={control}
                         name="addressLineOne"
                         label="Address Line 1"
-                        lightbg={1}
+                        lightBg={true}
                         formerror={errors.addressLineOne}
                         readOnly={!!selectedAddress}
                       />
@@ -519,7 +519,7 @@ const Checkout = () => {
                         control={control}
                         name="addressLineTwo"
                         label="Address Line 2"
-                        lightbg={1}
+                        lightBg={true}
                         readOnly={!!selectedAddress}
                       />
                     </Grid>
@@ -528,7 +528,7 @@ const Checkout = () => {
                         control={control}
                         name="postcode"
                         label="Postcode"
-                        lightbg={1}
+                        lightBg={true}
                         maxLength={10}
                         formerror={errors.postcode}
                         readOnly={!!selectedAddress}
@@ -539,7 +539,7 @@ const Checkout = () => {
                         control={control}
                         name="city"
                         label="City"
-                        lightbg={1}
+                        lightBg={true}
                         formerror={errors.city}
                         readOnly={!!selectedAddress}
                       />
@@ -550,7 +550,7 @@ const Checkout = () => {
                           control={control}
                           options={stateOptions}
                           name="state"
-                          lightbg={1}
+                          lightBg={true}
                           label="State"
                           // @ts-ignore
                           error={errors.state}
@@ -563,7 +563,7 @@ const Checkout = () => {
                         control={control}
                         name="country"
                         label="Country"
-                        lightbg={1}
+                        lightBg={true}
                         formerror={errors.country}
                         readOnly
                       />
@@ -574,7 +574,7 @@ const Checkout = () => {
                         name="promoCode"
                         label="Promo Code"
                         formerror={errors.promoCode}
-                        lightbg={1}
+                        lightBg={true}
                         disabled={!isLoggedIn}
                         isCapitalize={false}
                       />
@@ -597,7 +597,7 @@ const Checkout = () => {
                         control={control}
                         name="note"
                         label="Notes to seller (optional)"
-                        lightbg={1}
+                        lightBg={true}
                         multiline
                         rows={4}
                       />
