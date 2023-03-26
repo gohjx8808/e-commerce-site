@@ -22,7 +22,7 @@ const ControlledGenderPicker = <T extends FieldValues>(
       {...rest}
       label="Gender"
       options={genderOptions}
-      defaultcheck={
+      defaultCheck={
         genderOptions.find(
           (gender) => gender.id === defaultGender
         ) as UnpackNestedValue<PathValue<T, Path<T>>>

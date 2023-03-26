@@ -85,7 +85,7 @@ const ResetPassword: FC<PageProps> = (props) => {
                         label="Token"
                         formerror={errors.token}
                         readOnly
-                        defaultinput={token}
+                        defaultInput={token}
                       />
                     </Grid>
                     <Grid item xs={12} sm={10}>

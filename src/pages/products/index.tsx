@@ -143,7 +143,7 @@ const Products = () => {
                 label="Sort By"
                 lightBg={true}
                 disableClearable
-                defaultcheck={{ id: 1, name: "Name: A to Z" }}
+                defaultCheck={{ id: 1, name: "Name: A to Z" }}
               />
             </Grid>
           </Grid>

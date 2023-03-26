@@ -124,8 +124,8 @@ const SignUp = () => {
                         </Grid>
                         <ControlledCountryCodePhoneInput
                           control={control}
-                          countrycodeformerror={errors.countryCode}
-                          phonenumberformerror={errors.phoneNumber}
+                          countryCodeFormError={errors.countryCode}
+                          phoneNumberFormError={errors.phoneNumber}
                         />
                         <Grid item sm={6} xs={12}>
                           <ControlledTextInput

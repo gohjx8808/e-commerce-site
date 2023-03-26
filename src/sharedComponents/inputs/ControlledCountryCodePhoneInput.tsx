@@ -14,24 +14,24 @@ import ControlledTextInput, {
 interface ControlledCountryCodePhoneInputOwnProps<T extends FieldValues>
   extends ControlledTextInputProps<T> {
   control: Control<T>;
-  defaultcountrycode?: UnpackNestedValue<PathValue<T, Path<T>>>;
-  defaultphonenumber?: UnpackNestedValue<PathValue<T, Path<T>>>;
-  countrycodeformerror?: FieldError;
-  phonenumberformerror?: FieldError;
-  countrycodename?: Path<T>;
-  phonenumbername?: Path<T>;
+  defaultCountryCode?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  defaultPhoneNumber?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  countryCodeFormError?: FieldError;
+  phoneNumberFormError?: FieldError;
+  countryCodeName?: Path<T>;
+  phoneNumberName?: Path<T>;
 }
 
 const ControlledCountryCodePhoneInput = <T extends FieldValues>(
   props: Omit<ControlledCountryCodePhoneInputOwnProps<T>, "name">
 ) => {
   const {
-    defaultcountrycode,
-    defaultphonenumber,
-    countrycodeformerror,
-    phonenumberformerror,
-    countrycodename,
-    phonenumbername,
+    defaultCountryCode,
+    defaultPhoneNumber,
+    countryCodeFormError,
+    phoneNumberFormError,
+    countryCodeName,
+    phoneNumberName,
     ...rest
   } = props;
 
@@ -40,22 +40,22 @@ const ControlledCountryCodePhoneInput = <T extends FieldValues>(
       <Grid container flexDirection="row" columnSpacing={1}>
         <Grid item xs={4}>
           <ControlledTextInput
-            name={countrycodename || ("countryCode" as Path<T>)}
+            name={countryCodeName || ("countryCode" as Path<T>)}
             label="Country Code"
-            formerror={countrycodeformerror}
+            formerror={countryCodeFormError}
             type="number"
-            defaultinput={defaultcountrycode}
+            defaultInput={defaultCountryCode}
             {...rest}
           />
         </Grid>
         <Grid item xs={8}>
           <ControlledTextInput
-            name={phonenumbername || ("phoneNumber" as Path<T>)}
+            name={phoneNumberName || ("phoneNumber" as Path<T>)}
             label="Phone Number"
-            formerror={phonenumberformerror}
+            formerror={phoneNumberFormError}
             type="tel"
-            defaultinput={defaultphonenumber}
-            {...props}
+            defaultInput={defaultPhoneNumber}
+            {...rest}
           />
         </Grid>
       </Grid>
@@ -64,12 +64,12 @@ const ControlledCountryCodePhoneInput = <T extends FieldValues>(
 };
 
 ControlledCountryCodePhoneInput.defaultProps = {
-  defaultcountrycode: "60",
-  defaultphonenumber: "",
-  countrycodeformerror: null,
-  phonenumberformerror: null,
-  countrycodename: "",
-  phonenumbername: "",
+  defaultCountryCode: "60",
+  defaultPhoneNumber: "",
+  countryCodeFormError: null,
+  phoneNumberFormError: null,
+  countryCodeName: "",
+  phoneNumberName: "",
   lightBg: false,
 };
 

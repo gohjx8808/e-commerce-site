@@ -22,13 +22,13 @@ export interface ControlledPickerProps<T extends FieldValues>
   name: Path<T>;
   error?: FieldError;
   lightBg?: boolean;
-  defaultcheck?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  defaultCheck?: UnpackNestedValue<PathValue<T, Path<T>>>;
 }
 
 const ControlledPicker = <T extends FieldValues>(
   props: ControlledPickerProps<T>
 ) => {
-  const { control, label, name, defaultcheck, error, lightBg, ...rest } = props;
+  const { control, label, name, defaultCheck, error, lightBg, ...rest } = props;
 
   return (
     <Controller
@@ -62,7 +62,7 @@ const ControlledPicker = <T extends FieldValues>(
           <FormHelperText error>{error?.message}</FormHelperText>
         </StyledAutocompleteFormControl>
       )}
-      defaultValue={defaultcheck}
+      defaultValue={defaultCheck}
     />
   );
 };
@@ -70,7 +70,7 @@ const ControlledPicker = <T extends FieldValues>(
 ControlledPicker.defaultProps = {
   error: null,
   lightBg: false,
-  defaultcheck: null,
+  defaultCheck: null,
 };
 
 export default ControlledPicker;

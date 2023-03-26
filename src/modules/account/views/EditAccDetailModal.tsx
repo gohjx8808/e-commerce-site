@@ -74,7 +74,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
                 name="name"
                 lightBg={true}
                 label="Full Name"
-                defaultinput={accountDetails.name}
+                defaultInput={accountDetails.name}
                 startAdornment={
                   <InputAdornment position="start">
                     <PersonIcon />
@@ -99,10 +99,10 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
             <ControlledCountryCodePhoneInput
               control={control}
               lightBg={true}
-              defaultcountrycode={accountDetails.countryCode}
-              defaultphonenumber={accountDetails.phoneNumber}
-              countrycodeformerror={errors.countryCode}
-              phonenumberformerror={errors.phoneNo}
+              defaultCountryCode={accountDetails.countryCode}
+              defaultPhoneNumber={accountDetails.phoneNumber}
+              countryCodeFormError={errors.countryCode}
+              phoneNumberFormError={errors.phoneNo}
             />
             <Grid item sm={6} xs={12}>
               <ControlledGenderPicker

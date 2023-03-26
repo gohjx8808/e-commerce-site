@@ -496,11 +496,11 @@ const Checkout = () => {
                     </Grid>
                     <ControlledCountryCodePhoneInput
                       control={control}
-                      countrycodeformerror={errors.receiverCountryCode}
-                      phonenumberformerror={errors.receiverPhoneNumber}
-                      defaultcountrycode="60"
-                      countrycodename="receiverCountryCode"
-                      phonenumbername="receiverPhoneNumber"
+                      countryCodeFormError={errors.receiverCountryCode}
+                      phoneNumberFormError={errors.receiverPhoneNumber}
+                      defaultCountryCode="60"
+                      countryCodeName="receiverCountryCode"
+                      phoneNumberName="receiverPhoneNumber"
                       lightBg={true}
                       readOnly={!!selectedAddress}
                     />

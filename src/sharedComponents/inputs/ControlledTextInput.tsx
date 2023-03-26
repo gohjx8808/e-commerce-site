@@ -19,7 +19,7 @@ import CustomInputErrorIcon from "./CustomInputErrorIcon";
 export interface ControlledTextInputProps<T extends FieldValues>
   extends Omit<OutlinedInputProps, "defaultValue" | "name"> {
   control: Control<T>;
-  defaultinput?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  defaultInput?: UnpackNestedValue<PathValue<T, Path<T>>>;
   formerror?: FieldError;
   lightBg?: boolean;
   maxLength?: number;
@@ -36,7 +36,7 @@ const ControlledTextInput = <T extends FieldValues>(
     control,
     label,
     name,
-    defaultinput,
+    defaultInput,
     formerror,
     lightBg,
     maxLength,
@@ -85,13 +85,13 @@ const ControlledTextInput = <T extends FieldValues>(
           <FormHelperText>{infotext}</FormHelperText>
         </StyledFormControl>
       )}
-      defaultValue={defaultinput}
+      defaultValue={defaultInput}
     />
   );
 };
 
 ControlledTextInput.defaultProps = {
-  defaultinput: "",
+  defaultInput: "",
   formerror: null,
   lightBg: false,
   maxLength: null,

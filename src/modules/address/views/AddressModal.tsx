@@ -140,11 +140,11 @@ const AddressModal = (props: AddressModalProps) => {
             </Grid>
             <ControlledCountryCodePhoneInput
               control={control}
-              countrycodeformerror={errors.receiverCountryCode}
-              phonenumberformerror={errors.receiverPhoneNumber}
-              defaultcountrycode="60"
-              countrycodename="receiverCountryCode"
-              phonenumbername="receiverPhoneNumber"
+              countryCodeFormError={errors.receiverCountryCode}
+              phoneNumberFormError={errors.receiverPhoneNumber}
+              defaultCountryCode="60"
+              countryCodeName="receiverCountryCode"
+              phoneNumberName="receiverPhoneNumber"
               lightBg={true}
             />
             <Grid item xs={12}>
@@ -202,7 +202,7 @@ const AddressModal = (props: AddressModalProps) => {
                 lightBg={true}
                 formerror={errors.country}
                 disabled
-                defaultinput="Malaysia"
+                defaultInput="Malaysia"
               />
             </Grid>
             <Grid item sm={6} xs={12}>
