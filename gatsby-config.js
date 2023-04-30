@@ -53,14 +53,14 @@ module.exports = {
         mergeScriptHashes: false,
         directives: {
           "script-src":
-            "'self' 'unsafe-inline' https://*.firebasedatabase.app https://apis.google.com https://connect.facebook.net https://www.googletagmanager.com https://static.cloudflareinsights.com https://cdn.mouseflow.com",
+            "'self' 'unsafe-inline' https://apis.google.com https://connect.facebook.net https://www.googletagmanager.com https://static.cloudflareinsights.com https://cdn.mouseflow.com",
           "style-src": "'self' 'unsafe-inline' https://fonts.googleapis.com",
           "img-src":
             "'self' data: http://images.ctfassets.net/ https://www.facebook.com",
           "connect-src":
-            "'self' wss://*.firebasedatabase.app https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com https://web.facebook.com/ https://www.google-analytics.com https://cloudflareinsights.com https://o2.mouseflow.com https://send-checkout-email.gohjx8808.workers.dev https://send-feedback-email.gohjx8808.workers.dev https://yjartjournal-api.vercel.app",
+            "'self' https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com https://web.facebook.com/ https://www.google-analytics.com https://cloudflareinsights.com https://o2.mouseflow.com https://send-checkout-email.gohjx8808.workers.dev https://send-feedback-email.gohjx8808.workers.dev https://yjartjournal-api.vercel.app",
           "frame-src":
-            "'self' https://*.firebasedatabase.app https://apis.google.com https://*.firebase https://www.facebook.com https://web.facebook.com/ https://m.me/ https://m.facebook.com/",
+            "'self' https://apis.google.com https://www.facebook.com https://web.facebook.com/ https://m.me/ https://m.facebook.com/",
           "font-src": "'self' data: https://fonts.gstatic.com",
         },
       },
