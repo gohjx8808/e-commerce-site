@@ -13,16 +13,16 @@ This project is started to provide a catalog platform for my friend that is sell
 
 ## Tech Stack 🧑‍💻
 
-1.  <a href="https://www.gatsbyjs.com/">Gatsby
+1.  <a href="https://www.gatsbyjs.com/" target="_blank">Gatsby
     <img alt="gatsbyjs" src="https://upload.wikimedia.org/wikipedia/en/d/d0/Gatsby_Logo.png" width="20" />
     </a>
 
-2.  <a href="https://mui.com/">Material UI
+2.  <a href="https://mui.com/" target=”_blank”>Material UI
     <img alt="mui" src="https://mui.com/static/logo.png" width="20"/>
     </a>
 
-3.  <a href="https://www.contentful.com/">Contentful
-    <img alt="mui" src="https://image.pngaaa.com/12/6485012-middle.png" width="20" />
+3.  <a href="https://www.contentful.com/" target=”_blank”>Contentful
+    <img alt="contentful" src="https://images.ctfassets.net/fo9twyrwpveg/6eVeSgMr2EsEGiGc208c6M/f6d9ff47d8d26b3b238c6272a40d3a99/contentful-logo.png" width="20" />
     </a>
 
 ## Website URL
