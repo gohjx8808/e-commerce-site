@@ -21,7 +21,7 @@ This project is started to provide a catalog platform for my friend that is sell
     <img alt="mui" src="https://mui.com/static/logo.png" width="20"/>
     </a>
 
-3.  <a href="https://mui.com/">Contentful
+3.  <a href="https://www.contentful.com/">Contentful
     <img alt="mui" src="https://image.pngaaa.com/12/6485012-middle.png" width="20" />
     </a>
 
