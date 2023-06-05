@@ -21,6 +21,16 @@ This project is started to provide a catalog platform for my friend that is sell
     <img alt="mui" src="https://mui.com/static/logo.png" width="20"/>
     </a>
 
+## Hosting Provider
+
+<a href="https://www.gatsbyjs.com/" target="_blank">Cloudflare
+<img alt="gatsbyjs" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Cloudflare_Logo.png/480px-Cloudflare_Logo.png" width="20" />
+</a>
+
+## Backend Service
+The APIs of this site is developed by me using ExpressJS at <a href="https://github.com/gohjx8808/yjartjournal-api" target="_blank">here
+</a>.
+
 ## Website URL
 
 https://yjartjournal.com/
