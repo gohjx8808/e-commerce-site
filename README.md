@@ -23,8 +23,8 @@ This project is started to provide a catalog platform for my friend that is sell
 
 ## Hosting Provider
 
-<a href="https://www.gatsbyjs.com/" target="_blank">Cloudflare
-<img alt="gatsbyjs" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Cloudflare_Logo.png/480px-Cloudflare_Logo.png" width="20" />
+<a href="https://www.cloudflare.com/en-gb/" target="_blank">Cloudflare
+<img alt="cloudflare" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Cloudflare_Logo.png/480px-Cloudflare_Logo.png" width="20" />
 </a>
 
 ## Backend Service
