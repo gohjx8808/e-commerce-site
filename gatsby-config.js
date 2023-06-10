@@ -29,8 +29,8 @@ module.exports = {
     {
       resolve: "gatsby-plugin-robots-txt",
       options: {
-        host: "https://www.yjartjournal.com/",
-        sitemap: "https://www.yjartjournal.com/sitemap/sitemap-index.xml",
+        host: "https://yjartjournal.com/",
+        sitemap: "https://yjartjournal.com/sitemap-index.xml",
         policy: [{ userAgent: "*", allow: "/" }],
       },
     },
