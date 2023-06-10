@@ -7,8 +7,8 @@ module.exports = {
     title: "yjArtJournal",
     titleTemplate: "%s | The Handmade Cottage",
     description: "Crochet and drawings are made with love.",
-    url: "https://www.yjartjournal.com", // No trailing slash allowed!
-    siteUrl: "https://www.yjartjournal.com", // for sitemap, DO NOT DELETE!
+    url: "https://yjartjournal.com", // No trailing slash allowed!
+    siteUrl: "https://yjartjournal.com", // for sitemap, DO NOT DELETE!
     lang: "en",
     author: "@yj_artjournal",
     keywords: "yjartjournal, art, craft, crochet, drawings",
