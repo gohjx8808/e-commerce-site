@@ -14,7 +14,6 @@ module.exports = {
     keywords: "yjartjournal, art, craft, crochet, drawings",
   },
   plugins: [
-    "gatsby-plugin-gatsby-cloud",
     "gatsby-plugin-material-ui",
     {
       resolve: "gatsby-source-filesystem",
@@ -70,15 +69,6 @@ module.exports = {
       resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
       options: {
         devMode: false,
-      },
-    },
-    {
-      resolve: "gatsby-plugin-google-tagmanager",
-      options: {
-        id: process.env.GTM_ID,
-        includeInDevelopment: false,
-        defaultDataLayer: { platform: "gatsby" },
-        enableWebVitalsTracking: true,
       },
     },
     {
