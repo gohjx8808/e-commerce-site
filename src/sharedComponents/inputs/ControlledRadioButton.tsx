@@ -4,7 +4,6 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup, { RadioGroupProps } from "@mui/material/RadioGroup";
-import React from "react";
 import {
   Control,
   Controller,
@@ -12,7 +11,6 @@ import {
   FieldValues,
   Path,
   PathValue,
-  UnpackNestedValue,
 } from "react-hook-form";
 
 interface ControlledRadioButtonOwnProps<T extends FieldValues>
@@ -22,13 +20,14 @@ interface ControlledRadioButtonOwnProps<T extends FieldValues>
   error?: FieldError;
   options: optionsData[];
   name: Path<T>;
-  defaultSelect?: UnpackNestedValue<PathValue<T, NonNullable<Path<T>>>>;
+  defaultSelect?: PathValue<T, NonNullable<Path<T>>>;
 }
 
 const ControlledRadioButton = <T extends FieldValues>(
   props: ControlledRadioButtonOwnProps<T>
 ) => {
-  const { control, label, name, defaultSelect, error, options, ...rest } = props;
+  const { control, label, name, defaultSelect, error, options, ...rest } =
+    props;
 
   return (
     <Controller

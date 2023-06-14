@@ -1,10 +1,5 @@
 import { genderOptions } from "@utils/constants";
-import {
-  FieldValues,
-  Path,
-  PathValue,
-  UnpackNestedValue,
-} from "react-hook-form";
+import { FieldValues, Path, PathValue } from "react-hook-form";
 import ControlledPicker, { ControlledPickerProps } from "./ControlledPicker";
 
 interface ControlledGenderPickerOwnProps<T extends FieldValues>
@@ -25,7 +20,7 @@ const ControlledGenderPicker = <T extends FieldValues>(
       defaultCheck={
         genderOptions.find(
           (gender) => gender.id === defaultGender
-        ) as UnpackNestedValue<PathValue<T, Path<T>>>
+        ) as PathValue<T, Path<T>>
       }
     />
   );

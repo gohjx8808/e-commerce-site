@@ -8,7 +8,6 @@ import {
   FieldValues,
   Path,
   PathValue,
-  UnpackNestedValue,
 } from "react-hook-form";
 import StyledAutocompleteFormControl from "../../styledComponents/inputs/StyledAutocompleteFormControl";
 
@@ -22,7 +21,7 @@ export interface ControlledPickerProps<T extends FieldValues>
   name: Path<T>;
   error?: FieldError;
   lightBg?: boolean;
-  defaultCheck?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  defaultCheck?: PathValue<T, Path<T>>;
 }
 
 const ControlledPicker = <T extends FieldValues>(

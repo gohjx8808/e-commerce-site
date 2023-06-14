@@ -5,7 +5,6 @@ import {
   FieldValues,
   Path,
   PathValue,
-  UnpackNestedValue,
 } from "react-hook-form";
 import ControlledTextInput, {
   ControlledTextInputProps,
@@ -14,8 +13,8 @@ import ControlledTextInput, {
 interface ControlledCountryCodePhoneInputOwnProps<T extends FieldValues>
   extends ControlledTextInputProps<T> {
   control: Control<T>;
-  defaultCountryCode?: UnpackNestedValue<PathValue<T, Path<T>>>;
-  defaultPhoneNumber?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  defaultCountryCode?: PathValue<T, Path<T>>;
+  defaultPhoneNumber?: PathValue<T, Path<T>>;
   countryCodeFormError?: FieldError;
   phoneNumberFormError?: FieldError;
   countryCodeName?: Path<T>;

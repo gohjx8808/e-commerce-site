@@ -9,14 +9,16 @@ import {
   FieldValues,
   Path,
   PathValue,
-  UnpackNestedValue,
 } from "react-hook-form";
 import StyledTextField from "../../styledComponents/inputs/StyledTextField";
 
 interface ControlledDatePickerOwnProps<T extends FieldValues>
-  extends Omit<DatePickerProps<Dayjs>, "renderInput" | "onChange" | "value"> {
+  extends Omit<
+    DatePickerProps<Date, Dayjs>,
+    "renderInput" | "onChange" | "value"
+  > {
   control: Control<T>;
-  defaultdate?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  defaultdate?: PathValue<T, Path<T>>;
   formerror?: FieldError;
   lightBg?: boolean;
   name: Path<T>;
@@ -25,7 +27,7 @@ interface ControlledDatePickerOwnProps<T extends FieldValues>
 const ControlledDatePicker = <T extends FieldValues>(
   props: ControlledDatePickerOwnProps<T>
 ) => {
-  const { control, name, defaultdate, formerror, lightBg,...rest } = props;
+  const { control, name, defaultdate, formerror, lightBg, ...rest } = props;
 
   const isXsView = useXsDownMediaQuery();
 

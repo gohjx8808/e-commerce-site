@@ -21,13 +21,6 @@ interface statusQueryInnerData {
   };
 }
 
-const defaultIGatsbyData: IGatsbyImageData = {
-  layout: "fixed",
-  width: 0,
-  height: 0,
-  images: {},
-};
-
 const StatusModal = () => {
   const statusQuery = useStaticQuery(graphql`
     query {

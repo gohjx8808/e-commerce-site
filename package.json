@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.12.1",
-    "@contentful/rich-text-types": "^15.12.1",
+    "@contentful/rich-text-types": "^16.2.0",
     "@date-io/dayjs": "^2.16.0",
     "@emotion/react": "^11.3.0",
     "@emotion/styled": "^11.8.1",

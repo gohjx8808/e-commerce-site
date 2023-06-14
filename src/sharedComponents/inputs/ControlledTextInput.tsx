@@ -3,7 +3,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput, { OutlinedInputProps } from "@mui/material/OutlinedInput";
 import { capitalize } from "@mui/material/utils";
-import React from "react";
 import {
   Control,
   Controller,
@@ -11,7 +10,6 @@ import {
   FieldValues,
   Path,
   PathValue,
-  UnpackNestedValue,
 } from "react-hook-form";
 import StyledFormControl from "../../styledComponents/inputs/StyledFormControl";
 import CustomInputErrorIcon from "./CustomInputErrorIcon";
@@ -19,7 +17,7 @@ import CustomInputErrorIcon from "./CustomInputErrorIcon";
 export interface ControlledTextInputProps<T extends FieldValues>
   extends Omit<OutlinedInputProps, "defaultValue" | "name"> {
   control: Control<T>;
-  defaultInput?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  defaultInput?: PathValue<T, Path<T>>;
   formerror?: FieldError;
   lightBg?: boolean;
   maxLength?: number;
