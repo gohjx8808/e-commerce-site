@@ -223,8 +223,8 @@ const Checkout = () => {
       reset({
         buyerEmail: "",
         receiverName: "",
-        receiverCountryCode: 0,
-        receiverPhoneNumber: 0,
+        receiverCountryCode: 60,
+        receiverPhoneNumber: undefined,
         addressLineOne: "",
         addressLineTwo: "",
         postcode: "",

@@ -2,7 +2,7 @@
 export const defaultAddressData: address.addAddressPayload = {
   receiverName: "",
   receiverCountryCode: 60,
-  receiverPhoneNumber: 0,
+  receiverPhoneNumber: undefined as unknown as number,
   addressLineOne: "",
   postcode: "",
   city: "",
