@@ -55,6 +55,7 @@ const ControlledTextInput = <T extends FieldValues>(
             {label}
           </InputLabel>
           <OutlinedInput
+            label={label}
             id={name}
             value={value}
             onChange={(event) =>
