@@ -16,7 +16,7 @@ const FeedbackForm = () => {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<feedback.submitFeedbackFormPayload>({
+  } = useForm({
     resolver: yupResolver(feedbackFormSchema),
   });
 

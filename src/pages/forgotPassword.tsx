@@ -37,7 +37,7 @@ const ForgotPassword = () => {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<auth.submitForgotPasswordPayload>({
+  } = useForm({
     resolver: yupResolver(forgotPasswordSchema),
   });
 

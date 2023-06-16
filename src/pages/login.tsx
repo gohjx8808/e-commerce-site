@@ -36,7 +36,7 @@ const Login = () => {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<auth.logInPayload>({
+  } = useForm({
     resolver: yupResolver(loginSchema),
   });
 

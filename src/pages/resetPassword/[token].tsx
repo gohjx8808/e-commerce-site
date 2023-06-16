@@ -36,7 +36,7 @@ const ResetPassword: FC<PageProps> = (props) => {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<auth.resetPasswordFormData>({
+  } = useForm({
     resolver: yupResolver(resetPasswordSchema),
   });
 
