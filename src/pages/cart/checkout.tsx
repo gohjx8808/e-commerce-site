@@ -63,7 +63,10 @@ const Checkout = () => {
   const [checkoutProduct, setCheckoutProduct] = useState<
     products.checkoutProduct[]
   >([]);
-  const [pageSize, setPageSize] = useState<number>(5);
+  const [paginationModel, setPaginationModel] = useState({
+    pageSize: 5,
+    page: 0,
+  });
   const [shippingFee, setShippingFee] = useState<products.shippingFeeData>({
     shippingFee: 0,
     valid: false,
@@ -178,10 +181,6 @@ const Checkout = () => {
       headerAlign: "center",
     },
   ];
-
-  const handlePageSizeChange = (tablePageSize: number) => {
-    setPageSize(tablePageSize);
-  };
 
   const inputPromoCode = watch("promoCode");
   const stateSelected = watch("state");
@@ -320,12 +319,11 @@ const Checkout = () => {
                 rows={checkoutProduct}
                 columns={isXsView ? xsColumns : columns}
                 disableColumnMenu
-                pageSize={pageSize}
-                onPageSizeChange={handlePageSizeChange}
-                rowsPerPageOptions={[5, 10, 20]}
+                paginationModel={paginationModel}
+                onPaginationModelChange={setPaginationModel}
+                pageSizeOptions={[5, 10, 20]}
                 pagination
-                disableSelectionOnClick
-                hideFooter
+                disableRowSelectionOnClick
               />
             </Box>
             <Divider />
