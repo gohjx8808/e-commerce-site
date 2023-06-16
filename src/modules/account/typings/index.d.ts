@@ -11,15 +11,15 @@ declare namespace account {
   }
 
   interface updateAccDetailsFormData extends updateAccDetailsPayload {
-    gender: optionsData;
+    gender: stringOptionsData;
   }
 
   interface updateAccDetailsPayload {
     name: string;
-    preferredName: string;
+    preferredName?: string;
     dob: string;
     gender: string;
     countryCode: string;
-    phoneNo: string;
+    phoneNumber: string;
   }
 }

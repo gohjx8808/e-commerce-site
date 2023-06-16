@@ -35,6 +35,7 @@ export const signUpSchema = yup.object().shape({
     .required("Phone number is required")
     .typeError("Invalid phone number"),
   name: yup.string().required("Full name is required"),
+  preferredName: yup.string().optional(),
 });
 
 export const forgotPasswordSchema = yup.object().shape({

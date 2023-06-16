@@ -17,10 +17,10 @@ declare namespace auth {
     email: string;
     dob: string;
     confirmPassword: string;
-    gender: optionsData;
+    gender: stringOptionsData;
     password: string;
     countryCode: number;
-    phoneNumber: string;
+    phoneNumber: number;
     name: string;
     preferredName?: string;
   }

@@ -2,8 +2,18 @@ interface Response<T> {
   data: T;
 }
 
-interface optionsData {
-  id: number | string | boolean;
+interface stringOptionsData {
+  id: string;
+  name: string;
+}
+
+interface numberOptionsData {
+  id: number;
+  name: string;
+}
+
+interface booleanOptionsData {
+  id: boolean;
   name: string;
 }
 

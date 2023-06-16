@@ -5,10 +5,10 @@ declare namespace products {
     receiverCountryCode: string;
     receiverPhoneNumber: string;
     addressLineOne: string;
-    addressLineTwo: string;
+    addressLineTwo?: string;
     postcode: string;
     city: string;
-    state: optionsData;
+    state: numberOptionsData;
     country: "Malaysia";
     promoCode?: string;
     note?: string;
@@ -44,7 +44,7 @@ declare namespace products {
   type groupedProductData = { [x: string]: productData[] };
 
   interface calculateShippingFeePayload {
-    state: optionsData;
+    state: numberOptionsData;
     totalAmount: number;
   }
 
@@ -79,7 +79,7 @@ declare namespace products {
     addressLineTwo?: string;
     postcode?: string;
     city?: string;
-    state?: optionsData;
+    state?: numberOptionsData;
     country?: "Malaysia";
     promoCodeUsed?: promoCodeData;
     paymentMethod: string;

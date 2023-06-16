@@ -1,28 +1,29 @@
-import * as yup from "yup";
+import { boolean, number, object, string } from "yup";
 
-const shippingInfoSchema = yup.object().shape({
-  receiverName: yup.string().required("Receiver name is required"),
-  buyerEmail: yup
-    .string()
+const shippingInfoSchema = object().shape({
+  receiverName: string().required("Receiver name is required"),
+  buyerEmail: string()
     .email("Invalid email")
     .required("Buyer email is required"),
-  receiverCountryCode: yup
-    .number()
-    .typeError("Receiver country code is required"),
-  receiverPhoneNumber: yup
-    .number()
-    .typeError("Receiver phone number is required"),
-  addressLineOne: yup.string().required("Address line 1 is required"),
-  postcode: yup.number().typeError("Invalid postcode"),
-  city: yup.string().required("City is required"),
-  state: yup
-    .object()
+  receiverCountryCode: string()
+    .required("Receiver country code is required"),
+  receiverPhoneNumber: string()
+    .required("Receiver phone number is required"),
+  addressLineOne: string().required("Address line 1 is required"),
+  addressLineTwo:string().optional(),
+  postcode: string().required("Postcode is required"),
+  city: string().required("City is required"),
+  state: object()
     .shape({
-      id: yup.number().required("State is required"),
-      name: yup.string().required("State is required"),
+      id: number().required("State is required"),
+      name: string().required("State is required"),
     })
     .typeError("State is required"),
-  paymentMethod: yup.string().required("Payment method is required"),
+    country:string().oneOf(["Malaysia"]).required(),
+    promoCode:string().optional(),
+    note:string().optional(),
+    addToAddressBook:boolean().required("Add to address book is required"),
+  paymentMethod: string().required("Payment method is required"),
 });
 
 export default { shippingInfoSchema };

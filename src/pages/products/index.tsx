@@ -1,11 +1,11 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import useDebounce from "@hooks/useDebounce";
-import {
-  useProductCategories,
-  useProductList,
-  useSortOptions,
-} from "@modules/products/src/productQueries";
 import SEO from "@modules/SEO";
+import {
+    useProductCategories,
+    useProductList,
+    useSortOptions,
+} from "@modules/products/src/productQueries";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
@@ -15,7 +15,7 @@ import { socialMediaLinks } from "@utils/constants";
 import { generateHeader } from "@utils/helper";
 import { graphql, useStaticQuery } from "gatsby";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { scroller } from "react-scroll";
 import MainLayout from "../../layouts/MainLayout";
@@ -141,7 +141,7 @@ const Products = () => {
                 name="sortBy"
                 options={sortByOptions}
                 label="Sort By"
-                lightBg={true}
+                lightBg
                 disableClearable
                 defaultCheck={{ id: 1, name: "Name: A to Z" }}
               />

@@ -18,7 +18,7 @@ interface ControlledRadioButtonOwnProps<T extends FieldValues>
   control: Control<T>;
   label?: string;
   error?: FieldError;
-  options: optionsData[];
+  options: booleanOptionsData[]|stringOptionsData[];
   name: Path<T>;
   defaultSelect?: PathValue<T, NonNullable<Path<T>>>;
 }

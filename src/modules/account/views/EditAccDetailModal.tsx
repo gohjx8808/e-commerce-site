@@ -32,7 +32,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<account.updateAccDetailsFormData>({
+  } = useForm({
     resolver: yupResolver(editAccountSchema),
   });
 
@@ -72,7 +72,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
               <ControlledTextInput
                 control={control}
                 name="name"
-                lightBg={true}
+                lightBg
                 label="Full Name"
                 defaultInput={accountDetails.name}
                 startAdornment={
@@ -84,7 +84,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
               />
             </Grid>
             <Grid item sm={6} xs={12}>
-              <StyledFormControl disabled lightBg={true}>
+              <StyledFormControl disabled lightBg>
                 <InputLabel>Email</InputLabel>
                 <OutlinedInput
                   value={accountDetails.email}
@@ -98,17 +98,17 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
             </Grid>
             <ControlledCountryCodePhoneInput
               control={control}
-              lightBg={true}
+              lightBg
               defaultCountryCode={accountDetails.countryCode}
               defaultPhoneNumber={accountDetails.phoneNumber}
               countryCodeFormError={errors.countryCode}
-              phoneNumberFormError={errors.phoneNo}
+              phoneNumberFormError={errors.phoneNumber}
             />
             <Grid item sm={6} xs={12}>
               <ControlledGenderPicker
                 control={control}
                 name="gender"
-                lightBg={true}
+                lightBg
                 // @ts-ignore
                 error={errors.gender}
                 defaultGender={accountDetails.gender}
@@ -118,7 +118,7 @@ const EditAccDetailModal = (props: editAccDetailModalProps) => {
               <ControlledDatePicker
                 control={control}
                 name="dob"
-                lightBg={true}
+                lightBg
                 label="Date of Birth"
                 defaultdate={accountDetails.dob}
                 formerror={errors.dob}

@@ -1,7 +1,7 @@
 import { getRequest, postRequest } from "@utils/apiUtils";
 
 export const getStateOptions = () =>
-  getRequest<Response<optionsData[]>>("/addresses/state-options");
+  getRequest<Response<numberOptionsData[]>>("/addresses/state-options");
 
 export const getAddressList = () =>
   getRequest<Response<address.addressData[]>>("/addresses/list", {}, true);

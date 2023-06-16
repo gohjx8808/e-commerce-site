@@ -1,17 +1,17 @@
 import { ProductContext } from "@contextProvider/ProductContextProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useDebounce from "@hooks/useDebounce";
+import SEO from "@modules/SEO";
 import { useAccountDetails } from "@modules/account/src/accountQueries";
 import {
-  useAddressList,
-  useStateOptions,
+    useAddressList,
+    useStateOptions,
 } from "@modules/address/src/addressQueries";
 import {
-  useCalculateShippingFee,
-  useCheckout,
-  useVerifyPromoCode,
+    useCalculateShippingFee,
+    useCheckout,
+    useVerifyPromoCode,
 } from "@modules/products/src/productMutations";
-import SEO from "@modules/SEO";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -96,7 +96,7 @@ const Checkout = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<products.checkoutFormPayload>({
+  } = useForm({
     resolver: yupResolver(productSchema.shippingInfoSchema),
   });
 
@@ -187,7 +187,7 @@ const Checkout = () => {
   const stateSelected = watch("state");
 
   const onCalculateShippingFee = useCallback(
-    (state: optionsData) => {
+    (state: numberOptionsData) => {
       calculateShippingFee({ state, totalAmount });
     },
     [calculateShippingFee, totalAmount]
@@ -229,7 +229,7 @@ const Checkout = () => {
         addressLineTwo: "",
         postcode: "",
         city: "",
-        state: { id: "", name: "" },
+        state: { id: 0, name: "" },
         promoCode: watch("promoCode"),
         note: watch("note"),
         paymentMethod: watch("paymentMethod"),
@@ -478,7 +478,7 @@ const Checkout = () => {
                         control={control}
                         name="receiverName"
                         label="Receiver Name"
-                        lightBg={true}
+                        lightBg
                         formerror={errors.receiverName}
                         readOnly={!!selectedAddress}
                       />
@@ -488,7 +488,7 @@ const Checkout = () => {
                         control={control}
                         name="buyerEmail"
                         label="Buyer Email Address"
-                        lightBg={true}
+                        lightBg
                         isCapitalize={false}
                         formerror={errors.buyerEmail}
                         readOnly={!!selectedAddress}
@@ -501,7 +501,7 @@ const Checkout = () => {
                       defaultCountryCode="60"
                       countryCodeName="receiverCountryCode"
                       phoneNumberName="receiverPhoneNumber"
-                      lightBg={true}
+                      lightBg
                       readOnly={!!selectedAddress}
                     />
                     <Grid item xs={12}>
@@ -509,7 +509,7 @@ const Checkout = () => {
                         control={control}
                         name="addressLineOne"
                         label="Address Line 1"
-                        lightBg={true}
+                        lightBg
                         formerror={errors.addressLineOne}
                         readOnly={!!selectedAddress}
                       />
@@ -519,7 +519,7 @@ const Checkout = () => {
                         control={control}
                         name="addressLineTwo"
                         label="Address Line 2"
-                        lightBg={true}
+                        lightBg
                         readOnly={!!selectedAddress}
                       />
                     </Grid>
@@ -528,7 +528,7 @@ const Checkout = () => {
                         control={control}
                         name="postcode"
                         label="Postcode"
-                        lightBg={true}
+                        lightBg
                         maxLength={10}
                         formerror={errors.postcode}
                         readOnly={!!selectedAddress}
@@ -539,7 +539,7 @@ const Checkout = () => {
                         control={control}
                         name="city"
                         label="City"
-                        lightBg={true}
+                        lightBg
                         formerror={errors.city}
                         readOnly={!!selectedAddress}
                       />
@@ -550,7 +550,7 @@ const Checkout = () => {
                           control={control}
                           options={stateOptions}
                           name="state"
-                          lightBg={true}
+                          lightBg
                           label="State"
                           // @ts-ignore
                           error={errors.state}
@@ -563,7 +563,7 @@ const Checkout = () => {
                         control={control}
                         name="country"
                         label="Country"
-                        lightBg={true}
+                        lightBg
                         formerror={errors.country}
                         readOnly
                       />
@@ -574,7 +574,7 @@ const Checkout = () => {
                         name="promoCode"
                         label="Promo Code"
                         formerror={errors.promoCode}
-                        lightBg={true}
+                        lightBg
                         disabled={!isLoggedIn}
                         isCapitalize={false}
                       />
@@ -597,7 +597,7 @@ const Checkout = () => {
                         control={control}
                         name="note"
                         label="Notes to seller (optional)"
-                        lightBg={true}
+                        lightBg
                         multiline
                         rows={4}
                       />

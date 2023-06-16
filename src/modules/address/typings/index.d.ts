@@ -9,13 +9,13 @@ declare namespace address {
     receiverCountryCode: string;
     receiverPhoneNumber: string;
     addressLineOne: string;
-    addressLineTwo: string;
+    addressLineTwo?: string;
     postcode: string;
     city: string;
-    state: optionsData;
+    state: numberOptionsData;
     country: string;
     isDefault: boolean;
-    tag: string;
+    tag?: string;
   }
 
   interface addEditAddressModalData extends deleteAddressModalData {

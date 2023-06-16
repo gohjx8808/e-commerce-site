@@ -66,7 +66,7 @@ const AddressModal = (props: AddressModalProps) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<address.addAddressPayload>({
+  } = useForm({
     resolver: yupResolver(addressSchema),
   });
 
@@ -133,7 +133,7 @@ const AddressModal = (props: AddressModalProps) => {
               <ControlledTextInput
                 control={control}
                 name="receiverName"
-                lightBg={true}
+                lightBg
                 label="Receiver Name"
                 formerror={errors.receiverName}
               />
@@ -145,14 +145,14 @@ const AddressModal = (props: AddressModalProps) => {
               defaultCountryCode="60"
               countryCodeName="receiverCountryCode"
               phoneNumberName="receiverPhoneNumber"
-              lightBg={true}
+              lightBg
             />
             <Grid item xs={12}>
               <ControlledTextInput
                 control={control}
                 name="addressLineOne"
                 label="Address Line 1"
-                lightBg={true}
+                lightBg
                 formerror={errors.addressLineOne}
               />
             </Grid>
@@ -161,7 +161,7 @@ const AddressModal = (props: AddressModalProps) => {
                 control={control}
                 name="addressLineTwo"
                 label="Address Line 2"
-                lightBg={true}
+                lightBg
               />
             </Grid>
             <Grid item sm={6} xs={12}>
@@ -169,7 +169,7 @@ const AddressModal = (props: AddressModalProps) => {
                 control={control}
                 name="postcode"
                 label="Postcode"
-                lightBg={true}
+                lightBg
                 maxLength={10}
                 formerror={errors.postcode}
               />
@@ -179,7 +179,7 @@ const AddressModal = (props: AddressModalProps) => {
                 control={control}
                 name="city"
                 label="City"
-                lightBg={true}
+                lightBg
                 formerror={errors.city}
               />
             </Grid>
@@ -188,7 +188,7 @@ const AddressModal = (props: AddressModalProps) => {
                 control={control}
                 options={stateOptions || []}
                 name="state"
-                lightBg={true}
+                lightBg
                 label="State"
                 // @ts-ignore
                 error={errors.state}
@@ -199,7 +199,7 @@ const AddressModal = (props: AddressModalProps) => {
                 control={control}
                 name="country"
                 label="Country"
-                lightBg={true}
+                lightBg
                 formerror={errors.country}
                 disabled
                 defaultInput="Malaysia"

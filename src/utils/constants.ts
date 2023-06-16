@@ -1,6 +1,6 @@
 import routeNames from "./routeNames";
 
-export const booleanOptions: optionsData[] = [
+export const booleanOptions: booleanOptionsData[] = [
   { id: false, name: "No" },
   { id: true, name: "Yes" },
 ];
@@ -36,12 +36,12 @@ export enum socialMediaLinks {
   XHS = "https://www.xiaohongshu.com/user/profile/5cf791af000000000500c3eb?xhsshare=CopyLink&appuid=5cf791af000000000500c3eb&apptime=1642396244",
 }
 
-export const genderOptions: optionsData[] = [
+export const genderOptions: stringOptionsData[] = [
   { id: "M", name: "Male" },
   { id: "F", name: "Female" },
 ];
 
-export const paymentMethods: optionsData[] = [
+export const paymentMethods: stringOptionsData[] = [
   { id: "TNG", name: "TNG E-Wallet" },
   { id: "Bank Transfer", name: "Bank Transfer" },
 ];

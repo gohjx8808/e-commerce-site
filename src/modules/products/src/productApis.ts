@@ -7,7 +7,7 @@ export const getAllProducts = (payload: products.getAllProductPayload) =>
   postRequest<Response<products.productData[]>>("products", payload);
 
 export const getSortOptions = () =>
-  getRequest<Response<optionsData[]>>("products/sort-options");
+  getRequest<Response<numberOptionsData[]>>("products/sort-options");
 
 export const postCalculateShippingFee = (
   payload: products.calculateShippingFeePayload

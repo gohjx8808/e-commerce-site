@@ -13,7 +13,7 @@ import StyledAutocompleteFormControl from "../../styledComponents/inputs/StyledA
 
 export interface ControlledPickerProps<T extends FieldValues>
   extends Omit<
-    AutocompleteProps<optionsData, boolean, boolean, boolean>,
+    AutocompleteProps<numberOptionsData|stringOptionsData, boolean, boolean, boolean>,
     "renderInput"
   > {
   control: Control<T>;

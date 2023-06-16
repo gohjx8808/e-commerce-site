@@ -45,7 +45,7 @@ const FeedbackForm = () => {
                   <ControlledTextInput
                     control={control}
                     name="name"
-                    lightBg={true}
+                    lightBg
                     label="Nickname"
                     formerror={errors.name}
                     infotext="How should we address you."
@@ -55,7 +55,7 @@ const FeedbackForm = () => {
                   <ControlledTextInput
                     control={control}
                     name="email"
-                    lightBg={true}
+                    lightBg
                     label="Email"
                     formerror={errors.email}
                     infotext="Email is solely for the purpose of replying your feedback."
@@ -66,7 +66,7 @@ const FeedbackForm = () => {
                   <ControlledTextInput
                     control={control}
                     name="feedback"
-                    lightBg={true}
+                    lightBg
                     label="Feedback"
                     placeholder="Tell me what do you think..."
                     multiline

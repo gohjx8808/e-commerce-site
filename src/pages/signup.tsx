@@ -43,7 +43,7 @@ const SignUp = () => {
     formState: { errors },
     handleSubmit,
     watch,
-  } = useForm<auth.signUpFormData>({
+  } = useForm({
     resolver: yupResolver(signUpSchema),
   });
 

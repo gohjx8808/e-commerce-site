@@ -4,11 +4,9 @@ export const defaultAddressData: address.addAddressPayload = {
   receiverCountryCode: "60",
   receiverPhoneNumber: "",
   addressLineOne: "",
-  addressLineTwo: "",
   postcode: "",
   city: "",
-  state: { id: "", name: "" },
+  state: { id: 0, name: "" },
   country: "Malaysia",
   isDefault: false,
-  tag: "",
 };
