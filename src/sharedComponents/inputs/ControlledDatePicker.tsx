@@ -1,6 +1,6 @@
 import { useXsDownMediaQuery } from "@hooks";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import React from "react";
 import {
   Control,
@@ -10,13 +10,9 @@ import {
   Path,
   PathValue,
 } from "react-hook-form";
-import StyledTextField from "../../styledComponents/inputs/StyledTextField";
 
 interface ControlledDatePickerOwnProps<T extends FieldValues>
-  extends Omit<
-    DatePickerProps<Date, Dayjs>,
-    "renderInput" | "onChange" | "value"
-  > {
+  extends Omit<DatePickerProps<Dayjs>, "renderInput" | "onChange" | "value"> {
   control: Control<T>;
   defaultdate?: PathValue<T, Path<T>>;
   formerror?: FieldError;
@@ -37,20 +33,12 @@ const ControlledDatePicker = <T extends FieldValues>(
       name={name}
       render={({ field: { onChange, value } }) => (
         <DatePicker
-          inputFormat={isXsView ? "YYYY-MM-DD" : "DD/MM/YYYY"}
-          value={value}
+          format={isXsView ? "YYYY-MM-DD" : "DD/MM/YYYY"}
+          value={dayjs(value)}
           onChange={(selectedDate) =>
             onChange(selectedDate ? selectedDate?.format("YYYY-MM-DD") : "")
           }
-          renderInput={(params) => (
-            <StyledTextField
-              {...params}
-              error={!!formerror}
-              lightBg={lightBg}
-              helperText={formerror?.message}
-              type="date"
-            />
-          )}
+          slotProps={{ textField: { variant: "outlined", fullWidth: true } }}
           disableFuture
           {...rest}
         />
