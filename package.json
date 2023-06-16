@@ -13,8 +13,8 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean"
   },
-  "lint-staged":{
-    "**/*.{js,jsx,ts,tsx}":[
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
       "npx prettier --write",
       "npx eslint --fix"
     ]
@@ -28,8 +28,8 @@
     "@fontsource/amaranth": "^5.0.3",
     "@hookform/resolvers": "^3.1.1",
     "@mui/icons-material": "^5.6.2",
-    "@mui/lab": "^5.0.0-alpha.80",
-    "@mui/material": "^5.6.4",
+    "@mui/lab": "^5.0.0-alpha.134",
+    "@mui/material": "^5.13.5",
     "@mui/x-data-grid": "^5.10.0",
     "@mui/x-date-pickers": "^5.0.0-alpha.2",
     "@types/prop-types": "^15.7.4",
