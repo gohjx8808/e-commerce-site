@@ -7,8 +7,8 @@ export const formatPrice = (amount: number, currency: string) => {
 };
 
 export const internationalPhoneNumberFormatter = (
-  countryCode: string,
-  phoneNumber: string
+  countryCode: number,
+  phoneNumber: number
 ) => `+${countryCode} ${phoneNumber}`;
 
 export const getProductVariationSuffix = (

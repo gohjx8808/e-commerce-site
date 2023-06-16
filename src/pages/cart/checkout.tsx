@@ -4,13 +4,13 @@ import useDebounce from "@hooks/useDebounce";
 import SEO from "@modules/SEO";
 import { useAccountDetails } from "@modules/account/src/accountQueries";
 import {
-    useAddressList,
-    useStateOptions,
+  useAddressList,
+  useStateOptions,
 } from "@modules/address/src/addressQueries";
 import {
-    useCalculateShippingFee,
-    useCheckout,
-    useVerifyPromoCode,
+  useCalculateShippingFee,
+  useCheckout,
+  useVerifyPromoCode,
 } from "@modules/products/src/productMutations";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
@@ -223,8 +223,8 @@ const Checkout = () => {
       reset({
         buyerEmail: "",
         receiverName: "",
-        receiverCountryCode: "",
-        receiverPhoneNumber: "",
+        receiverCountryCode: 0,
+        receiverPhoneNumber: 0,
         addressLineOne: "",
         addressLineTwo: "",
         postcode: "",

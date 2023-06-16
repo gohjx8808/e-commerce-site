@@ -4,8 +4,8 @@ declare namespace account {
     name: string;
     preferredName: string;
     email: string;
-    countryCode: string;
-    phoneNumber: string;
+    countryCode: number;
+    phoneNumber: number;
     gender: "M" | "F";
     dob: string;
   }
@@ -19,7 +19,7 @@ declare namespace account {
     preferredName?: string;
     dob: string;
     gender: string;
-    countryCode: string;
-    phoneNumber: string;
+    countryCode: number;
+    phoneNumber: number;
   }
 }

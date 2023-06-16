@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 export const defaultAddressData: address.addAddressPayload = {
   receiverName: "",
-  receiverCountryCode: "60",
-  receiverPhoneNumber: "",
+  receiverCountryCode: 60,
+  receiverPhoneNumber: 0,
   addressLineOne: "",
   postcode: "",
   city: "",

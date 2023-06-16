@@ -5,12 +5,14 @@ const shippingInfoSchema = object().shape({
   buyerEmail: string()
     .email("Invalid email")
     .required("Buyer email is required"),
-  receiverCountryCode: string()
-    .required("Receiver country code is required"),
-  receiverPhoneNumber: string()
-    .required("Receiver phone number is required"),
+  receiverCountryCode: number()
+    .required("Receiver country code is required")
+    .typeError("Invalid receiver country code"),
+  receiverPhoneNumber: number()
+    .required("Receiver phone number is required")
+    .typeError("Invalid receiver phone number"),
   addressLineOne: string().required("Address line 1 is required"),
-  addressLineTwo:string().optional(),
+  addressLineTwo: string().optional(),
   postcode: string().required("Postcode is required"),
   city: string().required("City is required"),
   state: object()
@@ -19,10 +21,10 @@ const shippingInfoSchema = object().shape({
       name: string().required("State is required"),
     })
     .typeError("State is required"),
-    country:string().oneOf(["Malaysia"]).required(),
-    promoCode:string().optional(),
-    note:string().optional(),
-    addToAddressBook:boolean().required("Add to address book is required"),
+  country: string().oneOf(["Malaysia"]).required(),
+  promoCode: string().optional(),
+  note: string().optional(),
+  addToAddressBook: boolean().required("Add to address book is required"),
   paymentMethod: string().required("Payment method is required"),
 });
 

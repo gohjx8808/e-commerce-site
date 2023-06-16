@@ -6,8 +6,8 @@ declare namespace address {
 
   interface addAddressPayload {
     receiverName: string;
-    receiverCountryCode: string;
-    receiverPhoneNumber: string;
+    receiverCountryCode: number;
+    receiverPhoneNumber: number;
     addressLineOne: string;
     addressLineTwo?: string;
     postcode: string;

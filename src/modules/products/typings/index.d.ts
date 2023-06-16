@@ -2,8 +2,8 @@ declare namespace products {
   interface checkoutFormPayload {
     receiverName: string;
     buyerEmail: string;
-    receiverCountryCode: string;
-    receiverPhoneNumber: string;
+    receiverCountryCode: number;
+    receiverPhoneNumber: number;
     addressLineOne: string;
     addressLineTwo?: string;
     postcode: string;
@@ -73,8 +73,8 @@ declare namespace products {
     addressId?: number;
     buyerEmail: string;
     receiverName?: string;
-    receiverCountryCode?: string;
-    receiverPhoneNumber?: string;
+    receiverCountryCode?: number;
+    receiverPhoneNumber?: number;
     addressLineOne?: string;
     addressLineTwo?: string;
     postcode?: string;

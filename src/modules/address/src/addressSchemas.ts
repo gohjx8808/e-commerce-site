@@ -3,10 +3,14 @@ import { boolean, number, object, string } from "yup";
 /* eslint-disable import/prefer-default-export */
 export const addressSchema = object().shape({
   receiverName: string().required("Receiver name is required"),
-  receiverCountryCode: string().required("Receiver country code is required"),
-  receiverPhoneNumber: string().required("Receiver phone number is required"),
+  receiverCountryCode: number()
+    .required("Receiver country code is required")
+    .typeError("Invalid receiver country code"),
+  receiverPhoneNumber: number()
+    .required("Receiver phone number is required")
+    .typeError("Invalid receiver phone number"),
   addressLineOne: string().required("Address line one is required"),
-  addressLineTwo:string().optional(),
+  addressLineTwo: string().optional(),
   postcode: string().required("Postcode is required"),
   city: string().required("City is required"),
   state: object()
@@ -19,5 +23,5 @@ export const addressSchema = object().shape({
   isDefault: boolean()
     .typeError("Invalid default option")
     .required("Default option is required"),
-    tag:string().optional()
+  tag: string().optional(),
 });
