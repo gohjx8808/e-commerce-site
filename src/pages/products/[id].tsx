@@ -202,7 +202,7 @@ const ProductDescription: FC<PageProps> = (props) => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item md={2} sm={3} xs={9}>
+              <Grid item sm={3} xs={9}>
                 <Grid container justifyContent="flex-end">
                   <ModifyQuantityButton
                     actiontype="minus"
