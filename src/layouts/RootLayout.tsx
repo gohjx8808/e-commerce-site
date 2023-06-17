@@ -9,9 +9,9 @@ import {
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { ReactQueryDevtools } from "react-query/devtools";
 import { SnackbarProvider } from "notistack";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import EnlargedProductImageCarouselModal from "../modules/products/views/EnlargedProductImageCarouselModal";
 import StatusModal from "../modules/status/views/StatusModal";
@@ -152,12 +152,17 @@ const RootLayout = (props: parentComponent) => {
     }
   }, [prefersDarkMode, displayTheme]);
 
-  const toggleTheme = (selectedMode: modeType) => {
+  const toggleTheme = useCallback((selectedMode: modeType) => {
     setDisplayTheme(selectedMode);
-  };
+  }, []);
+
+  const darkModeContextValue = useMemo(
+    () => ({ toggleTheme, displayTheme }),
+    [toggleTheme, displayTheme]
+  );
 
   return (
-    <DarkModeContext.Provider value={{ toggleTheme, displayTheme }}>
+    <DarkModeContext.Provider value={darkModeContextValue}>
       <ThemeProvider theme={responsiveFontSizes(theme)}>
         <SnackbarProvider
           anchorOrigin={{
@@ -165,9 +170,7 @@ const RootLayout = (props: parentComponent) => {
             horizontal: "left",
           }}
           autoHideDuration={3000}
-          content={(key, message) => (
-            <CustomSnackbar id={key} message={message} />
-          )}
+          Components={{ info: CustomSnackbar }}
         >
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <QueryClientProvider client={queryClient}>

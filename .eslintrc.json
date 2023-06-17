@@ -57,7 +57,8 @@
         "react/jsx-props-no-spreading": "off",
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": "warn",
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "react/function-component-definition": [2, { "namedComponents": "arrow-function" }]
     },
     "settings": {
         "import/resolver": {

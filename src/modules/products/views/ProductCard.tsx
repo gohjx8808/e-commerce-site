@@ -46,7 +46,9 @@ const ProductCard = (props: ProductCardOwnProps) => {
     );
     const productName = productData.name + variationSuffix;
     addToCart(productData, isKeyChainSeries, 1, variation);
-    enqueueSnackbar(`${productName} had been added to your cart!`);
+    enqueueSnackbar(`${productName} had been added to your cart!`, {
+      variant: "info",
+    });
   };
 
   const triggerItemVariationMenu = (event: React.MouseEvent<HTMLElement>) => {

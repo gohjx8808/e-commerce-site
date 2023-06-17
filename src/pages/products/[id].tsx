@@ -19,6 +19,7 @@ import { Link as GatsbyLink, PageProps } from "gatsby";
 import { useSnackbar } from "notistack";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
+import { richTextRendererOptions } from "@modules/products/src/productHelpers";
 import { useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
 import ProductErrorSnackbar from "../../modules/products/views/ProductErrorSnackbar";
@@ -116,8 +117,10 @@ const ProductDescription: FC<PageProps> = (props) => {
         isKeyChainSeries,
         selectedItemVariation
       );
-      const productName = selectedProduct?.name + variationSuffix;
-      enqueueSnackbar(`${productName} had been added to your cart!`);
+      const productName = selectedProduct.name + variationSuffix;
+      enqueueSnackbar(`${productName} had been added to your cart!`, {
+        variant: "info",
+      });
     } else {
       toggleErrorSnackbar();
     }
@@ -125,22 +128,6 @@ const ProductDescription: FC<PageProps> = (props) => {
 
   const toggleErrorSnackbar = () => {
     setIsErrorSnackbarOpen(!isErrorSnackbarOpen);
-  };
-
-  const options = {
-    renderMark: {
-      [MARKS.BOLD]: (text: React.ReactNode) => (
-        <Typography variant="h6" fontWeight="bold">
-          {text}
-        </Typography>
-      ),
-    },
-    renderNode: {
-      [BLOCKS.PARAGRAPH]: (
-        _node: Block | Inline,
-        children: React.ReactNode
-      ) => <Typography variant="h6">{children}</Typography>,
-    },
   };
 
   if (selectedProduct) {
@@ -168,7 +155,7 @@ const ProductDescription: FC<PageProps> = (props) => {
               </Typography>
               {documentToReactComponents(
                 selectedProduct.contentDescription,
-                options
+                richTextRendererOptions
               )}
             </Grid>
             {isKeyChainSeries && (
