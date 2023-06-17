@@ -11,10 +11,10 @@ import IconButton from "@mui/material/IconButton";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { Link as GatsbyLink, navigate } from "gatsby";
+import { useSnackbar } from "notistack";
 import React, { useContext, useEffect, useState } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import ItemRemoveConfirmationDialog from "../../modules/products/views/ItemRemoveConfirmationDialog";
-import ProductErrorSnackbar from "../../modules/products/views/ProductErrorSnackbar";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
 import CartCard from "../../styledComponents/products/CartCard";
 import CartItemGrid from "../../styledComponents/products/CartItemGrid";
@@ -39,13 +39,14 @@ const Cart = () => {
     });
   const [removeConfirmModalDisplay, setRemoveConfirmModalDisplay] =
     useState<boolean>(false);
-  const [isCheckoutError, setIsCheckoutError] = useState(false);
   const {
     shoppingCart,
     modifyItemQuantity,
     selectedCheckoutItem,
     updateSelectedCheckoutItem,
   } = useContext(ProductContext);
+
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     let currentTotal = 0;
@@ -106,7 +107,9 @@ const Cart = () => {
     if (selectedCheckoutItem.length > 0) {
       navigate(routeNames.checkout);
     } else {
-      setIsCheckoutError(true);
+      enqueueSnackbar("Please select at least one item to proceed!", {
+        variant: "error",
+      });
     }
   };
 
@@ -419,11 +422,6 @@ const Cart = () => {
           itemName={toBeRemovedItem.name}
           toggleModal={toggleRemoveConfirmModalDisplay}
           confirmRemove={confirmItemRemove}
-        />
-        <ProductErrorSnackbar
-          isSnackbarOpen={isCheckoutError}
-          toggleSnackbar={() => setIsCheckoutError(false)}
-          msg="Please select at least one item to proceed!"
         />
       </Grid>
     </MainLayout>

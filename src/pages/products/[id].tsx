@@ -1,9 +1,9 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { Block, BLOCKS, Inline, MARKS } from "@contentful/rich-text-types";
 import { ProductContext } from "@contextProvider/ProductContextProvider";
+import SEO from "@modules/SEO";
+import { richTextRendererOptions } from "@modules/products/src/productHelpers";
 import { useProductList } from "@modules/products/src/productQueries";
 import ProductImageCarousel from "@modules/products/views/ProductImageCarousel";
-import SEO from "@modules/SEO";
 import AddIcon from "@mui/icons-material/Add";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -19,10 +19,8 @@ import { Link as GatsbyLink, PageProps } from "gatsby";
 import { useSnackbar } from "notistack";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
-import { richTextRendererOptions } from "@modules/products/src/productHelpers";
 import { useXsDownMediaQuery } from "../../hooks";
 import MainLayout from "../../layouts/MainLayout";
-import ProductErrorSnackbar from "../../modules/products/views/ProductErrorSnackbar";
 import CustomBreadcrumbs from "../../sharedComponents/CustomBreadcrumbs";
 import ItemQuantityInput from "../../styledComponents/products/ItemQuantityInput";
 import ItemVariationToggleButton from "../../styledComponents/products/ItemVariationToggleButton";
@@ -50,7 +48,6 @@ const ProductDescription: FC<PageProps> = (props) => {
 
   const [itemQuantity, setItemQuantity] = useState(1);
   const [selectedItemVariation, setSelectedItemVariation] = useState("");
-  const [isErrorSnackbarOpen, setIsErrorSnackbarOpen] = useState(false);
   const [productRecommendation, setProductRecommendation] = useState<
     products.productData[][]
   >([]);
@@ -122,12 +119,10 @@ const ProductDescription: FC<PageProps> = (props) => {
         variant: "info",
       });
     } else {
-      toggleErrorSnackbar();
+      enqueueSnackbar("Please select one variation to proceed!", {
+        variant: "error",
+      });
     }
-  };
-
-  const toggleErrorSnackbar = () => {
-    setIsErrorSnackbarOpen(!isErrorSnackbarOpen);
   };
 
   if (selectedProduct) {
@@ -327,11 +322,6 @@ const ProductDescription: FC<PageProps> = (props) => {
               </Link>
             </Grid>
           </Grid>
-          <ProductErrorSnackbar
-            isSnackbarOpen={isErrorSnackbarOpen}
-            toggleSnackbar={toggleErrorSnackbar}
-            msg="Please select one variation to proceed!"
-          />
         </Grid>
       </MainLayout>
     );

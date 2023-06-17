@@ -9,13 +9,14 @@ import {
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { SnackbarProvider } from "notistack";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import ProductErrorSnackbar from "@sharedComponents/snackBars/ProductErrorSnackbar";
 import EnlargedProductImageCarouselModal from "../modules/products/views/EnlargedProductImageCarouselModal";
 import StatusModal from "../modules/status/views/StatusModal";
-import CustomSnackbar from "../sharedComponents/CustomSnackbar";
+import CustomSnackbar from "../sharedComponents/snackBars/CustomSnackbar";
 import DarkModeContext from "../utils/DarkModeContext";
 
 declare module "@mui/material/AppBar" {
@@ -170,7 +171,10 @@ const RootLayout = (props: parentComponent) => {
             horizontal: "left",
           }}
           autoHideDuration={3000}
-          Components={{ info: CustomSnackbar }}
+          Components={{
+            info: CustomSnackbar,
+            error: ProductErrorSnackbar,
+          }}
         >
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <QueryClientProvider client={queryClient}>
