@@ -10,6 +10,7 @@ import { generateHeader } from "@utils/helper";
 import { graphql, Link as GatsbyLink, useStaticQuery } from "gatsby";
 import { getImage } from "gatsby-plugin-image";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { CUSTOMER_ROLE } from "@utils/constants";
 import AuthLayout from "../layouts/AuthLayout";
 import { useLogIn } from "../modules/auth/src/authMutations";
 import { loginSchema } from "../modules/auth/src/authSchema";
@@ -42,8 +43,8 @@ const Login = () => {
 
   const { mutate: logIn, isLoading: logInLoading } = useLogIn();
 
-  const submitLogin: SubmitHandler<auth.logInPayload> = (hookData) => {
-    logIn(hookData);
+  const submitLogin: SubmitHandler<auth.logInFormData> = (hookData) => {
+    logIn({ ...hookData, role: CUSTOMER_ROLE });
   };
 
   return (

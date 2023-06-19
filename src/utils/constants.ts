@@ -45,3 +45,5 @@ export const paymentMethods: stringOptionsData[] = [
   { id: "TNG", name: "TNG E-Wallet" },
   { id: "Bank Transfer", name: "Bank Transfer" },
 ];
+
+export const CUSTOMER_ROLE = 3;

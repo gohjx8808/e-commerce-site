@@ -1,5 +1,9 @@
 declare namespace auth {
-  interface logInPayload {
+  interface logInPayload extends logInFormData {
+    role: number;
+  }
+
+  interface logInFormData {
     email: string;
     password: string;
   }
