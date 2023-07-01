@@ -62,6 +62,16 @@ const RootLayout = (props: parentComponent) => {
     },
   });
 
+  if (typeof window !== "undefined") {
+    window.onerror = (e) => {
+      if (typeof e === "string") {
+        if (e.includes("Failed to execute 'insertBefore' on 'Node'")) {
+          document.location.reload();
+        }
+      }
+    };
+  }
+
   const theme = useMemo(
     () =>
       createTheme({
