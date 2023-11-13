@@ -20,14 +20,14 @@ export const useForgotPassword = () => {
     onSuccess: () => {
       toggleSuccess(true);
       updateMsg(
-        "An email to reset your password has been sent to your registered email address."
+        "An email to reset your password has been sent to your registered email address.",
       );
       toggleVisible(true);
       navigate(routeNames.login);
     },
     onError: (error: AxiosError<customErrorData>) => {
       updateMsg(
-        error.response?.data.message || "Network error! Please try again."
+        error.response?.data.message || "Network error! Please try again.",
       );
       toggleSuccess(false);
       toggleVisible(true);
@@ -44,14 +44,14 @@ export const useResetPassword = () => {
     onSuccess: () => {
       toggleSuccess(true);
       updateMsg(
-        "Your password had been reset. Please login using your new password."
+        "Your password had been reset. Please login using your new password.",
       );
       toggleVisible(true);
       navigate(routeNames.login);
     },
     onError: (error: AxiosError<customErrorData>) => {
       updateMsg(
-        error.response?.data.message || "Network error! Please try again."
+        error.response?.data.message || "Network error! Please try again.",
       );
       toggleSuccess(false);
       toggleVisible(true);
@@ -68,7 +68,7 @@ export const useSignUp = () => {
     onSuccess: () => {
       toggleSuccess(true);
       updateMsg(
-        "Your registration is successful! Please login using your credentials."
+        "Your registration is successful! Please login using your credentials.",
       );
       toggleVisible(true);
       navigate(routeNames.login);
@@ -78,6 +78,10 @@ export const useSignUp = () => {
       let errorMsg = errResponse?.message || "";
       if (!errResponse?.message) {
         errorMsg = "Your registration has failed! Please try again.";
+      } else if (errResponse.message === "Same email exists.") {
+        errorMsg =
+          "The provided email is already in use by an existing user. " +
+          "Please register using another email or login using the correct credentials.";
       }
       updateMsg(errorMsg);
       toggleSuccess(false);
@@ -95,11 +99,11 @@ export const useLogIn = () => {
     onSuccess: (response) => {
       localStorage.setItem(
         authLocalStorageKeys.TOKEN,
-        response.data.data.accessToken
+        response.data.data.accessToken,
       );
       localStorage.setItem(
         authLocalStorageKeys.USER,
-        JSON.stringify(response.data.data.user)
+        JSON.stringify(response.data.data.user),
       );
       navigate(routeNames.home);
     },
