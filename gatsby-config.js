@@ -57,7 +57,7 @@ module.exports = {
           "img-src":
             "'self' data: http://images.ctfassets.net/ https://www.facebook.com",
           "connect-src":
-            "'self' https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com https://web.facebook.com/ https://www.google-analytics.com https://cloudflareinsights.com https://o2.mouseflow.com https://yjartjournal-api.vercel.app https://socialplugin.facebook.net",
+            "'self' https://www.googleapis.com https://securetoken.googleapis.com https://www.facebook.com https://web.facebook.com/ https://www.google-analytics.com https://cloudflareinsights.com https://o2.mouseflow.com https://yjartjournal-api.onrender.com https://socialplugin.facebook.net",
           "frame-src":
             "'self' https://apis.google.com https://www.facebook.com https://web.facebook.com/ https://m.me/ https://m.facebook.com/",
           "font-src": "'self' data: https://fonts.gstatic.com",
