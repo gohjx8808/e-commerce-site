@@ -2,13 +2,13 @@ import axios, { AxiosResponse } from "axios";
 
 const API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://yjartjournal-api.vercel.app"
+    ? "https://yjartjournal-api.onrender.com"
     : "http://localhost:3000";
 
 export const postRequest = <T>(
   url: string,
   payload: any,
-  auth: boolean = false
+  auth: boolean = false,
 ): Promise<AxiosResponse<T>> =>
   axios.post(url, payload, {
     baseURL: API_URL,
@@ -20,7 +20,7 @@ export const postRequest = <T>(
 export const getRequest = <T>(
   url: string,
   data?: any,
-  auth: boolean = false
+  auth: boolean = false,
 ): Promise<AxiosResponse<T>> =>
   axios.get(url, {
     data,
